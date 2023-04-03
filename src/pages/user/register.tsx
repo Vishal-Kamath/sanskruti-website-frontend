@@ -2,13 +2,20 @@ import { MdAlternateEmail, MdLocalPhone, MdLocationPin } from 'react-icons/md';
 import { HiOutlineMail } from 'react-icons/hi';
 import { BsCalendar3 } from 'react-icons/bs';
 import Link from 'next/link';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { NextPageWithLayout } from '../_app';
 import SignLayout from '@/components/signLayout';
 import { Input, TextArea } from '@/components/input';
 import Head from 'next/head';
 
 const RegisterPage: NextPageWithLayout = () => {
+  const [name, setName] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [mobileNumber, setMobileNumber] = useState<number>();
+  const [dateOfBirth, setDateOfBirth] = useState<string>();
+  const [address, setAddress] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
   return (
     <>
       <Head>
@@ -19,11 +26,13 @@ const RegisterPage: NextPageWithLayout = () => {
 
         <div className="flex flex-col gap-3">
           <div className="flex gap-3 max-md:flex-col">
-            {/* Username */}
+            {/* Name */}
             <Input
               input_type="text"
               placeholder="Name"
               symbol={<MdAlternateEmail />}
+              value={name}
+              setValue={setName}
             />
 
             {/* Email */}
@@ -31,6 +40,8 @@ const RegisterPage: NextPageWithLayout = () => {
               input_type="email"
               placeholder="Email"
               symbol={<HiOutlineMail />}
+              value={email}
+              setValue={setEmail}
             />
           </div>
 
@@ -40,6 +51,8 @@ const RegisterPage: NextPageWithLayout = () => {
               input_type="number"
               placeholder="Mobile number"
               symbol={<MdLocalPhone />}
+              value={mobileNumber}
+              setValue={setMobileNumber}
             />
 
             {/* DOB */}
@@ -47,10 +60,18 @@ const RegisterPage: NextPageWithLayout = () => {
               input_type="date"
               placeholder="Date of birth"
               symbol={<BsCalendar3 />}
+              value={dateOfBirth}
+              setValue={setDateOfBirth}
             />
           </div>
 
-          <TextArea placeholder="Address" symbol={<MdLocationPin />} />
+          {/* Address */}
+          <TextArea
+            placeholder="Address"
+            symbol={<MdLocationPin />}
+            value={address}
+            setValue={setAddress}
+          />
 
           <div className="flex gap-3 max-md:flex-col">
             {/* Password */}
@@ -58,6 +79,8 @@ const RegisterPage: NextPageWithLayout = () => {
               input_type="password"
               placeholder="Password"
               symbol={<span>***</span>}
+              value={password}
+              setValue={setPassword}
             />
 
             {/* Confirm Password */}
@@ -65,6 +88,8 @@ const RegisterPage: NextPageWithLayout = () => {
               input_type="password"
               placeholder="Confirm password"
               symbol={<span>***</span>}
+              value={confirmPassword}
+              setValue={setConfirmPassword}
             />
           </div>
 

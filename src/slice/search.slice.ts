@@ -3,13 +3,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
 import { Tags } from '@/model/item.model';
 
-type SeacrhType = {
+type SearchType = {
   searchInput: string;
   tags: Tags;
 };
 
 // Define the initial state using that type
-const initialState: SeacrhType = {
+const initialState: SearchType = {
   searchInput: '',
   tags: {},
 };

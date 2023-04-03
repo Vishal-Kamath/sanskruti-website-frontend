@@ -1,12 +1,28 @@
 import { HiOutlineMail } from 'react-icons/hi';
 import Link from 'next/link';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { NextPageWithLayout } from '../_app';
 import SignLayout from '@/components/signLayout';
 import { Input } from '@/components/input';
 import Head from 'next/head';
+import { useAppDispatch } from '@/store/hooks';
+import { setNotification, showNotification } from '@/slice/notification.slice';
 
 const LoginPage: NextPageWithLayout = () => {
+  const dispatch = useAppDispatch();
+
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+
+  const _submit = () => {
+    if (!email?.trim() || !password?.trim()) {
+      dispatch(
+        setNotification({ message: 'fill all details', type: 'warning' })
+      );
+      return dispatch(showNotification());
+    }
+  };
+
   return (
     <>
       <Head>
@@ -21,6 +37,8 @@ const LoginPage: NextPageWithLayout = () => {
             input_type="text"
             placeholder="Email"
             symbol={<HiOutlineMail />}
+            value={email}
+            setValue={setEmail}
           />
 
           {/* Password */}
@@ -28,11 +46,14 @@ const LoginPage: NextPageWithLayout = () => {
             input_type="password"
             placeholder="Password"
             symbol={<span>***</span>}
+            value={password}
+            setValue={setPassword}
           />
 
           <button
             type="button"
             className="h-10 rounded-md bg-sky-700 text-white hover:bg-sky-500"
+            onClick={_submit}
           >
             SUBMIT
           </button>

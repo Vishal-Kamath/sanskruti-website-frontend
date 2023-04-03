@@ -3,10 +3,14 @@ import Image from 'next/image';
 import Head from 'next/head';
 import { RxCross2 } from 'react-icons/rx';
 import Link from 'next/link';
+import { useAppSelector } from '@/store/hooks';
+import { selectNotification } from '@/slice/notification.slice';
+import Notification from './notification';
 
 const SignLayout: React.FC<{ children: React.ReactElement }> = ({
   children,
 }) => {
+  const notification = useAppSelector(selectNotification);
   return (
     <>
       <Head>
@@ -14,7 +18,13 @@ const SignLayout: React.FC<{ children: React.ReactElement }> = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="grid min-h-screen place-content-center bg-gradient-to-tr from-sky-700 to-white py-20 text-black">
+      <div className="relative grid min-h-screen place-content-center bg-gradient-to-tr from-sky-700 to-white py-20 text-black">
+        {notification.notify && (
+          <Notification
+            message={notification.message}
+            type={notification.type}
+          />
+        )}
         <div className="relative flex min-h-[70vh] bg-white shadow-xl  shadow-sky-950">
           {children}
           <div className="h-full w-[25rem] max-md:hidden">

@@ -4,7 +4,9 @@ export const Input: React.FC<{
   symbol: React.ReactElement;
   input_type: string;
   placeholder: string;
-}> = ({ symbol, input_type, placeholder }) => {
+  value: any;
+  setValue: React.Dispatch<React.SetStateAction<any>>;
+}> = ({ symbol, input_type, placeholder, value, setValue }) => {
   const [focus, setFocus] = useState(false);
   return (
     <div className="flex h-10 w-full overflow-hidden rounded-md">
@@ -21,6 +23,8 @@ export const Input: React.FC<{
           focus ? 'border-sky-500' : 'border-sky-700'
         }`}
         placeholder={placeholder}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
       />
@@ -31,7 +35,9 @@ export const Input: React.FC<{
 export const TextArea: React.FC<{
   symbol: React.ReactElement;
   placeholder: string;
-}> = ({ symbol, placeholder }) => {
+  value: any;
+  setValue: React.Dispatch<React.SetStateAction<any>>;
+}> = ({ symbol, placeholder, value, setValue }) => {
   const [focus, setFocus] = useState(false);
   return (
     <div className="flex w-full overflow-hidden rounded-md">
@@ -47,6 +53,8 @@ export const TextArea: React.FC<{
           focus ? 'border-sky-500' : 'border-sky-700'
         }`}
         placeholder={placeholder}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
         onFocus={() => setFocus(true)}
         onBlur={() => setFocus(false)}
       />

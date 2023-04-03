@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import sidebarReducer from '@/slice/sidebar.slice';
 import searchReducer from '@/slice/search.slice';
+import notificationReducer from '@/slice/notification.slice';
 
 export const store = configureStore({
   reducer: {
     search: searchReducer,
     sidebar: sidebarReducer,
+    notification: notificationReducer
   },
 });
 
