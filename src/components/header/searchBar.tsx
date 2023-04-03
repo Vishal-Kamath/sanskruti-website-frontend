@@ -10,7 +10,7 @@ const SearchBar: React.FC<{ classname: string }> = ({ classname }) => {
     <div
       className={`${classname} flex h-9 w-full items-center gap-2 rounded-lg border-2 border-black bg-white px-3`}
     >
-      <FaSearch className="text-pinkAccent" />
+      <FaSearch className="text-sky-700" />
       <input
         type="text"
         value={searchInput}

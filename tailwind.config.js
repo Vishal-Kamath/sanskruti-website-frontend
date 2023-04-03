@@ -10,9 +10,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        pinkAccent: '#FA8072',
-      },
     },
   },
   plugins: [require('tailwind-scrollbar')({ nocompatible: true })],

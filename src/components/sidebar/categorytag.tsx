@@ -78,7 +78,7 @@ const CategoryTag: React.FC<{
         name={value}
         id={value}
         checked={checked}
-        className="h-4 w-4 accent-blue-500"
+        className="h-4 w-4 accent-sky-500"
       />
       {value}
     </button>

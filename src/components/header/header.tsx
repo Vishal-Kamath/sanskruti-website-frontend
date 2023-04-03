@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   return (
-    <div className="padding-x from-pinkAccent fixed top-0 z-30 flex w-full flex-col gap-2 border-b-2 border-black bg-gradient-to-r to-white py-2">
+    <div className="padding-x fixed top-0 z-30 flex w-full flex-col gap-2 border-b-2 border-black bg-gradient-to-r from-sky-700 to-white py-2">
       <div className="flex items-center justify-between">
         <div className="md:hidden">
           {sideBarOpen ? (
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
           <Link href="/wishtlist">
             <div className="relative">
               <AiOutlineHeart className="h-6 w-6" />
-              <div className="bg-pinkAccent absolute right-0 top-0 grid h-5 w-5 -translate-y-2 translate-x-1/2 place-content-center rounded-full text-white">
+              <div className="absolute right-0 top-0 grid h-5 w-5 -translate-y-2 translate-x-1/2 place-content-center rounded-full bg-sky-700 text-white">
                 0
               </div>
             </div>
