@@ -7,8 +7,19 @@ import { NextPageWithLayout } from '../_app';
 import SignLayout from '@/components/signLayout';
 import { Input, TextArea } from '@/components/input';
 import Head from 'next/head';
+import { useAppDispatch } from '@/store/hooks';
+import {
+  NotificationType,
+  setNotification,
+  showNotification,
+} from '@/slice/notification.slice';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const RegisterPage: NextPageWithLayout = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const [name, setName] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [mobileNumber, setMobileNumber] = useState<number>();
@@ -16,6 +27,60 @@ const RegisterPage: NextPageWithLayout = () => {
   const [address, setAddress] = useState<string>();
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
+
+  const _submit = async () => {
+    // check if input fields are empty
+    if (
+      !name?.trim() ||
+      !email?.trim() ||
+      !mobileNumber ||
+      !dateOfBirth?.trim() ||
+      !address?.trim() ||
+      !password?.trim() ||
+      !confirmPassword?.trim()
+    ) {
+      dispatch(
+        setNotification({ message: 'fill all details', type: 'warning' })
+      );
+      return dispatch(showNotification());
+    }
+
+    if (password !== confirmPassword) {
+      dispatch(
+        setNotification({ message: "passwords don't match", type: 'warning' })
+      );
+      return dispatch(showNotification());
+    }
+
+    const registerResponse = await axios
+      .post<NotificationType>('http://localhost:3500/api/v1/user/register', {
+        name,
+        email,
+        dob: dateOfBirth,
+        mobileNo: Number(mobileNumber),
+        address,
+        password,
+      })
+      .then((res) => {
+        const response = res.data;
+        dispatch(
+          setNotification({ message: response.message, type: response.type })
+        );
+        dispatch(showNotification());
+        if (res.status === 201) return router.replace('/user/login');
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
+  };
+
   return (
     <>
       <Head>
@@ -96,6 +161,7 @@ const RegisterPage: NextPageWithLayout = () => {
           <button
             type="button"
             className="h-10 rounded-md bg-sky-700 text-white hover:bg-sky-500"
+            onClick={_submit}
           >
             SUBMIT
           </button>

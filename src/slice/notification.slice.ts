@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
 import { Tags } from '@/model/item.model';
 
-export type SearchType = {
+export type NotificationType = {
   message: string | undefined;
   type: 'success' | 'warning' | 'info' | undefined;
 };
@@ -13,7 +13,7 @@ type Notify = {
 };
 
 // Define the initial state using that type
-const initialState: Notify & SearchType = {
+const initialState: Notify & NotificationType = {
   notify: false,
   message: undefined,
   type: undefined,
@@ -30,7 +30,7 @@ export const notification = createSlice({
     closeNotification: (state) => {
       state.notify = false;
     },
-    setNotification: (state, action: PayloadAction<SearchType>) => {
+    setNotification: (state, action: PayloadAction<NotificationType>) => {
       state.message = action.payload.message;
       state.type = action.payload.type;
     },

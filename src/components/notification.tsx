@@ -1,11 +1,14 @@
-import { SearchType, closeNotification } from '@/slice/notification.slice';
+import {
+  NotificationType,
+  closeNotification,
+} from '@/slice/notification.slice';
 import { useAppDispatch } from '@/store/hooks';
 import { RxCross2 } from 'react-icons/rx';
 import { BiError } from 'react-icons/bi';
 import { BsCheckCircle, BsExclamationCircleFill } from 'react-icons/bs';
 import React from 'react';
 
-const Notification: React.FC<SearchType> = ({ message, type }) => {
+const Notification: React.FC<NotificationType> = ({ message, type }) => {
   const dispatch = useAppDispatch();
   const close = () => dispatch(closeNotification());
   return (
