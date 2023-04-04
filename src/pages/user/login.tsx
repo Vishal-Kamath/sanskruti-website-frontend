@@ -6,21 +6,60 @@ import SignLayout from '@/components/signLayout';
 import { Input } from '@/components/input';
 import Head from 'next/head';
 import { useAppDispatch } from '@/store/hooks';
-import { setNotification, showNotification } from '@/slice/notification.slice';
+import {
+  NotificationType,
+  setNotification,
+  showNotification,
+} from '@/slice/notification.slice';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { setAccessToken } from '@/slice/user.slice';
 
 const LoginPage: NextPageWithLayout = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
-  const _submit = () => {
+  const _submit = async () => {
     if (!email?.trim() || !password?.trim()) {
       dispatch(
         setNotification({ message: 'fill all details', type: 'warning' })
       );
       return dispatch(showNotification());
     }
+
+    const registerResponse = await axios
+      .post<NotificationType & { accessToken: string }>(
+        'http://localhost:3500/api/v1/user/login',
+        {
+          email,
+          password,
+        }
+      )
+      .then((res) => {
+        const response = res.data;
+        dispatch(
+          setNotification({ message: response.message, type: response.type })
+        );
+        dispatch(showNotification());
+
+        if (res.status === 200) {
+          dispatch(setAccessToken({ accessToken: response.accessToken }));
+          return router.replace('/');
+        }
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
   };
 
   return (

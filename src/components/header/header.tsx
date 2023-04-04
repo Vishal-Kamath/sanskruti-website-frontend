@@ -33,8 +33,8 @@ const Header: React.FC = () => {
           )}
         </div>
         <Logo classname="aspect-square w-12" />
-        <SearchBar classname="max-md:hidden max-w-sm" />
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
+          <SearchBar classname="max-md:hidden w-[20rem]" />
           <Link href="/wishtlist">
             <div className="relative">
               <AiOutlineHeart className="h-6 w-6" />
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
               </div>
             </div>
           </Link>
-          <Link href="/user/login">
+          <Link href="/user">
             <HiOutlineUserCircle className="h-6 w-6" />
           </Link>
         </div>

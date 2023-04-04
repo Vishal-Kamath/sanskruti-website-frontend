@@ -13,7 +13,7 @@ const Notification: React.FC<NotificationType> = ({ message, type }) => {
   const close = () => dispatch(closeNotification());
   return (
     <div
-      className={`absolute left-1/2 top-3 flex w-full max-w-md -translate-x-1/2 gap-2 rounded-sm border-2 px-2 py-3 
+      className={`absolute left-1/2 top-1 z-50 flex w-full max-w-md -translate-x-1/2 gap-2 rounded-sm border-2 px-2 py-3 
         ${type === 'success' && 'border-green-500 bg-green-200 text-green-500'}
         ${type === 'warning' && 'border-red-500 bg-red-200 text-red-500'}
         ${
