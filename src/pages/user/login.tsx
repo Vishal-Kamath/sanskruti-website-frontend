@@ -13,7 +13,7 @@ import {
 } from '@/slice/notification.slice';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { setAccessToken } from '@/slice/user.slice';
+import { loggedIn, setAccessToken } from '@/slice/user.slice';
 
 const LoginPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -47,6 +47,7 @@ const LoginPage: NextPageWithLayout = () => {
 
         if (res.status === 200) {
           dispatch(setAccessToken({ accessToken: response.accessToken }));
+          dispatch(loggedIn());
           return router.replace('/');
         }
       })

@@ -1,13 +1,14 @@
 import { useAppSelector } from '@/store/hooks';
 import { NextPageWithLayout } from '../_app';
-import { selectLoginStatus } from '@/slice/user.slice';
+import { selectLoginStatus, selectUser } from '@/slice/user.slice';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const UserPage: NextPageWithLayout = () => {
   const router = useRouter();
 
-  const isLoggedIn = useAppSelector(selectLoginStatus);
+  const user = useAppSelector(selectUser);
+  const isLoggedIn = user.loggedIn;
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/user/login');

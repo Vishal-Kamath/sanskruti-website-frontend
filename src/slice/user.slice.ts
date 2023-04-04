@@ -1,9 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
+import axios from 'axios';
+import getUser from '@/utils/getUser.utils';
 
 export type AccessToken = {
   accessToken: string | undefined;
+};
+
+export type UserType = {
+  name?: string;
+  email?: string;
+  dob?: Date;
+  mobileNo?: number;
+  address?: string;
 };
 
 type LoggedIn = {
@@ -11,19 +21,37 @@ type LoggedIn = {
 };
 
 // Define the initial state using that type
-const initialState: AccessToken & LoggedIn = {
+const initialState: AccessToken & UserType & LoggedIn = {
   accessToken: undefined,
   loggedIn: false,
 };
+
+const fetchUser = createAsyncThunk(
+  'users/fetchByIdStatus',
+  async (accessToken: string, thunkAPI) => {
+    const response = await getUser({ accessToken });
+    return response;
+  }
+);
 
 export const user = createSlice({
   name: 'user',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    // accessToken
     setAccessToken: (state, action: PayloadAction<AccessToken>) => {
       state.accessToken = action.payload.accessToken;
     },
+    // user
+    setUser: (state, action: PayloadAction<UserType>) => {
+      state.email = action.payload.email;
+      state.name = action.payload.name;
+      state.dob = action.payload.dob;
+      state.mobileNo = action.payload.mobileNo;
+      state.address = action.payload.address;
+    },
+    // login status
     loggedIn: (state) => {
       state.loggedIn = true;
     },
@@ -31,12 +59,18 @@ export const user = createSlice({
       state.loggedIn = false;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      // Add user to the state array
+    });
+  },
 });
 
-export const { setAccessToken, loggedIn, loggedOut } = user.actions;
+export const { setAccessToken, setUser, loggedIn, loggedOut } = user.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectAccessToken = (state: RootState) => state.user.accessToken;
 export const selectLoginStatus = (state: RootState) => state.user.loggedIn;
+export const selectUser = (state: RootState) => state.user;
 
 export default user.reducer;
