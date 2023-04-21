@@ -24,5 +24,5 @@
 }
 
 .custom-scrollbar {
-  @apply scrollbar-thin scrollbar-track-red-100 scrollbar-thumb-sky-700 scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
+  @apply scrollbar-thin scrollbar-track-sky-100 scrollbar-thumb-sky-700 scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
 }

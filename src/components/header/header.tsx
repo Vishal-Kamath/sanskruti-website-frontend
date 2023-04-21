@@ -17,7 +17,7 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   return (
-    <div className="padding-x fixed top-0 z-30 flex w-full flex-col gap-2 border-b-2 border-black bg-gradient-to-r from-sky-700 to-white py-2">
+    <div className="padding-x fixed top-0 z-30 flex w-full flex-col gap-2 border-b-2 border-black bg-white py-2">
       <div className="flex items-center justify-between">
         <div className="md:hidden">
           {sideBarOpen ? (
