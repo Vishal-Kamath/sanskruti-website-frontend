@@ -7,12 +7,21 @@ import { HiOutlineUserCircle } from 'react-icons/hi';
 import { MdOutlineShoppingBag } from 'react-icons/md';
 import { RxCross2 } from 'react-icons/rx';
 import { BiMenuAltRight } from 'react-icons/bi';
+import { useRouter } from 'next/router';
 
 const Header: React.FC = () => {
+  const router = useRouter();
   const [search, setSearch] = useState('');
   const [sideBarOpen, setSideBarOpen] = useState(false); // temp sidebar logic
+  const isLoggedIn = false;
+
+  const userRedirect = () => {
+    if (!isLoggedIn) return;
+    router.push('/user');
+  };
+
   return (
-    <header className="flex flex-col shadow-md">
+    <header className="isolate z-40 flex flex-col shadow-md fixed top-0 w-full text-black">
       <TopBanner />
 
       <div className="px-[4vw] bg-white h-12 flex items-center justify-between">
@@ -30,11 +39,16 @@ const Header: React.FC = () => {
           )}
         </div>
 
-        <img
-          src="assets/logo.svg"
-          alt="Sanskruti Logo"
-          className="h-12 aspect-square max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2"
-        />
+        <Link
+          href="/"
+          className="max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2"
+        >
+          <img
+            src="assets/logo.svg"
+            alt="Sanskruti Logo"
+            className="h-12 aspect-square"
+          />
+        </Link>
 
         <div className="flex items-center gap-3">
           <SearchBar
@@ -42,9 +56,9 @@ const Header: React.FC = () => {
             search={search}
             setSearch={setSearch}
           />
-          <Link href="/user">
+          <div onClick={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
-          </Link>
+          </div>
           <Link href="/wishtlist">
             <div className="relative">
               <AiOutlineHeart className="h-6 w-6" />

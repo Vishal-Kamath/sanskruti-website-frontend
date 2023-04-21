@@ -1,8 +1,12 @@
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
+import Carousel from '@/components/carousel';
+import { NextPage } from 'next';
 
-const inter = Inter({ subsets: ['latin'] });
+const Home: NextPage = () => {
+  return (
+    <main className="max-md:pt-36 pt-24 px-[4vw]">
+      <Carousel />
+    </main>
+  );
+};
 
-export default function Home() {
-  return <main></main>;
-}
+export default Home;
