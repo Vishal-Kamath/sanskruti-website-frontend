@@ -4,14 +4,14 @@ import FooterDetailsCard from './footerDetailsCard';
 const FooterDetails: React.FC = () => {
   return (
     <div className="flex w-full flex-col gap-5 bg-gray-100 pb-10">
-      <div className="flex w-full justify-between max-md:flex-col md:px-[4vw]">
+      <div className="flex w-full justify-between max-md:flex-col md:px-[5vw]">
         <FooterDetailsCard
           title="DESIGNER WEAR"
           list={[
             {
               inWebsiteLink: true,
               title: 'Salwar Kameez',
-              link: '/category/Salwar_Kameez',
+              link: '/category/Salwar Kameez',
             },
             {
               inWebsiteLink: true,
@@ -36,12 +36,12 @@ const FooterDetails: React.FC = () => {
             {
               inWebsiteLink: true,
               title: 'Saree Blouse',
-              link: '/category/Saree_Blouse',
+              link: '/category/Saree Blouse',
             },
             {
               inWebsiteLink: true,
               title: 'Indowestern Styles',
-              link: '/category/Indowestern_Styles',
+              link: '/category/Indowestern Styles',
             },
             {
               inWebsiteLink: true,
@@ -82,7 +82,7 @@ const FooterDetails: React.FC = () => {
             {
               inWebsiteLink: true,
               title: 'Terms & Conditions',
-              link: '/terms_and_conditions',
+              link: '/terms and conditions',
             },
             {
               inWebsiteLink: true,
@@ -92,7 +92,7 @@ const FooterDetails: React.FC = () => {
             {
               inWebsiteLink: true,
               title: 'Return Policy',
-              link: '/return_policy',
+              link: '/return policy',
             },
             {
               inWebsiteLink: true,
@@ -125,7 +125,7 @@ const FooterDetails: React.FC = () => {
           />
         </div>
       </div>
-      <div className="flex justify-between gap-2 px-[4vw] max-md:flex-col">
+      <div className="flex justify-between gap-2 px-[5vw] max-md:flex-col">
         <span>Design and development by 🖤 Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>

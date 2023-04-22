@@ -24,19 +24,21 @@ const Header: React.FC = () => {
     <header className="fixed top-0 isolate z-40 flex w-full flex-col text-black shadow-md">
       <TopBanner />
 
-      <div className="flex h-12 items-center justify-between bg-white px-[4vw]">
+      <div className="flex h-12 items-center justify-between bg-white px-[5vw]">
         <div className="md:hidden">
-          {sideBarOpen ? (
-            <RxCross2
-              className="text-2xl"
-              onClick={() => setSideBarOpen(false)}
-            />
-          ) : (
-            <BiMenuAltLeft
-              className="text-2xl"
-              onClick={() => setSideBarOpen(true)}
-            />
-          )}
+          {router.pathname !== '/' ? (
+            sideBarOpen ? (
+              <RxCross2
+                className="text-2xl"
+                onClick={() => setSideBarOpen(false)}
+              />
+            ) : (
+              <BiMenuAltLeft
+                className="text-2xl"
+                onClick={() => setSideBarOpen(true)}
+              />
+            )
+          ) : null}
         </div>
 
         <Link
@@ -44,7 +46,7 @@ const Header: React.FC = () => {
           className="max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2"
         >
           <img
-            src="assets/logo.svg"
+            src="/assets/logo.svg"
             alt="Sanskruti Logo"
             className="aspect-square h-12"
           />
@@ -73,7 +75,7 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-white px-[4vw] pb-2 md:hidden">
+      <div className="bg-white px-[5vw] pb-2 md:hidden">
         <SearchBar
           classname="rounded-full"
           search={search}
