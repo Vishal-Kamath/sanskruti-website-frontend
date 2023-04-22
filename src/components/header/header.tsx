@@ -6,7 +6,7 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { MdOutlineShoppingBag } from 'react-icons/md';
 import { RxCross2 } from 'react-icons/rx';
-import { BiMenuAltRight } from 'react-icons/bi';
+import { BiMenuAltLeft } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 
 const Header: React.FC = () => {
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
               onClick={() => setSideBarOpen(false)}
             />
           ) : (
-            <BiMenuAltRight
+            <BiMenuAltLeft
               className="text-2xl"
               onClick={() => setSideBarOpen(true)}
             />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
-import { RxDotFilled } from 'react-icons/rx';
+import { RxDotFilled, RxDot } from 'react-icons/rx';
 
 const Carousel: React.FC = () => {
   const images = {
@@ -46,6 +46,11 @@ const Carousel: React.FC = () => {
     <div className="w-full">
       <div className="relative group">
         <img
+          key={
+            isMobile
+              ? images.mobile[currentIndex]
+              : images.desktop[currentIndex]
+          }
           src={
             isMobile
               ? images.mobile[currentIndex]
@@ -72,14 +77,21 @@ const Carousel: React.FC = () => {
       </div>
       {/* Page Dots */}
       <div className="flex justify-center py-2">
-        {images.desktop.map((slide, index) => (
-          <RxDotFilled
-            onClick={() => jumpToSlide(index)}
-            className={`${
-              currentIndex === index ? 'text-sky-500' : 'text-gray-300'
-            } text-2xl`}
-          />
-        ))}
+        {images.desktop.map((slide, index) => {
+          return currentIndex === index ? (
+            <RxDotFilled
+              key={slide}
+              onClick={() => jumpToSlide(index)}
+              className="text-3xl"
+            />
+          ) : (
+            <RxDot
+              key={slide}
+              onClick={() => jumpToSlide(index)}
+              className="text-3xl"
+            />
+          );
+        })}
       </div>
     </div>
   );

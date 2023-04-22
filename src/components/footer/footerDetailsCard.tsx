@@ -32,13 +32,24 @@ const FooterDetailsCard: React.FC<{
       >
         {list.map((listItem) => {
           return !listItem.link ? (
-            <span className="leading-none">{listItem.title}</span>
+            <span key={listItem.title} className="leading-none">
+              {listItem.title}
+            </span>
           ) : listItem.inWebsiteLink ? (
-            <Link href={listItem.link} className="leading-none">
+            <Link
+              href={listItem.link}
+              key={listItem.title}
+              className="leading-none"
+            >
               {listItem.title}
             </Link>
           ) : (
-            <a href={listItem.link} target="_blank" className="leading-none">
+            <a
+              href={listItem.link}
+              target="_blank"
+              key={listItem.title}
+              className="leading-none"
+            >
               {listItem.title}
             </a>
           );
