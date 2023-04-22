@@ -1,5 +1,4 @@
 import React from 'react';
-import VisitOurStore from './visitOurStore';
 import FooterDetails from './footerDetails';
 
 const Footer: React.FC = () => {
@@ -12,8 +11,6 @@ const Footer: React.FC = () => {
           className="w-full"
         />
       </a>
-
-      {/* <VisitOurStore /> */}
 
       <FooterDetails />
     </footer>

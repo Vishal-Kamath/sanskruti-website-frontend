@@ -1,5 +1,6 @@
 import React from 'react';
 import FooterDetailsCard from './footerDetailsCard';
+import VisitOurStore from './visitOurStore';
 
 const FooterDetails: React.FC = () => {
   return (
@@ -129,6 +130,8 @@ const FooterDetails: React.FC = () => {
         <span>Design and development by 🖤 Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>
+
+      <VisitOurStore />
     </div>
   );
 };
