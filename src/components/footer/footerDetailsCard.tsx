@@ -15,9 +15,9 @@ const FooterDetailsCard: React.FC<{
   const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col">
-      <h5 className="max-md:px-[4vw] py-2 text-ms font-bold flex items-center justify-between">
+      <h5 className="text-ms flex items-center justify-between py-2 font-bold max-md:px-[4vw]">
         <span>{title}</span>
-        <span className="md:hidden text-xl">
+        <span className="text-xl md:hidden">
           {open ? (
             <AiOutlineMinus onClick={() => setOpen(false)} />
           ) : (
@@ -26,7 +26,7 @@ const FooterDetailsCard: React.FC<{
         </span>
       </h5>
       <div
-        className={`max-md:px-[4vw] max-md:bg-gray-300 py-1 flex flex-col gap-1 ${
+        className={`flex flex-col gap-1 py-1 max-md:bg-gray-300 max-md:px-[4vw] ${
           !open && 'max-md:hidden'
         }`}
       >

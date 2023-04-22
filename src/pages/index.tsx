@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 
 const Home: NextPage = () => {
   return (
-    <main className="max-md:pt-36 pt-24 px-[4vw]">
+    <main className="px-[4vw] pt-24 max-md:pt-36">
       <Carousel />
     </main>
   );

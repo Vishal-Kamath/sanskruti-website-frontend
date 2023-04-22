@@ -44,7 +44,7 @@ const Carousel: React.FC = () => {
 
   return (
     <div className="w-full">
-      <div className="relative group">
+      <div className="group relative">
         <img
           key={
             isMobile
@@ -56,13 +56,13 @@ const Carousel: React.FC = () => {
               ? images.mobile[currentIndex]
               : images.desktop[currentIndex]
           }
-          className="w-full h-full rounded-sm bg-center bg-cover duration-500"
+          className="h-full w-full rounded-sm bg-cover bg-center duration-500"
         />
 
         {/* Left Arrow */}
         <div
           onClick={prevSlide}
-          className="hidden group-hover:block absolute top-1/2 -translate-y-1/2 left-5 text-2xl rounded-full p-2 bg-white opacity-75 hover:opacity-100 cursor-pointer"
+          className="absolute left-5 top-1/2 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 text-2xl opacity-75 hover:opacity-100 group-hover:block"
         >
           <BsChevronCompactLeft size={30} />
         </div>
@@ -70,7 +70,7 @@ const Carousel: React.FC = () => {
         {/* Right Arrow */}
         <div
           onClick={nextSlide}
-          className="hidden group-hover:block absolute top-1/2 -translate-y-1/2 right-5 text-2xl rounded-full p-2 bg-white opacity-75 hover:opacity-100 cursor-pointer"
+          className="absolute right-5 top-1/2 hidden -translate-y-1/2 cursor-pointer rounded-full bg-white p-2 text-2xl opacity-75 hover:opacity-100 group-hover:block"
         >
           <BsChevronCompactRight size={30} />
         </div>

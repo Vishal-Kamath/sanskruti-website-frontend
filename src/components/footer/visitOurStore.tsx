@@ -4,12 +4,12 @@ import { BiLinkExternal } from 'react-icons/bi';
 
 const VisitOurStore: React.FC = () => {
   return (
-    <div className="flex max-md:flex-col justify-between">
+    <div className="flex justify-between max-md:flex-col">
       <div className="relative">
         <img src="assets/storeImage.png" alt="Sanskruti Store" />
         <a
           href="https://goo.gl/maps/LaGnDHJ6WhTNJDsGA"
-          className="bg-white absolute flex gap-1 items-center rounded-md p-1 bottom-2 right-2"
+          className="absolute bottom-2 right-2 flex items-center gap-1 rounded-md bg-white p-1"
           target="_blank"
         >
           View Details

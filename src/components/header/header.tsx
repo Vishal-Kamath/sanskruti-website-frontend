@@ -21,10 +21,10 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="isolate z-40 flex flex-col shadow-md fixed top-0 w-full text-black">
+    <header className="fixed top-0 isolate z-40 flex w-full flex-col text-black shadow-md">
       <TopBanner />
 
-      <div className="px-[4vw] bg-white h-12 flex items-center justify-between">
+      <div className="flex h-12 items-center justify-between bg-white px-[4vw]">
         <div className="md:hidden">
           {sideBarOpen ? (
             <RxCross2
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
           <img
             src="assets/logo.svg"
             alt="Sanskruti Logo"
-            className="h-12 aspect-square"
+            className="aspect-square h-12"
           />
         </Link>
 
@@ -73,7 +73,7 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      <div className="md:hidden px-[4vw] pb-2 bg-white">
+      <div className="bg-white px-[4vw] pb-2 md:hidden">
         <SearchBar
           classname="rounded-full"
           search={search}

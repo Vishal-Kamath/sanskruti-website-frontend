@@ -3,8 +3,8 @@ import FooterDetailsCard from './footerDetailsCard';
 
 const FooterDetails: React.FC = () => {
   return (
-    <div className="w-full flex flex-col gap-5 pb-10 bg-gray-100">
-      <div className="w-full md:px-[4vw] justify-between flex max-md:flex-col">
+    <div className="flex w-full flex-col gap-5 bg-gray-100 pb-10">
+      <div className="flex w-full justify-between max-md:flex-col md:px-[4vw]">
         <FooterDetailsCard
           title="DESIGNER WEAR"
           list={[
@@ -125,7 +125,7 @@ const FooterDetails: React.FC = () => {
           />
         </div>
       </div>
-      <div className="px-[4vw] flex max-md:flex-col justify-between gap-2">
+      <div className="flex justify-between gap-2 px-[4vw] max-md:flex-col">
         <span>Design and development by 🖤 Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>
