@@ -16,7 +16,7 @@ const VisitOurStore: React.FC = () => {
         </div>
         <div className="relative">
           <img
-            src="assets/storeImage.png"
+            src="/assets/storeImage.png"
             className="h-[15rem]"
             alt="Sanskruti Store"
           />
