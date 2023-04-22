@@ -1,0 +1,136 @@
+import React from 'react';
+import FooterDetailsCard from './footerDetailsCard';
+
+const FooterDetails: React.FC = () => {
+  return (
+    <div className="w-full flex flex-col gap-5 pb-10 bg-gray-100">
+      <div className="w-full md:px-[4vw] justify-between flex max-md:flex-col">
+        <FooterDetailsCard
+          title="DESIGNER WEAR"
+          list={[
+            {
+              inWebsiteLink: true,
+              title: 'Salwar Kameez',
+              link: '/category/Salwar_Kameez',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Sarees',
+              link: '/category/Sarees',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Lehengas',
+              link: '/category/Lehengas',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Gowns',
+              link: '/category/Gowns',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Kidswear',
+              link: '/category/Kidswear',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Saree Blouse',
+              link: '/category/Saree_Blouse',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Indowestern Styles',
+              link: '/category/Indowestern_Styles',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Accessories',
+              link: '/category/Accessories',
+            },
+          ]}
+        />
+        <FooterDetailsCard
+          title="ABOUT US"
+          list={[
+            {
+              inWebsiteLink: true,
+              title: 'About Us',
+              link: '/about',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Contact Us',
+              link: '/contactUs',
+            },
+            {
+              inWebsiteLink: false,
+              title: 'Blog',
+              link: '#',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'testimonial',
+              link: '/testimonial',
+            },
+          ]}
+        />
+
+        <FooterDetailsCard
+          title="POLICIES"
+          list={[
+            {
+              inWebsiteLink: true,
+              title: 'Terms & Conditions',
+              link: '/terms_and_conditions',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Shipping',
+              link: '/shipping',
+            },
+            {
+              inWebsiteLink: true,
+              title: 'Return Policy',
+              link: '/return_policy',
+            },
+            {
+              inWebsiteLink: true,
+              title: "FAQ's",
+              link: '/faqs',
+            },
+          ]}
+        />
+        <div className="flex flex-col gap-2">
+          <FooterDetailsCard
+            title="GET IN TOUCH"
+            list={[
+              {
+                title: '+91-1234567890',
+              },
+              {
+                title: '+91-0987654321',
+              },
+            ]}
+          />
+          <FooterDetailsCard
+            title="EMAIL US ON"
+            list={[
+              {
+                inWebsiteLink: false,
+                title: 'info@sanskruti.com',
+                link: 'mailto:info@sanskruti.com',
+              },
+            ]}
+          />
+        </div>
+      </div>
+      <div className="px-[4vw] flex max-md:flex-col justify-between gap-2">
+        <span>Design and development by 🖤 Growtecs</span>
+        <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
+      </div>
+    </div>
+  );
+};
+
+export default FooterDetails;
