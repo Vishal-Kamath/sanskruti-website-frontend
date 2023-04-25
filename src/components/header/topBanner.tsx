@@ -13,10 +13,13 @@ const TopBanner: React.FC = () => {
         <img src="/assets/truck.svg" alt="Shipping truck" />
         <span>Free Shipping in India</span>
       </div>
-      <div className="flex items-center gap-2 text-sm max-lg:hidden">
+      <a
+        href="#visitOurStore"
+        className="flex items-center gap-2 text-sm max-lg:hidden"
+      >
         <MdLocationOn className="text-lg" />
         <span>Visit Our Store</span>
-      </div>
+      </a>
     </div>
   );
 };

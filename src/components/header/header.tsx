@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TopBanner from './topBanner';
 import SearchBar from './searchBar';
 import Link from 'next/link';
@@ -8,15 +8,25 @@ import { MdOutlineShoppingBag } from 'react-icons/md';
 import { RxCross2 } from 'react-icons/rx';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { useRouter } from 'next/router';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import {
+  closeSidebar,
+  openSidebar,
+  selectSidebarOpen,
+} from '@/slice/sidebar.slice';
+import { selectUser } from '@/slice/user.slice';
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [search, setSearch] = useState('');
-  const [sideBarOpen, setSideBarOpen] = useState(false); // temp sidebar logic
-  const isLoggedIn = false;
+
+  const sideBarOpen = useAppSelector(selectSidebarOpen);
+  const user = useAppSelector(selectUser);
+  const isLoggedIn = user.loggedIn;
 
   const userRedirect = () => {
-    if (!isLoggedIn) return;
+    if (!isLoggedIn) return router.push('/user/login');
     router.push('/user');
   };
 
@@ -25,32 +35,31 @@ const Header: React.FC = () => {
       <TopBanner />
 
       <div className="flex h-12 items-center justify-between bg-white px-[5vw]">
-        <div className="md:hidden">
-          {router.pathname !== '/' ? (
-            sideBarOpen ? (
-              <RxCross2
-                className="text-2xl"
-                onClick={() => setSideBarOpen(false)}
-              />
-            ) : (
-              <BiMenuAltLeft
-                className="text-2xl"
-                onClick={() => setSideBarOpen(true)}
-              />
-            )
-          ) : null}
-        </div>
+        <div className="flex items-center gap-2">
+          <div className="sm:hidden">
+            {router.pathname !== '/' ? (
+              sideBarOpen ? (
+                <RxCross2
+                  className="text-2xl"
+                  onClick={() => dispatch(closeSidebar())}
+                />
+              ) : (
+                <BiMenuAltLeft
+                  className="text-2xl"
+                  onClick={() => dispatch(openSidebar())}
+                />
+              )
+            ) : null}
+          </div>
 
-        <Link
-          href="/"
-          className="max-md:absolute max-md:left-1/2 max-md:-translate-x-1/2"
-        >
-          <img
-            src="/assets/logo.svg"
-            alt="Sanskruti Logo"
-            className="aspect-square h-12"
-          />
-        </Link>
+          <Link href="/">
+            <img
+              src="/assets/logo.svg"
+              alt="Sanskruti Logo"
+              className="aspect-square h-12"
+            />
+          </Link>
+        </div>
 
         <div className="flex items-center gap-3">
           <SearchBar
