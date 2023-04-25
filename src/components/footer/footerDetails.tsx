@@ -78,7 +78,7 @@ const FooterDetails: React.FC = () => {
             {
               inWebsiteLink: true,
               title: 'Terms & Conditions',
-              link: '/terms and conditions',
+              link: '/terms&Conditions',
             },
             {
               inWebsiteLink: true,
