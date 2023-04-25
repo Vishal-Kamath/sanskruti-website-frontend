@@ -16,38 +16,33 @@ const FooterDetails: React.FC = () => {
             },
             {
               inWebsiteLink: true,
-              title: 'Sarees',
-              link: '/category/Sarees',
+              title: "Lehenga's",
+              link: "/category/Lehenga's",
             },
             {
               inWebsiteLink: true,
-              title: 'Lehengas',
-              link: '/category/Lehengas',
+              title: 'Indo Western',
+              link: '/category/Indo Western',
             },
             {
               inWebsiteLink: true,
-              title: 'Gowns',
-              link: '/category/Gowns',
+              title: 'Bridal',
+              link: '/category/Bridal',
             },
             {
               inWebsiteLink: true,
-              title: 'Kidswear',
-              link: '/category/Kidswear',
+              title: "Kurti's",
+              link: "/category/Kurti's",
             },
             {
               inWebsiteLink: true,
-              title: 'Saree Blouse',
-              link: '/category/Saree Blouse',
+              title: 'Western Wear',
+              link: '/category/Western Wear',
             },
             {
               inWebsiteLink: true,
-              title: 'Indowestern Styles',
-              link: '/category/Indowestern Styles',
-            },
-            {
-              inWebsiteLink: true,
-              title: 'Accessories',
-              link: '/category/Accessories',
+              title: "Dress Material's",
+              link: "/category/Dress Material's",
             },
           ]}
         />

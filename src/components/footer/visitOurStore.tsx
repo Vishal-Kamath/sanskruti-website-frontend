@@ -3,7 +3,10 @@ import { BiLinkExternal } from 'react-icons/bi';
 
 const VisitOurStore: React.FC = () => {
   return (
-    <div className="flex flex-col gap-4 border-b-2 border-t-2 border-gray-500 px-[5vw] py-5">
+    <div
+      id="visitOurStore"
+      className="flex flex-col gap-4 border-b-2 border-t-2 border-gray-500 px-[5vw] py-5"
+    >
       <div className="font-bold">VISIT OUR STORE</div>
       <div className="flex justify-between gap-2 max-md:flex-col-reverse">
         <div className="flex flex-col">

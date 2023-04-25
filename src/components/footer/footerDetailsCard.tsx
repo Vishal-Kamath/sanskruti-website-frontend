@@ -26,7 +26,7 @@ const FooterDetailsCard: React.FC<{
         </span>
       </h5>
       <div
-        className={`flex flex-col gap-1 py-1 max-md:bg-gray-300 max-md:px-[5vw] ${
+        className={`flex flex-col gap-1 py-1 max-md:bg-gray-200 max-md:px-[5vw] ${
           !open && 'max-md:hidden'
         }`}
       >
