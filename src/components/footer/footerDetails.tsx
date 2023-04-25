@@ -52,7 +52,7 @@ const FooterDetails: React.FC = () => {
             {
               inWebsiteLink: true,
               title: 'About Us',
-              link: '/about',
+              link: '/aboutus',
             },
             {
               inWebsiteLink: true,
