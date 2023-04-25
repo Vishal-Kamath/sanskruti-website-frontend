@@ -1,9 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import notificationReducer from '@/slice/notification.slice';
+import sidebarReducer from '@/slice/sidebar.slice';
+import filterReducer from '@/slice/filter.slice';
+import userReducer from '@/slice/user.slice';
 
 export const store = configureStore({
   reducer: {
     notification: notificationReducer,
+    sidebar: sidebarReducer,
+    filter: filterReducer,
+    user: userReducer,
   },
 });
 

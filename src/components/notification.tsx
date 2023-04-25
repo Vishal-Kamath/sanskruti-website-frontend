@@ -20,7 +20,10 @@ const Notification: React.FC<NotificationType> = ({ message, type }) => {
           (type === 'info' || type === undefined) &&
           'border-gray-500 bg-gray-200 text-gray-800'
         }
-        ${type === 'warning' && 'border-yellow-500 bg-red-200 text-yellow-500'}
+        ${
+          type === 'warning' &&
+          'border-yellow-500 bg-yellow-100 text-yellow-500'
+        }
         ${type === 'error' && 'border-red-500 bg-red-200 text-red-500'}
       `}
     >
