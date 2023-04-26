@@ -1,3 +1,4 @@
+import ProductCard from '@/components/productCard/productCard';
 import FilterBar from '@/components/sidebars/filterBar/filterBar';
 import { setFilter } from '@/slice/filter.slice';
 import { useAppDispatch } from '@/store/hooks';
@@ -21,7 +22,7 @@ const CategoryPage: NextPage<{ categoryName: string }> = ({ categoryName }) => {
 
         <div className="flex">
           <FilterBar />
-          <div className="flex w-full flex-col gap-3 pr-[5vw] pt-5 text-justify sm:pl-4">
+          <div className="flex w-full flex-col gap-3 px-[5vw] pb-10 pt-5 text-justify sm:pl-4">
             {/* Descriptiom */}
             <div>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
@@ -51,6 +52,14 @@ const CategoryPage: NextPage<{ categoryName: string }> = ({ categoryName }) => {
               <span className="absolute left-0 grid h-9 w-16 place-content-center">
                 Sort by:
               </span>
+            </div>
+
+            <div className="xl: grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
+              {Array(12)
+                .fill(null)
+                .map((value, index) => (
+                  <ProductCard key={index} />
+                ))}
             </div>
           </div>
         </div>
