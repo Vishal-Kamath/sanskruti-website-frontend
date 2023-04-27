@@ -2,7 +2,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 import Link from 'next/link';
 import { ReactElement, useState } from 'react';
 import { NextPageWithLayout } from '../_app';
-import SignLayout from '@/components/signLayout';
+import SignLayout from '@/components/auth/authContainer';
 import { Input } from '@/components/input';
 import Head from 'next/head';
 import { useAppDispatch } from '@/store/hooks';

@@ -1,21 +1,31 @@
-import { selectSearchInput, setSearchInput } from '@/slice/search.slice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { FaSearch } from 'react-icons/fa';
-import React from 'react';
+import React, { useState } from 'react';
+import { AiOutlineSearch } from 'react-icons/ai';
 
-const SearchBar: React.FC<{ classname: string }> = ({ classname }) => {
-  const searchInput = useAppSelector(selectSearchInput);
-  const dispatch = useAppDispatch();
+const SearchBar: React.FC<{
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  classname?: string;
+}> = ({ search, setSearch, classname }) => {
+  const [searchFocused, setSearchFocused] = useState(false);
   return (
     <div
-      className={`${classname} flex h-9 w-full items-center gap-2 rounded-lg border-2 border-black bg-white px-3`}
+      className={`${classname} text-md flex h-9 w-full max-w-2xl items-center gap-1 border-2 px-2 ${
+        searchFocused ? 'border-gray-600' : 'border-gray-200'
+      } bg-gray-100`}
     >
-      <FaSearch className="text-sky-700" />
+      <AiOutlineSearch
+        className={`aspect-sqaure text-xl ${
+          searchFocused ? 'text-gray-600' : 'text-gray-400'
+        }`}
+      />
       <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
         type="text"
-        value={searchInput}
-        className="h-full w-full outline-none"
-        onChange={(e) => dispatch(setSearchInput(e.target.value))}
+        className="w-full border-none bg-transparent outline-none"
+        onFocus={() => setSearchFocused(true)}
+        onBlur={() => setSearchFocused(false)}
+        placeholder="Search for Products, Styles..."
       />
     </div>
   );

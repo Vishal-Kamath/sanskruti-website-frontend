@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/store';
-import { Tags } from '@/model/item.model';
 
 export type NotificationType = {
   message: string | undefined;
-  type: 'success' | 'warning' | 'info' | undefined;
+  type: 'success' | 'info' | 'warning' | 'error' | undefined;
 };
 
 type Notify = {

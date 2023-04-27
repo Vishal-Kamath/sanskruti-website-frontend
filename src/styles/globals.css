@@ -2,27 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.padding-x {
-  padding-left: max(4vw, calc(50vw - 50rem));
-  padding-right: max(4vw, calc(50vw - 50rem));
-}
-
-.padding-l {
-  padding-left: max(4vw, calc(50vw - 50rem));
-}
-
-.padding-r {
-  padding-right: max(4vw, calc(50vw - 50rem));
-}
-
-.content-w {
-  width: calc(50vw + 13rem);
-}
-
-.sidebar-w {
-  width: calc(50vw - 13rem);
-}
-
-.custom-scrollbar {
-  @apply scrollbar-thin scrollbar-track-sky-100 scrollbar-thumb-sky-700 scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
+.custom_scrollbar {
+  @apply scrollbar-thin scrollbar-track-slate-100 scrollbar-thumb-black scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
 }

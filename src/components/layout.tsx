@@ -1,9 +1,10 @@
-import React from 'react';
 import Head from 'next/head';
+import React from 'react';
 import Header from './header/header';
+import Notification from './notification';
 import { useAppSelector } from '@/store/hooks';
 import { selectNotification } from '@/slice/notification.slice';
-import Notification from './notification';
+import Footer from './footer/footer';
 
 const Layout: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const notification = useAppSelector(selectNotification);
@@ -18,7 +19,7 @@ const Layout: React.FC<{ children: React.ReactElement }> = ({ children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="relative min-h-screen bg-white text-black">
+      <main className="relative flex min-h-screen flex-col bg-white text-black">
         {notification.notify && (
           <Notification
             message={notification.message}
@@ -26,8 +27,9 @@ const Layout: React.FC<{ children: React.ReactElement }> = ({ children }) => {
           />
         )}
         <Header />
-        <main>{children}</main>
-      </div>
+        {children}
+        <Footer />
+      </main>
     </>
   );
 };

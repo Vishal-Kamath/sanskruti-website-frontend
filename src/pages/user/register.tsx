@@ -4,7 +4,7 @@ import { BsCalendar3 } from 'react-icons/bs';
 import Link from 'next/link';
 import { ReactElement, useState } from 'react';
 import { NextPageWithLayout } from '../_app';
-import SignLayout from '@/components/signLayout';
+import SignLayout from '@/components/auth/authContainer';
 import { Input, TextArea } from '@/components/input';
 import Head from 'next/head';
 import { useAppDispatch } from '@/store/hooks';

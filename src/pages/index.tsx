@@ -1,10 +1,16 @@
-import SideBar from '@/components/sidebar/sidebar';
+import Carousel from '@/components/carousel';
+import CategoryBar from '@/components/sidebars/categoryBar/categoryBar';
+import CategorySidebar from '@/components/sidebars/categorySideBar/categorySidebar';
+import { NextPage } from 'next';
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
-    <main className="relative flex min-h-screen">
-      <SideBar />
-      <div className="padding-r h-full min-h-screen w-full pt-20 max-md:pl-[4vw] md:pl-5"></div>
+    <main className="flex flex-col gap-5 px-[5vw] pb-10 pt-24 max-md:pt-36">
+      <CategorySidebar />
+      <Carousel />
+      <CategoryBar />
     </main>
   );
-}
+};
+
+export default Home;
