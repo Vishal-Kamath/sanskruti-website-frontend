@@ -95,9 +95,9 @@ const FilterList: React.FC = () => {
 
   return (
     <div className="flex flex-col">
-      <FilterItem main={main.main} sub={main.sub} />
-      <FilterItem {...Size} />
-      <FilterItem {...Color} />
+      <FilterItem main={main.main} sub={main.sub} classname="pl-[5vw]" />
+      <FilterItem {...Size} classname="pl-[5vw]" />
+      <FilterItem {...Color} classname="pl-[5vw]" />
     </div>
   );
 };

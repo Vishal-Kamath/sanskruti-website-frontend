@@ -6,8 +6,9 @@ import { RxCross2 } from 'react-icons/rx';
 const FilterItem: React.FC<{
   main: string;
   sub: { title: string }[];
-}> = ({ main, sub }) => {
-  const [open, setOpen] = useState(false);
+  classname?: string;
+}> = ({ main, sub, classname }) => {
+  const [open, setOpen] = useState(true);
   const [selected, setSelected] = useState('');
   const router = useRouter();
 
@@ -45,7 +46,7 @@ const FilterItem: React.FC<{
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-1 py-2 pl-[5vw] pr-4 font-bold">
+      <div className={`flex flex-col gap-1 py-2 ${classname} pr-4 font-bold`}>
         <h5 className="flex items-center justify-between">
           <span>{main}</span>
           <span className="text-xl">
@@ -66,7 +67,7 @@ const FilterItem: React.FC<{
         </h5>
       </div>
       <div
-        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-x-hidden overflow-y-scroll bg-gray-100 py-1 pl-[5vw] pr-4 ${
+        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-x-hidden overflow-y-scroll bg-gray-50 py-1 ${classname} pr-4 ${
           !open && 'hidden'
         }`}
       >
