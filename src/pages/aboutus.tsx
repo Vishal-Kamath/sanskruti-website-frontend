@@ -3,9 +3,9 @@ import { NextPage } from 'next';
 const AboutUsPage: NextPage = () => {
   return (
     <div className="flex flex-col gap-5 px-[5vw] pb-10 pt-24 max-md:pt-36">
-      <div className="grid h-[10rem] w-full place-content-center bg-emerald-200">
-        <span className="font-poppins text-2xl font-semibold">ABOUT US</span>
-      </div>
+      <h1 className="flex items-baseline gap-4 border-b-2 border-gray-300 pb-5">
+        <span className="text-xl font-bold">ABOUT US</span>
+      </h1>
       <div className="text-md">
         <div className="font-semibold">Sanskruti nx</div>
         Welcome to Sanskruti.This document is an electronic record in terms of
