@@ -37,19 +37,17 @@ const Header: React.FC = () => {
       <div className="flex h-12 items-center justify-between bg-white px-[5vw]">
         <div className="flex items-center gap-2">
           <div className="sm:hidden">
-            {router.pathname !== '/' ? (
-              sideBarOpen ? (
-                <RxCross2
-                  className="text-2xl"
-                  onClick={() => dispatch(closeSidebar())}
-                />
-              ) : (
-                <BiMenuAltLeft
-                  className="text-2xl"
-                  onClick={() => dispatch(openSidebar())}
-                />
-              )
-            ) : null}
+            {sideBarOpen ? (
+              <RxCross2
+                className="text-2xl"
+                onClick={() => dispatch(closeSidebar())}
+              />
+            ) : (
+              <BiMenuAltLeft
+                className="text-2xl"
+                onClick={() => dispatch(openSidebar())}
+              />
+            )}
           </div>
 
           <Link href="/">
@@ -70,11 +68,11 @@ const Header: React.FC = () => {
           <div onClick={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
           </div>
-          <Link href="/wishtlist">
+          <Link href="/wishlist">
             <div className="relative">
               <AiOutlineHeart className="h-6 w-6" />
               <div className="absolute right-0 top-0 grid h-5 w-5 -translate-y-2 translate-x-1/2 place-content-center rounded-full bg-gray-300">
-                0
+                7
               </div>
             </div>
           </Link>

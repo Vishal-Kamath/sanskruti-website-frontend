@@ -9,7 +9,7 @@ const SearchBar: React.FC<{
   const [searchFocused, setSearchFocused] = useState(false);
   return (
     <div
-      className={`${classname} text-md flex h-9 w-full max-w-xl items-center gap-1 border-2 px-2 ${
+      className={`${classname} text-md flex h-9 w-full max-w-2xl items-center gap-1 border-2 px-2 ${
         searchFocused ? 'border-gray-600' : 'border-gray-200'
       } bg-gray-100`}
     >

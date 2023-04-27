@@ -8,6 +8,11 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/product',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };
