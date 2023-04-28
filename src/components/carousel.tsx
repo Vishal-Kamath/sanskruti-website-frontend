@@ -43,7 +43,7 @@ const Carousel: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full px-[5vw]">
       <div className="group relative">
         <img
           key={

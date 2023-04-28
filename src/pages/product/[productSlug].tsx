@@ -2,6 +2,7 @@ import ProductDetails from '@/components/product/productDetails';
 import ProductImageFullScreen from '@/components/product/productImageFullScreen';
 import ProductImageDisplay from '@/components/product/productImagesDisplay';
 import ProductCard from '@/components/productCard/productCard';
+import CategoryBar from '@/components/sidebars/categoryBar/categoryBar';
 import { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import { useState } from 'react';
@@ -62,6 +63,7 @@ const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
               ))}
           </div>
         </div>
+        <CategoryBar />
       </div>
     </>
   );
