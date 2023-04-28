@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .custom_scrollbar {
-  @apply scrollbar-thin scrollbar-track-slate-100 scrollbar-thumb-black scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
+  @apply scrollbar-thin scrollbar-track-slate-100 scrollbar-thumb-gray-400 scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
 }

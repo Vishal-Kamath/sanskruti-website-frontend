@@ -6,10 +6,14 @@ const ProductCard: React.FC = () => {
   const [liked, setLiked] = useState(false);
   const slug = 'product-slug';
   return (
-    <div className="relative max-w-[20rem] flex-shrink-0 rounded-md border-2 border-white p-2 hover:border-gray-300">
+    <div className="h- relative aspect-[3/4] max-w-[24.5rem] flex-shrink-0 rounded-lg border-2 border-gray-100 p-2 hover:border-gray-300 hover:shadow-md">
       <Link href={`/product/${slug}`} className="">
-        <div className="h-[25rem] w-full rounded-md bg-gray-200">
-          <img src="/temp/Western Wear.png" className="h-full w-full" alt="" />
+        <div className="h-full w-full rounded-md bg-gray-100">
+          <img
+            src="/temp/Western Wear.png"
+            className="h-full w-full object-contain"
+            alt=""
+          />
         </div>
         <div>
           <div>
