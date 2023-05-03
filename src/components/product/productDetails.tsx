@@ -33,7 +33,7 @@ const ProductDetails: React.FC = () => {
         />
       </div>
 
-      <div className="flex gap-3 max-sm:flex-col">
+      <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[5vw] max-md:py-2 max-md:shadow-top">
         <button className="text-md grid w-full place-content-center rounded-md border-2 border-black bg-white py-3 font-semibold text-black hover:outline hover:outline-4 hover:outline-gray-300">
           ADD TO CART
         </button>
