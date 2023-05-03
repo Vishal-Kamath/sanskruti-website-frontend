@@ -19,7 +19,7 @@ const Layout: React.FC<{ children: React.ReactElement }> = ({ children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="relative flex min-h-screen flex-col bg-white text-black">
+      <main className="relative flex min-h-screen select-none flex-col bg-white text-black">
         {notification.notify && (
           <Notification
             message={notification.message}
