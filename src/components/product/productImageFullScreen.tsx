@@ -1,6 +1,6 @@
 import React from 'react';
 import { RxCross1 } from 'react-icons/rx';
-import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
+import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
 
 const ProductImageFullScreen: React.FC<{
   imageSrc: string;
@@ -17,9 +17,9 @@ const ProductImageFullScreen: React.FC<{
         onClick={prevSlide}
         className="absolute left-0 top-0 h-full w-1/3 cursor-pointer bg-transparent"
       >
-        <BsChevronCompactLeft
+        <FaAngleLeft
           size={50}
-          className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 opacity-50 group-hover:opacity-100"
+          className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-100 p-1 opacity-50 group-hover:opacity-75"
         />
       </div>
 
@@ -28,9 +28,9 @@ const ProductImageFullScreen: React.FC<{
         onClick={nextSlide}
         className="absolute right-0 top-0 h-full w-1/3 cursor-pointer bg-transparent"
       >
-        <BsChevronCompactRight
+        <FaAngleRight
           size={50}
-          className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 opacity-50 group-hover:opacity-100"
+          className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-100 p-1 opacity-50 group-hover:opacity-75"
         />
       </div>
       <button
