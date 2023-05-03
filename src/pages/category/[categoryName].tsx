@@ -58,7 +58,7 @@ const CategoryPage: NextPage<{ categoryName: string }> = ({ categoryName }) => {
               {Array(12)
                 .fill(null)
                 .map((value, index) => (
-                  <ProductCard key={index} />
+                  <ProductCard key={index} takeFull />
                 ))}
             </div>
           </div>
