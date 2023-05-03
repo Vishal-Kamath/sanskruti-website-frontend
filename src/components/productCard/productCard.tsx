@@ -2,11 +2,17 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
-const ProductCard: React.FC = () => {
+const ProductCard: React.FC<{
+  takeFull?: boolean;
+}> = ({ takeFull }) => {
   const [liked, setLiked] = useState(false);
   const slug = 'product-slug';
   return (
-    <div className="h- relative aspect-[3/4] max-w-[24.5rem] flex-shrink-0 rounded-lg border-2 border-gray-100 p-2 hover:border-gray-300 hover:shadow-md">
+    <div
+      className={`relative aspect-[3/4] ${
+        !takeFull && 'max-w-[24.5rem]'
+      } flex-shrink-0 rounded-lg border-2 border-gray-100 p-2 hover:border-gray-300 hover:shadow-md`}
+    >
       <Link href={`/product/${slug}`} className="">
         <div className="h-full w-full rounded-md bg-gray-100">
           <img
