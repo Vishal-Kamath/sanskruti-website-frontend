@@ -22,7 +22,7 @@ const ProductImageDisplay: React.FC<{
         <img
           src={images[currentImageIndex]}
           alt="product image"
-          className="cursor-zoom-in rounded-md object-cover"
+          className="cursor-zoom-in rounded-md border-2 border-black object-cover"
           onClick={() => setFullscreenImageOpen(true)}
         />
         {/* Left Arrow */}
@@ -53,8 +53,8 @@ const ProductImageDisplay: React.FC<{
             src={imageSrc}
             alt=""
             key={index}
-            className={`aspect-auto h-auto w-20 rounded-md border-2 ${
-              index === currentImageIndex ? 'border-black' : 'border-gray-300'
+            className={`aspect-auto h-auto w-20 rounded-md border-2 hover:outline hover:outline-4 hover:outline-gray-300 ${
+              index === currentImageIndex ? 'border-black' : 'border-gray-600'
             }`}
             onClick={() => setCurrentImageIndex(index)}
           />

@@ -1,6 +1,6 @@
 import React from 'react';
-import FilterItem from '../sidebars/filterBar/filterItem';
 import DropdownComponent from '../utils/dropdown';
+import VariantTags from './varientTags';
 
 const ProductDetails: React.FC = () => {
   return (
@@ -12,24 +12,22 @@ const ProductDetails: React.FC = () => {
         <h3 className="text-md font-semibold text-gray-600">SKU SG136346</h3>
       </div>
 
-      <div className="flex flex-col gap-1 border-b-2 border-gray-300 pb-5">
+      <div className="flex flex-col gap-1">
         <div className="flex items-baseline gap-2 font-semibold">
-          <span className="text-xl  font-semibold">Rs. 5,450</span>
+          <span className="text-xl font-semibold">Rs. 5,450</span>
           <s className="text-sm text-gray-400">6,850</s>
         </div>
         <span className="text-xs">inclusive of all taxes</span>
       </div>
 
       <div className="flex flex-col">
-        <FilterItem
+        <VariantTags
           main="Size"
           sub={[{ title: 'S' }, { title: 'M' }, { title: 'L' }]}
-          classname="pl-2"
         />
-        <FilterItem
+        <VariantTags
           main="Color"
           sub={[{ title: 'Red' }, { title: 'Green' }, { title: 'Blue' }]}
-          classname="pl-2"
         />
       </div>
 
