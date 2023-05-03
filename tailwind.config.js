@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
+        ysabeau: ['Ysabeau', 'sans-serif'],
       },
       boxShadow: {
         top: '0 -5px 10px rgba(0, 0, 0, 0.05)',
