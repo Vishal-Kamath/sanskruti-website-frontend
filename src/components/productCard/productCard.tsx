@@ -11,17 +11,17 @@ const ProductCard: React.FC<{
     <div
       className={`relative aspect-[3/4] ${
         !takeFull && 'max-w-[24.5rem]'
-      } flex-shrink-0 rounded-lg border-2 border-gray-100 p-2 hover:border-gray-300 hover:shadow-md`}
+      } flex-shrink-0 border-2 border-white hover:border-gray-700 hover:shadow-md`}
     >
       <Link href={`/product/${slug}`} className="">
         <div className="h-full w-full rounded-md bg-gray-100">
           <img
             src="/temp/Western Wear.png"
-            className="h-full w-full object-contain"
+            className="h-full w-full object-cover"
             alt=""
           />
         </div>
-        <div>
+        <div className="px-2">
           <div>
             Mint Green Printed Palazzo Suit In Chanderi With Embroidery Mint
             Green Printed
