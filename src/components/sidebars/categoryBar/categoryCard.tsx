@@ -13,17 +13,17 @@ const CategoryCard: React.FC<{
   return (
     <div className="group flex flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-300 bg-white max-sm:flex-col">
       <div
-        onClick={() => setOpen(!open)}
+        style={{
+          backgroundImage: `url("${image}")`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+        }}
         className={`relative ${
           open ? 'h-[25rem]' : 'h-[10rem]'
         } aspect-square w-full overflow-hidden transition-all duration-300 ease-in-out sm:h-[20rem]`}
       >
-        <img
-          src={image}
-          alt={title}
-          className="h-full w-full object-cover object-top sm:aspect-auto"
-        />
         <div
+          onClick={() => setOpen(!open)}
           className={`absolute ${
             open ? 'top-0 h-full' : 'bottom-0 h-16'
           } flex w-full flex-col bg-white bg-opacity-40 py-2 font-semibold backdrop-blur-2xl`}
