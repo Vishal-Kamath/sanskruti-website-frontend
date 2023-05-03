@@ -28,58 +28,58 @@ const RegisterPage: NextPageWithLayout = () => {
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
 
-  const _submit = async () => {
-    // check if input fields are empty
-    if (
-      !name?.trim() ||
-      !email?.trim() ||
-      !mobileNumber ||
-      !dateOfBirth?.trim() ||
-      !address?.trim() ||
-      !password?.trim() ||
-      !confirmPassword?.trim()
-    ) {
-      dispatch(
-        setNotification({ message: 'fill all details', type: 'warning' })
-      );
-      return dispatch(showNotification());
-    }
+  // const _submit = async () => {
+  //   // check if input fields are empty
+  //   if (
+  //     !name?.trim() ||
+  //     !email?.trim() ||
+  //     !mobileNumber ||
+  //     !dateOfBirth?.trim() ||
+  //     !address?.trim() ||
+  //     !password?.trim() ||
+  //     !confirmPassword?.trim()
+  //   ) {
+  //     dispatch(
+  //       setNotification({ message: 'fill all details', type: 'warning' })
+  //     );
+  //     return dispatch(showNotification());
+  //   }
 
-    if (password !== confirmPassword) {
-      dispatch(
-        setNotification({ message: "passwords don't match", type: 'warning' })
-      );
-      return dispatch(showNotification());
-    }
+  //   if (password !== confirmPassword) {
+  //     dispatch(
+  //       setNotification({ message: "passwords don't match", type: 'warning' })
+  //     );
+  //     return dispatch(showNotification());
+  //   }
 
-    const registerResponse = await axios
-      .post<NotificationType>('http://localhost:3500/api/v1/user/register', {
-        name,
-        email,
-        dob: dateOfBirth,
-        mobileNo: Number(mobileNumber),
-        address,
-        password,
-      })
-      .then((res) => {
-        const response = res.data;
-        dispatch(
-          setNotification({ message: response.message, type: response.type })
-        );
-        dispatch(showNotification());
-        if (res.status === 201) return router.replace('/user/login');
-      })
-      .catch((err) => {
-        const response = err.response.data;
-        dispatch(
-          setNotification({
-            message: response.message,
-            type: response.type,
-          })
-        );
-        dispatch(showNotification());
-      });
-  };
+  //   const registerResponse = await axios
+  //     .post<NotificationType>('http://localhost:3500/api/v1/user/register', {
+  //       name,
+  //       email,
+  //       dob: dateOfBirth,
+  //       mobileNo: Number(mobileNumber),
+  //       address,
+  //       password,
+  //     })
+  //     .then((res) => {
+  //       const response = res.data;
+  //       dispatch(
+  //         setNotification({ message: response.message, type: response.type })
+  //       );
+  //       dispatch(showNotification());
+  //       if (res.status === 201) return router.replace('/user/login');
+  //     })
+  //     .catch((err) => {
+  //       const response = err.response.data;
+  //       dispatch(
+  //         setNotification({
+  //           message: response.message,
+  //           type: response.type,
+  //         })
+  //       );
+  //       dispatch(showNotification());
+  //     });
+  // };
 
   return (
     <>
@@ -87,7 +87,7 @@ const RegisterPage: NextPageWithLayout = () => {
         <title>Shoppers Den - Register</title>
       </Head>
       <div className="flex w-full flex-col justify-center gap-5 rounded-md p-5">
-        <div className="text-xl font-bold">Register</div>
+        <div className="text-center text-xl font-bold">REGISTER</div>
 
         <div className="flex flex-col gap-3">
           <div className="flex gap-3 max-md:flex-col">
@@ -95,7 +95,6 @@ const RegisterPage: NextPageWithLayout = () => {
             <Input
               input_type="text"
               placeholder="Name"
-              symbol={<MdAlternateEmail />}
               value={name}
               setValue={setName}
             />
@@ -104,7 +103,6 @@ const RegisterPage: NextPageWithLayout = () => {
             <Input
               input_type="email"
               placeholder="Email"
-              symbol={<HiOutlineMail />}
               value={email}
               setValue={setEmail}
             />
@@ -115,7 +113,6 @@ const RegisterPage: NextPageWithLayout = () => {
             <Input
               input_type="number"
               placeholder="Mobile number"
-              symbol={<MdLocalPhone />}
               value={mobileNumber}
               setValue={setMobileNumber}
             />
@@ -124,7 +121,6 @@ const RegisterPage: NextPageWithLayout = () => {
             <Input
               input_type="date"
               placeholder="Date of birth"
-              symbol={<BsCalendar3 />}
               value={dateOfBirth}
               setValue={setDateOfBirth}
             />
@@ -133,7 +129,6 @@ const RegisterPage: NextPageWithLayout = () => {
           {/* Address */}
           <TextArea
             placeholder="Address"
-            symbol={<MdLocationPin />}
             value={address}
             setValue={setAddress}
           />
@@ -143,7 +138,6 @@ const RegisterPage: NextPageWithLayout = () => {
             <Input
               input_type="password"
               placeholder="Password"
-              symbol={<span>***</span>}
               value={password}
               setValue={setPassword}
             />
@@ -152,7 +146,6 @@ const RegisterPage: NextPageWithLayout = () => {
             <Input
               input_type="password"
               placeholder="Confirm password"
-              symbol={<span>***</span>}
               value={confirmPassword}
               setValue={setConfirmPassword}
             />
@@ -160,8 +153,8 @@ const RegisterPage: NextPageWithLayout = () => {
 
           <button
             type="button"
-            className="h-10 rounded-md bg-sky-700 text-white hover:bg-sky-500"
-            onClick={_submit}
+            className="h-10 bg-gray-600 text-white hover:bg-black"
+            // onClick={_submit}
           >
             SUBMIT
           </button>
@@ -171,7 +164,10 @@ const RegisterPage: NextPageWithLayout = () => {
 
         <div className="flex justify-center gap-1">
           Already have an account,
-          <Link href="/user/login" className="text-sky-700 hover:text-sky-500">
+          <Link
+            href="/user/login"
+            className="text-gray-400 hover:text-gray-700"
+          >
             login
           </Link>
         </div>

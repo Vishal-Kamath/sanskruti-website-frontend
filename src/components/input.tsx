@@ -1,63 +1,52 @@
 import React, { useState } from 'react';
 
 export const Input: React.FC<{
-  symbol: React.ReactElement;
   input_type: string;
   placeholder: string;
   value: any;
   setValue: React.Dispatch<React.SetStateAction<any>>;
-}> = ({ symbol, input_type, placeholder, value, setValue }) => {
-  const [focus, setFocus] = useState(false);
+}> = ({ input_type, placeholder, value, setValue }) => {
   return (
-    <div className="flex h-10 w-full overflow-hidden rounded-md">
-      <span
-        className={`grid w-10 place-content-center text-white ${
-          focus ? 'bg-sky-500' : 'bg-sky-700'
-        }`}
-      >
-        {symbol}
-      </span>
+    <div className="relative h-10 w-full">
       <input
         type={input_type}
-        className={`h-full w-full rounded-r-md border-2 bg-transparent px-3 outline-none ${
-          focus ? 'border-sky-500' : 'border-sky-700'
-        }`}
-        placeholder={placeholder}
+        className="peer h-full w-full border-2 border-gray-300 bg-transparent px-3 outline-none focus:border-black"
+        id={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
       />
+      <label
+        htmlFor={placeholder}
+        className={`absolute left-3 ${
+          !!value ? 'top-0 text-sm' : 'top-1/2 text-lg'
+        } -translate-y-1/2 bg-white px-2 text-lg transition-all delay-300 ease-in-out peer-focus:top-0 peer-focus:text-sm peer-focus:font-semibold`}
+      >
+        {placeholder}
+      </label>
     </div>
   );
 };
 
 export const TextArea: React.FC<{
-  symbol: React.ReactElement;
   placeholder: string;
   value: any;
   setValue: React.Dispatch<React.SetStateAction<any>>;
-}> = ({ symbol, placeholder, value, setValue }) => {
-  const [focus, setFocus] = useState(false);
+}> = ({ placeholder, value, setValue }) => {
   return (
-    <div className="flex w-full overflow-hidden rounded-md">
-      <span
-        className={`grid h-full w-10 place-content-center text-white ${
-          focus ? 'bg-sky-500' : 'bg-sky-700'
-        }`}
-      >
-        {symbol}
-      </span>
+    <div className="relative h-10 w-full">
       <textarea
-        className={`h-full max-h-40 min-h-[2.5rem] w-full rounded-r-md border-2 bg-transparent px-3 pt-[0.3rem] outline-none ${
-          focus ? 'border-sky-500' : 'border-sky-700'
-        }`}
-        placeholder={placeholder}
+        className="peer h-full max-h-40 min-h-[2.5rem] w-full border-2 border-gray-300 bg-transparent px-3 pt-[0.3rem] outline-none focus:border-black"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
       />
+      <label
+        htmlFor={placeholder}
+        className={`absolute left-3 ${
+          !!value ? 'top-0 text-sm' : 'top-5 text-lg'
+        } -translate-y-1/2 bg-white px-2 text-lg transition-all delay-300 ease-in-out peer-focus:top-0 peer-focus:text-sm peer-focus:font-semibold`}
+      >
+        {placeholder}
+      </label>
     </div>
   );
 };

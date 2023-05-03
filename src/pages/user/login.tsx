@@ -22,46 +22,46 @@ const LoginPage: NextPageWithLayout = () => {
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
 
-  const _submit = async () => {
-    if (!email?.trim() || !password?.trim()) {
-      dispatch(
-        setNotification({ message: 'fill all details', type: 'warning' })
-      );
-      return dispatch(showNotification());
-    }
+  // const _submit = async () => {
+  //   if (!email?.trim() || !password?.trim()) {
+  //     dispatch(
+  //       setNotification({ message: 'fill all details', type: 'warning' })
+  //     );
+  //     return dispatch(showNotification());
+  //   }
 
-    const registerResponse = await axios
-      .post<NotificationType & { accessToken: string }>(
-        'http://localhost:3500/api/v1/user/login',
-        {
-          email,
-          password,
-        }
-      )
-      .then((res) => {
-        const response = res.data;
-        dispatch(
-          setNotification({ message: response.message, type: response.type })
-        );
-        dispatch(showNotification());
+  //   const registerResponse = await axios
+  //     .post<NotificationType & { accessToken: string }>(
+  //       'http://localhost:3500/api/v1/user/login',
+  //       {
+  //         email,
+  //         password,
+  //       }
+  //     )
+  //     .then((res) => {
+  //       const response = res.data;
+  //       dispatch(
+  //         setNotification({ message: response.message, type: response.type })
+  //       );
+  //       dispatch(showNotification());
 
-        if (res.status === 200) {
-          dispatch(setAccessToken({ accessToken: response.accessToken }));
-          dispatch(loggedIn());
-          return router.replace('/');
-        }
-      })
-      .catch((err) => {
-        const response = err.response.data;
-        dispatch(
-          setNotification({
-            message: response.message,
-            type: response.type,
-          })
-        );
-        dispatch(showNotification());
-      });
-  };
+  //       if (res.status === 200) {
+  //         dispatch(setAccessToken({ accessToken: response.accessToken }));
+  //         dispatch(loggedIn());
+  //         return router.replace('/');
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       const response = err.response.data;
+  //       dispatch(
+  //         setNotification({
+  //           message: response.message,
+  //           type: response.type,
+  //         })
+  //       );
+  //       dispatch(showNotification());
+  //     });
+  // };
 
   return (
     <>
@@ -69,14 +69,13 @@ const LoginPage: NextPageWithLayout = () => {
         <title>Shoppers Den - Login</title>
       </Head>
       <div className="flex w-full flex-col justify-center gap-5 rounded-md p-5">
-        <div className="text-xl font-bold">Login</div>
+        <div className="text-center text-xl font-bold ">LOGIN</div>
 
         <div className="flex flex-col gap-3">
           {/* Email */}
           <Input
             input_type="text"
             placeholder="Email"
-            symbol={<HiOutlineMail />}
             value={email}
             setValue={setEmail}
           />
@@ -85,15 +84,18 @@ const LoginPage: NextPageWithLayout = () => {
           <Input
             input_type="password"
             placeholder="Password"
-            symbol={<span>***</span>}
             value={password}
             setValue={setPassword}
           />
 
           <button
             type="button"
-            className="h-10 rounded-md bg-sky-700 text-white hover:bg-sky-500"
-            onClick={_submit}
+            className="h-10 bg-gray-600 text-white hover:bg-black"
+            // onClick={_submit}
+            onClick={() => {
+              dispatch(loggedIn());
+              router.push('/user');
+            }}
           >
             SUBMIT
           </button>
@@ -105,7 +107,7 @@ const LoginPage: NextPageWithLayout = () => {
           Don't have an account.
           <Link
             href="/user/register"
-            className="text-sky-700 hover:text-sky-500"
+            className="text-gray-400 hover:text-gray-700"
           >
             register here
           </Link>
