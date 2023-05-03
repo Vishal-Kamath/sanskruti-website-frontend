@@ -2,7 +2,6 @@ import React from 'react';
 import CategoryCard from './categoryCard';
 import { useAppSelector } from '@/store/hooks';
 import { selectSidebarOpen } from '@/slice/sidebar.slice';
-import {motion} from 'framer-motion'
 
 const categoryList: { image: string; title: string; link: string }[] = [
   {
