@@ -10,6 +10,9 @@ module.exports = {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
       },
+      boxShadow: {
+        top: '0 -5px 10px rgba(0, 0, 0, 0.05)',
+      },
     },
   },
   plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
