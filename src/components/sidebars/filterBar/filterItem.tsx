@@ -24,7 +24,7 @@ const FilterItem: React.FC<{
   };
 
   const deSelect = () => {
-    const radio = document.getElementById(main + selected) as HTMLInputElement;
+    const radio = document.getElementById(selected) as HTMLInputElement;
     radio.checked = false;
 
     const tags = router.query;
@@ -39,6 +39,9 @@ const FilterItem: React.FC<{
 
   useEffect(() => {
     const selectedTagFromQuery = router.query[main];
+    console.log(router.query);
+    console.log(main);
+    console.log(router.query[main]);
     if (!selectedTagFromQuery) return;
     if (Array.isArray(selectedTagFromQuery)) return;
     setSelected(selectedTagFromQuery);
@@ -76,8 +79,8 @@ const FilterItem: React.FC<{
             <input
               type="radio"
               name={main}
-              checked={selected === subItem.title ? true : false}
-              id={main + subItem.title}
+              checked={selected === subItem.title}
+              id={subItem.title}
               className="h-4 w-4 accent-black"
               onChange={() => onClick(subItem.title)}
             />

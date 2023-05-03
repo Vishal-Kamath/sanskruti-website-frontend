@@ -5,8 +5,9 @@ const DropdownComponent: React.FC<{
   main: string;
   children: React.ReactElement | React.ReactElement[];
   classname?: string;
-}> = ({ main, children, classname }) => {
-  const [open, setOpen] = useState(false);
+  open?: boolean;
+}> = ({ main, children, classname, open }) => {
+  const [cardOpen, setCardOpen] = useState(!!open);
 
   return (
     <div className="flex flex-col">
@@ -14,10 +15,10 @@ const DropdownComponent: React.FC<{
         <h5 className="flex items-center justify-between">
           <span>{main}</span>
           <span className="text-xl">
-            {open ? (
-              <AiOutlineMinus onClick={() => setOpen(false)} />
+            {cardOpen ? (
+              <AiOutlineMinus onClick={() => setCardOpen(false)} />
             ) : (
-              <AiOutlinePlus onClick={() => setOpen(true)} />
+              <AiOutlinePlus onClick={() => setCardOpen(true)} />
             )}
           </span>
         </h5>

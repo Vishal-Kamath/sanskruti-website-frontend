@@ -43,7 +43,7 @@ const ProductDetails: React.FC = () => {
       </div>
 
       <div className="flex flex-col">
-        <DropdownComponent main="Product Details">
+        <DropdownComponent main="Product Details" open>
           <table className="w-fit">
             <tbody>
               <tr>
@@ -84,7 +84,7 @@ const ProductDetails: React.FC = () => {
           </span>
         </DropdownComponent>
 
-        <DropdownComponent main="Style & Fit Tips">
+        <DropdownComponent main="Style & Fit Tips" open>
           <span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum
             nobis adipisci excepturi temporibus aspernatur fuga culpa, maxime
@@ -93,7 +93,7 @@ const ProductDetails: React.FC = () => {
           </span>
         </DropdownComponent>
 
-        <DropdownComponent main="Shipping & Returns">
+        <DropdownComponent main="Shipping & Returns" open>
           <span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum
             nobis adipisci excepturi temporibus aspernatur fuga culpa, maxime
@@ -102,7 +102,7 @@ const ProductDetails: React.FC = () => {
           </span>
         </DropdownComponent>
 
-        <DropdownComponent main="FAQs">
+        <DropdownComponent main="FAQs" open>
           <span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum
             nobis adipisci excepturi temporibus aspernatur fuga culpa, maxime
