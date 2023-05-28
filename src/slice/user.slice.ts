@@ -1,18 +1,18 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '@/store';
-import axios from 'axios';
-import getUser from '@/utils/getUser.utils';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "@/store";
+import axios from "axios";
+import getUser from "@/utils/getUser.utils";
 
 export type AccessToken = {
   accessToken: string | undefined;
 };
 
 export type UserType = {
-  name?: string;
-  email?: string;
+  name: string;
+  email: string;
   dob?: Date;
-  mobileNo?: number;
+  mobileNo: number;
   address?: string;
 };
 
@@ -24,10 +24,15 @@ type LoggedIn = {
 const initialState: AccessToken & UserType & LoggedIn = {
   accessToken: undefined,
   loggedIn: false,
+
+  // user
+  name: "John Doe",
+  mobileNo: 1234567890,
+  email: "Johndoe@email.com",
 };
 
 const fetchUser = createAsyncThunk(
-  'users/fetchByIdStatus',
+  "users/fetchByIdStatus",
   async (accessToken: string, thunkAPI) => {
     const response = await getUser({ accessToken });
     return response;
@@ -35,7 +40,7 @@ const fetchUser = createAsyncThunk(
 );
 
 export const user = createSlice({
-  name: 'user',
+  name: "user",
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
