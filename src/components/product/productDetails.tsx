@@ -1,7 +1,7 @@
 import React from 'react';
 import DropdownComponent from '../utils/dropdown';
 import VariantTags from './varientTags';
-import Button from '@/components/common/button';
+import UIButton from '@/components/common/button';
 
 const ProductDetails: React.FC = () => {
   return (
@@ -33,12 +33,12 @@ const ProductDetails: React.FC = () => {
       </div>
 
       <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[5vw] max-md:py-2 max-md:shadow-top">
-        <Button className="text-md w-full bg-white font-semibold text-black">
+        <UIButton className="text-md w-full bg-white font-semibold text-black">
           ADD TO CART
-        </Button>
-        <Button className="text-md w-full bg-black font-semibold text-white">
+        </UIButton>
+        <UIButton className="text-md w-full bg-black font-semibold text-white">
           BUY NOW
-        </Button>
+        </UIButton>
       </div>
 
       <div className="flex flex-col">

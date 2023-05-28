@@ -2,7 +2,7 @@ import { cn } from '@/utils/lib';
 import { FC, HTMLAttributes } from 'react';
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {}
-const Button: FC<Props> = ({ className, children, ...props }) => {
+const UIButton: FC<Props> = ({ className, children, ...props }) => {
   return (
     <button
       className={cn(
@@ -16,4 +16,4 @@ const Button: FC<Props> = ({ className, children, ...props }) => {
   );
 };
 
-export default Button;
+export default UIButton;

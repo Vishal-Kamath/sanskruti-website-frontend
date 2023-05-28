@@ -15,7 +15,7 @@ import {
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { loggedIn, setAccessToken } from '@/slice/user.slice';
-import Button from '@/components/common/button';
+import UIButton from '@/components/common/button';
 
 const LoginPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -90,7 +90,7 @@ const LoginPage: NextPageWithLayout = () => {
             setValue={setPassword}
           />
 
-          <Button
+          <UIButton
             className="h-10 border-black bg-black text-white"
             // onClick={_submit}
             onClick={() => {
@@ -99,20 +99,20 @@ const LoginPage: NextPageWithLayout = () => {
             }}
           >
             SUBMIT
-          </Button>
+          </UIButton>
         </div>
 
         <span className="text-center">OR</span>
 
         <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
-          <Button className="w-full gap-2">
+          <UIButton className="w-full gap-2">
             <FcGoogle className="h-6 w-6" />
             <span>GOOGLE</span>
-          </Button>
-          <Button className="w-full gap-2">
+          </UIButton>
+          <UIButton className="w-full gap-2">
             <BsFacebook className="h-6 w-6 text-facebook" />
             <span>FACEBOOK</span>
-          </Button>
+          </UIButton>
         </div>
 
         <div className="flex justify-center gap-1">

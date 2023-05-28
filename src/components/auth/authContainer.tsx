@@ -6,7 +6,7 @@ import { useAppSelector } from '@/store/hooks';
 import { selectNotification } from '@/slice/notification.slice';
 import Notification from '@/components/notification';
 import Layout from '@/components/layout';
-import Button from '@/components/common/button';
+import UIButton from '@/components/common/button';
 
 const SignLayout: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -30,10 +30,10 @@ const SignLayout: React.FC<{ children: React.ReactElement }> = ({
           <div className="relative flex min-h-[70vh] w-full md:max-w-[60vw] xl:max-w-[40vw]">
             {children}
             <Link href="/">
-              <Button className="absolute left-5 top-5 flex h-9 gap-2 px-5 text-black">
+              <UIButton className="absolute left-5 top-5 flex h-9 gap-2 px-5 text-black">
                 <BiArrowBack />
                 <span>Back</span>
-              </Button>
+              </UIButton>
             </Link>
           </div>
         </div>
