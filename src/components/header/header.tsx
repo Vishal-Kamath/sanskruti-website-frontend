@@ -26,7 +26,7 @@ const Header: React.FC = () => {
   const isLoggedIn = user.loggedIn;
 
   const userRedirect = () => {
-    if (!isLoggedIn) return router.push('/user/login');
+    // if (!isLoggedIn) return router.push('/user/login');
     router.push('/user');
   };
 
