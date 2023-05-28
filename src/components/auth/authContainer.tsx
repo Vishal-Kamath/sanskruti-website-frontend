@@ -1,12 +1,12 @@
 import React from 'react';
-import Image from 'next/image';
 import Head from 'next/head';
-import { RxCross2 } from 'react-icons/rx';
 import Link from 'next/link';
+import { BiArrowBack } from 'react-icons/bi';
 import { useAppSelector } from '@/store/hooks';
 import { selectNotification } from '@/slice/notification.slice';
 import Notification from '@/components/notification';
-import Layout from '../layout';
+import Layout from '@/components/layout';
+import Button from '@/components/common/button';
 
 const SignLayout: React.FC<{ children: React.ReactElement }> = ({
   children,
@@ -20,20 +20,20 @@ const SignLayout: React.FC<{ children: React.ReactElement }> = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="relative grid min-h-screen place-content-center bg-white py-20 font-ysabeau text-black">
+        <div className="relative flex min-h-screen items-center justify-center bg-white py-20 font-ysabeau text-black">
           {notification.notify && (
             <Notification
               message={notification.message}
               type={notification.type}
             />
           )}
-          <div className="relative flex min-h-[70vh] w-full border-gray-300 sm:border-2 lg:min-w-[50vw] xl:min-w-[40vw]">
+          <div className="relative flex min-h-[70vh] w-full md:max-w-[60vw] xl:max-w-[40vw]">
             {children}
             <Link href="/">
-              <RxCross2
-                className="absolute right-5 top-5 h-7 w-7 text-black"
-                title="back to home"
-              />
+              <Button className="absolute left-5 top-5 flex h-9 gap-2 px-5 text-black">
+                <BiArrowBack />
+                <span>Back</span>
+              </Button>
             </Link>
           </div>
         </div>

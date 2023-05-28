@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ReactElement, useState } from 'react';
 import { NextPageWithLayout } from '../_app';
 import SignLayout from '@/components/auth/authContainer';
-import { Input, TextArea } from '@/components/input';
+import { Input, TextArea } from '@/components/common/input';
 import Head from 'next/head';
 import { useAppDispatch } from '@/store/hooks';
 import {
@@ -15,6 +15,7 @@ import {
 } from '@/slice/notification.slice';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import Button from '@/components/common/button';
 
 const RegisterPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -151,24 +152,20 @@ const RegisterPage: NextPageWithLayout = () => {
             />
           </div>
 
-          <button
-            type="button"
-            className="h-10 bg-gray-600 text-white hover:bg-black"
+          <Button
+            className="h-10 bg-black text-white"
             // onClick={_submit}
           >
             SUBMIT
-          </button>
+          </Button>
         </div>
 
         <span className="text-center">OR</span>
 
         <div className="flex justify-center gap-1">
           Already have an account,
-          <Link
-            href="/user/login"
-            className="text-gray-400 hover:text-gray-700"
-          >
-            login
+          <Link href="/user/login" className="text-gray-600 hover:text-black">
+            login here
           </Link>
         </div>
       </div>
