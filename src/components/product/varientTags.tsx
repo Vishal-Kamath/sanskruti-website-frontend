@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { RxCross2 } from 'react-icons/rx';
+import Button from '../common/button';
 
 const VariantTags: React.FC<{
   main: string;
@@ -61,9 +62,9 @@ const VariantTags: React.FC<{
       </div>
       <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden px-2 py-1">
         {sub.map((subItem) => (
-          <div
+          <Button
             key={subItem.title}
-            className="relative isolate grid min-w-[3rem] place-content-center rounded-full border-2 border-black px-3 py-1 hover:outline hover:outline-4 hover:outline-gray-300"
+            className="relative isolate min-w-[3rem] rounded-full border-black px-3 py-1"
           >
             <input
               type="radio"
@@ -74,7 +75,7 @@ const VariantTags: React.FC<{
               onChange={() => onClick(subItem.title)}
             />
             {subItem.title}
-          </div>
+          </Button>
         ))}
       </div>
     </div>
