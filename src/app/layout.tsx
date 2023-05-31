@@ -3,6 +3,7 @@ import "./globals.css";
 import ProviderComponent from "@/components/providerComponent";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
+import NotificationComponent from "@/components/notification/notificationComponent";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX",
@@ -45,6 +46,7 @@ export default function RootLayout({
       <ProviderComponent>
         <body className="relative flex min-h-screen select-none flex-col bg-white text-black">
           <Header />
+          <NotificationComponent />
           {children}
           <Footer />
         </body>
