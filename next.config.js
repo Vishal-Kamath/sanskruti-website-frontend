@@ -4,16 +4,19 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: '/category',
-        destination: '/',
+        source: "/category",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/product',
-        destination: '/',
+        source: "/product",
+        destination: "/",
         permanent: true,
       },
     ];
+  },
+  env: {
+    ENDPOINT: "http://localhost:4000",
   },
 };
 

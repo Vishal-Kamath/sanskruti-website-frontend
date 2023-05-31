@@ -1,10 +1,10 @@
-import Head from 'next/head';
-import React from 'react';
-import Header from './header/header';
-import Notification from './notification';
-import { useAppSelector } from '@/store/hooks';
-import { selectNotification } from '@/slice/notification.slice';
-import Footer from './footer/footer';
+import Head from "next/head";
+import React from "react";
+import Header from "../header/header";
+import Notification from "../notification";
+import { useAppSelector } from "@/store/hooks";
+import { selectNotification } from "@/slice/notification.slice";
+import Footer from "../footer/footer";
 
 const Layout: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const notification = useAppSelector(selectNotification);

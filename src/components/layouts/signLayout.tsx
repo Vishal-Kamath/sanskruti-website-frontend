@@ -1,12 +1,12 @@
-import React from 'react';
-import Head from 'next/head';
-import Link from 'next/link';
-import { BiArrowBack } from 'react-icons/bi';
-import { useAppSelector } from '@/store/hooks';
-import { selectNotification } from '@/slice/notification.slice';
-import Notification from '@/components/notification';
-import Layout from '@/components/layout';
-import UIButton from '@/components/common/button';
+import React from "react";
+import Head from "next/head";
+import Link from "next/link";
+import { BiArrowBack } from "react-icons/bi";
+import { useAppSelector } from "@/store/hooks";
+import { selectNotification } from "@/slice/notification.slice";
+import Notification from "@/components/notification";
+import Layout from "@/components/layouts/layout";
+import UIButton from "@/components/common/button";
 
 const SignLayout: React.FC<{ children: React.ReactElement }> = ({
   children,

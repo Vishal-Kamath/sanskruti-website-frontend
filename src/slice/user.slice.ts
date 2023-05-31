@@ -11,9 +11,7 @@ export type AccessToken = {
 export type UserType = {
   name: string;
   email: string;
-  dob?: Date;
-  mobileNo: number;
-  address?: string;
+  Mobile_No: number;
 };
 
 type LoggedIn = {
@@ -27,7 +25,7 @@ const initialState: AccessToken & UserType & LoggedIn = {
 
   // user
   name: "John Doe",
-  mobileNo: 1234567890,
+  Mobile_No: 1234567890,
   email: "Johndoe@email.com",
 };
 
@@ -52,9 +50,7 @@ export const user = createSlice({
     setUser: (state, action: PayloadAction<UserType>) => {
       state.email = action.payload.email;
       state.name = action.payload.name;
-      state.dob = action.payload.dob;
-      state.mobileNo = action.payload.mobileNo;
-      state.address = action.payload.address;
+      state.Mobile_No = action.payload.Mobile_No;
     },
     // login status
     loggedIn: (state) => {
