@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import "./globals.css";
+import ProviderComponent from "@/components/providerComponent";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX",
@@ -39,7 +40,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ProviderComponent>{children}</ProviderComponent>
+      </body>
     </html>
   );
 }
