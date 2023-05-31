@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import "./globals.css";
 import ProviderComponent from "@/components/providerComponent";
 import Header from "@/components/header/header";
+import Footer from "@/components/footer/footer";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX",
@@ -41,12 +42,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <ProviderComponent>
+      <ProviderComponent>
+        <body className="relative flex min-h-screen select-none flex-col bg-white text-black">
           <Header />
           {children}
-        </ProviderComponent>
-      </body>
+          <Footer />
+        </body>
+      </ProviderComponent>
     </html>
   );
 }
