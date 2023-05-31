@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import TopBanner from './topBanner';
-import SearchBar from './searchBar';
-import Link from 'next/link';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { HiOutlineUserCircle } from 'react-icons/hi';
-import { MdOutlineShoppingBag } from 'react-icons/md';
-import { RxCross2 } from 'react-icons/rx';
-import { BiMenuAltLeft } from 'react-icons/bi';
-import { useRouter } from 'next/router';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import React, { useState, useEffect } from "react";
+import TopBanner from "./topBanner";
+import SearchBar from "./searchBar";
+import Link from "next/link";
+import { AiOutlineHeart } from "react-icons/ai";
+import { HiOutlineUserCircle } from "react-icons/hi";
+import { MdOutlineShoppingBag } from "react-icons/md";
+import { RxCross2 } from "react-icons/rx";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   closeSidebar,
   openSidebar,
   selectSidebarOpen,
-} from '@/slice/sidebar.slice';
-import { selectUser } from '@/slice/user.slice';
+} from "@/slice/sidebar.slice";
+import { selectUser } from "@/slice/user.slice";
 
 const Header: React.FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   const user = useAppSelector(selectUser);
   const isLoggedIn = user.loggedIn;
 
   const userRedirect = () => {
-    // if (!isLoggedIn) return router.push('/user/login');
-    router.push('/user');
+    if (!isLoggedIn) return router.push("/user/login");
+    router.push("/user");
   };
 
   return (

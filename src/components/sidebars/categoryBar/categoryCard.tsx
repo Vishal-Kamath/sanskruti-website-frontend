@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { filters } from '../filterBar/filtersList';
-import { FaAngleDown } from 'react-icons/fa';
-import UIButton from '@/components/common/button';
+import Link from "next/link";
+import React, { useState } from "react";
+import { filters } from "../filterBar/filtersList";
+import { FaAngleDown } from "react-icons/fa";
+import UIButton from "@/components/common/button";
 
 const CategoryCard: React.FC<{
   image: string;
@@ -12,21 +12,19 @@ const CategoryCard: React.FC<{
   const [open, setOpen] = useState(false);
   const category = filters.find((filter) => filter.main === title);
   return (
-    <div className="group relative flex h-fit flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border-2 border-amber-500 bg-white max-sm:flex-col">
+    <div className="group relative flex aspect-square h-fit flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border-2 border-amber-500 bg-white max-sm:flex-col">
       <div
         onClick={() => setOpen((open) => !open)}
         style={{
           backgroundImage: `url("${image}")`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
-        className={` ${
-          open ? 'h-[25rem]' : 'h-[10rem]'
-        } aspect-square w-full overflow-hidden transition-all duration-300 ease-in-out sm:h-[20rem]`}
+        className={`aspect-square h-full w-full overflow-hidden transition-all duration-300 ease-in-out`}
       ></div>
       <div
         className={`absolute ${
-          open ? 'top-0 h-full' : 'bottom-0 h-16'
+          open ? "top-0 h-full" : "bottom-0 h-16"
         } flex w-full cursor-default flex-col bg-amber-100 py-2 font-semibold`}
       >
         <span className="w-full text-center text-xl font-semibold text-black">
@@ -52,7 +50,7 @@ const CategoryCard: React.FC<{
       >
         <FaAngleDown
           className={`${
-            !open ? 'sm:rotate-180' : 'max-sm:rotate-180'
+            !open ? "sm:rotate-180" : "max-sm:rotate-180"
           } transition-all ease-in-out`}
         />
       </UIButton>

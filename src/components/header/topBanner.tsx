@@ -1,6 +1,6 @@
-import React from 'react';
-import { FiPhoneCall } from 'react-icons/fi';
-import { MdLocationOn } from 'react-icons/md';
+import React from "react";
+import { FiPhoneCall } from "react-icons/fi";
+import { MdLocationOn } from "react-icons/md";
 
 const TopBanner: React.FC = () => {
   return (

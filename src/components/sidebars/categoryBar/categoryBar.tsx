@@ -1,13 +1,15 @@
-import React from 'react';
-import CategoryCard from './categoryCard';
-import { useAppSelector } from '@/store/hooks';
-import { selectSidebarOpen } from '@/slice/sidebar.slice';
+import React from "react";
+import CategoryCard from "./categoryCard";
+import { useAppSelector } from "@/store/hooks";
+import { selectSidebarOpen } from "@/slice/sidebar.slice";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const categoryList: { image: string; title: string; link: string }[] = [
   {
-    title: 'Salwar Kameez',
-    image: '/temp/Salwar Kameez.png',
-    link: '/category/Salwar Kameez',
+    title: "Salwar Kameez",
+    image: "/temp/Salwar Kameez.png",
+    link: "/category/Salwar Kameez",
   },
   {
     title: "Lehenga's",
@@ -15,14 +17,14 @@ const categoryList: { image: string; title: string; link: string }[] = [
     link: "/category/Lehenga's",
   },
   {
-    title: 'Indo Western',
-    image: '/temp/Indo Western.png',
-    link: '/category/Indo Western',
+    title: "Indo Western",
+    image: "/temp/Indo Western.png",
+    link: "/category/Indo Western",
   },
   {
-    title: 'Bridal',
-    image: '/temp/Bridal.png',
-    link: '/category/Bridal',
+    title: "Bridal",
+    image: "/temp/Bridal.png",
+    link: "/category/Bridal",
   },
   {
     title: "Kurti's",
@@ -30,9 +32,9 @@ const categoryList: { image: string; title: string; link: string }[] = [
     link: "/category/Kurti's",
   },
   {
-    title: 'Western Wear',
-    image: '/temp/Western Wear.png',
-    link: '/category/Western Wear',
+    title: "Western Wear",
+    image: "/temp/Western Wear.png",
+    link: "/category/Western Wear",
   },
   {
     title: "Dress Material's",
@@ -46,18 +48,25 @@ const CategoryBar: React.FC = () => {
   return (
     <div
       className={`${
-        !open && 'max-sm:hidden'
+        !open && "max-sm:hidden"
       } isolate w-full bg-white px-[5vw] max-sm:fixed max-sm:left-0 max-sm:top-0 max-sm:z-30`}
     >
       <div className="flex flex-col gap-2 max-sm:max-h-screen max-sm:min-h-screen max-sm:overflow-y-auto max-sm:pt-36 max-sm:scrollbar-none">
         <h3 className="border-b-2 border-gray-300 pb-2 text-xl font-semibold">
           Categories
         </h3>
-        <div className="sm:custom_scrollbar flex w-full gap-2 py-2 max-sm:flex-col max-sm:pb-20 sm:overflow-x-auto">
+
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={4}
+          className="flex w-full gap-2 py-2 max-sm:flex-col max-sm:pb-20"
+        >
           {categoryList.map((category) => (
-            <CategoryCard key={category.title} {...category} />
+            <SwiperSlide className="w-fit">
+              <CategoryCard key={category.title} {...category} />
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
       </div>
     </div>
   );

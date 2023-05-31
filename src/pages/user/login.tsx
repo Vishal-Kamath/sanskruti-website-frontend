@@ -1,21 +1,21 @@
-import { FcGoogle } from 'react-icons/fc';
-import { BsFacebook } from 'react-icons/bs';
-import Link from 'next/link';
-import { ReactElement, useState } from 'react';
-import { NextPageWithLayout } from '../_app';
-import SignLayout from '@/components/auth/authContainer';
-import { Input } from '@/components/common/input';
-import Head from 'next/head';
-import { useAppDispatch } from '@/store/hooks';
+import { FcGoogle } from "react-icons/fc";
+import { BsFacebook } from "react-icons/bs";
+import Link from "next/link";
+import { ReactElement, useState } from "react";
+import { NextPageWithLayout } from "../_app";
+import SignLayout from "@/components/layouts/signLayout";
+import { Input } from "@/components/common/input";
+import Head from "next/head";
+import { useAppDispatch } from "@/store/hooks";
 import {
   NotificationType,
   setNotification,
   showNotification,
-} from '@/slice/notification.slice';
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { loggedIn, setAccessToken } from '@/slice/user.slice';
-import UIButton from '@/components/common/button';
+} from "@/slice/notification.slice";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { loggedIn, setAccessToken } from "@/slice/user.slice";
+import UIButton from "@/components/common/button";
 
 const LoginPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -23,47 +23,51 @@ const LoginPage: NextPageWithLayout = () => {
 
   const [email, setEmail] = useState<string>();
   const [password, setPassword] = useState<string>();
+  const [mobileNumber, setMobileNumber] = useState<number | null>(null);
 
-  // const _submit = async () => {
-  //   if (!email?.trim() || !password?.trim()) {
-  //     dispatch(
-  //       setNotification({ message: 'fill all details', type: 'warning' })
-  //     );
-  //     return dispatch(showNotification());
-  //   }
+  const [withEmail, setWithEmail] = useState(true);
 
-  //   const registerResponse = await axios
-  //     .post<NotificationType & { accessToken: string }>(
-  //       'http://localhost:3500/api/v1/user/login',
-  //       {
-  //         email,
-  //         password,
-  //       }
-  //     )
-  //     .then((res) => {
-  //       const response = res.data;
-  //       dispatch(
-  //         setNotification({ message: response.message, type: response.type })
-  //       );
-  //       dispatch(showNotification());
+  const _submit = async () => {
+    if (!email?.trim() || !password?.trim()) {
+      dispatch(
+        setNotification({ message: "fill all details", type: "warning" })
+      );
+      return dispatch(showNotification());
+    }
 
-  //       if (res.status === 200) {
-  //         dispatch(setAccessToken({ accessToken: response.accessToken }));
-  //         dispatch(loggedIn());
-  //         return router.replace('/');
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       const response = err.response.data;
-  //       dispatch(
-  //         setNotification({
-  //           message: response.message,
-  //           type: response.type,
-  //         })
-  //       );
-  //       dispatch(showNotification());
-  //     });
-  // };
+    const link = withEmail
+      ? `${process.env.ENDPOINT}/api/v1/user/emaillogin`
+      : `${process.env.ENDPOINT}/api/v1/user/numberlogin`;
+    const body = withEmail
+      ? { email, password }
+      : { Mobile_No: mobileNumber, password };
+
+    const registerResponse = await axios
+      .post<NotificationType & { accessToken: string }>(link, body)
+      .then((res) => {
+        const response = res.data;
+        dispatch(
+          setNotification({ message: response.message, type: response.type })
+        );
+        dispatch(showNotification());
+
+        if (res.status === 200) {
+          dispatch(setAccessToken({ accessToken: response.accessToken }));
+          dispatch(loggedIn());
+          return router.replace("/");
+        }
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
+  };
 
   return (
     <>
@@ -74,13 +78,30 @@ const LoginPage: NextPageWithLayout = () => {
         <div className="text-center text-xl font-bold ">LOGIN</div>
 
         <div className="flex flex-col gap-3">
-          {/* Email */}
-          <Input
-            input_type="text"
-            placeholder="Email"
-            value={email}
-            setValue={setEmail}
-          />
+          <div className="flex gap-3">
+            {withEmail ? (
+              <Input
+                input_type="email"
+                placeholder="Email"
+                value={email}
+                setValue={setEmail}
+              />
+            ) : (
+              <Input
+                input_type="number"
+                placeholder="Mobile number"
+                value={mobileNumber}
+                setValue={setMobileNumber}
+              />
+            )}
+
+            <UIButton
+              className="w-[12rem] text-xs"
+              onClick={() => setWithEmail((state) => !state)}
+            >
+              Login with {withEmail ? "Number" : "Email"}
+            </UIButton>
+          </div>
 
           {/* Password */}
           <Input
@@ -92,11 +113,11 @@ const LoginPage: NextPageWithLayout = () => {
 
           <UIButton
             className="h-10 border-black bg-black text-white"
-            // onClick={_submit}
-            onClick={() => {
-              dispatch(loggedIn());
-              router.push('/user');
-            }}
+            onClick={_submit}
+            // onClick={() => {
+            //   dispatch(loggedIn());
+            //   router.push("/user");
+            // }}
           >
             SUBMIT
           </UIButton>
