@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FC } from "react";
 import { BiLinkExternal } from "react-icons/bi";
 
@@ -18,9 +19,11 @@ const VisitOurStore: FC = () => {
           <span>Maharashtra 421301</span>
         </div>
         <div className="relative rounded-md overflow-hidden">
-          <img
+          <Image
             src="/assets/storeImage.png"
             className="h-[15rem] w-full object-cover"
+            width={500}
+            height={500}
             alt="Sanskruti Store"
           />
           <a

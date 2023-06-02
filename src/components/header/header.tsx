@@ -15,12 +15,20 @@ import {
   openSidebar,
   selectSidebarOpen,
 } from "@/redux/slice/sidebar.slice";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Header: FC = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [search, setSearch] = useState("");
 
   const sideBarOpen = useAppSelector(selectSidebarOpen);
+
+  const userRedirect = () => {
+    // if (!isLoggedIn) return router.push("/user/login");
+    router.push("/auth");
+  };
 
   return (
     <header className="fixed top-0 isolate z-40 flex w-full flex-col text-black shadow-md">
@@ -43,10 +51,12 @@ const Header: FC = () => {
           </div>
 
           <Link href="/">
-            <img
+            <Image
               src="/assets/logo.svg"
               alt="Sanskruti Logo"
-              className="aspect-square h-12"
+              width={100}
+              height={100}
+              className="aspect-square h-12 w-fit"
             />
           </Link>
         </div>
@@ -57,7 +67,7 @@ const Header: FC = () => {
             search={search}
             setSearch={setSearch}
           />
-          <div>
+          <div onClick={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
           </div>
           <Link href="/wishlist">

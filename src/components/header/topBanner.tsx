@@ -35,7 +35,7 @@ const TopBanner: React.FC = () => {
         disableOnInteraction: false,
       }}
       slidesPerView={isMobile ? 1 : 3}
-      className="w-full flex bg-black text-white"
+      className="w-full flex bg-black text-white [&>*>*]:py-1"
     >
       <SwiperSlide>
         <div className="flex items-center gap-2 text-sm justify-center">
