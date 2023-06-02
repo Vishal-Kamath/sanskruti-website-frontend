@@ -4,6 +4,19 @@ import ProviderComponent from "@/components/providerComponent";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import NotificationComponent from "@/components/notification/notificationComponent";
+import { cn } from "@/utils/lib";
+
+import { Poppins, Ysabeau } from "next/font/google";
+const poppins = Poppins({
+  weight: ["100", "500"],
+  subsets: ["latin"],
+  variable: "--poppins-font",
+});
+const ysabeau = Ysabeau({
+  weight: ["200", "300"],
+  subsets: ["latin"],
+  variable: "--ysabeau-font",
+});
 
 export const metadata: Metadata = {
   title: "Sanskruti NX",
@@ -44,7 +57,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ProviderComponent>
-        <body className="relative flex min-h-screen select-none flex-col bg-white text-black">
+        <body
+          className={cn(
+            poppins.variable,
+            ysabeau.variable,
+            "relative flex min-h-screen select-none flex-col bg-white text-black"
+          )}
+        >
           <Header />
           <NotificationComponent />
           {children}
