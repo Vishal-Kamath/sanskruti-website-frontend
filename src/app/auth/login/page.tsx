@@ -31,46 +31,45 @@ const LoginPage: NextPage = () => {
   const [withEmail, setWithEmail] = useState(true);
 
   const _submit = async () => {
-    // if (!email?.trim() || !password?.trim()) {
-    //   dispatch(
-    //     setNotification({ message: "fill all details", type: "warning" })
-    //   );
-    //   return dispatch(showNotification());
-    // }
-    // const link = withEmail
-    //   ? `${process.env.ENDPOINT}/api/v1/user/emaillogin`
-    //   : `${process.env.ENDPOINT}/api/v1/user/numberlogin`;
-    // const body = withEmail
-    //   ? { email, password }
-    //   : { Mobile_No: mobileNumber, password };
-    // const registerResponse = await axios
-    //   .post<NotificationType & { accessToken: string }>(link, body)
-    //   .then((res) => {
-    //     const response = res.data;
-    //     dispatch(
-    //       setNotification({ message: response.message, type: response.type })
-    //     );
-    //     dispatch(showNotification());
-    //     if (res.status === 200) {
-    //       dispatch(setAccessToken({ accessToken: response.accessToken }));
-    //       dispatch(loggedIn());
-    //       return router.replace("/");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     const response = err.response.data;
-    //     dispatch(
-    //       setNotification({
-    //         message: response.message,
-    //         type: response.type,
-    //       })
-    //     );
-    //     dispatch(showNotification());
-    //   });
+    if (!email?.trim() || !password?.trim()) {
+      dispatch(
+        setNotification({ message: "fill all details", type: "warning" })
+      );
+      return dispatch(showNotification());
+    }
+    const link = `${process.env.ENDPOINT}/api/v1/user/emaillogin`;
+    const body = withEmail
+      ? { emailOrNumber: email, password }
+      : { emailOrNumber: mobileNumber, password };
+
+    const registerResponse = await axios
+      .post<NotificationType & { accessToken: string }>(link, body)
+      .then((res) => {
+        const response = res.data;
+        dispatch(
+          setNotification({ message: response.message, type: response.type })
+        );
+        dispatch(showNotification());
+        if (res.status === 200) {
+          dispatch(setAccessToken({ accessToken: response.accessToken }));
+          dispatch(loggedIn());
+          return router.replace("/");
+        }
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
   };
 
   return (
-    <div className="flex w-full flex-col justify-center gap-5 rounded-md p-5">
+    <div className="flex w-full flex-col justify-center gap-5 rounded-md">
       <div className="text-center text-xl font-bold ">LOGIN</div>
 
       <div className="flex flex-col gap-3">
@@ -84,7 +83,7 @@ const LoginPage: NextPage = () => {
             />
           ) : (
             <Input
-              input_type="number"
+              input_type="tel"
               placeholder="Mobile number"
               value={mobileNumber}
               setValue={setMobileNumber}
@@ -92,7 +91,7 @@ const LoginPage: NextPage = () => {
           )}
 
           <UIButton
-            className="w-[12rem] text-xs"
+            className="w-[12rem] text-xs border-gray-400"
             onClick={() => setWithEmail((state) => !state)}
           >
             Login with {withEmail ? "Number" : "Email"}
@@ -133,8 +132,11 @@ const LoginPage: NextPage = () => {
       </div>
 
       <div className="flex justify-center gap-1">
-        Don't have an account.
-        <Link href="/auth/register" className="text-gray-600 hover:text-black">
+        Don&apos;t have an account?
+        <Link
+          href="/auth/register"
+          className="text-blue-700 font-semibold hover:text-blue-500 hover:underline"
+        >
           register here
         </Link>
       </div>
