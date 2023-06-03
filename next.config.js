@@ -7,6 +7,11 @@ const nextConfig = {
         destination: "/auth/login",
         permanent: true,
       },
+      {
+        source: "/user",
+        destination: "/user/details",
+        permanent: true,
+      },
     ];
   },
   env: {
