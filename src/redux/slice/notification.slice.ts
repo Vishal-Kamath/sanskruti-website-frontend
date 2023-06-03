@@ -5,6 +5,7 @@ import type { RootState } from "@/redux/store";
 export type NotificationType = {
   message: string | undefined;
   type: "success" | "info" | "warning" | "error" | undefined;
+  content?: string;
 };
 
 type Notify = {
@@ -32,6 +33,7 @@ export const notification = createSlice({
     setNotification: (state, action: PayloadAction<NotificationType>) => {
       state.message = action.payload.message;
       state.type = action.payload.type;
+      state.content = action.payload.content;
     },
     clearNotification: (state) => {
       state.message = undefined;

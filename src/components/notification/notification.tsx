@@ -12,32 +12,46 @@ import { AiOutlineWarning } from "react-icons/ai";
 import React from "react";
 import { cn } from "@/utils/lib";
 
-const Notification: React.FC<NotificationType> = ({ message, type }) => {
+const Notification: React.FC<NotificationType> = ({
+  message,
+  type,
+  content,
+}) => {
   const dispatch = useAppDispatch();
   const close = () => dispatch(closeNotification());
   return (
     <div
       className={cn(
-        "absolute left-1/2 top-1 z-50 flex w-full max-w-md -translate-x-1/2 gap-2 rounded-sm border-2 px-2 py-3",
-        type === "success" && "border-green-500 bg-green-200 text-green-500",
-        (type === "info" || type === undefined) &&
-          "border-gray-500 bg-gray-200 text-gray-800",
-        type === "warning" && "border-yellow-500 bg-yellow-100 text-yellow-500",
-        type === "error" && "border-red-500 bg-red-200 text-red-500"
+        "flex flex-col w-full max-w-md gap-3 rounded-md border-[3px] p-3 bg-white",
+        type === "success" && "border-green-500",
+        (type === "info" || type === undefined) && "border-gray-500",
+        type === "warning" && "border-amber-500",
+        type === "error" && "border-red-500"
       )}
     >
-      <div className="flex items-center">
-        {type === "success" && <BsCheckCircle className="h-5 w-5" />}
-        {(type === "info" || type === undefined) && (
-          <BsExclamationCircleFill className="h-5 w-5" />
+      <div
+        className={cn(
+          "flex gap-2",
+          type === "success" && "text-green-800",
+          (type === "info" || type === undefined) && "text-gray-800",
+          type === "warning" && "text-yellow-800",
+          type === "error" && "text-red-800"
         )}
-        {type === "warning" && <AiOutlineWarning className="h-5 w-5" />}
-        {type === "error" && <BiError className="h-5 w-5" />}
+      >
+        <div className="flex items-center [&>*]:w-5 [&>*]:h-5">
+          {type === "success" && <BsCheckCircle />}
+          {(type === "info" || type === undefined) && (
+            <BsExclamationCircleFill />
+          )}
+          {type === "warning" && <AiOutlineWarning />}
+          {type === "error" && <BiError />}
+        </div>
+        <div>{message || "Some thing went wrong"}</div>
+        <button className="ml-auto" onClick={close}>
+          <RxCross2 className="w-5 h-5" />
+        </button>
       </div>
-      <div>{message || "Some thing went wrong"}</div>
-      <button className="ml-auto w-5" onClick={close}>
-        <RxCross2 />
-      </button>
+      <div className="text-gray-500">{content}</div>
     </div>
   );
 };
