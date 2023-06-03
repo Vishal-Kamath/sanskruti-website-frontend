@@ -13,6 +13,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import UIButton from "@/components/common/button";
 import { Metadata, NextPage } from "next";
+import z from "zod";
+import { FcGoogle } from "react-icons/fc";
+import { BsFacebook } from "react-icons/bs";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX - Register",
@@ -28,13 +31,28 @@ const RegisterPage: NextPage = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const [withEmail, setWithEmail] = useState(true);
+  const validate = () => {
+    const mobileNumberSchema = z
+      .number()
+      .refine((number) => number.toString().length === 10);
+    const checkMobileNumber = mobileNumberSchema.parse(mobileNumber);
+
+    const emailSchema = z.string().email();
+    const checkEmail = emailSchema.parse(email);
+
+    const passwordSchema = z
+      .string()
+      .min(6)
+      .regex(/^(?=.*[!@#$%^&*(),.?":{}|<>])[0-9!@#$%^&*(),.?":{}|<>]+$/);
+    const checkPassword = passwordSchema.parse(password);
+  };
+
   const _submit = async () => {
     // check if input fields are empty
     if (
       !username?.trim() ||
-      (withEmail && !email?.trim()) ||
-      (!withEmail && !mobileNumber) ||
+      !email?.trim() ||
+      !mobileNumber ||
       !password?.trim() ||
       !confirmPassword?.trim()
     ) {
@@ -51,12 +69,8 @@ const RegisterPage: NextPage = () => {
       return dispatch(showNotification());
     }
 
-    const link = withEmail
-      ? `${process.env.ENDPOINT}/api/v1/user/emailregister`
-      : `${process.env.ENDPOINT}/api/v1/user/numberregister`;
-    const body = withEmail
-      ? { username, email, password }
-      : { username, Mobile_No: mobileNumber, password };
+    const link = `${process.env.ENDPOINT}/api/v1/user/register`;
+    const body = { username, email, Mobile_No: Number(mobileNumber), password };
 
     console.log(link);
     const registerResponse = await axios
@@ -67,7 +81,7 @@ const RegisterPage: NextPage = () => {
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
-        if (res.status === 201) return router.replace("/user/login");
+        if (res.status === 201) return router.replace("/auth/login");
       })
       .catch((err) => {
         const response = err.response.data;
@@ -82,7 +96,7 @@ const RegisterPage: NextPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-col justify-center gap-5 rounded-md p-5">
+    <div className="flex w-full flex-col justify-center gap-5 rounded-md">
       <div className="text-center text-xl font-bold">REGISTER</div>
 
       <div className="flex flex-col gap-3">
@@ -94,30 +108,19 @@ const RegisterPage: NextPage = () => {
           setValue={setUsername}
         />
 
-        <div className="flex gap-3">
-          {withEmail ? (
-            <Input
-              input_type="email"
-              placeholder="Email"
-              value={email}
-              setValue={setEmail}
-            />
-          ) : (
-            <Input
-              input_type="number"
-              placeholder="Mobile number"
-              value={mobileNumber}
-              setValue={setMobileNumber}
-            />
-          )}
+        <Input
+          input_type="email"
+          placeholder="Email"
+          value={email}
+          setValue={setEmail}
+        />
 
-          <UIButton
-            className="w-[12rem] text-xs"
-            onClick={() => setWithEmail((state) => !state)}
-          >
-            Register with {withEmail ? "Number" : "Email"}
-          </UIButton>
-        </div>
+        <Input
+          input_type="number"
+          placeholder="Mobile number"
+          value={mobileNumber}
+          setValue={setMobileNumber}
+        />
 
         {/* Password */}
         <Input
@@ -142,9 +145,23 @@ const RegisterPage: NextPage = () => {
 
       <span className="text-center">OR</span>
 
+      <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
+        <UIButton className="w-full gap-2">
+          <FcGoogle className="h-6 w-6" />
+          <span>GOOGLE</span>
+        </UIButton>
+        <UIButton className="w-full gap-2">
+          <BsFacebook className="h-6 w-6 text-facebook" />
+          <span>FACEBOOK</span>
+        </UIButton>
+      </div>
+
       <div className="flex justify-center gap-1">
-        Already have an account,
-        <Link href="/auth/login" className="text-gray-600 hover:text-black">
+        Already have an account?
+        <Link
+          href="/auth/login"
+          className="text-blue-700 font-semibold hover:text-blue-500 hover:underline"
+        >
           login here
         </Link>
       </div>
