@@ -25,11 +25,11 @@ const RegisterPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [mobileNumber, setMobileNumber] = useState<number | null>(null);
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const validate = () => {
     const mobileNumberSchema = z
