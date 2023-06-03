@@ -10,7 +10,9 @@ const NotificationComponent: FC = () => {
   return (
     <>
       {notification.notify && (
-        <Notification message={notification.message} type={notification.type} />
+        <div className="fixed flex justify-center pt-24 max-md:pt-36 px-[5vw] top-0 left-0 z-50 isolate w-full">
+          <Notification {...notification} />
+        </div>
       )}
     </>
   );
