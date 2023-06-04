@@ -17,7 +17,6 @@ export const DashboardElement: FC<ElementProps> = ({
 }) => {
   const pathname = usePathname();
   const isActive = pathname === path;
-  console.log(path, pathname, isActive);
   return (
     <div className="flex gap-1 h-9">
       <div
