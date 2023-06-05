@@ -7,11 +7,12 @@ import { Autoplay } from "swiper";
 
 import "swiper/css";
 import "swiper/css/autoplay";
+import Image from "next/image";
 
 const Carousel: FC = () => {
   const images = {
-    desktop: ["temp/desktop1.png", "temp/desktop2.png"],
-    mobile: ["temp/mobile1.png", "temp/mobile2.png"],
+    desktop: ["/temp/desktop1.png", "/temp/desktop2.png"],
+    mobile: ["/temp/mobile1.png", "/temp/mobile2.png"],
   };
   const [isMobile, setIsMobile] = useState<boolean>();
 
@@ -29,7 +30,7 @@ const Carousel: FC = () => {
   }, []);
 
   return (
-    <div className="px-[5vw]">
+    <div className="h-[70vh] bg-gradient-to-b from-gray-100 to-white">
       <Swiper
         modules={[Autoplay]}
         loop={true}
@@ -43,18 +44,22 @@ const Carousel: FC = () => {
         {images.desktop.map((value, index) => {
           return isMobile ? (
             <SwiperSlide key={images.mobile[index]}>
-              <img
+              <Image
                 src={images.mobile[index]}
                 alt={images.mobile[index]}
-                className="w-full h-full object-cover"
+                width={500}
+                height={500}
+                className="h-[70vh] w-full object-contain"
               />
             </SwiperSlide>
           ) : (
             <SwiperSlide key={value}>
-              <img
+              <Image
                 src={value}
                 alt={value}
-                className="w-full h-full object-cover"
+                width={500}
+                height={500}
+                className="h-[70vh] w-full object-contain"
               />
             </SwiperSlide>
           );
