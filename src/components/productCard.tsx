@@ -1,5 +1,6 @@
 "use client";
 
+import { filters } from "@/data/filterlist";
 import { cn } from "@/utils/lib";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +16,7 @@ const ProductCard: FC<Props> = ({ className }) => {
       <Link href={`/product/${slug}`} className="flex flex-col gap-1">
         <div className="h-[20rem] w-full bg-gray-100">
           <Image
-            src="/temp/Western Wear.png"
+            src={filters[Math.floor(Math.random() * filters.length)].image}
             width={500}
             height={500}
             className="h-full w-full object-cover object-top"
