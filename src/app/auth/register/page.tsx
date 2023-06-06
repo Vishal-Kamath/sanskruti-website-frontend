@@ -31,20 +31,48 @@ const RegisterPage: NextPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const validate = () => {
+  const validateTypes = (): { valid: boolean } & NotificationType => {
+    const emailSchema = z.string().email();
+    try {
+      emailSchema.parse(email);
+    } catch {
+      return {
+        valid: false,
+        message: "not a valid email",
+        type: "warning",
+        content:
+          "the email you have provide is not a valid email format an example of a valid email is: ashokkumar@email.com",
+      };
+    }
+
     const mobileNumberSchema = z
       .number()
       .refine((number) => number.toString().length === 10);
-    const checkMobileNumber = mobileNumberSchema.parse(mobileNumber);
+    try {
+      mobileNumberSchema.parse(Number(mobileNumber));
+    } catch {
+      return {
+        valid: false,
+        message: "not a valid mobile number",
+        type: "warning",
+        content:
+          "By Indian standards a valid mobile number must be a 10 digit number",
+      };
+    }
 
-    const emailSchema = z.string().email();
-    const checkEmail = emailSchema.parse(email);
+    const passwordSchema = z.string().min(6);
+    try {
+      passwordSchema.parse(password);
+    } catch {
+      return {
+        valid: false,
+        message: "not a valid password",
+        type: "warning",
+        content: "a password must contain minimum 6 characters",
+      };
+    }
 
-    const passwordSchema = z
-      .string()
-      .min(6)
-      .regex(/^(?=.*[!@#$%^&*(),.?":{}|<>])[0-9!@#$%^&*(),.?":{}|<>]+$/);
-    const checkPassword = passwordSchema.parse(password);
+    return { valid: true, message: "", type: "info", content: "" };
   };
 
   const _submit = async () => {
@@ -57,7 +85,12 @@ const RegisterPage: NextPage = () => {
       !confirmPassword?.trim()
     ) {
       dispatch(
-        setNotification({ message: "fill all details", type: "warning" })
+        setNotification({
+          message: "fill all details",
+          type: "warning",
+          content:
+            "We request the user to please fill all the required fields.",
+        })
       );
       return dispatch(showNotification());
     }
@@ -69,10 +102,15 @@ const RegisterPage: NextPage = () => {
       return dispatch(showNotification());
     }
 
+    const { valid, message, type, content } = validateTypes();
+    if (!valid) {
+      dispatch(setNotification({ message, type, content }));
+      return dispatch(showNotification());
+    }
+
     const link = `${process.env.ENDPOINT}/api/v1/user/register`;
     const body = { username, email, Mobile_No: Number(mobileNumber), password };
 
-    console.log(link);
     const registerResponse = await axios
       .post<NotificationType>(link, body)
       .then((res) => {
@@ -160,7 +198,7 @@ const RegisterPage: NextPage = () => {
         Already have an account?
         <Link
           href="/auth/login"
-          className="text-blue-700 font-semibold hover:text-blue-500 hover:underline"
+          className="font-semibold text-blue-700 hover:text-blue-500 hover:underline"
         >
           login here
         </Link>
