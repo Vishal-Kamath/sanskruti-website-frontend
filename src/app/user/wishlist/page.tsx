@@ -10,8 +10,8 @@ const WishListPage: FC = () => {
         {Array(7)
           .fill(null)
           .map((_, index) => (
-            <div className="flex flex-col gap-2">
-              <ProductCard key={index} />
+            <div key={index} className="flex flex-col gap-2">
+              <ProductCard />
               <UIButton>Add to cart</UIButton>
             </div>
           ))}
