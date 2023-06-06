@@ -10,15 +10,30 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
-import { selectAccessToken } from "@/redux/slice/user.slice";
+import { useAppDispatch } from "@/redux/store/hooks";
+import z from "zod";
 
 const SecurityPage: FC = () => {
-  const accessToken = useAppSelector(selectAccessToken);
   const dispatch = useAppDispatch();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const validateTypes = (): { valid: boolean } & NotificationType => {
+    const passwordSchema = z.string().min(6);
+    try {
+      passwordSchema.parse(newPassword);
+    } catch {
+      return {
+        valid: false,
+        message: "not a valid password",
+        type: "warning",
+        content: "a password must contain minimum 6 characters",
+      };
+    }
+
+    return { valid: true, message: "", type: "info", content: "" };
+  };
 
   const submit = async () => {
     if (
@@ -44,6 +59,12 @@ const SecurityPage: FC = () => {
       return dispatch(showNotification());
     }
 
+    const { valid, message, type, content } = validateTypes();
+    if (!valid) {
+      dispatch(setNotification({ message, type, content }));
+      return dispatch(showNotification());
+    }
+
     await axios
       .post<NotificationType>(
         `${process.env.ENDPOINT}/api/v1/user/password/update`,
@@ -53,7 +74,6 @@ const SecurityPage: FC = () => {
         },
         {
           headers: {
-            "Authorization": `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -79,7 +99,7 @@ const SecurityPage: FC = () => {
   };
   return (
     <Container containerTitle="Security">
-      <div className="mx-auto flex w-full max-w-lg flex-col gap-6">
+      <div className="mx-auto flex w-full flex-col gap-6 md:max-w-lg">
         <div className="flex w-full flex-col gap-2">
           <span className="shrink-0 text-lg">Your old password:</span>
           <Input
