@@ -11,12 +11,7 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
-import {
-  Address,
-  selectAccessToken,
-  selectUser,
-  setAddress,
-} from "@/redux/slice/user.slice";
+import { Address, selectUser, setAddress } from "@/redux/slice/user.slice";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
@@ -26,7 +21,8 @@ const EditAddressPage: FC = () => {
 
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const accessToken = useAppSelector(selectAccessToken);
+
+  if (!id) router.push("/user/address/add");
 
   const user = useAppSelector(selectUser);
   const address = user.address.find((address) => address.id === id);
@@ -79,7 +75,6 @@ const EditAddressPage: FC = () => {
         },
         {
           headers: {
-            "Authorization": `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -107,8 +102,8 @@ const EditAddressPage: FC = () => {
   };
 
   return (
-    <Container containerTitle="Edit Address">
-      <div className="flex max-w-lg flex-col gap-4">
+    <Container containerTitle="Add New Address">
+      <div className="mx-auto flex w-full flex-col gap-4 md:max-w-lg">
         <Input
           input_type="text"
           placeholder="Full Name"
@@ -153,7 +148,7 @@ const EditAddressPage: FC = () => {
         />
         <UIButton
           onClick={submit}
-          className="ml-auto w-fit bg-sky-100 px-16 hover:outline-sky-200"
+          className="ml-auto w-full bg-sky-100 hover:outline-sky-200"
         >
           SUBMIT
         </UIButton>

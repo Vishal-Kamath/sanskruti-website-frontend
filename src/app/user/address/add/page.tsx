@@ -4,24 +4,19 @@ import { FC, useState } from "react";
 import Container from "../../components/container";
 import { Input } from "@/components/common/input";
 import UIButton from "@/components/common/button";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { useAppDispatch } from "@/redux/store/hooks";
 import {
   NotificationType,
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
-import {
-  Address,
-  selectAccessToken,
-  setAddress,
-} from "@/redux/slice/user.slice";
+import { Address, setAddress } from "@/redux/slice/user.slice";
 import { useRouter } from "next/navigation";
 
 const AddAddressPage: FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const accessToken = useAppSelector(selectAccessToken);
 
   const [fullName, setfullName] = useState("");
   const [contactNo, setcontactNo] = useState("");
@@ -66,7 +61,6 @@ const AddAddressPage: FC = () => {
         },
         {
           headers: {
-            "Authorization": `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
           withCredentials: true,
@@ -95,7 +89,7 @@ const AddAddressPage: FC = () => {
 
   return (
     <Container containerTitle="Add New Address">
-      <div className="flex max-w-lg flex-col gap-4">
+      <div className="mx-auto flex w-full flex-col gap-4 md:max-w-lg">
         <Input
           input_type="text"
           placeholder="Full Name"
@@ -140,7 +134,7 @@ const AddAddressPage: FC = () => {
         />
         <UIButton
           onClick={submit}
-          className="ml-auto w-fit bg-sky-100 px-16 hover:outline-sky-200"
+          className="ml-auto w-full bg-sky-100 hover:outline-sky-200"
         >
           SUBMIT
         </UIButton>
