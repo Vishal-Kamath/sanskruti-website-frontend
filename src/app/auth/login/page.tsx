@@ -15,6 +15,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import UIButton from "@/components/common/button";
 import { Metadata, NextPage } from "next";
+import { loggedIn } from "@/redux/slice/user.slice";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX - Login",
@@ -24,34 +25,50 @@ const LoginPage: NextPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [mobileNumber, setMobileNumber] = useState<number | null>(null);
+  const [emailOrNumber, setEmailOrNumber] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [withEmail, setWithEmail] = useState(true);
+  const checkType = () => {
+    if (Number.isNaN(emailOrNumber)) {
+      return emailOrNumber;
+    } else {
+      return Number(emailOrNumber);
+    }
+  };
 
   const _submit = async () => {
-    if (!email?.trim() || !password?.trim()) {
+    if (!emailOrNumber?.trim() || !password?.trim()) {
       dispatch(
-        setNotification({ message: "fill all details", type: "warning" })
+        setNotification({
+          message: "fill all details",
+          type: "warning",
+          content:
+            "We request the user to please fill all the required fields.",
+        })
       );
       return dispatch(showNotification());
     }
-    const link = `${process.env.ENDPOINT}/api/v1/user/emaillogin`;
-    const body = withEmail
-      ? { emailOrNumber: email, password }
-      : { emailOrNumber: mobileNumber, password };
+
+    const emailOrNumberWithType = checkType();
+
+    const link = `${process.env.ENDPOINT}/api/v1/user/login`;
+    const body = { emailOrNumber: emailOrNumberWithType, password };
 
     const registerResponse = await axios
-      .post<NotificationType & { accessToken: string }>(link, body)
+      .post<NotificationType>(link, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         const response = res.data;
+        console.log(res);
         dispatch(
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
         if (res.status === 200) {
-          dispatch(setAccessToken({ accessToken: response.accessToken }));
           dispatch(loggedIn());
           return router.replace("/");
         }
@@ -68,35 +85,21 @@ const LoginPage: NextPage = () => {
       });
   };
 
+  const handleGoogleAuth = () => {
+    window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
+  };
+
   return (
     <div className="flex w-full flex-col justify-center gap-5 rounded-md">
       <div className="text-center text-xl font-bold ">LOGIN</div>
 
       <div className="flex flex-col gap-3">
-        <div className="flex gap-3">
-          {withEmail ? (
-            <Input
-              input_type="email"
-              placeholder="Email"
-              value={email}
-              setValue={setEmail}
-            />
-          ) : (
-            <Input
-              input_type="tel"
-              placeholder="Mobile number"
-              value={mobileNumber}
-              setValue={setMobileNumber}
-            />
-          )}
-
-          <UIButton
-            className="w-[12rem] text-xs border-gray-400"
-            onClick={() => setWithEmail((state) => !state)}
-          >
-            Login with {withEmail ? "Number" : "Email"}
-          </UIButton>
-        </div>
+        <Input
+          input_type="text"
+          placeholder="Login with email or number"
+          value={emailOrNumber}
+          setValue={setEmailOrNumber}
+        />
 
         {/* Password */}
         <Input
@@ -109,10 +112,6 @@ const LoginPage: NextPage = () => {
         <UIButton
           className="h-10 border-black bg-black text-white"
           onClick={_submit}
-          // onClick={() => {
-          //   dispatch(loggedIn());
-          //   router.push("/user");
-          // }}
         >
           SUBMIT
         </UIButton>
@@ -121,10 +120,11 @@ const LoginPage: NextPage = () => {
       <span className="text-center">OR</span>
 
       <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
-        <UIButton className="w-full gap-2">
+        <UIButton onClick={handleGoogleAuth} className="w-full gap-2">
           <FcGoogle className="h-6 w-6" />
           <span>GOOGLE</span>
         </UIButton>
+
         <UIButton className="w-full gap-2">
           <BsFacebook className="h-6 w-6 text-facebook" />
           <span>FACEBOOK</span>
@@ -135,7 +135,7 @@ const LoginPage: NextPage = () => {
         Don&apos;t have an account?
         <Link
           href="/auth/register"
-          className="text-blue-700 font-semibold hover:text-blue-500 hover:underline"
+          className="font-semibold text-blue-700 hover:text-blue-500 hover:underline"
         >
           register here
         </Link>
