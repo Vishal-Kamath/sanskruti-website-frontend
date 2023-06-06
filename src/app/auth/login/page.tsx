@@ -29,7 +29,7 @@ const LoginPage: NextPage = () => {
   const [password, setPassword] = useState("");
 
   const checkType = () => {
-    if (Number.isNaN(emailOrNumber)) {
+    if (Number.isNaN(Number(emailOrNumber))) {
       return emailOrNumber;
     } else {
       return Number(emailOrNumber);
