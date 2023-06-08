@@ -1,6 +1,8 @@
 // Temp Static Data
 export type FilterType = {
   main: string;
+  image: string;
+  link: string;
   sub: {
     title: string;
   }[];
@@ -9,6 +11,8 @@ export type FilterType = {
 export const filters: FilterType[] = [
   {
     main: "Salwar Kameez",
+    image: "/temp/Salwar Kameez.png",
+    link: "/category/Salwar Kameez",
     sub: [
       { title: "Sharara Suits" },
       { title: "Anarkali Suits" },
@@ -22,6 +26,8 @@ export const filters: FilterType[] = [
   },
   {
     main: "Lehenga's",
+    image: "/temp/Lehenga's.png",
+    link: "/category/Lehenga's",
     sub: [
       { title: "Bridal lehengas" },
       { title: "Brides maid lehengas" },
@@ -34,6 +40,8 @@ export const filters: FilterType[] = [
   },
   {
     main: "Indo Western",
+    image: "/temp/Indo Western.png",
+    link: "/category/Indo Western",
     sub: [
       { title: "Gown" },
       { title: "Indowestern Anarhati" },
@@ -45,7 +53,15 @@ export const filters: FilterType[] = [
     ],
   },
   {
+    main: "Bridal",
+    image: "/temp/Bridal.png",
+    link: "/category/Bridal",
+    sub: [],
+  },
+  {
     main: "Kurti's",
+    image: "/temp/Kurti's.png",
+    link: "/category/Kurti's",
     sub: [
       { title: "Gown" },
       { title: "Indowestern Anarhati" },
@@ -55,5 +71,17 @@ export const filters: FilterType[] = [
       { title: "Ready Pleated Sarees" },
       { title: "Jacket lehengas" },
     ],
+  },
+  {
+    main: "Western Wear",
+    image: "/temp/Western Wear.png",
+    link: "/category/Western Wear",
+    sub: [],
+  },
+  {
+    main: "Dress Material's",
+    image: "/temp/Dress Material's.png",
+    link: "/category/Dress Material's",
+    sub: [],
   },
 ];
