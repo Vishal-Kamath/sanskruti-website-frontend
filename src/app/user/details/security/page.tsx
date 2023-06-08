@@ -10,14 +10,20 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
-import { useAppDispatch } from "@/redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import z from "zod";
+import { useRouter } from "next/navigation";
+import { selectUser } from "@/redux/slice/user.slice";
 
 const SecurityPage: FC = () => {
   const dispatch = useAppDispatch();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
+
+  const router = useRouter();
+  const user = useAppSelector(selectUser);
+  if (user.provider !== "Email/Number") router.replace("/user/details");
 
   const validateTypes = (): { valid: boolean } & NotificationType => {
     const passwordSchema = z.string().min(6);
