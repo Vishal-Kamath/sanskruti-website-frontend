@@ -1,6 +1,3 @@
-"use client";
-
-import { FC, useState, useEffect } from "react";
 import { FiPhoneCall } from "react-icons/fi";
 import { MdLocationOn } from "react-icons/md";
 
@@ -9,23 +6,9 @@ import { Autoplay } from "swiper";
 
 import "swiper/css";
 import "swiper/css/autoplay";
+import Image from "next/image";
 
 const TopBanner: React.FC = () => {
-  const [isMobile, setIsMobile] = useState<boolean>();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <Swiper
       modules={[Autoplay]}
@@ -34,25 +17,31 @@ const TopBanner: React.FC = () => {
         delay: 2500,
         disableOnInteraction: false,
       }}
-      slidesPerView={isMobile ? 1 : 3}
-      className="w-full flex bg-black text-white [&>*>*]:py-1"
+      slidesPerView={1}
+      className="flex w-full bg-black text-white [&>*>*]:h-4"
     >
       <SwiperSlide>
-        <div className="flex items-center gap-2 text-sm justify-center">
+        <div className="flex items-center justify-center gap-2 text-sm">
           <FiPhoneCall />
           <span>+91-1234567890</span>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="flex items-center gap-2 text-sm justify-center">
-          <img src="/assets/truck.svg" alt="Shipping truck" />
+        <div className="flex items-center justify-center gap-2 text-sm">
+          <Image
+            src="/assets/truck.svg"
+            alt="Shipping truck"
+            width={20}
+            height={20}
+            className="h-fit w-fit"
+          />
           <span>Free Shipping in India</span>
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <a
           href="#visitOurStore"
-          className="flex items-center gap-2 text-sm justify-center"
+          className="flex items-center justify-center gap-2 text-sm"
         >
           <MdLocationOn className="text-lg" />
           <span>Visit Our Store</span>
