@@ -119,15 +119,17 @@ const EditProfile: FC = () => {
             setValue={setUsername}
           />
         </div>
-        <div className="flex w-full flex-col gap-2">
-          <span className="shrink-0 text-lg">Update email:</span>
-          <Input
-            input_type="text"
-            placeholder=""
-            value={email}
-            setValue={setEmail}
-          />
-        </div>
+        {user.provider === "Email/Number" && (
+          <div className="flex w-full flex-col gap-2">
+            <span className="shrink-0 text-lg">Update email:</span>
+            <Input
+              input_type="text"
+              placeholder=""
+              value={email}
+              setValue={setEmail}
+            />
+          </div>
+        )}
         <div className="flex w-full flex-col gap-2">
           <span className="shrink-0 text-lg">Update mobile number:</span>
           <Input
