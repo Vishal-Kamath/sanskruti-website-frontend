@@ -1,6 +1,7 @@
 "use client";
 
-import Container from "@/components/user/container";
+import UIButton from "@/components/common/button";
+import Container from "@/app/user/components/container";
 import { selectUser } from "@/redux/slice/user.slice";
 import { useAppSelector } from "@/redux/store/hooks";
 import Link from "next/link";
@@ -10,20 +11,29 @@ import { BsPerson } from "react-icons/bs";
 
 const DetailsPage: FC = () => {
   const user = useAppSelector(selectUser);
+
   return (
     <Container containerTitle="User Details">
-      <div className="flex gap-3 text-lg">
-        <BsPerson className="h-[15rem] w-[15rem] rounded-md bg-slate-50 p-3 text-sky-400 border-2 border-slate-300" />
-        <div className="flex flex-col gap-1">
-          <div>{user.name}</div>
-          <div>{user.email}</div>
-          <div>{user.Mobile_No}</div>
-          <Link
-            href="/user/details/edit"
-            className="mt-4 flex items-center w-fit gap-1 border-b-2 border-white text-sky-400 hover:border-sky-400"
-          >
-            <span>Edit</span>
-            <AiFillEdit />
+      <div className="flex gap-3 text-lg max-md:flex-col">
+        <BsPerson className="aspect-square h-full w-full shrink-0 rounded-md border-2 border-slate-300 bg-slate-50 p-3 text-sky-400 md:h-[15rem] md:w-[15rem]" />
+        <div className="flex w-full flex-col gap-1">
+          <div className="flex justify-between">
+            <h4 className="font-semibold">Username</h4>
+            <div className="text-gray-500">{user.username}</div>
+          </div>
+          <div className="flex justify-between">
+            <h4 className="font-semibold">Email</h4>
+            <div className="text-gray-500">{user.email}</div>
+          </div>
+          <div className="flex justify-between">
+            <h4 className="font-semibold">Mobile Number</h4>
+            <div className="text-gray-500">{user.Mobile_No}</div>
+          </div>
+          <Link href="/user/details/edit" className="ml-auto mt-7">
+            <UIButton className="flex w-fit items-center gap-1 border-gray-300 px-3 py-1 text-blue-500 hover:outline-blue-200">
+              <span>Edit</span>
+              <AiFillEdit />
+            </UIButton>
           </Link>
         </div>
       </div>
