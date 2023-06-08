@@ -22,7 +22,7 @@ const Notification: React.FC<NotificationType> = ({
   return (
     <div
       className={cn(
-        "flex flex-col w-full max-w-md gap-3 rounded-md border-[3px] p-3 bg-white",
+        "flex w-full max-w-md flex-col gap-3 rounded-md border-[3px] bg-white p-3 text-sm",
         type === "success" && "border-green-500",
         (type === "info" || type === undefined) && "border-gray-500",
         type === "warning" && "border-amber-500",
@@ -38,7 +38,7 @@ const Notification: React.FC<NotificationType> = ({
           type === "error" && "text-red-800"
         )}
       >
-        <div className="flex items-center [&>*]:w-5 [&>*]:h-5">
+        <div className="flex items-center [&>*]:h-5 [&>*]:w-5">
           {type === "success" && <BsCheckCircle />}
           {(type === "info" || type === undefined) && (
             <BsExclamationCircleFill />
@@ -48,10 +48,10 @@ const Notification: React.FC<NotificationType> = ({
         </div>
         <div>{message || "Some thing went wrong"}</div>
         <button className="ml-auto" onClick={close}>
-          <RxCross2 className="w-5 h-5" />
+          <RxCross2 className="h-5 w-5" />
         </button>
       </div>
-      <div className="text-gray-500">{content}</div>
+      <div className={cn("text-gray-500", !content && "hidden")}>{content}</div>
     </div>
   );
 };
