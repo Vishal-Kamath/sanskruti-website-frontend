@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/utils/lib";
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, useState } from "react";
 import Container from "./container";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -13,13 +13,18 @@ const DashboardContainer: FC<Props> = ({
   className,
   ...props
 }) => {
+  const [open, setOpen] = useState(false);
   return (
     <Container
       containerTitle={dashboardTitle}
       className={cn("md:w-[20rem]", className)}
+      toggler={() => setOpen((open) => !open)}
+      openState={open}
       {...props}
     >
-      <div className="flex flex-col">{children}</div>
+      <div className={cn("flex flex-col", !open && "max-md:hidden")}>
+        {children}
+      </div>
     </Container>
   );
 };
