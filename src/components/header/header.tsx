@@ -17,6 +17,8 @@ import {
 } from "@/redux/slice/sidebar.slice";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { selectisAuthenticated } from "@/redux/slice/user.slice";
+import Navbar from "./navbar";
 
 const Header: FC = () => {
   const router = useRouter();
@@ -24,14 +26,23 @@ const Header: FC = () => {
   const [search, setSearch] = useState("");
 
   const sideBarOpen = useAppSelector(selectSidebarOpen);
+  const isAuthenticated = useAppSelector(selectisAuthenticated);
 
   const userRedirect = () => {
-    // if (!isLoggedIn) return router.push("/user/login");
-    router.push("/auth");
+    if (!isAuthenticated) return router.push("/auth/login");
+    router.push("/user/details");
+  };
+  const userRedirectCart = () => {
+    if (!isAuthenticated) return router.push("/auth/login");
+    router.push("/user/cart");
+  };
+  const userRedirectWishList = () => {
+    if (!isAuthenticated) return router.push("/auth/login");
+    router.push("/user/wishlist");
   };
 
   return (
-    <header className="fixed top-0 isolate z-40 flex w-full flex-col text-black shadow-md">
+    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
 
       <div className="flex h-12 items-center justify-between bg-white px-[5vw]">
@@ -70,17 +81,13 @@ const Header: FC = () => {
           <div onClick={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
           </div>
-          <Link href="/wishlist">
-            <div className="relative">
-              <AiOutlineHeart className="h-6 w-6" />
-              <div className="absolute right-0 top-0 grid h-5 w-5 -translate-y-2 translate-x-1/2 place-content-center rounded-full bg-gray-300">
-                7
-              </div>
-            </div>
-          </Link>
-          <Link href="/cart">
-            <MdOutlineShoppingBag className="h-6 w-6" />
-          </Link>
+          <div onClick={userRedirectWishList}>
+            <AiOutlineHeart className="h-6 w-6" />
+          </div>
+          <MdOutlineShoppingBag
+            onClick={userRedirectCart}
+            className="h-6 w-6"
+          />
         </div>
       </div>
 
@@ -91,6 +98,7 @@ const Header: FC = () => {
           setSearch={setSearch}
         />
       </div>
+      <Navbar />
     </header>
   );
 };
