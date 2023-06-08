@@ -1,46 +1,53 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
 
-type UserAuthType = {
+export type UserAuthType = {
   isAuthenticated: boolean;
-  accessToken?: string;
-  loading: boolean;
 };
 
-type UserType = {
-  name?: string;
+export type Address = {
+  id: string;
+  fullName: string;
+  contactNo: number;
+  pincode: number;
+  nearBy: string;
+  landmark: string;
+  city: string;
+  state: string;
+};
+
+export type UserType = {
+  username?: string;
   email?: string;
-  address?: string;
+  address: Address[];
   Mobile_No?: number;
-  dob?: Date;
+  provider?: "Email/Number" | "google";
 };
 
 const initialState: UserAuthType & UserType = {
   isAuthenticated: false,
-  loading: false,
   // user
-  name: "John Doe",
+  username: "John Doe",
   Mobile_No: 1234567890,
   email: "Johndoe@email.com",
+  address: [],
 };
 
 export const user = createSlice({
   name: "user",
   initialState,
   reducers: {
-    // accessToken
-    setAccessToken: (
-      state,
-      action: PayloadAction<UserAuthType["accessToken"]>
-    ) => {
-      state.accessToken = action.payload;
-    },
     // user
     setUser: (state, action: PayloadAction<UserType>) => {
       state.email = action.payload.email;
-      state.name = action.payload.name;
+      state.username = action.payload.username;
       state.Mobile_No = action.payload.Mobile_No;
+      state.address = action.payload.address;
     },
+    setAddress: (state, action: PayloadAction<Address[]>) => {
+      state.address = action.payload;
+    },
+
     // login status
     loggedIn: (state) => {
       state.isAuthenticated = true;
@@ -51,7 +58,7 @@ export const user = createSlice({
   },
 });
 
-export const { setAccessToken, setUser, loggedIn, loggedOut } = user.actions;
+export const { setUser, setAddress, loggedIn, loggedOut } = user.actions;
 
 export const selectisAuthenticated = (state: RootState) =>
   state.user.isAuthenticated;
