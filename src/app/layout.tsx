@@ -7,6 +7,7 @@ import NotificationComponent from "@/components/notification/notificationCompone
 import { cn } from "@/utils/lib";
 
 import { Poppins, Ysabeau } from "next/font/google";
+import AuthComponent from "@/components/authComponent";
 const poppins = Poppins({
   weight: ["100", "500"],
   subsets: ["latin"],
@@ -57,18 +58,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ProviderComponent>
-        <body
-          className={cn(
-            poppins.variable,
-            ysabeau.variable,
-            "relative flex min-h-screen select-none flex-col bg-white text-black"
-          )}
-        >
-          <Header />
-          <NotificationComponent />
-          {children}
-          <Footer />
-        </body>
+        <AuthComponent>
+          <body
+            className={cn(
+              poppins.variable,
+              ysabeau.variable,
+              "relative flex min-h-screen select-none flex-col bg-white font-poppins text-black"
+            )}
+          >
+            <Header />
+            <NotificationComponent />
+            {children}
+            <Footer />
+          </body>
+        </AuthComponent>
       </ProviderComponent>
     </html>
   );
