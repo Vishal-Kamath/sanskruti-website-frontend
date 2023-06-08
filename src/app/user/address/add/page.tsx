@@ -47,6 +47,19 @@ const AddAddressPage: FC = () => {
       return dispatch(showNotification());
     }
 
+    const pincodePatttern = /^[1-9][0-9]{5}$/;
+    if (!pincodePatttern.test(pincode)) {
+      dispatch(
+        setNotification({
+          message: "Not a valid pincode",
+          type: "warning",
+          content:
+            "According to indian standard, a valid pincode is a 6-digit number. example: 123456",
+        })
+      );
+      return dispatch(showNotification());
+    }
+
     await axios
       .post<NotificationType & { address: Address[] }>(
         `${process.env.ENDPOINT}/api/v1/user/address`,
