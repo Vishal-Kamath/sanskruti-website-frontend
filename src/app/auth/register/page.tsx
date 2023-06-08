@@ -133,6 +133,10 @@ const RegisterPage: NextPage = () => {
       });
   };
 
+  const handleGoogleAuth = () => {
+    window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
+  };
+
   return (
     <div className="flex w-full flex-col justify-center gap-5 rounded-md">
       <div className="text-center text-xl font-bold">REGISTER</div>
@@ -184,7 +188,7 @@ const RegisterPage: NextPage = () => {
       <span className="text-center">OR</span>
 
       <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
-        <UIButton className="w-full gap-2">
+        <UIButton onClick={handleGoogleAuth} className="w-full gap-2">
           <FcGoogle className="h-6 w-6" />
           <span>GOOGLE</span>
         </UIButton>
