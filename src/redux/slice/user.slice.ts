@@ -43,6 +43,7 @@ export const user = createSlice({
       state.username = action.payload.username;
       state.Mobile_No = action.payload.Mobile_No;
       state.address = action.payload.address;
+      state.provider = action.payload.provider;
     },
     setAddress: (state, action: PayloadAction<Address[]>) => {
       state.address = action.payload;

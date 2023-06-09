@@ -1,5 +1,6 @@
 "use client";
 
+import { setLoading } from "@/redux/slice/loading.slice";
 import {
   UserType,
   loggedIn,
@@ -31,31 +32,85 @@ const AuthComponent: FC<Props> = ({ children }) => {
         withCredentials: true,
       })
       .then((response) => {
+        console.log(response.data);
         dispatch(
           setUser({
             username: response.data.username,
             email: response.data.email,
             Mobile_No: response.data.Mobile_No,
             address: response.data.address,
+            provider: response.data.provider,
           })
         );
         dispatch(loggedIn());
         firstFetch.current = false;
+
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 20 })),
+          200
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 75 })),
+          1000
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 100 })),
+          1600
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: false, value: 0 })),
+          1650
+        );
       })
       .catch(() => {
         dispatch(setUser({ address: [] }));
         dispatch(loggedOut());
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 20 })),
+          200
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 75 })),
+          1000
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 100 })),
+          1600
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: false, value: 0 })),
+          1650
+        );
       });
-
+    console.log(user);
     if (!user.isAuthenticated && pathname.includes("/user")) {
       router.replace("/");
     }
   };
 
   useEffect(() => {
+    dispatch(setLoading({ loading: true, value: 0 }));
     if (firstFetch.current || pathname.includes("/user")) {
       getUser();
       console.log("fetch");
+    } else {
+      setTimeout(() => dispatch(setLoading({ loading: true, value: 20 })), 200);
+      setTimeout(
+        () => dispatch(setLoading({ loading: true, value: 55 })),
+        1000
+      );
+      setTimeout(
+        () => dispatch(setLoading({ loading: true, value: 75 })),
+        1400
+      );
+      setTimeout(
+        () => dispatch(setLoading({ loading: true, value: 100 })),
+        1600
+      );
+      setTimeout(
+        () => dispatch(setLoading({ loading: false, value: 0 })),
+        1650
+      );
     }
   }, [pathname]);
 
