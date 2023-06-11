@@ -109,43 +109,40 @@ const EditProfile: FC = () => {
 
   return (
     <Container containerTitle="Edit Profile Details">
-      <div className="mx-auto flex w-full flex-col gap-6 md:max-w-lg">
-        <div className="flex w-full flex-col gap-2">
-          <span className="shrink-0 text-lg">Update username:</span>
+      <div className="mt-4 flex w-full flex-col gap-6">
+        <div className="text-justify text-gray-500">
+          Ensure your profile information is accurate and up-to-date.
+          Periodically review and update your details to ensure relevancy.
+          Keeping your profile information current helps us provide you with a
+          better user experience. Stay connected with the latest updates!
+        </div>
+        <div className="flex w-full shrink-0 flex-col gap-6 md:max-w-lg">
           <Input
             input_type="text"
-            placeholder=""
+            placeholder="Update Username"
             value={username}
             setValue={setUsername}
           />
-        </div>
-        {user.provider === "Email/Number" && (
-          <div className="flex w-full flex-col gap-2">
-            <span className="shrink-0 text-lg">Update email:</span>
-            <Input
-              input_type="text"
-              placeholder=""
-              value={email}
-              setValue={setEmail}
-            />
-          </div>
-        )}
-        <div className="flex w-full flex-col gap-2">
-          <span className="shrink-0 text-lg">Update mobile number:</span>
           <Input
             input_type="text"
-            placeholder=""
+            placeholder="Update Email"
+            value={email}
+            setValue={setEmail}
+          />
+          <Input
+            input_type="text"
+            placeholder="Update Mobile Number"
             value={mobileNumber}
             setValue={setMobileNumber}
           />
-        </div>
 
-        <UIButton
-          onClick={submit}
-          className="ml-auto w-full bg-sky-100 hover:outline-sky-200"
-        >
-          SUBMIT
-        </UIButton>
+          <UIButton
+            onClick={submit}
+            className="mx-auto w-full rounded-full bg-gray-700 px-4 text-white hover:outline-sky-200"
+          >
+            SUBMIT
+          </UIButton>
+        </div>
       </div>
     </Container>
   );
