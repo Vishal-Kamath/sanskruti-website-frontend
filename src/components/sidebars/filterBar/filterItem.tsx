@@ -19,37 +19,27 @@ const FilterItem: FC<{
   const query = useSearchParams();
 
   const onClick = (value: string) => {
-    // router.push({
-    //   pathname: pathname,
-    //   query: {
-    //     ...query,
-    //     [main]: value,
-    //   },
-    // });
-    // setSelected(value);
+    router.push(pathname);
+    setSelected(value);
   };
 
   const deSelect = () => {
     const radio = document.getElementById(selected) as HTMLInputElement;
     radio.checked = false;
 
-    // const tags = router.query;
-    // delete tags[main];
-
-    // router.push({
-    //   pathname: router.pathname,
-    //   query: tags,
-    // });
-    setSelected("");
+    const keys = query.keys();
+    const values = query.values();
+    console.log(keys);
+    console.log(values);
+    // router.push();
+    // setSelected("");
   };
 
   useEffect(() => {
-    const selectedTagFromQuery = decodeURIComponent(
-      query.get(encodeURIComponent(main)) || ""
-    );
+    const selectedTagFromQuery = decodeURIComponent(query.get(main) || "");
     if (!selectedTagFromQuery) return;
     setSelected(selectedTagFromQuery);
-  }, []);
+  }, [query, main]);
 
   return (
     <div className="flex flex-col">
@@ -76,7 +66,7 @@ const FilterItem: FC<{
       </div>
       <div
         className={cn(
-          "scrollbar-thin scrollbar-track-gray-400 flex max-h-[15rem] flex-col gap-1 overflow-x-hidden overflow-y-auto bg-gray-50 py-1 pr-4",
+          "flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden bg-gray-50 py-1 pr-4 scrollbar-thin scrollbar-track-gray-400",
           classname,
           !open && "hidden"
         )}

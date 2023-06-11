@@ -62,15 +62,7 @@ export const filters: FilterType[] = [
     main: "Kurti's",
     image: "/temp/Kurti's.png",
     link: "/category/Kurti's",
-    sub: [
-      { title: "Gown" },
-      { title: "Indowestern Anarhati" },
-      { title: "Jumpsuits" },
-      { title: "Cape Suits" },
-      { title: "Crop top Suits" },
-      { title: "Ready Pleated Sarees" },
-      { title: "Jacket lehengas" },
-    ],
+    sub: [],
   },
   {
     main: "Western Wear",
