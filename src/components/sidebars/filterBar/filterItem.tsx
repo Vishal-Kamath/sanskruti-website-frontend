@@ -16,30 +16,34 @@ const FilterItem: FC<{
 
   const router = useRouter();
   const pathname = usePathname();
-  const query = useSearchParams();
+  const searchParams = useSearchParams();
 
   const onClick = (value: string) => {
-    router.push(pathname);
+    const current = new URLSearchParams(searchParams.toString());
+    current.set(main, value);
+    const query = !!current.toString() ? `?${current.toString()}` : "";
+    router.push(`${pathname}/${query}`);
     setSelected(value);
   };
 
   const deSelect = () => {
     const radio = document.getElementById(selected) as HTMLInputElement;
     radio.checked = false;
+    setSelected("");
 
-    const keys = query.keys();
-    const values = query.values();
-    console.log(keys);
-    console.log(values);
-    // router.push();
-    // setSelected("");
+    const current = new URLSearchParams(searchParams.toString());
+    current.delete(main);
+    const query = !!current.toString() ? `?${current.toString()}` : "";
+    router.push(`${pathname}/${query}`);
   };
 
   useEffect(() => {
-    const selectedTagFromQuery = decodeURIComponent(query.get(main) || "");
+    const selectedTagFromQuery = decodeURIComponent(
+      searchParams.get(main) || ""
+    );
     if (!selectedTagFromQuery) return;
     setSelected(selectedTagFromQuery);
-  }, [query, main]);
+  }, [searchParams, main]);
 
   return (
     <div className="flex flex-col">
