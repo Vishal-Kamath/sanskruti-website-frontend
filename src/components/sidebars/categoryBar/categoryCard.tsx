@@ -20,7 +20,7 @@ const CategoryCard: FC<Props> = ({ main, image, link }) => {
         height={500}
         className="absolute left-0 top-0 -z-10 h-full w-full rounded-md object-cover object-top"
       />
-      <div className="mt-auto flex h-10 w-full items-center justify-center rounded-md bg-white">
+      <div className="mt-auto flex h-10 w-full items-center justify-center rounded-md bg-white bg-opacity-70">
         {main}
       </div>
     </Link>
