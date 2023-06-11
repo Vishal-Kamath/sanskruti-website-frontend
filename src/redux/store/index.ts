@@ -2,14 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import sidebarReducer from "@/redux/slice/sidebar.slice";
 import notificationReducer from "@/redux/slice/notification.slice";
 import userReducer from "@/redux/slice/user.slice";
-import filterReducer from "@/redux/slice/filter.slice";
 import loadingReducer from "@/redux/slice/loading.slice";
 
 export const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
     loading: loadingReducer,
-    filter: filterReducer,
     user: userReducer,
     notification: notificationReducer,
   },
