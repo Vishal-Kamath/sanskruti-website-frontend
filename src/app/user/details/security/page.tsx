@@ -105,41 +105,40 @@ const SecurityPage: FC = () => {
   };
   return (
     <Container containerTitle="Security">
-      <div className="mx-auto flex w-full flex-col gap-6 md:max-w-lg">
-        <div className="flex w-full flex-col gap-2">
-          <span className="shrink-0 text-lg">Your old password:</span>
+      <div className="mt-4 flex w-full flex-col gap-6">
+        <div className="text-justify text-gray-500">
+          Please note that it's essential to regularly update your password for
+          increased security. Remember to choose a strong, unique combination of
+          characters, numbers, and symbols. Stay proactive and safeguard your
+          account by changing your password periodically.
+        </div>
+        <div className="flex w-full shrink-0 flex-col gap-6 md:max-w-lg">
           <Input
             input_type="password"
-            placeholder=""
+            placeholder="Current Password"
             value={password}
             setValue={setPassword}
           />
-        </div>
-        <div className="flex w-full flex-col gap-2">
-          <span className="shrink-0 text-lg">Your new password:</span>
           <Input
             input_type="password"
-            placeholder=""
+            placeholder="New Password"
             value={newPassword}
             setValue={setNewPassword}
           />
-        </div>
-        <div className="flex w-full flex-col gap-2">
-          <span className="shrink-0 text-lg">Confirm new password:</span>
           <Input
             input_type="password"
-            placeholder=""
+            placeholder="Confirm New Password"
             value={confirmNewPassword}
             setValue={setConfirmNewPassword}
           />
-        </div>
 
-        <UIButton
-          onClick={submit}
-          className="ml-auto w-full bg-sky-100 hover:outline-sky-200"
-        >
-          SUBMIT
-        </UIButton>
+          <UIButton
+            onClick={submit}
+            className="mx-auto w-full rounded-full bg-gray-700 px-4 text-white hover:outline-sky-200"
+          >
+            SUBMIT
+          </UIButton>
+        </div>
       </div>
     </Container>
   );
