@@ -2,29 +2,19 @@
 
 import ProductCard from "@/components/productCard";
 import FilterBar from "@/components/sidebars/filterBar/filterBar";
-import { setFilter } from "@/redux/slice/filter.slice";
-import { useAppDispatch } from "@/redux/store/hooks";
-import { useParams, useRouter } from "next/navigation";
 import Head from "next/head";
-import { useEffect } from "react";
+import { useParams } from "next/navigation";
 
 const CategoryPage = async () => {
   const params = useParams();
-  const router = useRouter();
-  const categoryName = decodeURI(params["categoryName"]);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (!categoryName) return router.replace("/");
-    dispatch(setFilter(categoryName));
-  }, []);
+  const categoryName = decodeURIComponent(params["categoryName"]);
 
   return (
     <>
       <Head>
         <title>{`Category - ${categoryName}`}</title>
       </Head>
-      <div className="mb-10 border-b-2 border-gray-300 pt-24 max-md:pt-36">
+      <div className="mb-10 border-b-2 border-gray-300 pt-[93px] max-md:pt-28">
         <div className="grid h-[10rem] w-full place-content-center bg-slate-950 text-white">
           <span className="font-poppins text-2xl font-semibold">
             {categoryName}
