@@ -14,27 +14,35 @@ const DetailsPage: FC = () => {
 
   return (
     <Container containerTitle="User Details">
-      <div className="flex gap-3 text-lg max-md:flex-col">
-        <BsPerson className="aspect-square h-full w-full shrink-0 rounded-md border-2 border-slate-300 bg-slate-50 p-3 text-sky-400 md:h-[15rem] md:w-[15rem]" />
-        <div className="flex w-full flex-col gap-1">
-          <div className="flex justify-between">
-            <h4 className="font-semibold">Username</h4>
-            <div className="text-gray-500">{user.username}</div>
+      <div className="mt-4 flex w-full flex-col gap-6">
+        <div className="text-justify text-gray-500">
+          Ensure your profile information is accurate and up-to-date.
+          Periodically review and update your details to ensure relevancy.
+          Keeping your profile information current helps us provide you with a
+          better user experience. Stay connected with the latest updates!
+        </div>
+        <div className="flex items-center gap-7 text-sm max-lg:flex-col max-lg:items-center">
+          <BsPerson className="aspect-square h-[10rem] w-full shrink-0 rounded-[2rem] border-2 border-slate-300 bg-slate-50 p-9 text-sky-400 lg:h-[15rem] lg:w-[15rem]" />
+          <div className="flex w-full flex-col gap-1 text-sm md:text-lg">
+            <div className="flex justify-between">
+              <h4 className="font-normal">Username</h4>
+              <div className="text-gray-500">{user.username}</div>
+            </div>
+            <div className="flex justify-between">
+              <h4 className="font-normal">Email</h4>
+              <div className="text-gray-500">{user.email}</div>
+            </div>
+            <div className="flex justify-between">
+              <h4 className="font-normal">Mobile Number</h4>
+              <div className="text-gray-500">{user.Mobile_No}</div>
+            </div>
+            <Link href="/user/details/edit" className="ml-auto mt-7">
+              <UIButton className="flex w-fit items-center gap-1 border-gray-300 px-3 py-1 text-blue-500 hover:outline-blue-200">
+                <span>Edit</span>
+                <AiFillEdit />
+              </UIButton>
+            </Link>
           </div>
-          <div className="flex justify-between">
-            <h4 className="font-semibold">Email</h4>
-            <div className="text-gray-500">{user.email}</div>
-          </div>
-          <div className="flex justify-between">
-            <h4 className="font-semibold">Mobile Number</h4>
-            <div className="text-gray-500">{user.Mobile_No}</div>
-          </div>
-          <Link href="/user/details/edit" className="ml-auto mt-7">
-            <UIButton className="flex w-fit items-center gap-1 border-gray-300 px-3 py-1 text-blue-500 hover:outline-blue-200">
-              <span>Edit</span>
-              <AiFillEdit />
-            </UIButton>
-          </Link>
         </div>
       </div>
     </Container>
