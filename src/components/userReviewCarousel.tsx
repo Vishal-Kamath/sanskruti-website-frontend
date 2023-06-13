@@ -15,7 +15,7 @@ const UserReviewCarousel: FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 1024);
     };
 
     handleResize();
@@ -28,7 +28,7 @@ const UserReviewCarousel: FC = () => {
 
   return (
     <div className="mt-10 w-full bg-white px-[3vw]">
-      <div className="flex h-[30rem] flex-col gap-2">
+      <div className="flex h-[35rem] flex-col gap-2 sm:h-[30rem]">
         <div className="text-center font-bold">Customer Review</div>
         <Swiper
           modules={[Autoplay]}
@@ -42,13 +42,13 @@ const UserReviewCarousel: FC = () => {
         >
           {userReviews.map((review, index) => (
             <SwiperSlide key={review.image + index}>
-              <div className="flex w-full gap-5 rounded-xl border-2 border-gray-300 p-5">
+              <div className="flex w-full items-center gap-5 rounded-xl border-2 border-gray-300 p-5 max-sm:flex-col">
                 <Image
                   src={review.image}
                   alt={review.name}
                   width={500}
                   height={500}
-                  className="h-[20rem] w-full rounded-lg object-contain"
+                  className="h-[20rem] w-fit rounded-lg object-contain"
                 />
                 <div className="flex flex-col items-center justify-center gap-3">
                   <i className="text-center text-sm text-gray-400">
