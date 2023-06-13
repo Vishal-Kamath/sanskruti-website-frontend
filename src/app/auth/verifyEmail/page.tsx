@@ -40,14 +40,10 @@ const LoginPage: NextPage = () => {
       )
       .then((res) => {
         const response = res.data;
-        console.log(res);
         dispatch(
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
-        if (res.status === 200) {
-          return setTimeout(() => router.replace("/"), 1000);
-        }
       })
       .catch((err) => {
         const response = err.response.data;
@@ -58,7 +54,6 @@ const LoginPage: NextPage = () => {
           })
         );
         dispatch(showNotification());
-        return router.replace("/");
       });
   };
 

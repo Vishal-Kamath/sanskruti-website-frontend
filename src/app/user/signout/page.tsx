@@ -31,7 +31,6 @@ const SignOutPage: FC = () => {
         })
         .then((res) => {
           const response = res.data;
-          console.log(res);
           dispatch(
             setNotification({ message: response.message, type: response.type })
           );
