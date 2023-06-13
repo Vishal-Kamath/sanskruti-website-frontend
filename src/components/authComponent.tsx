@@ -25,21 +25,22 @@ const AuthComponent: FC<Props> = ({ children }) => {
 
   const getUser = async () => {
     await axios
-      .get<UserType>(`${process.env.ENDPOINT}/api/v1/user/`, {
+      .get<{ userTrimmend: UserType }>(`${process.env.ENDPOINT}/api/v1/user/`, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(
           setUser({
-            username: response.data.username,
-            email: response.data.email,
-            Mobile_No: response.data.Mobile_No,
-            address: response.data.address,
-            provider: response.data.provider,
+            username: response.data.userTrimmend.username,
+            email: response.data.userTrimmend.email,
+            email_verified: response.data.userTrimmend.email_verified,
+            Mobile_No: response.data.userTrimmend.Mobile_No,
+            Mobile_No_verified: response.data.userTrimmend.Mobile_No_verified,
+            address: response.data.userTrimmend.address,
+            provider: response.data.userTrimmend.provider,
           })
         );
         dispatch(loggedIn());
@@ -82,7 +83,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
           1650
         );
       });
-    console.log(user);
     if (!user.isAuthenticated && pathname.includes("/user")) {
       router.replace("/");
     }
@@ -92,7 +92,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
     dispatch(setLoading({ loading: true, value: 0 }));
     if (firstFetch.current || pathname.includes("/user")) {
       getUser();
-      console.log("fetch");
     } else {
       setTimeout(() => dispatch(setLoading({ loading: true, value: 20 })), 200);
       setTimeout(
