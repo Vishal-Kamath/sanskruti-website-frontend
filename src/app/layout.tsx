@@ -64,7 +64,7 @@ export default function RootLayout({
             className={cn(
               poppins.variable,
               ysabeau.variable,
-              "relative flex min-h-screen select-none flex-col bg-white font-poppins text-sm text-black"
+              "relative flex min-h-screen select-none flex-col bg-white font-poppins text-xs md:text-sm text-black"
             )}
           >
             <LoadingComponent />
