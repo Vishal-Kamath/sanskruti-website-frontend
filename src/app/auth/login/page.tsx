@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import UIButton from "@/components/common/button";
 import { Metadata, NextPage } from "next";
 import { loggedIn } from "@/redux/slice/user.slice";
+import { BiArrowBack } from "react-icons/bi";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX - Login",
@@ -63,7 +64,6 @@ const LoginPage: NextPage = () => {
       })
       .then((res) => {
         const response = res.data;
-        console.log(res);
         dispatch(
           setNotification({ message: response.message, type: response.type })
         );
@@ -91,7 +91,17 @@ const LoginPage: NextPage = () => {
 
   return (
     <div className="flex w-full flex-col justify-center gap-5 rounded-md">
-      <div className="text-center text-xl font-bold ">LOGIN</div>
+      <div className="relative flex items-baseline justify-between">
+        <Link href="/">
+          <UIButton className="h-8 gap-2 border-gray-400 px-3 py-2 text-black">
+            <BiArrowBack />
+            <span>Back</span>
+          </UIButton>
+        </Link>
+        <div className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
+          LOGIN
+        </div>
+      </div>
 
       <div className="flex flex-col gap-3">
         <Input
@@ -102,12 +112,20 @@ const LoginPage: NextPage = () => {
         />
 
         {/* Password */}
-        <Input
-          input_type="password"
-          placeholder="Password"
-          value={password}
-          setValue={setPassword}
-        />
+        <div className="flex flex-col gap-1">
+          <Input
+            input_type="password"
+            placeholder="Password"
+            value={password}
+            setValue={setPassword}
+          />
+          <Link
+            href="/auth/forgotPassword"
+            className="ml-auto font-semibold text-gray-500 hover:text-blue-500 hover:underline"
+          >
+            forgot password?
+          </Link>
+        </div>
 
         <UIButton
           className="h-10 border-black bg-black text-white"
