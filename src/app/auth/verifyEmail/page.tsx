@@ -10,7 +10,6 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Metadata, NextPage } from "next";
 import { useEffect } from "react";
-import { BsPerson } from "react-icons/bs";
 import Image from "next/image";
 
 export const metadata: Metadata = {
@@ -18,14 +17,13 @@ export const metadata: Metadata = {
 };
 
 const LoginPage: NextPage = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
   const _submit = async () => {
-    const link = `${process.env.ENDPOINT}/api/v1/user/verify`;
+    const link = `${process.env.ENDPOINT}/api/v1/user/verifyEmail`;
 
     await axios
       .post<NotificationType>(
