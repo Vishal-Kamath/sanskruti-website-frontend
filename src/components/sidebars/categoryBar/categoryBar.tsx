@@ -35,7 +35,7 @@ const CategoryBar: FC = () => {
   }, []);
 
   return (
-    <div className="w-full bg-white px-[5vw]">
+    <div className="w-full bg-white px-[3vw]">
       <div className="flex flex-col gap-3">
         <h3 className="text-center font-ysabeau text-2xl font-semibold">
           Shop by categories

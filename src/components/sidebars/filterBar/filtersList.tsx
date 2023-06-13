@@ -41,9 +41,9 @@ const FilterList: FC = () => {
 
   return (
     <div className="flex flex-col">
-      <FilterItem main={main.main} sub={main.sub} classname="pl-[5vw] pr-2" />
-      <FilterItem {...Size} classname="pl-[5vw] pr-2" />
-      <FilterItem {...Color} classname="pl-[5vw] pr-2" />
+      <FilterItem main={main.main} sub={main.sub} classname="pl-[3vw] pr-2" />
+      <FilterItem {...Size} classname="pl-[3vw] pr-2" />
+      <FilterItem {...Color} classname="pl-[3vw] pr-2" />
     </div>
   );
 };

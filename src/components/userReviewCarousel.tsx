@@ -27,7 +27,7 @@ const UserReviewCarousel: FC = () => {
   }, []);
 
   return (
-    <div className="mt-10 w-full bg-white px-[5vw]">
+    <div className="mt-10 w-full bg-white px-[3vw]">
       <div className="flex h-[30rem] flex-col gap-2">
         <div className="text-center font-bold">Customer Review</div>
         <Swiper

@@ -11,7 +11,7 @@ const UserLayout: FC<Props> = ({ children }) => {
   const user = useAppSelector(selectUser);
 
   return (
-    <div className="flex h-full min-h-screen gap-5 px-[5vw] pb-10 pt-24 max-md:flex-col max-md:pt-36">
+    <div className="flex h-full min-h-screen gap-5 px-[3vw] pb-10 pt-24 max-md:flex-col max-md:pt-36">
       <div className="flex flex-col gap-5">
         <DashboardContainer dashboardTitle="Profile">
           <DashboardElement path="/user/details">Details</DashboardElement>

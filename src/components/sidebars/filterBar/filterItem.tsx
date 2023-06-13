@@ -50,7 +50,7 @@ const FilterItem: FC<{
       <div className={cn("flex flex-col gap-1 py-2 font-bold", classname)}>
         <h5 className="flex items-center justify-between">
           <span>{main}</span>
-          <span className="text-xl">
+          <span className="text-xl text-gray-500">
             {open ? (
               <AiOutlineMinus onClick={() => setOpen(false)} />
             ) : (
@@ -60,7 +60,7 @@ const FilterItem: FC<{
         </h5>
         <h5
           className={cn(
-            "flex w-fit items-center justify-between gap-3 rounded-md bg-green-200 px-2 py-1 font-semibold",
+            "flex w-fit items-center justify-between gap-3 rounded-md bg-emerald-100 px-2 py-1 font-semibold",
             !selected && "hidden"
           )}
         >

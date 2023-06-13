@@ -5,12 +5,12 @@ import Image from "next/image";
 const Footer: FC = () => {
   return (
     <footer className="mt-auto flex flex-col gap-3">
-      <a href="" className="px-[5vw]" target="_blank">
+      <a href="" className="px-[3vw]" target="_blank">
         <Image
           src="/assets/footerInstagramImage.png"
           alt="Visit our instagram diaries"
-          width={300}
-          height={300}
+          width={600}
+          height={600}
           className="w-full"
         />
       </a>
