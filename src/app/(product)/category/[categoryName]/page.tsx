@@ -15,7 +15,7 @@ const CategoryPage = async () => {
         <title>{`Category - ${categoryName}`}</title>
       </Head>
       <div className="mb-10 border-b-2 border-gray-300 pt-[93px] max-md:pt-28">
-        <div className="grid h-[10rem] w-full place-content-center bg-slate-950 text-white">
+        <div className="grid h-[5rem] w-full place-content-center bg-gradient-to-tr from-emerald-200 via-emerald-50 to-emerald-100 text-emerald-700">
           <span className="font-poppins text-2xl font-semibold">
             {categoryName}
           </span>
@@ -23,9 +23,9 @@ const CategoryPage = async () => {
 
         <div className="flex">
           <FilterBar />
-          <div className="flex w-full flex-col gap-3 px-[5vw] pb-10 pt-5 text-justify sm:pl-4">
+          <div className="flex w-full flex-col gap-3 px-[3vw] pb-10 pt-5 text-justify sm:pl-4">
             {/* Descriptiom */}
-            <div>
+            <div className="text-gray-500">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
               sequi officia dolorem temporibus reiciendis tenetur aliquid rerum
               placeat esse eligendi quod quos voluptate, corrupti distinctio

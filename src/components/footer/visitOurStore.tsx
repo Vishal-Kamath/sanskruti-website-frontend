@@ -6,7 +6,7 @@ const VisitOurStore: FC = () => {
   return (
     <div
       id="visitOurStore"
-      className="flex flex-col gap-4 border-t-2 border-gray-500 px-[5vw] py-5"
+      className="flex flex-col gap-4 border-t-2 border-gray-500 px-[3vw] py-5"
     >
       <div className="font-bold">VISIT OUR STORE</div>
       <div className="flex justify-between gap-2 max-md:flex-col-reverse">
@@ -18,7 +18,7 @@ const VisitOurStore: FC = () => {
           <span>Kalyan(West)</span>
           <span>Maharashtra 421301</span>
         </div>
-        <div className="relative rounded-md overflow-hidden">
+        <div className="relative overflow-hidden rounded-md">
           <Image
             src="/assets/storeImage.png"
             className="h-[15rem] w-full object-cover"

@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
+import React from "react";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
 
 const ProductImageDisplay: React.FC<{
   images: string[];
@@ -17,12 +17,12 @@ const ProductImageDisplay: React.FC<{
   setFullscreenImageOpen,
 }) => {
   return (
-    <div className="flex w-full flex-col px-[5vw] md:pr-0">
-      <div className="group relative max-w-2xl">
+    <div className="flex w-fit shrink-0 flex-row-reverse justify-end gap-3 px-[3vw] md:pr-0">
+      <div className="group relative w-fit max-w-2xl">
         <img
           src={images[currentImageIndex]}
           alt="product image"
-          className="cursor-zoom-in rounded-md border-2 border-black object-cover"
+          className="h-[80vh] cursor-zoom-in rounded-md border-2 border-black object-cover"
           onClick={() => setFullscreenImageOpen(true)}
         />
         {/* Left Arrow */}
@@ -47,14 +47,14 @@ const ProductImageDisplay: React.FC<{
           />
         </div>
       </div>
-      <div className="custom_scrollbar flex gap-2 overflow-x-auto overflow-y-hidden py-3">
+      <div className="custom_scrollbar flex flex-col gap-2 overflow-x-auto overflow-y-hidden py-3">
         {images.map((imageSrc, index) => (
           <img
             src={imageSrc}
             alt=""
             key={index}
-            className={`aspect-auto h-auto w-20 rounded-md border-2 hover:outline hover:outline-4 hover:outline-gray-300 ${
-              index === currentImageIndex ? 'border-black' : 'border-gray-600'
+            className={`aspect-auto h-20 w-auto rounded-md border-2 hover:outline hover:outline-4 hover:outline-gray-300 ${
+              index === currentImageIndex ? "border-black" : "border-gray-600"
             }`}
             onClick={() => setCurrentImageIndex(index)}
           />

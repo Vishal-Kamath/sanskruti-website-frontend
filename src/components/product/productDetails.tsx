@@ -5,7 +5,7 @@ import UIButton from "@/components/common/button";
 
 const ProductDetails: React.FC = () => {
   return (
-    <div className="flex w-full flex-col gap-5 px-[5vw] md:pl-0">
+    <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
       <div className="flex flex-col gap-1">
         <h1 className="text-2xl font-bold">
           Blue Moon Floral Anarkali Suit With Gotta Work In Cotton
@@ -32,7 +32,7 @@ const ProductDetails: React.FC = () => {
         />
       </div>
 
-      <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[5vw] max-md:py-2 max-md:shadow-top">
+      <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
         <UIButton className="text-md w-full bg-white font-semibold text-black">
           ADD TO CART
         </UIButton>

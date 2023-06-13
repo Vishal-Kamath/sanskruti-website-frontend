@@ -5,7 +5,7 @@ import VisitOurStore from "./visitOurStore";
 const FooterDetails: FC = () => {
   return (
     <div className="flex w-full flex-col gap-5 bg-gray-100 pb-10">
-      <div className="flex w-full justify-between max-md:flex-col md:px-[5vw]">
+      <div className="flex w-full justify-between max-md:flex-col md:px-[3vw]">
         <FooterDetailsCard
           title="DESIGNER WEAR"
           list={[
@@ -121,7 +121,7 @@ const FooterDetails: FC = () => {
           />
         </div>
       </div>
-      <div className="flex justify-between gap-2 px-[5vw] max-md:flex-col">
+      <div className="flex justify-between gap-2 px-[3vw] max-md:flex-col">
         <span>Design and development by 🖤 Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>
