@@ -14,24 +14,12 @@ const FooterDetailsCard: FC<{
   title: string;
   list: DetailsListProps;
 }> = ({ title, list }) => {
-  const [open, setOpen] = useState(false);
   return (
     <div className="flex flex-col">
-      <h5 className="flex items-center justify-between py-2 font-bold max-md:px-[3vw]">
+      <h5 className="flex items-center justify-between py-2 font-bold">
         <span>{title}</span>
-        <span className="text-xl md:hidden">
-          {open ? (
-            <AiOutlineMinus onClick={() => setOpen(false)} />
-          ) : (
-            <AiOutlinePlus onClick={() => setOpen(true)} />
-          )}
-        </span>
       </h5>
-      <div
-        className={`flex flex-col gap-1 py-1 max-md:bg-gray-200 max-md:px-[3vw] ${
-          !open && "max-md:hidden"
-        }`}
-      >
+      <div className="text-500 flex flex-col gap-1 py-1">
         {list.map((listItem) => {
           return !listItem.link ? (
             <span key={listItem.title} className="leading-none">
