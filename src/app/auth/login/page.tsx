@@ -14,17 +14,13 @@ import {
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import UIButton from "@/components/common/button";
-import { Metadata, NextPage } from "next";
 import { loggedIn } from "@/redux/slice/user.slice";
 import { BiArrowBack } from "react-icons/bi";
 import z from "zod";
 import { validateType } from "../register/components/utils";
+import Head from "next/head";
 
-export const metadata: Metadata = {
-  title: "Sanskruti NX - Login",
-};
-
-const LoginPage: NextPage = () => {
+const LoginPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
