@@ -24,7 +24,15 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
               href={`/product/${product.slug}`}
               className="flex gap-3 p-2 hover:bg-gray-50"
             >
-              <div className="h-[6rem] w-[4rem] bg-gray-200"></div>
+              <div className="h-[6rem] w-[4rem] bg-gray-200">
+                <Image
+                  src={product.images[0]}
+                  alt={product.name}
+                  width={100}
+                  height={100}
+                  className="h-full w-full object-contain"
+                />
+              </div>
               <div className="flex flex-col justify-center gap-1">
                 <div>
                   {product.name.length > 25

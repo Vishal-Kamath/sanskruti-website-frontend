@@ -13,12 +13,6 @@ import { useParams } from "next/navigation";
 import { ProductType } from "@/components/header/header";
 import axios from "axios";
 
-const images = [
-  "/temp/productImage1.png",
-  "/temp/productImage2.png",
-  "/temp/productImage3.png",
-];
-
 const ProductPage = () => {
   const params = useParams();
   const slug = params["productSlug"];
@@ -52,13 +46,17 @@ const ProductPage = () => {
   }, []);
 
   const prevSlide = () => {
+    if (!product) return;
     const isFirstSlide = currentImageIndex === 0;
-    const newIndex = isFirstSlide ? images.length - 1 : currentImageIndex - 1;
+    const newIndex = isFirstSlide
+      ? product.images.length - 1
+      : currentImageIndex - 1;
     setCurrentImageIndex(newIndex);
   };
 
   const nextSlide = () => {
-    const isLastSlide = currentImageIndex === images.length - 1;
+    if (!product) return;
+    const isLastSlide = currentImageIndex === product.images.length - 1;
     const newIndex = isLastSlide ? 0 : currentImageIndex + 1;
     setCurrentImageIndex(newIndex);
   };
@@ -82,7 +80,7 @@ const ProductPage = () => {
     <>
       {fullscreenImageOpen && (
         <ProductImageFullScreen
-          imageSrc={images[currentImageIndex]}
+          imageSrc={product?.images[currentImageIndex] || ""}
           nextSlide={nextSlide}
           prevSlide={prevSlide}
           setFullscreenImageOpen={setFullscreenImageOpen}
@@ -92,7 +90,7 @@ const ProductPage = () => {
         <div className="flex items-start gap-5 max-md:flex-col">
           <ProductImageDisplay
             setFullscreenImageOpen={setFullscreenImageOpen}
-            images={images}
+            images={product?.images || []}
             currentImageIndex={currentImageIndex}
             setCurrentImageIndex={setCurrentImageIndex}
           />

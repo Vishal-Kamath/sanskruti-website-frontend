@@ -38,6 +38,7 @@ const debounce = <T extends (...args: any[]) => void>(
 export interface ProductType {
   name: string;
   description: string;
+  images: string[];
   gst_price: number;
   sale_price: number;
   MainCategory: string;
