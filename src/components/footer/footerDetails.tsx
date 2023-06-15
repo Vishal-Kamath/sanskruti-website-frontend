@@ -1,11 +1,10 @@
 import { FC } from "react";
 import FooterDetailsCard from "./footerDetailsCard";
-import VisitOurStore from "./visitOurStore";
 
 const FooterDetails: FC = () => {
   return (
-    <div className="flex w-full flex-col gap-5 bg-gray-100 pb-10">
-      <div className="flex w-full justify-between max-md:flex-col md:px-[3vw]">
+    <div className="flex w-full flex-col gap-5 bg-gray-100 py-10">
+      <div className="justify-betweenl grid w-full grid-cols-2 gap-10 px-[3vw] md:grid-cols-5">
         <FooterDetailsCard
           title="DESIGNER WEAR"
           list={[
@@ -125,8 +124,6 @@ const FooterDetails: FC = () => {
         <span>Design and development by 🖤 Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>
-
-      <VisitOurStore />
     </div>
   );
 };

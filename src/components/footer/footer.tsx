@@ -1,6 +1,7 @@
 import { FC } from "react";
 import FooterDetails from "./footerDetails";
 import Image from "next/image";
+import VisitOurStore from "./visitOurStore";
 
 const Footer: FC = () => {
   return (
@@ -15,6 +16,7 @@ const Footer: FC = () => {
         />
       </a>
 
+      <VisitOurStore />
       <FooterDetails />
     </footer>
   );
