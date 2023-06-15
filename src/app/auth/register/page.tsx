@@ -9,7 +9,7 @@ import {
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Metadata, NextPage } from "next";
+import { NextPage } from "next";
 import z from "zod";
 import { validateType } from "./components/utils";
 import Link from "next/link";
@@ -20,10 +20,6 @@ import { Input } from "@/components/common/input";
 import PhoneInput from "react-phone-input-2";
 import { BiArrowBack } from "react-icons/bi";
 import "@/app/high-res.css";
-
-export const metadata: Metadata = {
-  title: "Sanskruti NX - Register",
-};
 
 const RegisterPage: NextPage = () => {
   const router = useRouter();
