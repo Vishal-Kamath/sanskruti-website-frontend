@@ -4,8 +4,6 @@ import ProductDetails from "./components/productDetails";
 import ProductImageFullScreen from "./components/productImageFullScreen";
 import ProductImageDisplay from "./components/productImagesDisplay";
 import ProductCard from "@/components/productCard";
-import { Metadata } from "next";
-import Head from "next/head";
 import { useState, useEffect } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,15 +19,6 @@ const images = [
   "/temp/productImage3.png",
 ];
 
-interface Prop {
-  params: { slug: string };
-}
-export async function generateMetadata({ params }: Prop): Promise<Metadata> {
-  return {
-    title: `Sanskruti Nx - ${params.slug}`,
-  };
-}
-
 const ProductPage = () => {
   const params = useParams();
   const slug = params["productSlug"];
@@ -40,7 +29,6 @@ const ProductPage = () => {
   const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
 
   const [numberSlides, setNumberSlides] = useState(4);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,8 +41,6 @@ const ProductPage = () => {
       } else {
         setNumberSlides(2);
       }
-
-      setIsMobile(window.innerWidth < 640);
     };
 
     handleResize();
@@ -94,9 +80,6 @@ const ProductPage = () => {
 
   return (
     <>
-      <Head>
-        <title>{`Product - ${slug}`}</title>
-      </Head>
       {fullscreenImageOpen && (
         <ProductImageFullScreen
           imageSrc={images[currentImageIndex]}

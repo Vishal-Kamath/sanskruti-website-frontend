@@ -6,7 +6,7 @@ import Footer from "@/components/footer/footer";
 import NotificationComponent from "@/components/notification/notificationComponent";
 import { cn } from "@/utils/lib";
 
-import { Quicksand, Ysabeau } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import AuthComponent from "@/components/authComponent";
 import LoadingComponent from "@/components/loadingComponent";
 
@@ -14,11 +14,6 @@ const quicksand = Quicksand({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--quicksand-font",
-});
-const ysabeau = Ysabeau({
-  weight: ["200", "300"],
-  subsets: ["latin"],
-  variable: "--ysabeau-font",
 });
 
 export const metadata: Metadata = {
@@ -63,7 +58,6 @@ export default function RootLayout({
           <body
             className={cn(
               quicksand.variable,
-              ysabeau.variable,
               "relative flex min-h-screen select-none flex-col bg-white font-quicksand text-xs font-medium text-black md:text-[14px]"
             )}
           >
