@@ -72,7 +72,7 @@ export const filters: FilterType[] = [
   },
   {
     main: "Dress Material's",
-    image: "/temp/Dress Material's.png",
+    image: "/temp/dressmaterial.png",
     link: "/category/Dress Material's",
     sub: [],
   },

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const ProductImageDisplay: React.FC<{
@@ -13,17 +14,21 @@ const ProductImageDisplay: React.FC<{
 }) => {
   return (
     <div className="flex w-fit shrink-0 flex-col justify-end gap-3 px-[3vw] md:pr-0 lg:flex-row-reverse">
-      <img
+      <Image
+        width={500}
+        height={500}
         src={images[currentImageIndex]}
         alt="product image"
-        className="aspect-auto  w-full cursor-zoom-in object-cover md:max-w-[35vw]"
+        className="aspect-auto w-full cursor-zoom-in object-cover md:max-w-[35vw]"
         onClick={() => setFullscreenImageOpen(true)}
       />
       <div className="custom_scrollbar flex max-h-[50vh] gap-2 overflow-x-auto overflow-y-auto lg:flex-col">
         {images.map((imageSrc, index) => (
-          <img
+          <Image
             src={imageSrc}
-            alt=""
+            alt={index + " product image"}
+            width={50}
+            height={50}
             key={index}
             className={`aspect-auto h-20 w-auto ${
               index === currentImageIndex ? "opacity-100" : "opacity-75"

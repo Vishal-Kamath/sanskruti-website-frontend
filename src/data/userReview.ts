@@ -41,7 +41,7 @@ export const userReviews: Review[] = [
     name: "Customer name",
   },
   {
-    image: "/temp/Dress Material's.png",
+    image: "/temp/dressmaterial.png",
     review:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam numquam ipsum cupiditate vero iure officia illo quos dolores repudiandae, nihil ut a repellendus dolor, quas aut, architecto doloremque. Corrupti, quod.",
     name: "Customer name",

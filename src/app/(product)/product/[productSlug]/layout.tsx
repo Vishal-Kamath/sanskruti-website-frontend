@@ -8,22 +8,26 @@ export async function generateMetadata({
 }: {
   params: { productSlug: string };
 }): Promise<Metadata> {
-  const product = (
-    await axios.get<{ productAlreadyExists: ProductType }>(
-      `${process.env.ENDPOINT}/api/v1/user/product?slug=${params.productSlug}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-  ).data.productAlreadyExists;
+  try {
+    const product = (
+      await axios.get<{ productAlreadyExists: ProductType }>(
+        `${process.env.ENDPOINT}/api/v1/user/product?slug=${params.productSlug}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+    ).data.productAlreadyExists;
 
-  return {
-    title: product.meta_tittle,
-    description: product.meta_description,
-    keywords: product.meta_keyword,
-  };
+    return {
+      title: product.meta_tittle,
+      description: product.meta_description,
+      keywords: product.meta_keyword,
+    };
+  } catch {
+    return {};
+  }
 }
 
 interface Props {
