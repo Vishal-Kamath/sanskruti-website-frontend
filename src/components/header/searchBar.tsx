@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
+import React, { SetStateAction, Dispatch } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const SearchBar: React.FC<{
   search: string;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearch: (inputVal: string) => void;
+  searchFocused: boolean;
+  setSearchFocused: Dispatch<SetStateAction<boolean>>;
   classname?: string;
-}> = ({ search, setSearch, classname }) => {
-  const [searchFocused, setSearchFocused] = useState(false);
+}> = ({ search, setSearch, searchFocused, setSearchFocused, classname }) => {
   return (
     <div
-      className={`${classname} text-md flex h-9 w-full max-w-2xl items-center gap-1 border-2 px-2 ${
-        searchFocused ? 'border-gray-600' : 'border-gray-200'
+      className={`${classname} text-md flex h-9 w-full max-w-2xl items-center gap-1 rounded-full border-2 px-2 ${
+        searchFocused ? "border-gray-600" : "border-gray-300"
       } bg-gray-100`}
     >
       <AiOutlineSearch
         className={`aspect-sqaure text-xl ${
-          searchFocused ? 'text-gray-600' : 'text-gray-400'
+          searchFocused ? "text-gray-600" : "text-gray-400"
         }`}
       />
       <input
@@ -24,7 +25,7 @@ const SearchBar: React.FC<{
         type="text"
         className="w-full border-none bg-transparent outline-none"
         onFocus={() => setSearchFocused(true)}
-        onBlur={() => setSearchFocused(false)}
+        onBlur={() => setTimeout(() => setSearchFocused(false), 500)}
         placeholder="Search for Products, Styles..."
       />
     </div>

@@ -12,19 +12,18 @@ const Navbar: FC = () => {
   return (
     <div
       className={cn(
-        "relative flex justify-center bg-white px-[5vw] max-md:hidden",
+        "relative flex justify-center bg-white px-[3vw] max-md:hidden",
         block && "hidden"
       )}
     >
       <div className="group w-fit max-md:hidden">
-        <nav className="flex h-6 w-fit items-center justify-center gap-5 lg:gap-6">
+        <nav className="flex h-6 w-fit items-center justify-center gap-4 lg:gap-10">
           {filters.map((filter) => (
             <div
               key={filter.main}
               className={cn(
                 "text-xs text-gray-600 lg:text-sm",
-                filter.main === displayFilter.main &&
-                  "font-medium text-black underline underline-offset-4"
+                "hover:font-medium hover:text-black hover:underline hover:underline-offset-4"
               )}
               onMouseEnter={() => setDisplayFilter(filter)}
             >
@@ -42,7 +41,9 @@ const Navbar: FC = () => {
                 {displayFilter.sub.map((item, index) => (
                   <Link
                     key={item.title + index + displayFilter.main}
-                    href={`/category/${displayFilter.main}/?${displayFilter.main}=${item.title}`}
+                    href={`/category/${displayFilter.main}/?${
+                      displayFilter.main
+                    }=${encodeURIComponent(item.title)}`}
                   >
                     {item.title}
                   </Link>

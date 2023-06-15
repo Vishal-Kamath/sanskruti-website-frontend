@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FC } from "react";
+import { useState, FC, useRef, useCallback } from "react";
 import TopBanner from "./topBanner";
 import SearchBar from "./searchBar";
 import Link from "next/link";
@@ -19,11 +19,68 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { selectisAuthenticated } from "@/redux/slice/user.slice";
 import Navbar from "./navbar";
+import axios from "axios";
+import SearchResults from "./searchResults";
+import { cn } from "@/utils/lib";
+
+const debounce = <T extends (...args: any[]) => void>(
+  func: T,
+  wait: number
+) => {
+  let timeout: NodeJS.Timeout;
+
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+};
+
+export interface ProductType {
+  name: string;
+  description: string;
+  gst_price: number;
+  sale_price: number;
+  MainCategory: string;
+  SubCategory: string;
+  brand_name: string;
+  slug: string;
+  is_featured: boolean;
+  is_new_arrival: boolean;
+  is_best_seller: boolean;
+  meta_tittle: string;
+  meta_description: string;
+  meta_keyword: string;
+}
 
 const Header: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const [search, setSearch] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
+  const handleSearch = useCallback(
+    debounce((inputVal: string) => fetchResults(inputVal), 750),
+    []
+  );
+  const handleSearchInput = (value: string) => {
+    setSearch(value);
+    handleSearch(value);
+  };
+
+  const [searchResults, setSearchResults] = useState<ProductType[]>([]);
+
+  const fetchResults = async (inputVal: string) => {
+    try {
+      if (inputVal !== "") {
+        const { data } = await axios.get<{ products: ProductType[] }>(
+          `${process.env.ENDPOINT}/api/v1/user/getallProducts?keyword=${inputVal}`
+        );
+        setSearchResults(data.products);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   const isAuthenticated = useAppSelector(selectisAuthenticated);
@@ -45,7 +102,7 @@ const Header: FC = () => {
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
 
-      <div className="flex h-12 items-center justify-between bg-white px-[5vw]">
+      <div className="flex h-12 items-center justify-between bg-white px-[3vw]">
         <div className="flex items-center gap-2">
           <div className="sm:hidden">
             {sideBarOpen ? (
@@ -74,9 +131,11 @@ const Header: FC = () => {
 
         <div className="flex items-center gap-3">
           <SearchBar
-            classname="max-md:hidden min-w-[25rem] rounded-md"
+            classname="max-md:hidden min-w-[25rem]"
+            searchFocused={searchFocused}
+            setSearchFocused={setSearchFocused}
             search={search}
-            setSearch={setSearch}
+            setSearch={handleSearchInput}
           />
           <div onClick={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
@@ -86,19 +145,24 @@ const Header: FC = () => {
           </div>
           <MdOutlineShoppingBag
             onClick={userRedirectCart}
-            className="h-6 w-6"
+            className="h-8 w-8"
           />
         </div>
       </div>
 
-      <div className="bg-white px-[5vw] pb-2 md:hidden">
+      <div className="bg-white px-[3vw] pb-2 md:hidden">
         <SearchBar
-          classname="rounded-full"
           search={search}
-          setSearch={setSearch}
+          setSearch={handleSearchInput}
+          searchFocused={searchFocused}
+          setSearchFocused={setSearchFocused}
         />
       </div>
       <Navbar />
+      <SearchResults
+        searchResults={searchResults}
+        className={cn((!search || !searchFocused) && "hidden")}
+      />
     </header>
   );
 };
