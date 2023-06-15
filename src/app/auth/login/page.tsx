@@ -3,7 +3,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/common/input";
 import { useAppDispatch } from "@/redux/store/hooks";
 import {
@@ -17,6 +17,8 @@ import UIButton from "@/components/common/button";
 import { Metadata, NextPage } from "next";
 import { loggedIn } from "@/redux/slice/user.slice";
 import { BiArrowBack } from "react-icons/bi";
+import z from "zod";
+import { validateType } from "../register/components/utils";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX - Login",
@@ -51,6 +53,22 @@ const LoginPage: NextPage = () => {
     }
 
     const emailOrNumberWithType = checkType();
+
+    const emailOrNumberSchema = z.union([
+      z.string().email(),
+      z.number().refine((num) => num.toString().length > 10),
+    ]);
+    const isEmailOrNumberValid = validateType(
+      emailOrNumberWithType,
+      emailOrNumberSchema,
+      {
+        message: "Not Valid format",
+        type: "warning",
+        content: `To log in with an email, use the format "ashokkumar@email.com". For mobile number login, include the country code, like "911234567890".`,
+      },
+      dispatch
+    );
+    if (!isEmailOrNumberValid) return;
 
     const link = `${process.env.ENDPOINT}/api/v1/user/login`;
     const body = { emailOrNumber: emailOrNumberWithType, password };
@@ -87,6 +105,10 @@ const LoginPage: NextPage = () => {
 
   const handleGoogleAuth = () => {
     window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
+  };
+
+  const handleFacebookAuth = () => {
+    window.open(`${process.env.ENDPOINT}/api/v1/facebooklogin`, "_self");
   };
 
   return (
@@ -144,7 +166,10 @@ const LoginPage: NextPage = () => {
         </UIButton>
 
         <UIButton className="w-full gap-2">
-          <BsFacebook className="h-6 w-6 text-facebook" />
+          <BsFacebook
+            onClick={handleFacebookAuth}
+            className="h-6 w-6 text-facebook"
+          />
           <span>FACEBOOK</span>
         </UIButton>
       </div>
