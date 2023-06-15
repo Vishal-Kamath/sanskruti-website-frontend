@@ -10,8 +10,8 @@ const CategoryPage = async () => {
 
   return (
     <div className="mb-10 border-b-2 border-gray-300 pt-[93px] max-md:pt-28">
-      <div className="grid h-[5rem] w-full place-content-center bg-gradient-to-tr from-emerald-200 via-emerald-50 to-emerald-100 text-emerald-700">
-        <span className="font-poppins text-2xl font-semibold">
+      <div className="grid h-[5rem] w-full place-content-center bg-slate-800">
+        <span className="font-poppins text-2xl font-semibold text-white">
           {categoryName}
         </span>
       </div>
