@@ -4,6 +4,12 @@
   position: relative;
   width: 100%;
 }
+.react-tel-input ~ #mobileLabel {
+  color: #6b7280;
+}
+.react-tel-input:focus-within ~ #mobileLabel {
+  color: black;
+}
 .react-tel-input :disabled {
   cursor: not-allowed;
 }
