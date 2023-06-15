@@ -1,51 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { FC, useState, useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
-import UIButton from "../common/button";
+import UIButton from "@/components/common/button";
 
-const VariantTags: React.FC<{
+const VariantTags: FC<{
   main: string;
   sub: { title: string }[];
 }> = ({ main, sub }) => {
   const [selected, setSelected] = useState("");
+
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const onClick = (value: string) => {
-    // router.push({
-    //   pathname: router.pathname,
-    //   query: {
-    //     ...router.query,
-    //     [main]: value,
-    //   },
-    // });
+    const current = new URLSearchParams(searchParams.toString());
+    current.set(main, value);
+    const query = !!current.toString() ? `?${current.toString()}` : "";
+    router.push(`${pathname}/${query}`);
     setSelected(value);
   };
 
   const deSelect = () => {
-    // const radio = document.getElementById(selected) as HTMLInputElement;
-    // radio.checked = false;
-    // const tags = router.query;
-    // delete tags[main];
-    // router.push({
-    //   pathname: router.pathname,
-    //   query: tags,
-    // });
-    // setSelected('');
+    const radio = document.getElementById(selected) as HTMLInputElement;
+    radio.checked = false;
+    setSelected("");
+
+    const current = new URLSearchParams(searchParams.toString());
+    current.delete(main);
+    const query = !!current.toString() ? `?${current.toString()}` : "";
+    router.push(`${pathname}/${query}`);
   };
 
   useEffect(() => {
-    // const selectedTagFromQuery = router.query[main];
-    // console.log(router.query);
-    // console.log(main);
-    // console.log(router.query[main]);
-    // if (!selectedTagFromQuery) return;
-    // if (Array.isArray(selectedTagFromQuery)) return;
-    // setSelected(selectedTagFromQuery);
-  }, []);
+    const selectedTagFromQuery = decodeURIComponent(
+      searchParams.get(main) || ""
+    );
+    if (!selectedTagFromQuery) return;
+    setSelected(selectedTagFromQuery);
+  }, [searchParams, main]);
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-1 py-2 pr-4 font-bold">
+      <div className="flex flex-col gap-1 py-2 font-bold">
         <h5 className="flex items-center border-b-2 border-gray-300">
           <span>{main}</span>
         </h5>
@@ -58,7 +55,7 @@ const VariantTags: React.FC<{
           <RxCross2 className="text-lg" onClick={deSelect} />
         </h5>
       </div>
-      <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden px-2 py-1">
+      <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden px-1 py-1">
         {sub.map((subItem) => (
           <UIButton
             key={subItem.title}
