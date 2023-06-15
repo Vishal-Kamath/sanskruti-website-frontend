@@ -20,7 +20,7 @@ const Container: FC<Props> = ({
       className={cn("flex h-fit w-full flex-col gap-3", className)}
       {...props}
     >
-      <h3 className="flex items-center justify-between rounded-md border-b-2 border-slate-400 bg-slate-100 px-5 py-2 text-lg font-medium">
+      <h3 className="flex items-center justify-between rounded-md border-b-2 border-gray-200 bg-gray-50 px-5 py-2 text-lg font-medium">
         {containerTitle}
         {toggler && (
           <button onClick={toggler} className="outline-none md:hidden">

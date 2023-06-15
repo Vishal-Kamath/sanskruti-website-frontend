@@ -12,18 +12,18 @@ const DropdownComponent: React.FC<{
   const [cardOpen, setCardOpen] = useState(!!open);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-b-2 border-gray-300">
       <button
-        className="flex items-center justify-between px-4 py-2 font-bold outline-none"
+        className="flex items-center justify-between py-3 font-bold outline-none"
         onClick={() => setCardOpen((openState) => !openState)}
       >
         <span>{main}</span>
-        <span className="text-xl">
+        <span className="text-xl text-gray-500">
           {cardOpen ? <AiOutlineMinus /> : <AiOutlinePlus />}
         </span>
       </button>
       <div
-        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden bg-gray-50 py-1 ${classname} px-4 ${
+        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden pb-3 text-gray-600 ${classname} ${
           !cardOpen && "hidden"
         }`}
       >
