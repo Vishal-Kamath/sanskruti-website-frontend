@@ -60,7 +60,7 @@ const FilterItem: FC<{
         </h5>
         <h5
           className={cn(
-            "flex w-fit items-center justify-between gap-3 rounded-md bg-emerald-100 px-2 py-1 font-semibold",
+            "flex w-fit items-center justify-between gap-3 rounded-md bg-sky-100 px-2 py-1 font-semibold",
             !selected && "hidden"
           )}
         >
