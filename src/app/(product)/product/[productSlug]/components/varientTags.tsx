@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { RxCross2 } from "react-icons/rx";
 import UIButton from "@/components/common/button";
+import { cn } from "@/utils/lib";
 
 const VariantTags: FC<{
   main: string;
@@ -21,17 +21,6 @@ const VariantTags: FC<{
     setSelected(value);
   };
 
-  const deSelect = () => {
-    const radio = document.getElementById(selected) as HTMLInputElement;
-    radio.checked = false;
-    setSelected("");
-
-    const current = new URLSearchParams(searchParams.toString());
-    current.delete(main);
-    const query = !!current.toString() ? `?${current.toString()}` : "";
-    router.push(`${pathname}/${query}`);
-  };
-
   useEffect(() => {
     const selectedTagFromQuery = decodeURIComponent(
       searchParams.get(main) || ""
@@ -41,25 +30,18 @@ const VariantTags: FC<{
   }, [searchParams, main]);
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col gap-1 py-2 font-bold">
-        <h5 className="flex items-center border-b-2 border-gray-300">
-          <span>{main}</span>
-        </h5>
-        <h5
-          className={`${
-            !selected && "hidden"
-          } flex w-fit items-center justify-between gap-3 rounded-md bg-green-200 px-2 py-1 font-semibold`}
-        >
-          {selected}
-          <RxCross2 className="text-lg" onClick={deSelect} />
-        </h5>
-      </div>
+    <div className="flex flex-col gap-3 border-t-2 border-gray-300 py-3">
+      <h5 className="flex items-center font-bold">
+        <span>{main}</span>
+      </h5>
       <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden px-1 py-1">
         {sub.map((subItem) => (
           <UIButton
             key={subItem.title}
-            className="relative isolate min-w-[3rem] rounded-full border-black px-3 py-1"
+            className={cn(
+              "relative isolate min-w-[3rem] rounded-full border-gray-700 px-3 py-2 text-[14px]",
+              selected === subItem.title && "bg-gray-700 text-white"
+            )}
           >
             <input
               type="radio"

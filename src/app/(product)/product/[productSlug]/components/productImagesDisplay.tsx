@@ -12,14 +12,14 @@ const ProductImageDisplay: React.FC<{
   setFullscreenImageOpen,
 }) => {
   return (
-    <div className="flex w-fit shrink-0 flex-row-reverse justify-end gap-3 px-[3vw] md:pr-0">
+    <div className="flex w-fit shrink-0 flex-col justify-end gap-3 px-[3vw] md:pr-0 lg:flex-row-reverse">
       <img
         src={images[currentImageIndex]}
         alt="product image"
         className="aspect-auto  w-full cursor-zoom-in object-cover md:max-w-[35vw]"
         onClick={() => setFullscreenImageOpen(true)}
       />
-      <div className="custom_scrollbar flex max-h-[50vh] flex-col gap-2 overflow-x-auto overflow-y-auto py-3">
+      <div className="custom_scrollbar flex max-h-[50vh] gap-2 overflow-x-auto overflow-y-auto lg:flex-col">
         {images.map((imageSrc, index) => (
           <img
             src={imageSrc}
