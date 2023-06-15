@@ -13,6 +13,9 @@ import {
 import axios from "axios";
 import { Address, setAddress } from "@/redux/slice/user.slice";
 import { useRouter } from "next/navigation";
+import z from "zod";
+import PhoneInput from "react-phone-input-2";
+import "@/app/high-res.css";
 
 const AddAddressPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -25,6 +28,43 @@ const AddAddressPage: FC = () => {
   const [landmark, setlandmark] = useState("");
   const [city, setcity] = useState("");
   const [state, setstate] = useState("");
+
+  const validateTypes = (): { valid: boolean } & NotificationType => {
+    const mobileNumberSchema = z
+      .number()
+      .refine((number) => number.toString().length > 10);
+    try {
+      mobileNumberSchema.parse(Number(contactNo));
+    } catch {
+      return {
+        valid: false,
+        message: "not a valid mobile number",
+        type: "warning",
+        content: `For mobile number, include the country code, like "911234567890".`,
+      };
+    }
+
+    const pincodeSchema = z
+      .number()
+      .refine(
+        (number) =>
+          /^[1-9][0-9]{5}$/.test(number.toString()) &&
+          number.toString().length === 6
+      );
+    try {
+      pincodeSchema.parse(Number(pincode));
+    } catch {
+      return {
+        valid: false,
+        message: "Not a valid pincode",
+        type: "warning",
+        content:
+          "According to indian standard, a valid pincode is a 6-digit number. example: 123456",
+      };
+    }
+
+    return { valid: true, message: "", type: "info", content: "" };
+  };
 
   const submit = async () => {
     if (
@@ -47,16 +87,9 @@ const AddAddressPage: FC = () => {
       return dispatch(showNotification());
     }
 
-    const pincodePatttern = /^[1-9][0-9]{5}$/;
-    if (!pincodePatttern.test(pincode)) {
-      dispatch(
-        setNotification({
-          message: "Not a valid pincode",
-          type: "warning",
-          content:
-            "According to indian standard, a valid pincode is a 6-digit number. example: 123456",
-        })
-      );
+    const { valid, message, type, content } = validateTypes();
+    if (!valid) {
+      dispatch(setNotification({ message, type, content }));
       return dispatch(showNotification());
     }
 
@@ -109,12 +142,20 @@ const AddAddressPage: FC = () => {
           setValue={setfullName}
           value={fullName}
         />
-        <Input
-          input_type="number"
-          placeholder="Contact No"
-          setValue={setcontactNo}
-          value={contactNo}
-        />
+        <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
+          <PhoneInput
+            country={"in"}
+            value={contactNo}
+            onChange={setcontactNo}
+          />
+          <label
+            id="mobileLabel"
+            htmlFor="mobile"
+            className="absolute left-3 top-0 z-10 -translate-y-1/2 bg-white px-2 text-xs"
+          >
+            Contact Number
+          </label>
+        </div>
         <Input
           input_type="text"
           placeholder="Landmark"

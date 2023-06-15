@@ -13,6 +13,8 @@ import {
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
 import z from "zod";
+import PhoneInput from "react-phone-input-2";
+import "@/app/high-res.css";
 
 const EditProfile: FC = () => {
   const user = useAppSelector(selectUser);
@@ -38,7 +40,7 @@ const EditProfile: FC = () => {
 
     const mobileNumberSchema = z
       .number()
-      .refine((number) => number.toString().length === 10);
+      .refine((number) => number.toString().length > 10);
     try {
       mobileNumberSchema.parse(Number(mobileNumber));
     } catch {
@@ -46,8 +48,7 @@ const EditProfile: FC = () => {
         valid: false,
         message: "not a valid mobile number",
         type: "warning",
-        content:
-          "By Indian standards a valid mobile number must be a 10 digit number",
+        content: `For mobile number, include the country code, like "911234567890".`,
       };
     }
 
@@ -129,12 +130,20 @@ const EditProfile: FC = () => {
             value={email}
             setValue={setEmail}
           />
-          <Input
-            input_type="text"
-            placeholder="Update Mobile Number"
-            value={mobileNumber}
-            setValue={setMobileNumber}
-          />
+          <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
+            <PhoneInput
+              country={"in"}
+              value={mobileNumber}
+              onChange={setMobileNumber}
+            />
+            <label
+              id="mobileLabel"
+              htmlFor="mobile"
+              className="absolute left-3 top-0 z-10 -translate-y-1/2 bg-white px-2 text-xs"
+            >
+              Update Mobile Number
+            </label>
+          </div>
 
           <UIButton
             onClick={submit}
