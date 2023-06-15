@@ -6,13 +6,14 @@ import Footer from "@/components/footer/footer";
 import NotificationComponent from "@/components/notification/notificationComponent";
 import { cn } from "@/utils/lib";
 
-import { Poppins, Ysabeau } from "next/font/google";
+import { Quicksand, Ysabeau } from "next/font/google";
 import AuthComponent from "@/components/authComponent";
 import LoadingComponent from "@/components/loadingComponent";
-const poppins = Poppins({
-  weight: ["100", "500"],
+
+const quicksand = Quicksand({
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--poppins-font",
+  variable: "--quicksand-font",
 });
 const ysabeau = Ysabeau({
   weight: ["200", "300"],
@@ -23,7 +24,6 @@ const ysabeau = Ysabeau({
 export const metadata: Metadata = {
   title: "Sanskruti NX",
   applicationName: "Sanskruti NX",
-
   description:
     "Sanskruti NX, a one stop destination for latest fashion, trends and clothing",
   viewport: "width=device-width, initial-scale=1",
@@ -62,9 +62,9 @@ export default function RootLayout({
         <AuthComponent>
           <body
             className={cn(
-              poppins.variable,
+              quicksand.variable,
               ysabeau.variable,
-              "relative flex min-h-screen select-none flex-col bg-white font-poppins text-xs md:text-sm text-black"
+              "relative flex min-h-screen select-none flex-col bg-white font-quicksand text-xs font-medium text-black md:text-[14px]"
             )}
           >
             <LoadingComponent />
