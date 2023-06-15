@@ -1,6 +1,6 @@
-import React from 'react';
-import { RxCross1 } from 'react-icons/rx';
-import { FaAngleRight, FaAngleLeft } from 'react-icons/fa';
+import React from "react";
+import { RxCross1 } from "react-icons/rx";
+import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
 
 const ProductImageFullScreen: React.FC<{
   imageSrc: string;
@@ -15,27 +15,27 @@ const ProductImageFullScreen: React.FC<{
       {/* Left Arrow */}
       <div
         onClick={prevSlide}
-        className="absolute left-0 top-0 h-full w-1/3 cursor-pointer bg-transparent"
+        className="group absolute left-0 top-0 h-full w-1/3 cursor-pointer bg-transparent"
       >
-        <FaAngleLeft
+        <TfiAngleLeft
           size={50}
-          className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-100 p-1 opacity-50 group-hover:opacity-75"
+          className="absolute left-5 top-1/2 -translate-y-1/2 text-white opacity-50 group-hover:opacity-100"
         />
       </div>
 
       {/* Right Arrow */}
       <div
         onClick={nextSlide}
-        className="absolute right-0 top-0 h-full w-1/3 cursor-pointer bg-transparent"
+        className="group absolute right-0 top-0 h-full w-1/3 cursor-pointer bg-transparent"
       >
-        <FaAngleRight
+        <TfiAngleRight
           size={50}
-          className="absolute right-5 top-1/2 -translate-y-1/2 rounded-full bg-gray-100 p-1 opacity-50 group-hover:opacity-75"
+          className="absolute right-5 top-1/2 -translate-y-1/2 text-white opacity-50 group-hover:opacity-100"
         />
       </div>
       <button
         onClick={() => setFullscreenImageOpen(false)}
-        className="absolute right-5 top-5 rounded-md border-2 border-gray-300 bg-slate-700 p-2 text-2xl text-white"
+        className="absolute right-5 top-5 border-2 border-gray-500 bg-slate-700 p-2 text-2xl text-white"
       >
         <RxCross1 />
       </button>

@@ -1,16 +1,19 @@
 "use client";
 
-import ProductDetails from "@/components/product/productDetails";
-import ProductImageFullScreen from "@/components/product/productImageFullScreen";
-import ProductImageDisplay from "@/components/product/productImagesDisplay";
+import ProductDetails from "./components/productDetails";
+import ProductImageFullScreen from "./components/productImageFullScreen";
+import ProductImageDisplay from "./components/productImagesDisplay";
 import ProductCard from "@/components/productCard";
-import { GetServerSideProps, NextPage } from "next";
+import { Metadata } from "next";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
+import { useParams } from "next/navigation";
+import { ProductType } from "@/components/header/header";
+import axios from "axios";
 
 const images = [
   "/temp/productImage1.png",
@@ -18,7 +21,21 @@ const images = [
   "/temp/productImage3.png",
 ];
 
-const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
+interface Prop {
+  params: { slug: string };
+}
+export async function generateMetadata({ params }: Prop): Promise<Metadata> {
+  return {
+    title: `Sanskruti Nx - ${params.slug}`,
+  };
+}
+
+const ProductPage = () => {
+  const params = useParams();
+  const slug = params["productSlug"];
+
+  const [product, setProduct] = useState<ProductType>();
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
 
@@ -59,6 +76,22 @@ const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
     const newIndex = isLastSlide ? 0 : currentImageIndex + 1;
     setCurrentImageIndex(newIndex);
   };
+
+  useEffect(() => {
+    axios
+      .get<{ productAlreadyExists: ProductType }>(
+        `${process.env.ENDPOINT}/api/v1/user/product?slug=${slug}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        setProduct(res.data.productAlreadyExists);
+      });
+  }, [slug]);
+
   return (
     <>
       <Head>
@@ -72,19 +105,17 @@ const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
           setFullscreenImageOpen={setFullscreenImageOpen}
         />
       )}
-      <div className="mb-10 flex flex-col gap-6 pt-24 max-md:pt-36">
+      <div className="mb-10 flex flex-col gap-6 pt-28 max-md:pt-32">
         <div className="flex items-start gap-5 max-md:flex-col">
           <ProductImageDisplay
             setFullscreenImageOpen={setFullscreenImageOpen}
             images={images}
             currentImageIndex={currentImageIndex}
-            nextSlide={nextSlide}
-            prevSlide={prevSlide}
             setCurrentImageIndex={setCurrentImageIndex}
           />
-          <ProductDetails />
+          <ProductDetails product={product} />
         </div>
-        <div className="flex flex-col gap-3 px-[5vw]">
+        <div className="flex flex-col gap-3 px-[3vw]">
           <h3 className="text-xl font-semibold">Similar Products</h3>
           <Swiper
             spaceBetween={10}
@@ -94,13 +125,13 @@ const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
             {Array(12)
               .fill(null)
               .map((value, index) => (
-                <SwiperSlide>
-                  <ProductCard key={index} />
+                <SwiperSlide key={index}>
+                  <ProductCard />
                 </SwiperSlide>
               ))}
           </Swiper>
         </div>
-        <div className="flex flex-col gap-3 px-[5vw]">
+        <div className="flex flex-col gap-3 px-[3vw]">
           <h3 className="text-xl font-semibold">Similar Products</h3>
           <Swiper
             spaceBetween={10}
@@ -110,8 +141,8 @@ const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
             {Array(12)
               .fill(null)
               .map((value, index) => (
-                <SwiperSlide>
-                  <ProductCard key={index} />
+                <SwiperSlide key={index}>
+                  <ProductCard />
                 </SwiperSlide>
               ))}
           </Swiper>
@@ -122,12 +153,3 @@ const ProductPage: NextPage<{ slug: string }> = ({ slug }) => {
 };
 
 export default ProductPage;
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const slug = params?.productSlug;
-  return {
-    props: {
-      slug,
-    },
-  };
-};
