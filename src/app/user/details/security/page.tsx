@@ -10,20 +10,14 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { useAppDispatch } from "@/redux/store/hooks";
 import z from "zod";
-import { useRouter } from "next/navigation";
-import { selectUser } from "@/redux/slice/user.slice";
 
 const SecurityPage: FC = () => {
   const dispatch = useAppDispatch();
   const [password, setPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
-  const router = useRouter();
-  const user = useAppSelector(selectUser);
-  if (user.provider !== "Email/Number") router.replace("/user/details");
 
   const validateTypes = (): { valid: boolean } & NotificationType => {
     const passwordSchema = z.string().min(6);
@@ -107,10 +101,10 @@ const SecurityPage: FC = () => {
     <Container containerTitle="Security">
       <div className="mt-4 flex w-full flex-col gap-6">
         <div className="text-justify text-gray-500">
-          Please note that it's essential to regularly update your password for
-          increased security. Remember to choose a strong, unique combination of
-          characters, numbers, and symbols. Stay proactive and safeguard your
-          account by changing your password periodically.
+          Please note that it&apos;s essential to regularly update your password
+          for increased security. Remember to choose a strong, unique
+          combination of characters, numbers, and symbols. Stay proactive and
+          safeguard your account by changing your password periodically.
         </div>
         <div className="flex w-full shrink-0 flex-col gap-6 md:max-w-lg">
           <Input

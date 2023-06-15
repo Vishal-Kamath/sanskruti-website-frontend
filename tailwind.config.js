@@ -9,7 +9,6 @@ module.exports = {
     extend: {
       fontFamily: {
         quicksand: "var(--quicksand-font)",
-        ysabeau: "var(--ysabeau-font)",
       },
       colors: {
         facebook: "#4267B2",

@@ -52,7 +52,7 @@ const UserReviewCarousel: FC = () => {
                 />
                 <div className="flex flex-col items-center justify-center gap-3">
                   <i className="text-center text-sm text-gray-400">
-                    "{review.review}"
+                    &quot;{review.review}&quot;
                   </i>
                   <div>{review.name}</div>
                 </div>

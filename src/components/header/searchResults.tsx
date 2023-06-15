@@ -20,6 +20,7 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
         <>
           {searchResults.map((product) => (
             <Link
+              key={product.slug}
               href={`/product/${product.slug}`}
               className="flex gap-3 p-2 hover:bg-gray-50"
             >

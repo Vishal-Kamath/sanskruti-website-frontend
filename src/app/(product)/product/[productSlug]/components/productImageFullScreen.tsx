@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { RxCross1 } from "react-icons/rx";
 import { TfiAngleRight, TfiAngleLeft } from "react-icons/tfi";
@@ -10,7 +11,13 @@ const ProductImageFullScreen: React.FC<{
 }> = ({ imageSrc, nextSlide, prevSlide, setFullscreenImageOpen }) => {
   return (
     <div className="fixed left-0 top-0 isolate z-50 grid max-h-screen min-h-screen w-full place-content-center bg-black bg-opacity-75">
-      <img src={imageSrc} alt="zoomed image" className="max-h-screen" />
+      <Image
+        width={500}
+        height={500}
+        src={imageSrc}
+        alt="zoomed image"
+        className="max-h-screen"
+      />
 
       {/* Left Arrow */}
       <div

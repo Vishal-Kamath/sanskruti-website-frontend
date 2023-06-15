@@ -92,7 +92,7 @@ const ForgotPasswordPage: NextPage = () => {
 
       <div className="flex flex-col gap-3">
         <div className="text-sm text-gray-500">
-          Please provide your email. We'll send a password reset link that
+          Please provide your email. We&apos;ll send a password reset link that
           expires in 15 minutes to help you regain access.
         </div>
         <Input
