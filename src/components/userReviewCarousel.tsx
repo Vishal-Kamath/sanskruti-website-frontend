@@ -29,7 +29,7 @@ const UserReviewCarousel: FC = () => {
   return (
     <div className="mt-10 w-full bg-white px-[3vw]">
       <div className="flex h-[35rem] flex-col gap-2 sm:h-[30rem]">
-        <div className="text-center font-bold">Customer Review</div>
+        <div className="text-center text-lg font-bold">Customer Review</div>
         <Swiper
           modules={[Autoplay]}
           spaceBetween={20}

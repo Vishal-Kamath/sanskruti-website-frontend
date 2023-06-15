@@ -14,16 +14,16 @@ const ProductCard: FC<Props> = ({ className }) => {
   return (
     <div className={cn("relative flex-shrink-0", className)}>
       <Link href={`/product/${slug}`} className="flex flex-col gap-1">
-        <div className="h-[20rem] w-full bg-gray-100">
+        <div className="bg-gray-100">
           <Image
-            src={filters[Math.floor(Math.random() * filters.length)].image}
+            src={filters[5].image}
             width={500}
             height={500}
-            className="h-full w-full object-cover object-top"
+            className="aspect-[2/2.5] h-full w-full rounded-md object-cover object-top"
             alt="Product image"
           />
         </div>
-        <div>
+        <div className="text-sm font-normal">
           Mint Green Printed Palazzo Suit In Chanderi With Embroidery Mint Green
           Printed
         </div>
@@ -32,7 +32,7 @@ const ProductCard: FC<Props> = ({ className }) => {
           <s className="text-sm text-gray-500">4,440</s>
         </div>
       </Link>
-      <div className="absolute right-3 top-3 grid h-7 w-7 place-content-center rounded-md border-2 border-gray-300 bg-white">
+      <div className="absolute right-3 top-3 grid h-7 w-7 place-content-center rounded-full bg-white bg-opacity-30 hover:bg-opacity-100">
         <input
           type="checkbox"
           name="like"
