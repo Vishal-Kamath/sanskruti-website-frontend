@@ -19,7 +19,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Input } from "@/components/common/input";
 import PhoneInput from "react-phone-input-2";
 import { BiArrowBack } from "react-icons/bi";
-import "./high-res.css";
+import "@/app/high-res.css";
 
 export const metadata: Metadata = {
   title: "Sanskruti NX - Register",
@@ -97,7 +97,11 @@ const RegisterPage: NextPage = () => {
       .then((res) => {
         const response = res.data;
         dispatch(
-          setNotification({ message: response.message, type: response.type })
+          setNotification({
+            message: response.message,
+            type: response.type,
+            content: response.content,
+          })
         );
         dispatch(showNotification());
         if (res.status === 201) return router.replace("/auth/login");
@@ -108,6 +112,7 @@ const RegisterPage: NextPage = () => {
           setNotification({
             message: response.message,
             type: response.type,
+            content: response.content,
           })
         );
         dispatch(showNotification());
@@ -116,6 +121,10 @@ const RegisterPage: NextPage = () => {
 
   const handleGoogleAuth = () => {
     window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
+  };
+
+  const handleFacebookAuth = () => {
+    window.open(`${process.env.ENDPOINT}/api/v1/facebooklogin`, "_self");
   };
 
   return (
@@ -195,7 +204,10 @@ const RegisterPage: NextPage = () => {
           <span>GOOGLE</span>
         </UIButton>
         <UIButton className="w-full gap-2">
-          <BsFacebook className="h-6 w-6 text-facebook" />
+          <BsFacebook
+            onClick={handleFacebookAuth}
+            className="h-6 w-6 text-facebook"
+          />
           <span>FACEBOOK</span>
         </UIButton>
       </div>
