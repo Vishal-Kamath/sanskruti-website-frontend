@@ -7,14 +7,10 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Metadata, NextPage } from "next";
+import { useSearchParams } from "next/navigation";
+import { NextPage } from "next";
 import { useEffect } from "react";
 import Image from "next/image";
-
-export const metadata: Metadata = {
-  title: "Sanskruti NX - Login",
-};
 
 const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
