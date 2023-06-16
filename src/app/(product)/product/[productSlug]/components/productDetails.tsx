@@ -27,12 +27,19 @@ const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
 
       <div className="flex flex-col gap-1">
         {product?.sale_price ? (
-          <div className="flex items-baseline gap-2 font-semibold">
-            <span className="text-xl font-semibold">{product?.sale_price}</span>
-            <s className="text-sm text-gray-400">{product?.gst_price}</s>
+          <div className="flex items-baseline gap-2 text-lg">
+            <span>&#8377;{product?.sale_price}</span>
+            <s className="text-gray-500">&#8377;{product?.gst_price}</s>
+            <span className="font-bold text-red-800">
+              (
+              {((product?.gst_price - product?.sale_price) /
+                product?.gst_price) *
+                100}
+              % OFF)
+            </span>
           </div>
         ) : (
-          <span className="text-xl font-semibold">{product?.gst_price}</span>
+          <span className="text-lg">&#8377;{product?.gst_price}</span>
         )}
 
         <span className="text-xs">inclusive of all taxes</span>

@@ -35,18 +35,27 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
               </div>
               <div className="flex flex-col justify-center gap-1">
                 <div>
-                  {product.name.length > 25
-                    ? `${product.name.slice(0, 25)}...`
+                  {product.name.length > 35
+                    ? `${product.name.slice(0, 35)}...`
                     : product.name}
                 </div>
                 <div className="flex gap-1">
                   {!!product.sale_price ? (
                     <>
-                      <div>{product.sale_price}</div>
-                      <s>{product.gst_price}</s>
+                      <span>&#8377;{product?.sale_price}</span>
+                      <s className="text-gray-500">
+                        &#8377;{product?.gst_price}
+                      </s>
+                      <span className="font-bold text-red-800">
+                        (
+                        {((product?.gst_price - product?.sale_price) /
+                          product?.gst_price) *
+                          100}
+                        % OFF)
+                      </span>
                     </>
                   ) : (
-                    <div>{product.gst_price}</div>
+                    <div>&#8377;{product.gst_price}</div>
                   )}
                 </div>
               </div>

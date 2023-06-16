@@ -27,9 +27,9 @@ const ProductCard: FC<Props> = ({ className }) => {
           Mint Green Printed Palazzo Suit In Chanderi With Embroidery Mint Green
           Printed
         </div>
-        <div className="flex items-center gap-2 font-semibold">
-          <span className="text-lg">Rs. 4,000</span>
-          <s className="text-sm text-gray-500">4,440</s>
+        <div className="flex items-center gap-2 text-lg font-medium">
+          <span>&#8377;4,000</span>
+          <s className="text-gray-500">&#8377;4,440</s>
         </div>
       </Link>
       <div className="absolute right-3 top-3 grid h-7 w-7 place-content-center rounded-full bg-white bg-opacity-30 hover:bg-opacity-100">
