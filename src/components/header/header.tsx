@@ -86,18 +86,11 @@ const Header: FC = () => {
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   const isAuthenticated = useAppSelector(selectisAuthenticated);
 
-  const userRedirect = () => {
-    if (!isAuthenticated) return router.push("/auth/login");
-    router.push("/user/details");
-  };
-  const userRedirectCart = () => {
-    if (!isAuthenticated) return router.push("/auth/login");
-    router.push("/user/cart");
-  };
-  const userRedirectWishList = () => {
-    if (!isAuthenticated) return router.push("/auth/login");
-    router.push("/user/wishlist");
-  };
+  const userRedirect = !isAuthenticated ? "/auth/login" : "/user/details";
+  const userRedirectCart = !isAuthenticated ? "/auth/login" : "/user/cart";
+  const userRedirectWishList = !isAuthenticated
+    ? "/auth/login"
+    : "/user/wishlist";
 
   return (
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
@@ -138,16 +131,15 @@ const Header: FC = () => {
             search={search}
             setSearch={handleSearchInput}
           />
-          <div onClick={userRedirect}>
+          <Link href={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
-          </div>
-          <div onClick={userRedirectWishList}>
+          </Link>
+          <Link href={userRedirectWishList}>
             <AiOutlineHeart className="h-6 w-6" />
-          </div>
-          <MdOutlineShoppingBag
-            onClick={userRedirectCart}
-            className="h-8 w-8"
-          />
+          </Link>
+          <Link href={userRedirectCart}>
+            <MdOutlineShoppingBag className="h-7 w-7" />
+          </Link>
         </div>
       </div>
 
