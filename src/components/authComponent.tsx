@@ -27,6 +27,7 @@ const AuthComponent: FC<Props> = ({ children }) => {
     await axios
       .get<{ userTrimmend: UserType }>(`${process.env.ENDPOINT}/api/v1/user/`, {
         headers: {
+          "Access-Control-Allow-Credentials": true,
           "Content-Type": "application/json",
         },
         withCredentials: true,

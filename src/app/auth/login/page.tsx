@@ -72,6 +72,7 @@ const LoginPage = () => {
     const registerResponse = await axios
       .post<NotificationType>(link, body, {
         headers: {
+          "Access-Control-Allow-Credentials": true,
           "Content-Type": "application/json",
         },
         withCredentials: true,
