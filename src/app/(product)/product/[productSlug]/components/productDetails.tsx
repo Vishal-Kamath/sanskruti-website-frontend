@@ -1,6 +1,6 @@
 import React from "react";
 import DropdownComponent from "@/components/common/dropdown";
-import VariantTags from "./varientTags";
+import VariantTags from "./variantTags";
 import UIButton from "@/components/common/button";
 import { ProductType } from "@/components/header/header";
 

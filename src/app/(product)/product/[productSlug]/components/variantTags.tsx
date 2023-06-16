@@ -14,11 +14,26 @@ const VariantTags: FC<{
   const searchParams = useSearchParams();
 
   const onClick = (value: string) => {
+    if (selected === value) deSelectVariant();
+    else selectVariant(value);
+  };
+
+  const selectVariant = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
     current.set(main, value);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
     setSelected(value);
+  };
+  const deSelectVariant = () => {
+    const radio = document.getElementById(selected) as HTMLInputElement;
+    radio.checked = false;
+    setSelected("");
+
+    const current = new URLSearchParams(searchParams.toString());
+    current.delete(main);
+    const query = !!current.toString() ? `?${current.toString()}` : "";
+    router.push(`${pathname}/${query}`);
   };
 
   useEffect(() => {
@@ -49,7 +64,7 @@ const VariantTags: FC<{
               checked={selected === subItem.title}
               id={subItem.title}
               className="absolute left-0 top-0 z-10 h-full w-full opacity-0"
-              onChange={() => onClick(subItem.title)}
+              onClick={() => onClick(subItem.title)}
             />
             {subItem.title}
           </UIButton>
