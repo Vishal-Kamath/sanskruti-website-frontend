@@ -1,10 +1,17 @@
+"use client";
+
 import React from "react";
 import DropdownComponent from "@/components/common/dropdown";
 import VariantTags from "./variantTags";
 import UIButton from "@/components/common/button";
 import { ProductType } from "@/components/header/header";
+import { useAppSelector } from "@/redux/store/hooks";
+import { selectisAuthenticated } from "@/redux/slice/user.slice";
+import Link from "next/link";
 
 const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
+  const isAuthenticated = useAppSelector(selectisAuthenticated);
+
   const addToCart = () => {
     // axios.post()
   };
@@ -43,12 +50,22 @@ const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
       </div>
 
       <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
-        <UIButton className="w-full bg-white text-lg font-semibold text-black">
-          ADD TO CART
-        </UIButton>
-        <UIButton className="w-full bg-black text-lg font-semibold text-white">
-          BUY NOW
-        </UIButton>
+        {isAuthenticated ? (
+          <>
+            <UIButton className="w-full bg-white text-lg font-semibold text-black">
+              ADD TO CART
+            </UIButton>
+            <UIButton className="w-full bg-black text-lg font-semibold text-white">
+              BUY NOW
+            </UIButton>
+          </>
+        ) : (
+          <Link href="/auth/login" className="w-full">
+            <UIButton className="w-full bg-white text-lg font-semibold text-black">
+              SIGN IN
+            </UIButton>
+          </Link>
+        )}
       </div>
 
       <div className="flex flex-col">
