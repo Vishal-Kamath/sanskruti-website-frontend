@@ -48,9 +48,11 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
                       </s>
                       <span className="font-bold text-red-800">
                         (
-                        {((product?.gst_price - product?.sale_price) /
-                          product?.gst_price) *
-                          100}
+                        {Math.round(
+                          ((product?.gst_price - product?.sale_price) /
+                            product?.gst_price) *
+                            100
+                        )}
                         % OFF)
                       </span>
                     </>

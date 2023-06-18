@@ -1,13 +1,14 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect, SetStateAction, Dispatch } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import UIButton from "@/components/common/button";
 import { cn } from "@/utils/lib";
 
 const VariantTags: FC<{
   main: string;
+  selected: string,
+  setSelected: Dispatch<SetStateAction<string>>
   sub: { title: string }[];
-}> = ({ main, sub }) => {
-  const [selected, setSelected] = useState("");
+}> = ({ main, sub, selected, setSelected }) => {
 
   const router = useRouter();
   const pathname = usePathname();

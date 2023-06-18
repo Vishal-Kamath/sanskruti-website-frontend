@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import {FC, useState} from "react";
 import DropdownComponent from "@/components/common/dropdown";
 import VariantTags from "./variantTags";
 import UIButton from "@/components/common/button";
@@ -8,12 +8,28 @@ import { ProductType } from "@/components/header/header";
 import { useAppSelector } from "@/redux/store/hooks";
 import { selectisAuthenticated } from "@/redux/slice/user.slice";
 import Link from "next/link";
+import axios from "axios";
 
-const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
+const ProductDetails: FC<{ product?: ProductType }> = ({ product }) => {
   const isAuthenticated = useAppSelector(selectisAuthenticated);
+  const colorArray = [{ title: "S" }, { title: "M" }, { title: "L" }]
+  const [color, setColor] = useState(colorArray[0].title)
+  const sizeArray = [{ title: "Red" }, { title: "Green" }, { title: "Blue" }]
+  const [size, setSize] = useState(sizeArray[0].title)
 
   const addToCart = () => {
-    // axios.post()
+    const body = {
+      ...product,
+      quantity: 1,
+      variants: []
+    }
+
+    axios.post(`${process.env.ENDPOINT}/api/user/cart`, body, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      withCredentials: true
+    }).then
   };
 
   return (
@@ -32,9 +48,11 @@ const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
             <s className="text-gray-500">&#8377;{product?.gst_price}</s>
             <span className="font-bold text-red-800">
               (
-              {((product?.gst_price - product?.sale_price) /
-                product?.gst_price) *
-                100}
+              {Math.round(
+                ((product?.gst_price - product?.sale_price) /
+                  product?.gst_price) *
+                  100
+              )}
               % OFF)
             </span>
           </div>
@@ -48,11 +66,15 @@ const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
       <div className="flex flex-col">
         <VariantTags
           main="Size"
-          sub={[{ title: "S" }, { title: "M" }, { title: "L" }]}
+          selected={size}
+          setSelected={setSize}
+          sub={colorArray}
         />
         <VariantTags
           main="Color"
-          sub={[{ title: "Red" }, { title: "Green" }, { title: "Blue" }]}
+          selected={color}
+          setSelected={setColor}
+          sub={sizeArray}
         />
       </div>
 

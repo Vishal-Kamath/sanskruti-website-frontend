@@ -27,7 +27,11 @@ const AuthComponent: FC<Props> = ({ children }) => {
     await axios
       .get<{ userTrimmend: UserType }>(`${process.env.ENDPOINT}/api/v1/user/`, {
         headers: {
-          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Origin": "https://sanskruti.onrender.com",
+          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          "Access-Control-Allow-Headers":
+            "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+          "Access-Control-Allow-Credentials": "true",
           "Content-Type": "application/json",
         },
         withCredentials: true,

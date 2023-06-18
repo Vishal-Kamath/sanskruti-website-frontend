@@ -3,15 +3,12 @@
 import ProductDetails from "./components/productDetails";
 import ProductImageFullScreen from "./components/productImageFullScreen";
 import ProductImageDisplay from "./components/productImagesDisplay";
-import ProductCard from "@/components/productCard";
 import { useState, useEffect } from "react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
 import { useParams } from "next/navigation";
 import { ProductType } from "@/components/header/header";
 import axios from "axios";
+import ProductCarousel from "@/components/common/productCarousel";
 
 const ProductPage = () => {
   const params = useParams();
@@ -21,29 +18,6 @@ const ProductPage = () => {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
-
-  const [numberSlides, setNumberSlides] = useState(4);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 1024) {
-        setNumberSlides(5);
-      } else if (window.innerWidth > 768) {
-        setNumberSlides(4);
-      } else if (window.innerWidth > 640) {
-        setNumberSlides(3);
-      } else {
-        setNumberSlides(2);
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const prevSlide = () => {
     if (!product) return;
@@ -96,38 +70,7 @@ const ProductPage = () => {
           />
           <ProductDetails product={product} />
         </div>
-        <div className="flex flex-col gap-3 px-[3vw]">
-          <h3 className="text-xl font-semibold">Similar Products</h3>
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={numberSlides}
-            className="flex w-full"
-          >
-            {Array(12)
-              .fill(null)
-              .map((value, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCard />
-                </SwiperSlide>
-              ))}
-          </Swiper>
-        </div>
-        <div className="flex flex-col gap-3 px-[3vw]">
-          <h3 className="text-xl font-semibold">Similar Products</h3>
-          <Swiper
-            spaceBetween={10}
-            slidesPerView={numberSlides}
-            className="flex w-full"
-          >
-            {Array(12)
-              .fill(null)
-              .map((value, index) => (
-                <SwiperSlide key={index}>
-                  <ProductCard />
-                </SwiperSlide>
-              ))}
-          </Swiper>
-        </div>
+        <ProductCarousel />
       </div>
     </>
   );

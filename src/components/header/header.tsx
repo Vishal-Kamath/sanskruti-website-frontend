@@ -36,6 +36,7 @@ const debounce = <T extends (...args: any[]) => void>(
 };
 
 export interface ProductType {
+  _id: string;
   name: string;
   description: string;
   images: string[];
