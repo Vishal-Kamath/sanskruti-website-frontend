@@ -60,7 +60,7 @@ const DetailsPage: FC = () => {
             better user experience. Stay connected with the latest updates!
           </div>
           <div className="flex items-center gap-7 text-sm max-lg:flex-col max-lg:items-center">
-            <BsPerson className="aspect-square h-[10rem] w-full shrink-0 rounded-[2rem] border-2 border-slate-300 bg-slate-50 p-9 text-sky-400 lg:h-[15rem] lg:w-[15rem]" />
+            <BsPerson className="aspect-square h-[10rem] w-full shrink-0 rounded-[1rem] border-2 border-slate-300 bg-slate-50 p-9 text-sky-400 lg:h-[15rem] lg:w-[15rem]" />
             <div className="flex w-full flex-col gap-1 text-sm md:text-lg">
               <div className="flex justify-between">
                 <h4 className="font-normal">Username</h4>
