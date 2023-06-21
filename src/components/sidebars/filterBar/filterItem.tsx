@@ -3,16 +3,13 @@
 import { cn } from "@/utils/lib";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { BsFillCheckSquareFill } from "react-icons/bs";
-import { RxCross2 } from "react-icons/rx";
 
 const FilterItem: FC<{
   main: string;
   sub: { title: string }[];
   classname?: string;
 }> = ({ main, sub, classname }) => {
-  const [open, setOpen] = useState(true);
   const [selected, setSelected] = useState("");
 
   const router = useRouter();
@@ -31,8 +28,11 @@ const FilterItem: FC<{
     router.push(`${pathname}/${query}`);
     setSelected(value);
   };
+
   const deSelectVariant = () => {
-    const radio = document.getElementById(selected) as HTMLInputElement;
+    const radio = document.getElementById(
+      selected + " filter sidebar"
+    ) as HTMLInputElement;
     radio.checked = false;
     setSelected("");
 
@@ -51,42 +51,34 @@ const FilterItem: FC<{
   }, [searchParams, main]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2 border-t-2 border-gray-100 py-2 first:border-0">
       <h5
         className={cn(
-          "flex items-center justify-between py-2 font-normal",
+          "flex items-center justify-between text-[16px] font-medium sm:text-sm sm:font-normal",
           classname
         )}
       >
-        <span>{main}</span>
-        <span className="text-xl text-gray-500">
-          {open ? (
-            <AiOutlineMinus onClick={() => setOpen(false)} />
-          ) : (
-            <AiOutlinePlus onClick={() => setOpen(true)} />
-          )}
-        </span>
+        {main}
       </h5>
       <div
         className={cn(
           "flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400",
-          classname,
-          !open && "hidden"
+          classname
         )}
       >
         {sub.map((subItem) => (
           <span
             key={subItem.title}
-            className="flex items-center gap-3 text-xs font-extralight"
+            className="flex items-center gap-4 font-extralight sm:gap-3 sm:text-xs"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
                 type="radio"
                 name={main}
                 checked={selected === subItem.title}
-                id={subItem.title}
+                id={subItem.title + " filter sidebar"}
                 className="absolute left-0 top-0 h-full w-full opacity-0"
-                onChange={() => onClick(subItem.title)}
+                onClick={() => onClick(subItem.title)}
               />
               {selected === subItem.title ? (
                 <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
