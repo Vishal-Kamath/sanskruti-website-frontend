@@ -18,7 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { selectisAuthenticated } from "@/redux/slice/user.slice";
-import Navbar from "./navbar";
+import Navbar, { NavbarDrawer } from "./navbar";
 import axios from "axios";
 import SearchResults from "./searchResults";
 import { cn } from "@/utils/lib";
@@ -55,7 +55,6 @@ export interface ProductType {
 }
 
 const Header: FC = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState("");
@@ -99,7 +98,7 @@ const Header: FC = () => {
 
       <div className="flex h-12 items-center justify-between bg-white px-[3vw]">
         <div className="flex items-center gap-2">
-          <div className="sm:hidden">
+          <div className="md:hidden">
             {sideBarOpen ? (
               <RxCross2
                 className="text-2xl"
@@ -115,11 +114,11 @@ const Header: FC = () => {
 
           <Link href="/">
             <Image
-              src="/assets/logo.svg"
+              src="/assets/logo.png"
               alt="Sanskruti Logo"
               width={100}
               height={100}
-              className="aspect-square h-12 w-fit"
+              className="h-16"
             />
           </Link>
         </div>
@@ -157,6 +156,8 @@ const Header: FC = () => {
         searchResults={searchResults}
         className={cn((!search || !searchFocused) && "hidden")}
       />
+
+      <NavbarDrawer sidebarOpen={sideBarOpen} />
     </header>
   );
 };

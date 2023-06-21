@@ -1,9 +1,11 @@
 import { FC, useState } from "react";
-import { filters } from "@/data/filterlist";
+import { FilterType, filters } from "@/data/filterlist";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/lib";
+import { FaAngleDown } from "react-icons/fa";
+import UIButton from "../common/button";
 
 const Navbar: FC = () => {
   const [displayFilter, setDisplayFilter] = useState(filters[0]);
@@ -17,17 +19,17 @@ const Navbar: FC = () => {
       )}
     >
       <div className="group w-fit max-md:hidden">
-        <nav className="flex h-6 w-fit items-center justify-center gap-4 lg:gap-10">
+        <nav className="flex h-6 w-fit items-center justify-evenly gap-4 lg:gap-6">
           {filters.map((filter) => (
             <div
               key={filter.main}
               className={cn(
-                "text-xs text-gray-600 lg:text-sm",
-                "hover:font-medium hover:text-black hover:underline hover:underline-offset-4"
+                "flex items-center gap-[2px] text-xs text-gray-600 lg:text-sm",
+                "border-b-[1px] border-transparent hover:border-black hover:font-medium hover:text-black"
               )}
               onMouseEnter={() => setDisplayFilter(filter)}
             >
-              {filter.main.toLocaleUpperCase()}
+              {filter.main} <FaAngleDown />
             </div>
           ))}
         </nav>
@@ -67,3 +69,70 @@ const Navbar: FC = () => {
 };
 
 export default Navbar;
+
+export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
+  const [displayFilter, setDisplayFilter] = useState<FilterType>();
+  return (
+    <div
+      className={cn(
+        "fixed left-0 top-0 -z-30 max-h-screen min-h-screen w-full overflow-auto bg-white px-[3vw] pt-32 scrollbar-none",
+        !sidebarOpen && "hidden"
+      )}
+    >
+      {!displayFilter ? (
+        <div className="grid grid-cols-2 gap-2">
+          {filters.map((filter) => (
+            <button
+              key={filter.main + " nav"}
+              onClick={() => setDisplayFilter(filter)}
+              className="relative h-32"
+            >
+              <Image
+                src={filter.image}
+                alt={filter.main + " nav image"}
+                className="h-full w-full object-cover object-top"
+                height={100}
+                width={100}
+              />
+              <div className="absolute bottom-0 flex h-8 w-full items-center justify-center gap-1 bg-white bg-opacity-75">
+                {filter.main} <FaAngleDown />
+              </div>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between px-1">
+            <UIButton
+              onClick={() => setDisplayFilter(undefined)}
+              className="px-4"
+            >
+              Back
+            </UIButton>
+            <span className="text-lg font-bold">{displayFilter.main}</span>
+          </div>
+          <Image
+            src={displayFilter.image}
+            alt={displayFilter.main + " image"}
+            width={100}
+            height={100}
+            className="h-40 w-full object-cover object-top"
+          />
+          <div className="flex flex-col gap-1 pb-20">
+            {displayFilter.sub.map((item, index) => (
+              <Link
+                key={item.title + index + displayFilter.main + " sidebar"}
+                href={`/category/${displayFilter.main}/?${
+                  displayFilter.main
+                }=${encodeURIComponent(item.title)}`}
+                className="text-lg"
+              >
+                {item.title}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
