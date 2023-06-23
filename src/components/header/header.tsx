@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FC, useRef, useCallback } from "react";
+import { useState, FC, useCallback } from "react";
 import TopBanner from "./topBanner";
 import SearchBar from "./searchBar";
 import Link from "next/link";
@@ -15,13 +15,14 @@ import {
   openSidebar,
   selectSidebarOpen,
 } from "@/redux/slice/sidebar.slice";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { selectisAuthenticated } from "@/redux/slice/user.slice";
-import Navbar, { NavbarDrawer } from "./navbar";
+import Navbar from "./navbar";
 import axios from "axios";
 import SearchResults from "./searchResults";
 import { cn } from "@/utils/lib";
+import { NavbarDrawer } from "./navbarDrawer";
+import { usePathname } from "next/navigation";
 
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -56,6 +57,7 @@ export interface ProductType {
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
 
   const [search, setSearch] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
@@ -84,6 +86,9 @@ const Header: FC = () => {
   };
 
   const sideBarOpen = useAppSelector(selectSidebarOpen);
+  const sideBarBlocked =
+    pathname.includes("/auth") || pathname.includes("/user");
+
   const isAuthenticated = useAppSelector(selectisAuthenticated);
 
   const userRedirect = !isAuthenticated ? "/auth/login" : "/user/details";
@@ -96,9 +101,9 @@ const Header: FC = () => {
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
 
-      <div className="flex h-12 items-center justify-between bg-white px-[3vw]">
+      <div className="flex h-12 items-center justify-between gap-24 bg-white px-[3vw]">
         <div className="flex items-center gap-2">
-          <div className="md:hidden">
+          <div className={cn("md:hidden", sideBarBlocked && "hidden")}>
             {sideBarOpen ? (
               <RxCross2
                 className="text-2xl"
@@ -112,7 +117,7 @@ const Header: FC = () => {
             )}
           </div>
 
-          <Link href="/">
+          <Link href="/" className="flex-shrink-0">
             <Image
               src="/assets/logo.png"
               alt="Sanskruti Logo"
@@ -123,9 +128,9 @@ const Header: FC = () => {
           </Link>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:w-full">
           <SearchBar
-            classname="max-md:hidden min-w-[25rem]"
+            classname="ml-auto max-md:hidden min-w-[25rem]"
             searchFocused={searchFocused}
             setSearchFocused={setSearchFocused}
             search={search}
