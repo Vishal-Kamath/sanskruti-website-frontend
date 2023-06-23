@@ -79,6 +79,7 @@ const FilterItem: FC<{
                 id={subItem.title + " filter sidebar"}
                 className="absolute left-0 top-0 h-full w-full opacity-0"
                 onClick={() => onClick(subItem.title)}
+                onChange={() => {}}
               />
               {selected === subItem.title ? (
                 <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
