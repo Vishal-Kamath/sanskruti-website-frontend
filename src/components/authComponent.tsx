@@ -5,13 +5,12 @@ import {
   UserType,
   loggedIn,
   loggedOut,
-  selectUser,
   setUser,
 } from "@/redux/slice/user.slice";
 import { WishlistType, setWishlist } from "@/redux/slice/wishlist.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { useAppDispatch } from "@/redux/store/hooks";
 import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { FC, HTMLAttributes, useEffect, useRef } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
@@ -20,9 +19,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
 
   const pathname = usePathname();
   const dispatch = useAppDispatch();
-
-  const user = useAppSelector(selectUser);
-  const router = useRouter();
 
   const getUser = async () => {
     await axios
@@ -105,9 +101,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
       });
 
     firstFetch.current = false;
-    if (!user.isAuthenticated && pathname.includes("/user")) {
-      router.replace("/");
-    }
   };
 
   useEffect(() => {
