@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Container from "../components/container";
-import ProductCard from "@/components/productCard";
+import { DummyProductCard } from "@/components/productCard";
 import UIButton from "@/components/common/button";
 
 const WishListPage: FC = () => {
@@ -11,7 +11,7 @@ const WishListPage: FC = () => {
           .fill(null)
           .map((_, index) => (
             <div key={index} className="flex flex-col gap-2">
-              <ProductCard />
+              <DummyProductCard />
               <UIButton>Add to cart</UIButton>
             </div>
           ))}

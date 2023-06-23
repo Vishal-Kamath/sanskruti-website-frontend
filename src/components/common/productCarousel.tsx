@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
-import ProductCard from "../productCard";
+import ProductCard, { DummyProductCard } from "../productCard";
 
 const ProductCarousel: FC = () => {
   const [numberSlides, setNumberSlides] = useState(4);
@@ -41,7 +41,7 @@ const ProductCarousel: FC = () => {
           .fill(null)
           .map((value, index) => (
             <SwiperSlide key={index}>
-              <ProductCard />
+              <DummyProductCard />
             </SwiperSlide>
           ))}
       </Swiper>
