@@ -8,6 +8,7 @@ import {
   selectUser,
   setUser,
 } from "@/redux/slice/user.slice";
+import { WishlistType, setWishlist } from "@/redux/slice/wishlist.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import axios from "axios";
 import { usePathname, useRouter } from "next/navigation";
@@ -27,11 +28,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
     await axios
       .get<{ userTrimmend: UserType }>(`${process.env.ENDPOINT}/api/v1/user/`, {
         headers: {
-          "Access-Control-Allow-Origin": "https://sanskruti.onrender.com",
-          "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
-          "Access-Control-Allow-Headers":
-            "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
-          "Access-Control-Allow-Credentials": "true",
           "Content-Type": "application/json",
         },
         withCredentials: true,
@@ -49,7 +45,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
           })
         );
         dispatch(loggedIn());
-        firstFetch.current = false;
 
         setTimeout(
           () => dispatch(setLoading({ loading: true, value: 20 })),
@@ -58,14 +53,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
         setTimeout(
           () => dispatch(setLoading({ loading: true, value: 75 })),
           1000
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 100 })),
-          1600
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: false, value: 0 })),
-          1650
         );
       })
       .catch(() => {
@@ -79,6 +66,34 @@ const AuthComponent: FC<Props> = ({ children }) => {
           () => dispatch(setLoading({ loading: true, value: 75 })),
           1000
         );
+      });
+
+    await axios
+      .get<WishlistType>(`${process.env.ENDPOINT}/api/v1/user/wishlist`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        dispatch(
+          setWishlist({
+            ids: response.data.ids,
+            list: response.data.list,
+          })
+        );
+
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 100 })),
+          1600
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: false, value: 0 })),
+          1650
+        );
+      })
+      .catch(() => {
+        dispatch(setWishlist({ ids: [], list: [] }));
         setTimeout(
           () => dispatch(setLoading({ loading: true, value: 100 })),
           1600
@@ -88,6 +103,8 @@ const AuthComponent: FC<Props> = ({ children }) => {
           1650
         );
       });
+
+    firstFetch.current = false;
     if (!user.isAuthenticated && pathname.includes("/user")) {
       router.replace("/");
     }

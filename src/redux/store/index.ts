@@ -4,12 +4,14 @@ import userReducer from "@/redux/slice/user.slice";
 import loadingReducer from "@/redux/slice/loading.slice";
 import notificationReducer from "@/redux/slice/notification.slice";
 import cartReducer from "@/redux/slice/cart.slice";
+import wishlistReducer from "@/redux/slice/wishlist.slice";
 
 export const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
     loading: loadingReducer,
     user: userReducer,
+    wishlist: wishlistReducer,
     cart: cartReducer,
     notification: notificationReducer,
   },

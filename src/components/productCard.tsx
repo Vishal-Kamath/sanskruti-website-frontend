@@ -7,13 +7,56 @@ import Link from "next/link";
 import { FC, HTMLAttributes, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { ProductType } from "./header/header";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { selectisAuthenticated } from "@/redux/slice/user.slice";
+import { useRouter } from "next/navigation";
+import {
+  selectWishlistIds,
+  setWishlistIds,
+} from "@/redux/slice/wishlist.slice";
+import axios from "axios";
 
 interface Props {
   className?: string;
   product: ProductType;
 }
 const ProductCard: FC<Props> = ({ className, product }) => {
-  const [liked, setLiked] = useState(false);
+  const disptach = useAppDispatch();
+  const router = useRouter();
+  const userWishlistIds = useAppSelector(selectWishlistIds);
+  const isAuthenticated = useAppSelector(selectisAuthenticated);
+
+  const liked = !!userWishlistIds.find(
+    (listProduct) => listProduct === product._id
+  );
+
+  const handleLike = () => {
+    if (!isAuthenticated) return router.push("/auth/login");
+
+    if (!liked) likeProduct();
+    else unlikeProduct();
+  };
+
+  const likeProduct = () => {
+    axios
+      .post<{ ids: string[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/wishlist`,
+        {
+          productId: product._id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        disptach(setWishlistIds({ ids: res.data.ids }));
+      });
+  };
+  const unlikeProduct = () => {};
+
   return (
     <div className={cn("flex w-full flex-shrink-0 flex-col gap-2", className)}>
       <Link href={`/product/${product.slug}`}>
@@ -30,8 +73,13 @@ const ProductCard: FC<Props> = ({ className, product }) => {
         </div>
       </Link>
       <button
-        onClick={() => setLiked((like) => !like)}
-        className="flex h-8 w-full flex-shrink-0 items-center justify-center gap-2 rounded-sm border-[1px] border-gray-300 text-xs font-medium text-gray-500 hover:border-gray-600 hover:text-black"
+        onClick={handleLike}
+        className={cn(
+          "flex h-8 w-full flex-shrink-0 items-center justify-center gap-2 rounded-sm border-[1px] text-xs font-medium",
+          liked
+            ? "border-red-300 bg-red-50 text-red-500 hover:border-red-600"
+            : "border-gray-300 text-gray-500 hover:border-gray-600 hover:text-black"
+        )}
       >
         <span>WISHLIST</span>
         {liked ? (
