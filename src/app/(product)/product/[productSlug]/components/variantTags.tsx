@@ -5,11 +5,10 @@ import { cn } from "@/utils/lib";
 
 const VariantTags: FC<{
   main: string;
-  selected: string,
-  setSelected: Dispatch<SetStateAction<string>>
+  selected: string;
+  setSelected: Dispatch<SetStateAction<string>>;
   sub: { title: string }[];
 }> = ({ main, sub, selected, setSelected }) => {
-
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -66,6 +65,7 @@ const VariantTags: FC<{
               id={subItem.title}
               className="absolute left-0 top-0 z-10 h-full w-full opacity-0"
               onClick={() => onClick(subItem.title)}
+              onChange={() => {}}
             />
             {subItem.title}
           </UIButton>
