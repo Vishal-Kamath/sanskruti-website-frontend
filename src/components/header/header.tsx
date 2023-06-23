@@ -23,6 +23,7 @@ import SearchResults from "./searchResults";
 import { cn } from "@/utils/lib";
 import { NavbarDrawer } from "./navbarDrawer";
 import { usePathname } from "next/navigation";
+import { selectWishlistIds } from "@/redux/slice/wishlist.slice";
 
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -97,6 +98,8 @@ const Header: FC = () => {
     ? "/auth/login"
     : "/user/wishlist";
 
+  const userWishlistIds = useAppSelector(selectWishlistIds);
+
   return (
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
@@ -139,8 +142,16 @@ const Header: FC = () => {
           <Link href={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
           </Link>
-          <Link href={userRedirectWishList}>
+          <Link href={userRedirectWishList} className="relative">
             <AiOutlineHeart className="h-6 w-6" />
+            <div
+              className={cn(
+                "absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-sky-200 text-xs font-bold",
+                !userWishlistIds.length && "hidden"
+              )}
+            >
+              {userWishlistIds.length}
+            </div>
           </Link>
           <Link href={userRedirectCart}>
             <MdOutlineShoppingBag className="h-7 w-7" />
