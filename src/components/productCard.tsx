@@ -53,9 +53,26 @@ const ProductCard: FC<Props> = ({ className, product }) => {
       )
       .then((res) => {
         disptach(setWishlistIds({ ids: res.data.ids }));
-      });
+      })
+      .catch(() => {});
   };
-  const unlikeProduct = () => {};
+
+  const unlikeProduct = () => {
+    axios
+      .delete<{ ids: string[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/wishlist?productId=${product._id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        disptach(setWishlistIds({ ids: res.data.ids }));
+      })
+      .catch(() => {});
+  };
 
   return (
     <div className={cn("flex w-full flex-shrink-0 flex-col gap-2", className)}>
