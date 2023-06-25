@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import FilterItem from "./filterItem";
 import { filters } from "@/data/filterlist";
 import { useParams } from "next/navigation";
+import SortItem from "./sortItem";
 
 const Size = {
   main: "Size",
@@ -42,6 +43,7 @@ const FilterList: FC = () => {
   return (
     <div className="flex flex-col">
       <FilterItem main={main.main} sub={main.sub} classname="pl-[3vw] pr-2" />
+      <SortItem className="pl-[3vw] pr-2" />
       <FilterItem {...Size} classname="pl-[3vw] pr-2" />
       <FilterItem {...Color} classname="pl-[3vw] pr-2" />
     </div>

@@ -30,10 +30,6 @@ const FilterItem: FC<{
   };
 
   const deSelectVariant = () => {
-    const radio = document.getElementById(
-      selected + " filter sidebar"
-    ) as HTMLInputElement;
-    radio.checked = false;
     setSelected("");
 
     const current = new URLSearchParams(searchParams.toString());
