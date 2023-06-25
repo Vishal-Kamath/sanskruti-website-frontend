@@ -1,17 +1,24 @@
-import { FC, useEffect, SetStateAction, Dispatch } from "react";
+"use client";
+
+import { FC, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import UIButton from "@/components/common/button";
 import { cn } from "@/utils/lib";
+import { ProductType } from "@/components/header/header";
 
 const VariantTags: FC<{
-  main: string;
-  selected: string;
-  setSelected: Dispatch<SetStateAction<string>>;
-  sub: { title: string }[];
-}> = ({ main, sub, selected, setSelected }) => {
+  variant: ProductType["varients"]["attributes"][0];
+  variantSetters: (value: string) => void;
+}> = ({ variant, variantSetters }) => {
+  const [selected, setSelected] = useState("");
+
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  useEffect(() => {
+    variantSetters(selected);
+  }, [selected]);
 
   const onClick = (value: string) => {
     if (selected === value) deSelectVariant();
@@ -20,54 +27,59 @@ const VariantTags: FC<{
 
   const selectVariant = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
-    current.set(main, value);
+    current.set(variant.name, value);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
     setSelected(value);
   };
   const deSelectVariant = () => {
-    const radio = document.getElementById(selected) as HTMLInputElement;
-    radio.checked = false;
     setSelected("");
 
     const current = new URLSearchParams(searchParams.toString());
-    current.delete(main);
+    current.delete(variant.name);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
   };
 
   useEffect(() => {
     const selectedTagFromQuery = decodeURIComponent(
-      searchParams.get(main) || ""
+      searchParams.get(variant.name) || ""
     );
     if (!selectedTagFromQuery) return;
     setSelected(selectedTagFromQuery);
-  }, [searchParams, main]);
+  }, [searchParams, variant.name]);
+
+  const filterChildren = variant.childern.filter((child) => child.state);
 
   return (
-    <div className="flex flex-col gap-3 border-t-2 border-gray-300 py-3">
-      <h5 className="flex items-center font-bold">
-        <span>{main}</span>
+    <div
+      className={cn(
+        "flex flex-col gap-3 border-t-2 border-gray-300 py-3 capitalize",
+        filterChildren.length === 0 && "hidden"
+      )}
+    >
+      <h5 className="flex items-center text-lg font-bold">
+        <span>{variant.name}</span>
       </h5>
-      <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden px-1 py-1">
-        {sub.map((subItem) => (
+      <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden py-1">
+        {filterChildren.map((subVariant) => (
           <UIButton
-            key={subItem.title}
+            key={subVariant.value}
             className={cn(
-              "relative isolate min-w-[3rem] rounded-full border-gray-700 px-3 py-2 text-[14px]",
-              selected === subItem.title && "bg-gray-700 text-white"
+              "relative isolate min-w-[3rem] rounded-full border-gray-700 px-3 py-2 text-[14px] capitalize",
+              selected === subVariant.value && "bg-gray-700 text-white"
             )}
           >
             <input
               type="radio"
-              name={main}
-              checked={selected === subItem.title}
-              id={subItem.title}
+              name={variant.name}
+              checked={selected === subVariant.value}
+              id={variant.name + " " + subVariant.value}
               className="absolute left-0 top-0 z-10 h-full w-full opacity-0"
-              onClick={() => onClick(subItem.title)}
+              onClick={() => onClick(subVariant.value)}
               onChange={() => {}}
             />
-            {subItem.title}
+            {subVariant.value}
           </UIButton>
         ))}
       </div>

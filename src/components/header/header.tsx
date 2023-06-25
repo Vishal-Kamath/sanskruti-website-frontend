@@ -42,6 +42,17 @@ export interface ProductType {
   name: string;
   description: string;
   images: string[];
+  varients: {
+    attributes: {
+      name: string;
+      state: boolean;
+      childern: {
+        value: string;
+        state: boolean;
+      }[];
+    }[];
+    variations: any[];
+  };
   gst_price: number;
   sale_price: number;
   MainCategory: string;

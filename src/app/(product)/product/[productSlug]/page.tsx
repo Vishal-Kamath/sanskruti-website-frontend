@@ -1,79 +1,49 @@
-"use client";
-
-import ProductDetails from "./components/productDetails";
-import ProductImageFullScreen from "./components/productImageFullScreen";
-import ProductImageDisplay from "./components/productImagesDisplay";
-import { useState, useEffect } from "react";
-
-import { useParams } from "next/navigation";
 import { ProductType } from "@/components/header/header";
 import axios from "axios";
-import ProductCarousel from "@/components/common/productCarousel";
+import ProductPageComponent from "./components/productPage";
+import { Metadata } from "next";
 
-const ProductPage = () => {
-  const params = useParams();
-  const slug = params["productSlug"];
-
-  const [product, setProduct] = useState<ProductType>();
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
-
-  const prevSlide = () => {
-    if (!product) return;
-    const isFirstSlide = currentImageIndex === 0;
-    const newIndex = isFirstSlide
-      ? product.images.length - 1
-      : currentImageIndex - 1;
-    setCurrentImageIndex(newIndex);
-  };
-
-  const nextSlide = () => {
-    if (!product) return;
-    const isLastSlide = currentImageIndex === product.images.length - 1;
-    const newIndex = isLastSlide ? 0 : currentImageIndex + 1;
-    setCurrentImageIndex(newIndex);
-  };
-
-  useEffect(() => {
-    axios
-      .get<{ productAlreadyExists: ProductType }>(
-        `${process.env.ENDPOINT}/api/v1/user/product?slug=${slug}`,
+export async function generateMetadata({
+  params,
+}: {
+  params: { productSlug: string };
+}): Promise<Metadata> {
+  try {
+    const product = (
+      await axios.get<{ productAlreadyExists: ProductType }>(
+        `${process.env.ENDPOINT}/api/v1/user/product?slug=${params.productSlug}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       )
-      .then((res) => {
-        setProduct(res.data.productAlreadyExists);
-      });
-  }, [slug]);
+    ).data.productAlreadyExists;
 
-  return (
-    <>
-      {fullscreenImageOpen && (
-        <ProductImageFullScreen
-          imageSrc={product?.images[currentImageIndex] || ""}
-          nextSlide={nextSlide}
-          prevSlide={prevSlide}
-          setFullscreenImageOpen={setFullscreenImageOpen}
-        />
-      )}
-      <div className="mb-10 flex flex-col gap-6 pt-28 max-md:pt-32">
-        <div className="flex items-start gap-5 max-md:flex-col">
-          <ProductImageDisplay
-            setFullscreenImageOpen={setFullscreenImageOpen}
-            images={product?.images || []}
-            currentImageIndex={currentImageIndex}
-            setCurrentImageIndex={setCurrentImageIndex}
-          />
-          <ProductDetails product={product} />
-        </div>
-        <ProductCarousel />
-      </div>
-    </>
-  );
+    return {
+      title: product.meta_tittle,
+      description: product.meta_description,
+      keywords: product.meta_keyword,
+    };
+  } catch {
+    return {};
+  }
+}
+
+const ProductPage = async ({ params }: { params: { productSlug: string } }) => {
+  const slug = params["productSlug"];
+  const product = (
+    await axios.get<{ productAlreadyExists: ProductType }>(
+      `${process.env.ENDPOINT}/api/v1/user/product?slug=${slug}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+  ).data.productAlreadyExists;
+
+  return <ProductPageComponent product={product} />;
 };
 
 export default ProductPage;

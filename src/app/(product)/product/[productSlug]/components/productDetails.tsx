@@ -1,6 +1,6 @@
 "use client";
 
-import {FC, useState} from "react";
+import { FC, useState } from "react";
 import DropdownComponent from "@/components/common/dropdown";
 import VariantTags from "./variantTags";
 import UIButton from "@/components/common/button";
@@ -10,26 +10,36 @@ import { selectisAuthenticated } from "@/redux/slice/user.slice";
 import Link from "next/link";
 import axios from "axios";
 
-const ProductDetails: FC<{ product?: ProductType }> = ({ product }) => {
+const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   const isAuthenticated = useAppSelector(selectisAuthenticated);
-  const colorArray = [{ title: "S" }, { title: "M" }, { title: "L" }]
-  const [color, setColor] = useState(colorArray[0].title)
-  const sizeArray = [{ title: "Red" }, { title: "Green" }, { title: "Blue" }]
-  const [size, setSize] = useState(sizeArray[0].title)
+
+  const filteredAttributes = product.varients.attributes.filter((attr) => {
+    const filterAttr = attr.childern.filter((child) => child.state);
+    return !!filterAttr.length;
+  });
+
+  const [variations, setVariations] = useState<string[]>(
+    Array(filteredAttributes.length || 0)
+  );
+  const combination = product.varients.variations.find(
+    (variation: any) =>
+      JSON.stringify(variation.combinationString) === JSON.stringify(variations)
+  );
+  console.log(combination);
 
   const addToCart = () => {
     const body = {
       ...product,
       quantity: 1,
-      variants: []
-    }
+      variants: [],
+    };
 
     axios.post(`${process.env.ENDPOINT}/api/user/cart`, body, {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      withCredentials: true
-    }).then
+      withCredentials: true,
+    }).then;
   };
 
   return (
@@ -45,37 +55,41 @@ const ProductDetails: FC<{ product?: ProductType }> = ({ product }) => {
         {product?.sale_price ? (
           <div className="flex items-baseline gap-2 text-lg">
             <span>&#8377;{product?.sale_price}</span>
-            <s className="text-gray-500">&#8377;{product?.gst_price}</s>
+            <s className="text-gray-500">
+              &#8377;{combination?.price || product?.gst_price}
+            </s>
             <span className="font-bold text-red-800">
               (
               {Math.round(
-                ((product?.gst_price - product?.sale_price) /
-                  product?.gst_price) *
+                (((combination?.price || product?.gst_price) -
+                  product?.sale_price) /
+                  (combination?.price || product?.gst_price)) *
                   100
               )}
               % OFF)
             </span>
           </div>
         ) : (
-          <span className="text-lg">&#8377;{product?.gst_price}</span>
+          <span className="text-lg">
+            &#8377;{combination?.price || product?.gst_price}
+          </span>
         )}
 
         <span className="text-xs">inclusive of all taxes</span>
       </div>
 
       <div className="flex flex-col">
-        <VariantTags
-          main="Size"
-          selected={size}
-          setSelected={setSize}
-          sub={colorArray}
-        />
-        <VariantTags
-          main="Color"
-          selected={color}
-          setSelected={setColor}
-          sub={sizeArray}
-        />
+        {filteredAttributes.map((variant, index) => (
+          <VariantTags
+            variantSetters={(value: string) =>
+              setVariations((variation) => {
+                variation[index] = value;
+                return variation;
+              })
+            }
+            variant={variant}
+          />
+        ))}
       </div>
 
       <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
