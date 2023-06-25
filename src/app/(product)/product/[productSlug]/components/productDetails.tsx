@@ -19,13 +19,12 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   });
 
   const [variations, setVariations] = useState<string[]>(
-    Array(filteredAttributes.length || 0)
+    Array(filteredAttributes.length || 0).fill("")
   );
   const combination = product.varients.variations.find(
     (variation: any) =>
       JSON.stringify(variation.combinationString) === JSON.stringify(variations)
   );
-  console.log(combination);
 
   const addToCart = () => {
     const body = {
@@ -81,10 +80,11 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
       <div className="flex flex-col">
         {filteredAttributes.map((variant, index) => (
           <VariantTags
+            key={variant.name}
             variantSetters={(value: string) =>
               setVariations((variation) => {
                 variation[index] = value;
-                return variation;
+                return variation.slice();
               })
             }
             variant={variant}

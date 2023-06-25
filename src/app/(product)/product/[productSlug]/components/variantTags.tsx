@@ -10,7 +10,7 @@ const VariantTags: FC<{
   variant: ProductType["varients"]["attributes"][0];
   variantSetters: (value: string) => void;
 }> = ({ variant, variantSetters }) => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(variant.childern[0].value);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -21,33 +21,30 @@ const VariantTags: FC<{
   }, [selected]);
 
   const onClick = (value: string) => {
-    if (selected === value) deSelectVariant();
-    else selectVariant(value);
-  };
-
-  const selectVariant = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
     current.set(variant.name, value);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
     setSelected(value);
   };
-  const deSelectVariant = () => {
-    setSelected("");
-
-    const current = new URLSearchParams(searchParams.toString());
-    current.delete(variant.name);
-    const query = !!current.toString() ? `?${current.toString()}` : "";
-    router.push(`${pathname}/${query}`);
-  };
 
   useEffect(() => {
     const selectedTagFromQuery = decodeURIComponent(
       searchParams.get(variant.name) || ""
     );
-    if (!selectedTagFromQuery) return;
-    setSelected(selectedTagFromQuery);
-  }, [searchParams, variant.name]);
+
+    const existsInList = variant.childern.find(
+      (child) => child.value === selectedTagFromQuery
+    );
+
+    if (!existsInList) {
+      setSelected(variant.childern[0].value);
+      variantSetters(variant.childern[0].value);
+    } else {
+      setSelected(selectedTagFromQuery);
+      variantSetters(selectedTagFromQuery);
+    }
+  }, [searchParams, variant.name, variant.childern]);
 
   const filterChildren = variant.childern.filter((child) => child.state);
 
