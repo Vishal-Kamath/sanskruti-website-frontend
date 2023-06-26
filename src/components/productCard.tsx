@@ -156,7 +156,12 @@ export const DummyProductCard: FC<DummyProps> = ({ className }) => {
       </div>
       <button
         onClick={() => setLiked((like) => !like)}
-        className="flex h-8 w-full flex-shrink-0 items-center justify-center gap-2 rounded-sm border-[1px] border-gray-300 text-xs font-medium text-gray-500 hover:border-gray-600 hover:text-black"
+        className={cn(
+          "flex h-8 w-full flex-shrink-0 items-center justify-center gap-2 rounded-sm border-[1px] text-xs font-medium",
+          liked
+            ? "border-red-300 bg-red-50 text-red-500 hover:border-red-600"
+            : "border-gray-300 text-gray-500 hover:border-gray-600 hover:text-black"
+        )}
       >
         <span>WISHLIST</span>
         {liked ? (
