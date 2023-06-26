@@ -26,7 +26,7 @@ const ProductCard: FC<Props> = ({ className, product }) => {
   const userWishlistIds = useAppSelector(selectWishlistIds);
   const isAuthenticated = useAppSelector(selectisAuthenticated);
 
-  const liked = !!userWishlistIds.find(
+  const liked = !!userWishlistIds?.find(
     (listProduct) => listProduct === product._id
   );
 
