@@ -158,10 +158,10 @@ const Header: FC = () => {
             <div
               className={cn(
                 "absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-sky-200 text-xs font-bold",
-                !userWishlistIds.length && "hidden"
+                !userWishlistIds?.length && "hidden"
               )}
             >
-              {userWishlistIds.length}
+              {userWishlistIds?.length}
             </div>
           </Link>
           <Link href={userRedirectCart}>
