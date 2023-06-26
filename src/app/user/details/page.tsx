@@ -84,30 +84,36 @@ const DetailsPage: FC = () => {
           </div>
         </div>
       </Container>
-      <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         {!user.email_verified && (
-          <Container containerTitle="Email Verification">
-            <div className="flex flex-col gap-4">
+          <Container containerTitle="Email Verification" className="h-full">
+            <div className="flex h-full flex-col gap-4">
               <div className="text-justify text-sm text-gray-500">
                 It appears that your email is not verified. Please click the
                 button below to request an email verification link. (Please note
                 this link will only be valid for the next 15 minutes)
               </div>
-              <UIButton onClick={_requestEmailVerification}>
+              <UIButton
+                className="mt-auto bg-amber-50"
+                onClick={_requestEmailVerification}
+              >
                 SEND VERIFICATION LINK
               </UIButton>
             </div>
           </Container>
         )}
         {!user.Mobile_No_verified && (
-          <Container containerTitle="Mobile Number Verification">
-            <div className="flex flex-col gap-4">
+          <Container
+            containerTitle="Mobile Number Verification"
+            className="h-full"
+          >
+            <div className="flex h-full flex-col gap-4">
               <div className="text-justify text-sm text-gray-500">
                 It appears that your mobile number is not verified. Please click
                 the button below to request an OTP. (Please note this OTP will
                 only be valid for the next 15 minutes)
               </div>
-              <UIButton>SEND OTP</UIButton>
+              <UIButton className="mt-auto bg-amber-50">SEND OTP</UIButton>
             </div>
           </Container>
         )}
