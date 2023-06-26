@@ -11,7 +11,7 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
   return (
     <div
       className={cn(
-        "fixed top-[68px] flex max-h-[30rem] w-full flex-col border-x-2 border-b-2 border-gray-300 bg-white max-md:top-28 md:right-[3vw] md:max-w-[39rem]",
+        "fixed top-[68px] grid max-h-[30rem] w-full bg-white max-md:top-28 md:right-[3vw] md:max-w-[39rem] md:grid-cols-2",
         className
       )}
       {...props}
@@ -22,7 +22,7 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
             <Link
               key={product.slug}
               href={`/product/${product.slug}`}
-              className="flex gap-3 p-2 hover:bg-gray-50"
+              className="flex gap-3 p-2 hover:bg-slate-100"
             >
               <div className="h-[6rem] w-[4rem]">
                 <Image
@@ -35,8 +35,8 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
               </div>
               <div className="flex flex-col justify-center gap-1">
                 <div>
-                  {product.name.length > 45
-                    ? `${product.name.slice(0, 45)}...`
+                  {product.name.length > 35
+                    ? `${product.name.slice(0, 35)}...`
                     : product.name}
                 </div>
                 <div className="flex gap-1">
@@ -65,7 +65,9 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
           ))}
         </>
       ) : (
-        <div className="p-3 text-center text-lg">Not Results found</div>
+        <div className="col-span-full p-3 text-center text-lg">
+          Not Results found
+        </div>
       )}
     </div>
   );

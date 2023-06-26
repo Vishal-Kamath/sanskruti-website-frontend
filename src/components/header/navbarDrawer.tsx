@@ -20,7 +20,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
       className={cn(
         "fixed left-0 top-0 -z-30 max-h-screen min-h-screen w-full overflow-auto bg-white px-[3vw] pt-32 scrollbar-none",
         !sidebarOpen && "hidden",
-        isBlocked && "hidden"
+        isBlocked && "max-sm:hidden"
       )}
     >
       {!displayFilter ? (
