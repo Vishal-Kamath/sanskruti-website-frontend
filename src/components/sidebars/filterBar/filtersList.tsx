@@ -16,11 +16,11 @@ const FilterList: FC = () => {
 
   useEffect(() => {
     setMain(
-      filters.find(
+      filters?.find(
         (filter) => filter.main === decodeURIComponent(params["categoryName"])
       ) || filters[0]
     );
-  }, [params]);
+  }, [params, filters]);
 
   useEffect(() => {
     axios
