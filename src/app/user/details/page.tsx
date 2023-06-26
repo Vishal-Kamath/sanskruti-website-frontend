@@ -99,6 +99,18 @@ const DetailsPage: FC = () => {
             </div>
           </Container>
         )}
+        {!user.Mobile_No_verified && (
+          <Container containerTitle="Mobile Number Verification">
+            <div className="flex flex-col gap-4">
+              <div className="text-justify text-sm text-gray-500">
+                It appears that your mobile number is not verified. Please click
+                the button below to request an OTP. (Please note this OTP will
+                only be valid for the next 15 minutes)
+              </div>
+              <UIButton>SEND OTP</UIButton>
+            </div>
+          </Container>
+        )}
       </div>
     </div>
   );
