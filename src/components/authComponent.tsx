@@ -1,6 +1,7 @@
 "use client";
 
 import { setLoading } from "@/redux/slice/loading.slice";
+import { closeSidebar } from "@/redux/slice/sidebar.slice";
 import {
   UserType,
   loggedIn,
@@ -19,6 +20,9 @@ const AuthComponent: FC<Props> = ({ children }) => {
 
   const pathname = usePathname();
   const dispatch = useAppDispatch();
+
+  // close sidebar
+  dispatch(closeSidebar());
 
   const getUser = async () => {
     await axios
