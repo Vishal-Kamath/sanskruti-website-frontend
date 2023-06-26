@@ -5,32 +5,14 @@ import FilterItem from "./filterItem";
 import { filters } from "@/data/filterlist";
 import { useParams } from "next/navigation";
 import SortItem from "./sortItem";
-
-const Size = {
-  main: "Size",
-  sub: [
-    { title: "XS" },
-    { title: "S" },
-    { title: "M" },
-    { title: "L" },
-    { title: "XL" },
-  ],
-};
-
-const Color = {
-  main: "Color",
-  sub: [
-    { title: "Black" },
-    { title: "White" },
-    { title: "Blue" },
-    { title: "Pink" },
-    { title: "Purple" },
-  ],
-};
+import axios from "axios";
+import VariantItem, { VariantType } from "./variantItem";
 
 const FilterList: FC = () => {
   const params = useParams();
   const [main, setMain] = useState(filters[0]);
+
+  const [variants, setVariants] = useState<VariantType[]>([]);
 
   useEffect(() => {
     setMain(
@@ -40,12 +22,32 @@ const FilterList: FC = () => {
     );
   }, [params]);
 
+  useEffect(() => {
+    axios
+      .get<{ varients: VariantType[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/getVarients`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        setVariants(res.data.varients);
+      });
+  }, []);
+
   return (
     <div className="flex flex-col">
       <FilterItem main={main.main} sub={main.sub} classname="pl-[3vw] pr-2" />
       <SortItem className="pl-[3vw] pr-2" />
-      <FilterItem {...Size} classname="pl-[3vw] pr-2" />
-      <FilterItem {...Color} classname="pl-[3vw] pr-2" />
+      {variants.map((variant, index) => (
+        <VariantItem
+          key={variant.varientName + index}
+          {...variant}
+          className="pl-[3vw] pr-2"
+        />
+      ))}
     </div>
   );
 };

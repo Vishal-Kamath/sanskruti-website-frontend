@@ -105,8 +105,8 @@ const SortItem: FC<{ className?: string }> = ({ className }) => {
           className
         )}
       >
-        {sort.map((sortItem) => (
-          <SortCheckItem sortItem={sortItem} />
+        {sort.map((sortItem, index) => (
+          <SortCheckItem key={sortItem.name + index} sortItem={sortItem} />
         ))}
       </div>
     </div>
