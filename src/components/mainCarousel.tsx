@@ -8,12 +8,16 @@ import { Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/autoplay";
 import Image from "next/image";
+import axios from "axios";
+
+type Banner = {
+  isPublished: boolean;
+  desktopImage: string;
+  mobileImage: string;
+};
 
 const Carousel: FC = () => {
-  const images = {
-    desktop: ["/temp/desktop1.png", "/temp/desktop2.png"],
-    mobile: ["/temp/mobile1.png", "/temp/mobile2.png"],
-  };
+  const [banners, setBanners] = useState<Banner[]>([]);
   const [isMobile, setIsMobile] = useState<boolean>();
 
   useEffect(() => {
@@ -29,6 +33,18 @@ const Carousel: FC = () => {
     };
   }, []);
 
+  const getBanners = async () => {
+    const { banners } = (
+      await axios.get<{ banners: Banner[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/getAllBanners`
+      )
+    ).data;
+    setBanners(banners);
+  };
+  useEffect(() => {
+    getBanners();
+  }, []);
+
   return (
     <div className="h-fit bg-gradient-to-b from-gray-200 to-white">
       <Swiper
@@ -41,22 +57,13 @@ const Carousel: FC = () => {
         slidesPerView={1}
         className="flex"
       >
-        {images.desktop.map((value, index) => {
-          return isMobile ? (
-            <SwiperSlide key={images.mobile[index]}>
+        {banners?.map((banner, index) => {
+          const val = isMobile ? "mobileImage" : "desktopImage";
+          return (
+            <SwiperSlide key={"banner slide " + index}>
               <Image
-                src={images.mobile[index]}
-                alt={images.mobile[index]}
-                width={500}
-                height={500}
-                className="h-full w-full object-contain max-md:object-top xl:max-h-[70vh]"
-              />
-            </SwiperSlide>
-          ) : (
-            <SwiperSlide key={value}>
-              <Image
-                src={value}
-                alt={value}
+                src={banner[val]}
+                alt={"banner image" + index}
                 width={500}
                 height={500}
                 className="h-full w-full object-contain max-md:object-top xl:max-h-[70vh]"
