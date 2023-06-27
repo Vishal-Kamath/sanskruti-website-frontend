@@ -40,7 +40,7 @@ const Navbar: FC = () => {
             </div>
           ))}
         </nav>
-        <div className="absolute left-1/2 top-6 hidden h-[25rem] w-[60rem] -translate-x-1/2 border-x-2 border-b-2 border-gray-300 bg-white group-hover:block">
+        <div className="absolute left-1/2 top-6 hidden h-[25rem] w-full max-w-[60rem] -translate-x-1/2 border-x-2 border-b-2 border-gray-300 bg-white group-hover:block">
           <div className="flex h-full w-full gap-3 overflow-hidden p-5">
             <div className="flex w-full flex-col gap-3">
               <h3 className="text-lg font-semibold">
