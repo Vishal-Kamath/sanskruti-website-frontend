@@ -41,6 +41,8 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
     }).then;
   };
 
+  console.log(combination);
+
   return (
     <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
       <div className="flex flex-col gap-1">
@@ -51,21 +53,19 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
       </div>
 
       <div className="flex flex-col gap-1">
-        {product?.sale_price ? (
+        {!!combination?.discount ? (
           <div className="flex items-baseline gap-2 text-lg">
-            <span>&#8377;{product?.sale_price}</span>
+            <span>
+              &#8377;
+              {combination?.price *
+                ((100 - (combination?.discount || 0)) / 100)}
+            </span>
             <s className="text-gray-500">
-              &#8377;{combination?.price || product?.gst_price}
+              &#8377;
+              {combination?.price}
             </s>
             <span className="font-bold text-red-800">
-              (
-              {Math.round(
-                (((combination?.price || product?.gst_price) -
-                  product?.sale_price) /
-                  (combination?.price || product?.gst_price)) *
-                  100
-              )}
-              % OFF)
+              ({combination?.discount}% OFF)
             </span>
           </div>
         ) : (
