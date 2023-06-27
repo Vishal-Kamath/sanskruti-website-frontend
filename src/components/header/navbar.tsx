@@ -53,6 +53,7 @@ const Navbar: FC = () => {
                     href={`/category/${displayCategory?.Title}/?${
                       displayCategory?.Title
                     }=${encodeURIComponent(item)}`}
+                    className="capitalize"
                   >
                     {item}
                   </Link>

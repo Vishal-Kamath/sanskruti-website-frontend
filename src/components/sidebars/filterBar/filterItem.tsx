@@ -83,7 +83,7 @@ const FilterItem: FC<{
                 <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
               )}
             </div>
-            {subItem}
+            <span className="capitalize">{subItem}</span>
           </span>
         ))}
       </div>

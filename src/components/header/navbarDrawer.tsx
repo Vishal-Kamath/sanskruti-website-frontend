@@ -41,7 +41,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
                 height={100}
                 width={100}
               />
-              <div className="absolute bottom-0 flex h-8 w-full items-center justify-center gap-1 bg-white bg-opacity-75">
+              <div className="absolute bottom-0 flex h-8 w-full items-center justify-center gap-1 bg-white bg-opacity-75 capitalize">
                 {category.Title} <FaAngleDown />
               </div>
             </button>
@@ -56,7 +56,9 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
             >
               Back
             </UIButton>
-            <span className="text-lg font-bold">{displayCategory?.Title}</span>
+            <span className="text-lg font-bold capitalize">
+              {displayCategory?.Title}
+            </span>
           </div>
           <Image
             src={displayCategory?.Image}
@@ -72,7 +74,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
                 href={`/category?/${displayCategory?.Title}/?${
                   displayCategory?.Title
                 }=${encodeURIComponent(item)}`}
-                className="text-lg"
+                className="text-lg capitalize"
               >
                 {item}
               </Link>
