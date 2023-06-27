@@ -61,13 +61,15 @@ const Navbar: FC = () => {
               </div>
             </div>
             <div className="aspect-[2/3] h-full shrink-0 overflow-hidden">
-              <Image
-                src={displayCategory?.Image}
-                alt={displayCategory?.Title}
-                width={300}
-                height={300}
-                className="h-full w-full object-cover object-top"
-              />
+              {!!displayCategory?.Image && (
+                <Image
+                  src={displayCategory?.Image}
+                  alt={displayCategory?.Title}
+                  width={300}
+                  height={300}
+                  className="h-full w-full object-cover object-top"
+                />
+              )}
             </div>
           </div>
         </div>
