@@ -136,8 +136,7 @@ const AuthComponent: FC<Props> = ({ children }) => {
   const getCategories = async () => {
     const { categories } = (
       await axios.get<CategoryStateType>(
-        // `${process.env.ENDPOINT}/api/v1/user/categories`
-        `https://api.sanskrutinx.in/api/v1/user/categories`
+        `${process.env.ENDPOINT}/api/v1/user/categories`
       )
     ).data;
 
@@ -145,8 +144,7 @@ const AuthComponent: FC<Props> = ({ children }) => {
       categories.map(async (category, index) => {
         const subCategories = (
           await axios.get<{ subCategories: { Title: string }[] }>(
-            // `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
-            `https://api.sanskrutinx.in/api/v1/user/subCategories?keyword=${category.Title}`
+            `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
           )
         ).data;
         categories[index].subCategory = subCategories.subCategories.map(
