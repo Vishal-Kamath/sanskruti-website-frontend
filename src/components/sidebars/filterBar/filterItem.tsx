@@ -7,7 +7,7 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 
 const FilterItem: FC<{
   main: string;
-  sub: { title: string }[];
+  sub: string[];
   classname?: string;
 }> = ({ main, sub, classname }) => {
   const [selected, setSelected] = useState("");
@@ -50,7 +50,7 @@ const FilterItem: FC<{
     <div className="flex flex-col gap-2 border-t-2 border-gray-100 py-2 first:border-0">
       <h5
         className={cn(
-          "flex items-center justify-between text-[16px] font-medium sm:text-sm sm:font-normal",
+          "flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal",
           classname
         )}
       >
@@ -64,26 +64,26 @@ const FilterItem: FC<{
       >
         {sub.map((subItem) => (
           <span
-            key={subItem.title}
+            key={subItem}
             className="flex items-center gap-4 font-extralight sm:gap-3 sm:text-xs"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
                 type="radio"
                 name={main}
-                checked={selected === subItem.title}
-                id={subItem.title + " filter sidebar"}
+                checked={selected === subItem}
+                id={subItem + " filter sidebar"}
                 className="absolute left-0 top-0 h-full w-full opacity-0"
-                onClick={() => onClick(subItem.title)}
+                onClick={() => onClick(subItem)}
                 onChange={() => {}}
               />
-              {selected === subItem.title ? (
+              {selected === subItem ? (
                 <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
               ) : (
-                <div className="h-full w-full rounded-sm border-2 border-gray-300"></div>
+                <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
               )}
             </div>
-            {subItem.title}
+            {subItem}
           </span>
         ))}
       </div>

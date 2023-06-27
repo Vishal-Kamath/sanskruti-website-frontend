@@ -7,20 +7,26 @@ import { useParams } from "next/navigation";
 import SortItem from "./sortItem";
 import axios from "axios";
 import VariantItem, { VariantType } from "./variantItem";
+import { useAppSelector } from "@/redux/store/hooks";
+import { selectCategory } from "@/redux/slice/category.slice";
 
 const FilterList: FC = () => {
   const params = useParams();
-  const [main, setMain] = useState(filters[0]);
+
+  const { categories } = useAppSelector(selectCategory);
+
+  const [main, setMain] = useState(categories[0]);
 
   const [variants, setVariants] = useState<VariantType[]>([]);
 
   useEffect(() => {
     setMain(
-      filters?.find(
-        (filter) => filter.main === decodeURIComponent(params["categoryName"])
-      ) || filters[0]
+      categories?.find(
+        (category) =>
+          category.Title === decodeURIComponent(params["categoryName"])
+      ) || categories[0]
     );
-  }, [params, filters]);
+  }, [params, categories]);
 
   useEffect(() => {
     axios
@@ -39,7 +45,13 @@ const FilterList: FC = () => {
 
   return (
     <div className="flex flex-col">
-      <FilterItem main={main.main} sub={main.sub} classname="pl-[3vw] pr-2" />
+      {!!main && (
+        <FilterItem
+          main={main.Title}
+          sub={main.subCategory}
+          classname="pl-[3vw] pr-2"
+        />
+      )}
       <SortItem className="pl-[3vw] pr-2" />
       {variants.map((variant, index) => (
         <VariantItem
