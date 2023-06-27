@@ -1,6 +1,6 @@
 "use client";
 
-import { CategoryType, setCategory } from "@/redux/slice/category.slice";
+import { CategoryStateType, setCategory } from "@/redux/slice/category.slice";
 import { setLoading } from "@/redux/slice/loading.slice";
 import { closeSidebar } from "@/redux/slice/sidebar.slice";
 import {
@@ -135,7 +135,7 @@ const AuthComponent: FC<Props> = ({ children }) => {
 
   const getCategories = async () => {
     const { categories } = (
-      await axios.get<CategoryType>(
+      await axios.get<CategoryStateType>(
         // `${process.env.ENDPOINT}/api/v1/user/categories`
         `https://api.sanskrutinx.in/api/v1/user/categories`
       )

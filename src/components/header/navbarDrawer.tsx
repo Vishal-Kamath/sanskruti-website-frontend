@@ -14,8 +14,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
   const pathname = usePathname();
 
   const { categories } = useAppSelector(selectCategory);
-  const [displayCategory, setDisplayCategory] =
-    useState<CategoryType["categories"][0]>();
+  const [displayCategory, setDisplayCategory] = useState<CategoryType>();
 
   const isBlocked = pathname.includes("/category");
 

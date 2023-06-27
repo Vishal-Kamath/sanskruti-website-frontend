@@ -1,18 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
-import { ProductType } from "@/components/header/header";
 
 export type CategoryType = {
-  categories: {
-    Title: string;
-    Image: string;
-    Meta_Title: string;
-    Meta_Description: string;
-    subCategory: string[];
-  }[];
+  Title: string;
+  Image: string;
+  Meta_Title: string;
+  Meta_Description: string;
+  subCategory: string[];
 };
 
-const initialState: CategoryType = {
+export type CategoryStateType = {
+  categories: CategoryType[];
+};
+
+const initialState: CategoryStateType = {
   categories: [],
 };
 
@@ -21,7 +22,7 @@ export const category = createSlice({
   initialState,
   reducers: {
     // category
-    setCategory: (state, action: PayloadAction<CategoryType>) => {
+    setCategory: (state, action: PayloadAction<CategoryStateType>) => {
       state.categories = action.payload.categories;
     },
   },
