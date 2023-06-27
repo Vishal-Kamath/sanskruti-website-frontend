@@ -1,5 +1,6 @@
 "use client";
 
+import { CategoryType, setCategory } from "@/redux/slice/category.slice";
 import { setLoading } from "@/redux/slice/loading.slice";
 import { closeSidebar } from "@/redux/slice/sidebar.slice";
 import {
@@ -131,6 +132,35 @@ const AuthComponent: FC<Props> = ({ children }) => {
       );
     }
   }, [pathname]);
+
+  const getCategories = async () => {
+    const { categories } = (
+      await axios.get<CategoryType>(
+        // `${process.env.ENDPOINT}/api/v1/user/categories`
+        `https://api.sanskrutinx.in/api/v1/user/categories`
+      )
+    ).data;
+
+    await Promise.all(
+      categories.map(async (category, index) => {
+        const subCategories = (
+          await axios.get<{ subCategories: { Title: string }[] }>(
+            // `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
+            `https://api.sanskrutinx.in/api/v1/user/subCategories?keyword=${category.Title}`
+          )
+        ).data;
+        categories[index].subCategory = subCategories.subCategories.map(
+          (subCat) => subCat.Title
+        );
+      })
+    );
+
+    dispatch(setCategory({ categories: categories }));
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return <>{children}</>;
 };
