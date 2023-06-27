@@ -27,7 +27,7 @@ export type UserType = {
 };
 
 const initialState: UserAuthType & UserType = {
-  isAuthenticated: false,
+  isAuthenticated: true,
   // user
   username: "John Doe",
   Mobile_No: 1234567890,

@@ -30,7 +30,7 @@ const Carousel: FC = () => {
   }, []);
 
   return (
-    <div className="h-[70vh] bg-gradient-to-b from-gray-100 to-white">
+    <div className="h-fit bg-gradient-to-b from-gray-200 to-white">
       <Swiper
         modules={[Autoplay]}
         loop={true}
@@ -49,7 +49,7 @@ const Carousel: FC = () => {
                 alt={images.mobile[index]}
                 width={500}
                 height={500}
-                className="h-[70vh] w-full object-contain"
+                className="h-full w-full object-contain max-md:object-top xl:max-h-[70vh]"
               />
             </SwiperSlide>
           ) : (
@@ -59,7 +59,7 @@ const Carousel: FC = () => {
                 alt={value}
                 width={500}
                 height={500}
-                className="h-[70vh] w-full object-contain"
+                className="h-full w-full object-contain max-md:object-top xl:max-h-[70vh]"
               />
             </SwiperSlide>
           );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FC, useRef, useCallback } from "react";
+import { useState, FC, useCallback } from "react";
 import TopBanner from "./topBanner";
 import SearchBar from "./searchBar";
 import Link from "next/link";
@@ -15,13 +15,15 @@ import {
   openSidebar,
   selectSidebarOpen,
 } from "@/redux/slice/sidebar.slice";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { selectisAuthenticated } from "@/redux/slice/user.slice";
 import Navbar from "./navbar";
 import axios from "axios";
 import SearchResults from "./searchResults";
 import { cn } from "@/utils/lib";
+import { NavbarDrawer } from "./navbarDrawer";
+import { usePathname } from "next/navigation";
+import { selectWishlistIds } from "@/redux/slice/wishlist.slice";
 
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -36,8 +38,21 @@ const debounce = <T extends (...args: any[]) => void>(
 };
 
 export interface ProductType {
+  _id: string;
   name: string;
   description: string;
+  images: string[];
+  varients: {
+    attributes: {
+      name: string;
+      state: boolean;
+      childern: {
+        value: string;
+        state: boolean;
+      }[];
+    }[];
+    variations: any[];
+  };
   gst_price: number;
   sale_price: number;
   MainCategory: string;
@@ -53,8 +68,8 @@ export interface ProductType {
 }
 
 const Header: FC = () => {
-  const router = useRouter();
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
 
   const [search, setSearch] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
@@ -83,28 +98,26 @@ const Header: FC = () => {
   };
 
   const sideBarOpen = useAppSelector(selectSidebarOpen);
+  const sideBarBlocked =
+    pathname.includes("/auth") || pathname.includes("/user");
+
   const isAuthenticated = useAppSelector(selectisAuthenticated);
 
-  const userRedirect = () => {
-    if (!isAuthenticated) return router.push("/auth/login");
-    router.push("/user/details");
-  };
-  const userRedirectCart = () => {
-    if (!isAuthenticated) return router.push("/auth/login");
-    router.push("/user/cart");
-  };
-  const userRedirectWishList = () => {
-    if (!isAuthenticated) return router.push("/auth/login");
-    router.push("/user/wishlist");
-  };
+  const userRedirect = !isAuthenticated ? "/auth/login" : "/user/details";
+  const userRedirectCart = !isAuthenticated ? "/auth/login" : "/user/cart";
+  const userRedirectWishList = !isAuthenticated
+    ? "/auth/login"
+    : "/user/wishlist";
+
+  const userWishlistIds = useAppSelector(selectWishlistIds);
 
   return (
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
 
-      <div className="flex h-12 items-center justify-between bg-white px-[3vw]">
+      <div className="flex h-12 items-center justify-between gap-24 bg-white px-[3vw]">
         <div className="flex items-center gap-2">
-          <div className="sm:hidden">
+          <div className={cn("md:hidden", sideBarBlocked && "hidden")}>
             {sideBarOpen ? (
               <RxCross2
                 className="text-2xl"
@@ -118,35 +131,42 @@ const Header: FC = () => {
             )}
           </div>
 
-          <Link href="/">
+          <Link href="/" className="flex-shrink-0">
             <Image
-              src="/assets/logo.svg"
+              src="/assets/logo.png"
               alt="Sanskruti Logo"
               width={100}
               height={100}
-              className="aspect-square h-12 w-fit"
+              className="h-16"
             />
           </Link>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 md:w-full">
           <SearchBar
-            classname="max-md:hidden min-w-[25rem]"
+            classname="ml-auto max-md:hidden min-w-[25rem]"
             searchFocused={searchFocused}
             setSearchFocused={setSearchFocused}
             search={search}
             setSearch={handleSearchInput}
           />
-          <div onClick={userRedirect}>
+          <Link href={userRedirect}>
             <HiOutlineUserCircle className="h-6 w-6" />
-          </div>
-          <div onClick={userRedirectWishList}>
+          </Link>
+          <Link href={userRedirectWishList} className="relative">
             <AiOutlineHeart className="h-6 w-6" />
-          </div>
-          <MdOutlineShoppingBag
-            onClick={userRedirectCart}
-            className="h-8 w-8"
-          />
+            <div
+              className={cn(
+                "absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-sky-200 text-xs font-bold",
+                !userWishlistIds?.length && "hidden"
+              )}
+            >
+              {userWishlistIds?.length}
+            </div>
+          </Link>
+          <Link href={userRedirectCart}>
+            <MdOutlineShoppingBag className="h-7 w-7" />
+          </Link>
         </div>
       </div>
 
@@ -163,6 +183,8 @@ const Header: FC = () => {
         searchResults={searchResults}
         className={cn((!search || !searchFocused) && "hidden")}
       />
+
+      <NavbarDrawer sidebarOpen={sideBarOpen} />
     </header>
   );
 };

@@ -18,7 +18,6 @@ import { loggedIn } from "@/redux/slice/user.slice";
 import { BiArrowBack } from "react-icons/bi";
 import z from "zod";
 import { validateType } from "../register/components/utils";
-import Head from "next/head";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -72,6 +71,7 @@ const LoginPage = () => {
     const registerResponse = await axios
       .post<NotificationType>(link, body, {
         headers: {
+          "Access-Control-Allow-Credentials": true,
           "Content-Type": "application/json",
         },
         withCredentials: true,

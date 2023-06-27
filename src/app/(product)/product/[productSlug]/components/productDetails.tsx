@@ -1,12 +1,44 @@
-import React from "react";
+"use client";
+
+import { FC, useState } from "react";
 import DropdownComponent from "@/components/common/dropdown";
-import VariantTags from "./varientTags";
+import VariantTags from "./variantTags";
 import UIButton from "@/components/common/button";
 import { ProductType } from "@/components/header/header";
+import { useAppSelector } from "@/redux/store/hooks";
+import { selectisAuthenticated } from "@/redux/slice/user.slice";
+import Link from "next/link";
+import axios from "axios";
 
-const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
+const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
+  const isAuthenticated = useAppSelector(selectisAuthenticated);
+
+  const filteredAttributes = product.varients.attributes.filter((attr) => {
+    const filterAttr = attr.childern.filter((child) => child.state);
+    return !!filterAttr.length;
+  });
+
+  const [variations, setVariations] = useState<string[]>(
+    Array(filteredAttributes.length || 0).fill("")
+  );
+  const combination = product.varients.variations.find(
+    (variation: any) =>
+      JSON.stringify(variation.combinationString) === JSON.stringify(variations)
+  );
+
   const addToCart = () => {
-    // axios.post()
+    const body = {
+      ...product,
+      quantity: 1,
+      variants: [],
+    };
+
+    axios.post(`${process.env.ENDPOINT}/api/user/cart`, body, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    }).then;
   };
 
   return (
@@ -20,35 +52,63 @@ const ProductDetails: React.FC<{ product?: ProductType }> = ({ product }) => {
 
       <div className="flex flex-col gap-1">
         {product?.sale_price ? (
-          <div className="flex items-baseline gap-2 font-semibold">
-            <span className="text-xl font-semibold">{product?.sale_price}</span>
-            <s className="text-sm text-gray-400">{product?.gst_price}</s>
+          <div className="flex items-baseline gap-2 text-lg">
+            <span>&#8377;{product?.sale_price}</span>
+            <s className="text-gray-500">
+              &#8377;{combination?.price || product?.gst_price}
+            </s>
+            <span className="font-bold text-red-800">
+              (
+              {Math.round(
+                (((combination?.price || product?.gst_price) -
+                  product?.sale_price) /
+                  (combination?.price || product?.gst_price)) *
+                  100
+              )}
+              % OFF)
+            </span>
           </div>
         ) : (
-          <span className="text-xl font-semibold">{product?.gst_price}</span>
+          <span className="text-lg">
+            &#8377;{combination?.price || product?.gst_price}
+          </span>
         )}
 
         <span className="text-xs">inclusive of all taxes</span>
       </div>
 
       <div className="flex flex-col">
-        <VariantTags
-          main="Size"
-          sub={[{ title: "S" }, { title: "M" }, { title: "L" }]}
-        />
-        <VariantTags
-          main="Color"
-          sub={[{ title: "Red" }, { title: "Green" }, { title: "Blue" }]}
-        />
+        {filteredAttributes.map((variant, index) => (
+          <VariantTags
+            key={variant.name}
+            variantSetters={(value: string) =>
+              setVariations((variation) => {
+                variation[index] = value;
+                return variation.slice();
+              })
+            }
+            variant={variant}
+          />
+        ))}
       </div>
 
       <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
-        <UIButton className="w-full bg-white text-lg font-semibold text-black">
-          ADD TO CART
-        </UIButton>
-        <UIButton className="w-full bg-black text-lg font-semibold text-white">
-          BUY NOW
-        </UIButton>
+        {isAuthenticated ? (
+          <>
+            <UIButton className="w-full bg-white text-lg font-semibold text-black">
+              ADD TO CART
+            </UIButton>
+            <UIButton className="w-full bg-black text-lg font-semibold text-white">
+              BUY NOW
+            </UIButton>
+          </>
+        ) : (
+          <Link href="/auth/login" className="w-full">
+            <UIButton className="w-full bg-white text-lg font-semibold text-black">
+              SIGN IN
+            </UIButton>
+          </Link>
+        )}
       </div>
 
       <div className="flex flex-col">

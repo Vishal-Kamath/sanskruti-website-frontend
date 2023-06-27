@@ -10,7 +10,7 @@ const SearchBar: React.FC<{
 }> = ({ search, setSearch, searchFocused, setSearchFocused, classname }) => {
   return (
     <div
-      className={`${classname} text-md flex h-9 w-full max-w-2xl items-center gap-1 rounded-full border-2 px-2 ${
+      className={`${classname} text-md flex h-9 w-full items-center gap-1 rounded-full border-2 px-2 md:max-w-lg ${
         searchFocused ? "border-gray-600" : "border-gray-300"
       } bg-gray-100`}
     >
@@ -26,7 +26,7 @@ const SearchBar: React.FC<{
         className="w-full border-none bg-transparent outline-none"
         onFocus={() => setSearchFocused(true)}
         onBlur={() => setTimeout(() => setSearchFocused(false), 500)}
-        placeholder="Search for Products, Styles..."
+        placeholder="Search for products, brands, styles and more"
       />
     </div>
   );

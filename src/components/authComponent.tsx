@@ -1,16 +1,18 @@
 "use client";
 
+import { CategoryStateType, setCategory } from "@/redux/slice/category.slice";
 import { setLoading } from "@/redux/slice/loading.slice";
+import { closeSidebar } from "@/redux/slice/sidebar.slice";
 import {
   UserType,
   loggedIn,
   loggedOut,
-  selectUser,
   setUser,
 } from "@/redux/slice/user.slice";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { WishlistType, setWishlist } from "@/redux/slice/wishlist.slice";
+import { useAppDispatch } from "@/redux/store/hooks";
 import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { FC, HTMLAttributes, useEffect, useRef } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
@@ -20,8 +22,8 @@ const AuthComponent: FC<Props> = ({ children }) => {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector(selectUser);
-  const router = useRouter();
+  // close sidebar
+  dispatch(closeSidebar());
 
   const getUser = async () => {
     await axios
@@ -44,7 +46,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
           })
         );
         dispatch(loggedIn());
-        firstFetch.current = false;
 
         setTimeout(
           () => dispatch(setLoading({ loading: true, value: 20 })),
@@ -53,14 +54,6 @@ const AuthComponent: FC<Props> = ({ children }) => {
         setTimeout(
           () => dispatch(setLoading({ loading: true, value: 75 })),
           1000
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 100 })),
-          1600
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: false, value: 0 })),
-          1650
         );
       })
       .catch(() => {
@@ -74,6 +67,34 @@ const AuthComponent: FC<Props> = ({ children }) => {
           () => dispatch(setLoading({ loading: true, value: 75 })),
           1000
         );
+      });
+
+    await axios
+      .get<WishlistType>(`${process.env.ENDPOINT}/api/v1/user/wishlist`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        dispatch(
+          setWishlist({
+            ids: response.data.ids,
+            list: response.data.list,
+          })
+        );
+
+        setTimeout(
+          () => dispatch(setLoading({ loading: true, value: 100 })),
+          1600
+        );
+        setTimeout(
+          () => dispatch(setLoading({ loading: false, value: 0 })),
+          1650
+        );
+      })
+      .catch(() => {
+        dispatch(setWishlist({ ids: [], list: [] }));
         setTimeout(
           () => dispatch(setLoading({ loading: true, value: 100 })),
           1600
@@ -83,9 +104,8 @@ const AuthComponent: FC<Props> = ({ children }) => {
           1650
         );
       });
-    if (!user.isAuthenticated && pathname.includes("/user")) {
-      router.replace("/");
-    }
+
+    firstFetch.current = false;
   };
 
   useEffect(() => {
@@ -112,6 +132,33 @@ const AuthComponent: FC<Props> = ({ children }) => {
       );
     }
   }, [pathname]);
+
+  const getCategories = async () => {
+    const { categories } = (
+      await axios.get<CategoryStateType>(
+        `${process.env.ENDPOINT}/api/v1/user/categories`
+      )
+    ).data;
+
+    await Promise.all(
+      categories.map(async (category, index) => {
+        const subCategories = (
+          await axios.get<{ subCategories: { Title: string }[] }>(
+            `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
+          )
+        ).data;
+        categories[index].subCategory = subCategories.subCategories.map(
+          (subCat) => subCat.Title
+        );
+      })
+    );
+
+    dispatch(setCategory({ categories: categories }));
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return <>{children}</>;
 };

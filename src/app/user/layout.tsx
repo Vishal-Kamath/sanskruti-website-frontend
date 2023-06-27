@@ -4,11 +4,18 @@ import DashboardContainer from "@/app/user/components/dashboard";
 import { DashboardElement } from "@/app/user/components/dashboardElement";
 import { selectUser } from "@/redux/slice/user.slice";
 import { useAppSelector } from "@/redux/store/hooks";
-import { HTMLAttributes, FC } from "react";
+import { useRouter } from "next/navigation";
+import { HTMLAttributes, FC, useEffect } from "react";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 const UserLayout: FC<Props> = ({ children }) => {
+  const router = useRouter();
   const user = useAppSelector(selectUser);
+  const { isAuthenticated } = user;
+
+  useEffect(() => {
+    if (!isAuthenticated) return router.replace("/");
+  }, [isAuthenticated]);
 
   return (
     <div className="flex h-full min-h-screen gap-5 px-[3vw] pb-10 pt-24 max-md:flex-col max-md:pt-36">

@@ -9,9 +9,13 @@ import { Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { filters } from "@/data/filterlist";
+import { useAppSelector } from "@/redux/store/hooks";
+import { selectCategory } from "@/redux/slice/category.slice";
 
 const CategoryBar: FC = () => {
   const [numberSlides, setNumberSlides] = useState(4);
+
+  const { categories } = useAppSelector(selectCategory);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +41,7 @@ const CategoryBar: FC = () => {
   return (
     <div className="w-full bg-white px-[3vw]">
       <div className="flex flex-col gap-3">
-        <h3 className="text-center font-ysabeau text-2xl font-semibold">
+        <h3 className="font-ysabeau text-center text-2xl font-semibold">
           Shop by categories
         </h3>
         <Swiper
@@ -50,9 +54,9 @@ const CategoryBar: FC = () => {
             disableOnInteraction: true,
           }}
         >
-          {filters.map((filter) => (
-            <SwiperSlide key={filter.main} className="w-fit">
-              <CategoryCard {...filter} />
+          {categories?.map((category) => (
+            <SwiperSlide key={category.Title} className="w-fit">
+              <CategoryCard {...category} />
             </SwiperSlide>
           ))}
         </Swiper>

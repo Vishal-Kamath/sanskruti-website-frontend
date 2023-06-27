@@ -5,11 +5,16 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 
-const FilterItem: FC<{
-  main: string;
-  sub: string[];
-  classname?: string;
-}> = ({ main, sub, classname }) => {
+export type VariantType = {
+  varientName: string;
+  value: string[];
+};
+
+const VariantItem: FC<
+  VariantType & {
+    className?: string;
+  }
+> = ({ varientName, value, className }) => {
   const [selected, setSelected] = useState("");
 
   const router = useRouter();
@@ -23,7 +28,7 @@ const FilterItem: FC<{
 
   const selectVariant = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
-    current.set(main, value);
+    current.set(varientName, value);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
     setSelected(value);
@@ -33,57 +38,57 @@ const FilterItem: FC<{
     setSelected("");
 
     const current = new URLSearchParams(searchParams.toString());
-    current.delete(main);
+    current.delete(varientName);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
   };
 
   useEffect(() => {
     const selectedTagFromQuery = decodeURIComponent(
-      searchParams.get(main) || ""
+      searchParams.get(varientName) || ""
     );
     if (!selectedTagFromQuery) return;
     setSelected(selectedTagFromQuery);
-  }, [searchParams, main]);
+  }, [searchParams, varientName]);
 
   return (
     <div className="flex flex-col gap-2 border-t-2 border-gray-100 py-2 first:border-0">
       <h5
         className={cn(
           "flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal",
-          classname
+          className
         )}
       >
-        {main}
+        {varientName}
       </h5>
       <div
         className={cn(
           "flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400",
-          classname
+          className
         )}
       >
-        {sub.map((subItem) => (
+        {value.map((valueItem) => (
           <span
-            key={subItem}
-            className="flex items-center gap-4 font-extralight sm:gap-3 sm:text-xs"
+            key={valueItem}
+            className="flex items-center gap-4 font-extralight capitalize sm:gap-3 sm:text-xs"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
                 type="radio"
-                name={main}
-                checked={selected === subItem}
-                id={subItem + " filter sidebar"}
+                name={varientName}
+                checked={selected === valueItem}
+                id={valueItem + " filter sidebar"}
                 className="absolute left-0 top-0 h-full w-full opacity-0"
-                onClick={() => onClick(subItem)}
+                onClick={() => onClick(valueItem)}
                 onChange={() => {}}
               />
-              {selected === subItem ? (
+              {selected === valueItem ? (
                 <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
               ) : (
-                <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
+                <div className="h-full w-full rounded-sm border-2 border-gray-300"></div>
               )}
             </div>
-            <span className="capitalize">{subItem}</span>
+            {valueItem}
           </span>
         ))}
       </div>
@@ -91,4 +96,4 @@ const FilterItem: FC<{
   );
 };
 
-export default FilterItem;
+export default VariantItem;

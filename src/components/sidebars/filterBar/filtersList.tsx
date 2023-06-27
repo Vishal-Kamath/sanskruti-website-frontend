@@ -4,46 +4,62 @@ import { FC, useEffect, useState } from "react";
 import FilterItem from "./filterItem";
 import { filters } from "@/data/filterlist";
 import { useParams } from "next/navigation";
-
-const Size = {
-  main: "Size",
-  sub: [
-    { title: "XS" },
-    { title: "S" },
-    { title: "M" },
-    { title: "L" },
-    { title: "XL" },
-  ],
-};
-
-const Color = {
-  main: "Color",
-  sub: [
-    { title: "Black" },
-    { title: "White" },
-    { title: "Blue" },
-    { title: "Pink" },
-    { title: "Purple" },
-  ],
-};
+import SortItem from "./sortItem";
+import axios from "axios";
+import VariantItem, { VariantType } from "./variantItem";
+import { useAppSelector } from "@/redux/store/hooks";
+import { selectCategory } from "@/redux/slice/category.slice";
 
 const FilterList: FC = () => {
   const params = useParams();
-  const [main, setMain] = useState(filters[0]);
+
+  const { categories } = useAppSelector(selectCategory);
+
+  const [main, setMain] = useState(categories[0]);
+
+  const [variants, setVariants] = useState<VariantType[]>([]);
 
   useEffect(() => {
     setMain(
-      filters.find(
-        (filter) => filter.main === decodeURIComponent(params["categoryName"])
-      ) || filters[0]
+      categories?.find(
+        (category) =>
+          category.Title === decodeURIComponent(params["categoryName"])
+      ) || categories[0]
     );
-  }, [params]);
+  }, [params, categories]);
+
+  useEffect(() => {
+    axios
+      .get<{ varients: VariantType[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/getVarients`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        setVariants(res.data.varients);
+      });
+  }, []);
 
   return (
     <div className="flex flex-col">
-      <FilterItem main={main.main} sub={main.sub} classname="pl-[3vw] pr-2" />
-      <FilterItem {...Size} classname="pl-[3vw] pr-2" />
-      <FilterItem {...Color} classname="pl-[3vw] pr-2" />
+      {!!main && (
+        <FilterItem
+          main={main.Title}
+          sub={main.subCategory}
+          classname="pl-[3vw] pr-2"
+        />
+      )}
+      <SortItem className="pl-[3vw] pr-2" />
+      {variants.map((variant, index) => (
+        <VariantItem
+          key={variant.varientName + index}
+          {...variant}
+          className="pl-[3vw] pr-2"
+        />
+      ))}
     </div>
   );
 };

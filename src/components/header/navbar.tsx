@@ -1,14 +1,21 @@
+"use client";
+
 import { FC, useState } from "react";
-import { filters } from "@/data/filterlist";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/utils/lib";
+import { FaAngleDown } from "react-icons/fa";
+import { useAppSelector } from "@/redux/store/hooks";
+import { selectCategory } from "@/redux/slice/category.slice";
 
 const Navbar: FC = () => {
-  const [displayFilter, setDisplayFilter] = useState(filters[0]);
+  const { categories } = useAppSelector(selectCategory);
+
+  const [displayCategory, setDisplayCategory] = useState(categories[0]);
   const pathname = usePathname();
   const block = pathname.includes("/auth") || pathname.includes("/user");
+
   return (
     <div
       className={cn(
@@ -17,47 +24,52 @@ const Navbar: FC = () => {
       )}
     >
       <div className="group w-fit max-md:hidden">
-        <nav className="flex h-6 w-fit items-center justify-center gap-4 lg:gap-10">
-          {filters.map((filter) => (
+        <nav className="flex h-6 w-fit items-center justify-evenly gap-4 lg:gap-6">
+          {categories?.map((category) => (
             <div
-              key={filter.main}
+              key={category.Title}
               className={cn(
-                "text-xs text-gray-600 lg:text-sm",
-                "hover:font-medium hover:text-black hover:underline hover:underline-offset-4"
+                "flex items-center gap-[2px] text-xs capitalize text-gray-600 lg:text-sm",
+                "border-b-[1px] border-transparent hover:border-black hover:font-medium hover:text-black"
               )}
-              onMouseEnter={() => setDisplayFilter(filter)}
+              onMouseEnter={() => {
+                setDisplayCategory(category);
+              }}
             >
-              {filter.main.toLocaleUpperCase()}
+              {category.Title} <FaAngleDown />
             </div>
           ))}
         </nav>
-        <div className="absolute left-1/2 top-6 hidden h-[25rem] w-[60rem] -translate-x-1/2 border-x-2 border-b-2 border-gray-300 bg-white group-hover:block">
+        <div className="absolute left-1/2 top-6 hidden h-[25rem] w-full max-w-[60rem] -translate-x-1/2 border-x-2 border-b-2 border-gray-300 bg-white group-hover:block">
           <div className="flex h-full w-full gap-3 overflow-hidden p-5">
             <div className="flex w-full flex-col gap-3">
               <h3 className="text-lg font-semibold">
-                {displayFilter.main.toLocaleUpperCase()}
+                {displayCategory?.Title.toLocaleUpperCase()}
               </h3>
               <div className="flex h-[15rem] w-full flex-col flex-wrap gap-2 text-sm">
-                {displayFilter.sub.map((item, index) => (
+                {displayCategory?.subCategory.map((item, index) => (
                   <Link
-                    key={item.title + index + displayFilter.main}
-                    href={`/category/${displayFilter.main}/?${
-                      displayFilter.main
-                    }=${encodeURIComponent(item.title)}`}
+                    key={item + index + displayCategory?.Title}
+                    href={`/category/${displayCategory?.Title}/?${
+                      displayCategory?.Title
+                    }=${encodeURIComponent(item)}`}
+                    className="capitalize"
                   >
-                    {item.title}
+                    {item}
                   </Link>
                 ))}
               </div>
             </div>
             <div className="aspect-[2/3] h-full shrink-0 overflow-hidden">
-              <Image
-                src={displayFilter.image}
-                alt={displayFilter.main}
-                width={300}
-                height={300}
-                className="h-full w-full object-cover object-top"
-              />
+              {!!displayCategory?.Image && (
+                <Image
+                  src={displayCategory?.Image}
+                  alt={displayCategory?.Title}
+                  width={300}
+                  height={300}
+                  className="h-full w-full object-cover object-top"
+                />
+              )}
             </div>
           </div>
         </div>
