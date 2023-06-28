@@ -74,6 +74,11 @@ const ProductCard: FC<Props> = ({ className, product }) => {
       .catch(() => {});
   };
 
+  const price = !!product.varients.variations[0]?.discount
+    ? product.varients.variations[0]?.price *
+      ((100 - product.varients.variations[0]?.discount) / 100)
+    : product.varients.variations[0]?.price;
+
   return (
     <div className={cn("flex w-full flex-shrink-0 flex-col gap-2", className)}>
       <Link href={`/product/${product.slug}`}>
@@ -114,22 +119,18 @@ const ProductCard: FC<Props> = ({ className, product }) => {
           {product.name}
         </div>
         <div className="mt-auto flex items-center gap-2 text-sm font-[550]">
-          {product?.sale_price ? (
+          {!!product.varients.variations[0]?.discount ? (
             <div className="flex items-baseline gap-2">
-              <span>&#8377;{product?.sale_price}</span>
-              <s className="text-gray-500">&#8377;{product?.gst_price}</s>
+              <span>&#8377;{price}</span>
+              <s className="text-gray-500">
+                &#8377;{product.varients.variations[0]?.price}
+              </s>
               <span className="text-red-800">
-                (
-                {Math.round(
-                  ((product?.gst_price - product?.sale_price) /
-                    product?.gst_price) *
-                    100
-                )}
-                % OFF)
+                ({product.varients.variations[0].discount}% OFF)
               </span>
             </div>
           ) : (
-            <span>&#8377;{product?.gst_price}</span>
+            <span>&#8377;{price}</span>
           )}
         </div>
       </Link>

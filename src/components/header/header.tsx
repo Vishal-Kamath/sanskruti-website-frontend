@@ -51,9 +51,13 @@ export interface ProductType {
         state: boolean;
       }[];
     }[];
-    variations: any[];
+    variations: {
+      quantity: number;
+      discount: number;
+      price: number;
+      combinationString: string[];
+    }[];
   };
-  gst_price: number;
   sale_price: number;
   MainCategory: string;
   SubCategory: string;
