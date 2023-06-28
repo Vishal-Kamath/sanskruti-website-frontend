@@ -4,8 +4,16 @@ import { FC } from "react";
 import { RxCross1 } from "react-icons/rx";
 
 const CartProduct: FC<CartItem> = ({ ...product }) => {
-  const sale_price = product?.sale_price * product.quantity;
-  const gst_price = product?.gst_price * product.quantity;
+  const combination =
+    product.varients.variations.find(
+      (variant) =>
+        JSON.stringify(variant.combinationString) ===
+        JSON.stringify(product.variants.combinationString)
+    ) || product.varients.variations[0];
+
+  const price = !!combination?.discount
+    ? combination?.price * ((100 - combination?.discount) / 100)
+    : combination?.price;
   return (
     <div className="relative flex w-full gap-3 rounded-md border-[1px] border-gray-300 p-3">
       <Image
@@ -36,17 +44,16 @@ const CartProduct: FC<CartItem> = ({ ...product }) => {
           <button className="grid place-content-center">-</button>
         </div>
         <div>
-          {sale_price ? (
+          {combination.discount ? (
             <div className="flex items-baseline gap-2 text-[14px]">
-              <span>&#8377;{sale_price}</span>
-              <s className="text-gray-500">&#8377;{gst_price}</s>
+              <span>&#8377;{price}</span>
+              <s className="text-gray-500">&#8377;{combination.price}</s>
               <span className="font-bold text-red-800">
-                ({Math.round(((gst_price - sale_price) / gst_price) * 100)}%
-                OFF)
+                ({combination.discount}% OFF)
               </span>
             </div>
           ) : (
-            <span className="text-[14px]">&#8377;{gst_price}</span>
+            <span className="text-[14px]">&#8377;{price}</span>
           )}
         </div>
       </div>

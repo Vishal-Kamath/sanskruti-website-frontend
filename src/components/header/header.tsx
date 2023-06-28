@@ -58,7 +58,6 @@ export interface ProductType {
       combinationString: string[];
     }[];
   };
-  sale_price: number;
   MainCategory: string;
   SubCategory: string;
   brand_name: string;

@@ -4,10 +4,7 @@ import { ProductType } from "@/components/header/header";
 
 export type CartItem = ProductType & {
   quantity: number;
-  variants: {
-    variant: string;
-    value: string;
-  }[];
+  variants: ProductType["varients"]["variations"][0];
 };
 
 export type CartType = {
