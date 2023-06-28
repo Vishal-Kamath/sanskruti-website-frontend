@@ -37,10 +37,7 @@ const VariantTags: FC<{
       (child) => child.value === selectedTagFromQuery
     );
 
-    if (!existsInList) {
-      setSelected(variant.childern[0].value);
-      variantSetters(variant.childern[0].value);
-    } else {
+    if (existsInList) {
       setSelected(selectedTagFromQuery);
       variantSetters(selectedTagFromQuery);
     }
