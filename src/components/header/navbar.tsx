@@ -50,7 +50,7 @@ const Navbar: FC = () => {
                 {displayCategory?.subCategory.map((item, index) => (
                   <Link
                     key={item + index + displayCategory?.Title}
-                    href={`/category/${displayCategory?.Title}/?${
+                    href={`/category/${displayCategory?.Title}?${
                       displayCategory?.Title
                     }=${encodeURIComponent(item)}`}
                     className="capitalize"
