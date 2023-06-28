@@ -19,10 +19,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   });
 
   const [variations, setVariations] = useState<string[]>(
-    Array(filteredAttributes.length || 0).fill("")
+    product.varients.variations[0]?.combinationString
   );
   const combination = product.varients.variations.find(
-    (variation: any) =>
+    (variation) =>
       JSON.stringify(variation.combinationString) === JSON.stringify(variations)
   );
 
@@ -40,8 +40,6 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
       withCredentials: true,
     }).then;
   };
-
-  console.log(combination);
 
   return (
     <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
@@ -69,9 +67,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
             </span>
           </div>
         ) : (
-          <span className="text-lg">
-            &#8377;{combination?.price || product?.gst_price}
-          </span>
+          <span className="text-lg">&#8377;{combination?.price}</span>
         )}
 
         <span className="text-xs">inclusive of all taxes</span>
