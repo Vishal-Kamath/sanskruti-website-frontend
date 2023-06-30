@@ -1,50 +1,13 @@
 import { FC } from "react";
 import FooterDetailsCard from "./footerDetailsCard";
+import { BsFacebook, BsInstagram, BsTwitter, BsWhatsapp } from "react-icons/bs";
+import FooterCategory from "./footerCategories";
 
 const FooterDetails: FC = () => {
   return (
     <div className="flex w-full flex-col gap-5 bg-gray-100 py-10">
       <div className="justify-betweenl grid w-full grid-cols-2 gap-10 px-[3vw] md:grid-cols-5">
-        <FooterDetailsCard
-          title="DESIGNER WEAR"
-          list={[
-            {
-              inWebsiteLink: true,
-              title: "Salwar Kameez",
-              link: "/category/Salwar Kameez",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Lehenga's",
-              link: "/category/Lehenga's",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Indo Western",
-              link: "/category/Indo Western",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Bridal",
-              link: "/category/Bridal",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Kurti's",
-              link: "/category/Kurti's",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Western Wear",
-              link: "/category/Western Wear",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Dress Material's",
-              link: "/category/Dress Material's",
-            },
-          ]}
-        />
+        <FooterCategory />
         <FooterDetailsCard
           title="ABOUT US"
           list={[
@@ -87,7 +50,7 @@ const FooterDetails: FC = () => {
             {
               inWebsiteLink: true,
               title: "Return Policy",
-              link: "/return policy",
+              link: "/return",
             },
             {
               inWebsiteLink: true,
@@ -118,6 +81,27 @@ const FooterDetails: FC = () => {
               },
             ]}
           />
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
+            <h5 className="flex items-center justify-between py-2 font-bold">
+              <span>FOLLOW US</span>
+            </h5>
+            <div className="flex gap-4 [&>*>*]:h-5 [&>*>*]:w-5">
+              <a href="#" target="_blank">
+                <BsInstagram />
+              </a>
+              <a href="#" target="_blank">
+                <BsFacebook />
+              </a>
+              <a href="#" target="_blank">
+                <BsWhatsapp />
+              </a>
+              <a href="#" target="_blank">
+                <BsTwitter />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div className="flex justify-between gap-2 px-[3vw] max-md:flex-col">
