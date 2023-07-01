@@ -12,10 +12,7 @@ import UIButton from "@/components/common/button";
 
 const ShoppingCartPage: FC = () => {
   const dispatch = useAppDispatch();
-  // const cart = useAppSelector(selectCart);
-  const cart: CartType = {
-    cart: [],
-  };
+  const cart = useAppSelector(selectCart);
 
   const user = useAppSelector(selectUser);
 
@@ -34,7 +31,7 @@ const ShoppingCartPage: FC = () => {
   };
 
   useEffect(() => {
-    // getCartDetails()
+    getCartDetails();
   }, []);
 
   return (
@@ -49,8 +46,8 @@ const ShoppingCartPage: FC = () => {
           Please verify your mobile number before proceding
         </div>
       )}
-      {cart.cart.map((cartItem) => (
-        <CartProduct key={cartItem._id} {...cartItem} />
+      {cart.cart.map((cartItem, index) => (
+        <CartProduct key={cartItem.product.name + index} {...cartItem} />
       ))}
       <UIButton className="w-fit px-3 py-2">
         <Link href="/user/cart/address">Next</Link>

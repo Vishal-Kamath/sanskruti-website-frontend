@@ -3,12 +3,11 @@ import Image from "next/image";
 import { FC } from "react";
 import { RxCross1 } from "react-icons/rx";
 
-const CartProduct: FC<CartItem> = ({ ...product }) => {
+const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
   const combination =
     product.varients.variations.find(
-      (variant) =>
-        JSON.stringify(variant.combinationString) ===
-        JSON.stringify(product.variants.combinationString)
+      (variation) =>
+        JSON.stringify(variation.combinationString) === JSON.stringify(variant)
     ) || product.varients.variations[0];
 
   const price = !!combination?.discount
@@ -39,7 +38,7 @@ const CartProduct: FC<CartItem> = ({ ...product }) => {
             +
           </button>
           <span className="grid place-content-center border-r-[1px] border-gray-400">
-            {product.quantity}
+            {quantity}
           </span>
           <button className="grid place-content-center">-</button>
         </div>

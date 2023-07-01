@@ -2,9 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
 import { ProductType } from "@/components/header/header";
 
-export type CartItem = ProductType & {
+export type CartItem = {
+  product: ProductType;
   quantity: number;
-  variants: ProductType["varients"]["variations"][0];
+  variant: string[];
 };
 
 export type CartType = {
