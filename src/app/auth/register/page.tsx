@@ -199,11 +199,8 @@ const RegisterPage: NextPage = () => {
           <FcGoogle className="h-6 w-6" />
           <span>GOOGLE</span>
         </UIButton>
-        <UIButton className="w-full gap-2">
-          <BsFacebook
-            onClick={handleFacebookAuth}
-            className="h-6 w-6 text-facebook"
-          />
+        <UIButton onClick={handleFacebookAuth} className="w-full gap-2">
+          <BsFacebook className="h-6 w-6 text-facebook" />
           <span>FACEBOOK</span>
         </UIButton>
       </div>
