@@ -5,12 +5,19 @@ import DropdownComponent from "@/components/common/dropdown";
 import VariantTags from "./variantTags";
 import UIButton from "@/components/common/button";
 import { ProductType } from "@/components/header/header";
-import { useAppSelector } from "@/redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { selectisAuthenticated } from "@/redux/slice/user.slice";
 import Link from "next/link";
 import axios from "axios";
+import {
+  NotificationType,
+  setNotification,
+  showNotification,
+} from "@/redux/slice/notification.slice";
 
 const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
+  const dispatch = useAppDispatch();
+
   const isAuthenticated = useAppSelector(selectisAuthenticated);
 
   const filteredAttributes = product.varients.attributes.filter((attr) => {
@@ -30,17 +37,41 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
 
   const addToCart = () => {
     const body = {
-      ...product,
+      productId: product._id,
       quantity: 1,
-      variants: [],
+      variant: combination.combinationString,
     };
 
-    axios.post(`${process.env.ENDPOINT}/api/user/cart`, body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    }).then;
+    axios
+      .post<NotificationType>(
+        `${process.env.ENDPOINT}/api/v1/user/cart`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        dispatch(
+          setNotification({
+            message: res.data.message,
+            type: res.data.type,
+          })
+        );
+        dispatch(showNotification());
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
   };
 
   return (
@@ -93,7 +124,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
       <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
         {isAuthenticated ? (
           <>
-            <UIButton className="w-full bg-white text-lg font-semibold text-black">
+            <UIButton
+              className="w-full bg-white text-lg font-semibold text-black"
+              onClick={addToCart}
+            >
               ADD TO CART
             </UIButton>
             <UIButton className="w-full bg-black text-lg font-semibold text-white">
