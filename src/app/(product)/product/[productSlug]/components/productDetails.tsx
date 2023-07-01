@@ -18,13 +18,15 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
     return !!filterAttr.length;
   });
 
-  const [variations, setVariations] = useState<string[]>(
-    product.varients.variations[0]?.combinationString
+  const [variations, setVariations] = useState(
+    product.varients.variations[0]?.combinationString.slice() || []
   );
-  const combination = product.varients.variations.find(
-    (variation) =>
-      JSON.stringify(variation.combinationString) === JSON.stringify(variations)
-  );
+  const combination =
+    product.varients.variations.find(
+      (variation) =>
+        JSON.stringify(variation.combinationString) ===
+        JSON.stringify(variations)
+    ) || product.varients.variations[0];
 
   const addToCart = () => {
     const body = {

@@ -10,7 +10,10 @@ const VariantTags: FC<{
   variant: ProductType["varients"]["attributes"][0];
   variantSetters: (value: string) => void;
 }> = ({ variant, variantSetters }) => {
-  const [selected, setSelected] = useState(variant.childern[0].value);
+  const { name, childern } = variant;
+  const filterChildren = childern.filter((child) => child.state);
+
+  const [selected, setSelected] = useState(filterChildren[0].value);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -22,28 +25,25 @@ const VariantTags: FC<{
 
   const onClick = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
-    current.set(variant.name, value);
-    const query = !!current.toString() ? `?${current.toString()}` : "";
+    current.set(name, value);
+    const query = `?${current.toString()}`;
     router.push(`${pathname}/${query}`);
     setSelected(value);
   };
 
   useEffect(() => {
     const selectedTagFromQuery = decodeURIComponent(
-      searchParams.get(variant.name) || ""
+      searchParams.get(name) || ""
     );
 
-    const existsInList = variant.childern.find(
+    const existsInList = childern.find(
       (child) => child.value === selectedTagFromQuery
     );
 
     if (existsInList) {
       setSelected(selectedTagFromQuery);
-      variantSetters(selectedTagFromQuery);
     }
-  }, [searchParams, variant.name, variant.childern]);
-
-  const filterChildren = variant.childern.filter((child) => child.state);
+  }, [searchParams, name, childern]);
 
   return (
     <div
@@ -53,7 +53,7 @@ const VariantTags: FC<{
       )}
     >
       <h5 className="flex items-center text-lg font-bold">
-        <span>{variant.name}</span>
+        <span>{name}</span>
       </h5>
       <div className="custom_scrollbar flex max-h-[10rem] flex-wrap gap-3 overflow-y-auto overflow-x-hidden py-1">
         {filterChildren.map((subVariant) => (
@@ -66,9 +66,9 @@ const VariantTags: FC<{
           >
             <input
               type="radio"
-              name={variant.name}
+              name={name}
               checked={selected === subVariant.value}
-              id={variant.name + " " + subVariant.value}
+              id={name + " " + subVariant.value}
               className="absolute left-0 top-0 z-10 h-full w-full opacity-0"
               onClick={() => onClick(subVariant.value)}
               onChange={() => {}}

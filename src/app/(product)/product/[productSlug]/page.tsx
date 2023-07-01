@@ -1,17 +1,21 @@
+"use client";
+
 import { ProductType } from "@/components/header/header";
 import axios from "axios";
 import ProductPageComponent from "./components/productPage";
-import { Metadata } from "next";
+import { FC, useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { productSlug: string };
-}): Promise<Metadata> {
-  try {
-    const product = (
+const ProductPage: FC = () => {
+  const params = useParams();
+  const productSlug = params["productSlug"];
+
+  const [product, setProduct] = useState<ProductType>();
+
+  const getProduct = async (slug: string) => {
+    const newProduct = (
       await axios.get<{ productAlreadyExists: ProductType }>(
-        `${process.env.ENDPOINT}/api/v1/user/product?slug=${params.productSlug}`,
+        `${process.env.ENDPOINT}/api/v1/user/product?slug=${slug}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -19,31 +23,13 @@ export async function generateMetadata({
         }
       )
     ).data.productAlreadyExists;
+    setProduct(newProduct);
+  };
+  useEffect(() => {
+    getProduct(productSlug);
+  }, [productSlug]);
 
-    return {
-      title: product.meta_tittle,
-      description: product.meta_description,
-      keywords: product.meta_keyword,
-    };
-  } catch {
-    return {};
-  }
-}
-
-const ProductPage = async ({ params }: { params: { productSlug: string } }) => {
-  const slug = params["productSlug"];
-  const product = (
-    await axios.get<{ productAlreadyExists: ProductType }>(
-      `${process.env.ENDPOINT}/api/v1/user/product?slug=${slug}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-  ).data.productAlreadyExists;
-
-  return <ProductPageComponent product={product} />;
+  return !!product ? <ProductPageComponent product={product} /> : null;
 };
 
 export default ProductPage;
