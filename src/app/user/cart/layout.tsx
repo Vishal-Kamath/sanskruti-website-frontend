@@ -1,11 +1,15 @@
 "use client";
 
+import { CartType, setCart } from "@/redux/slice/cart.slice";
+import { useAppDispatch } from "@/redux/store/hooks";
 import { cn } from "@/utils/lib";
+import axios from "axios";
 import { usePathname } from "next/navigation";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
 
 const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
 
   const steps = ["BAG", "ADDRESS", "PAYMENT"];
@@ -17,6 +21,25 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
       : pathname === "/user/cart/payment"
       ? 2
       : 0;
+
+  const getCartDetails = async () => {
+    const cartDetails = await axios.get<CartType>(
+      `${process.env.ENDPOINT}/api/v1/user/cart`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    dispatch(setCart({ cart: cartDetails.data.cart }));
+  };
+
+  useEffect(() => {
+    getCartDetails();
+  }, []);
+
   return (
     <div className="flex w-full flex-col gap-3">
       <div className="mx-auto flex w-full max-w-xl">
