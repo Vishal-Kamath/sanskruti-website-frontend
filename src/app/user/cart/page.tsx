@@ -13,7 +13,7 @@ const ShoppingCartPage: FC = () => {
   const user = useAppSelector(selectUser);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       {!user.email_verified && (
         <div className="rounded-md border-2 border-amber-300 bg-amber-50 p-3 text-amber-400">
           Please verify your email before proceding
@@ -24,8 +24,11 @@ const ShoppingCartPage: FC = () => {
           Please verify your mobile number before proceding
         </div>
       )}
-      {cart.cart.map((cartItem, index) => (
-        <CartProduct key={cartItem.product.name + index} {...cartItem} />
+      {cart.cart?.map((cartItem, index) => (
+        <CartProduct
+          key={cartItem.product.name + index + "cart item"}
+          {...cartItem}
+        />
       ))}
       <UIButton className="w-fit px-3 py-2">
         <Link href="/user/cart/address">Next</Link>

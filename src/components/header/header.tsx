@@ -58,6 +58,7 @@ export interface ProductType {
       combinationString: string[];
     }[];
   };
+  gst_percent: number;
   MainCategory: string;
   SubCategory: string;
   brand_name: string;

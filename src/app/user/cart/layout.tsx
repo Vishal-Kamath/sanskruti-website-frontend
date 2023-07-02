@@ -7,6 +7,7 @@ import axios from "axios";
 import { usePathname } from "next/navigation";
 import { FC, ReactNode, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
+import Total from "./components/total";
 
 const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
         withCredentials: true,
       }
     );
-
+    if (cartDetails.status !== 200) return dispatch(setCart({ cart: [] }));
     dispatch(setCart({ cart: cartDetails.data.cart }));
   };
 
@@ -72,10 +73,10 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2">
+      <div className="flex gap-3 max-lg:flex-col">
         {children}
 
-        <div></div>
+        <Total />
       </div>
     </div>
   );
