@@ -17,7 +17,7 @@ const DashboardContainer: FC<Props> = ({
   return (
     <Container
       containerTitle={dashboardTitle}
-      className={cn("md:w-[20rem]", className)}
+      className={cn("md:w-[15rem]", className)}
       toggler={() => setOpen((open) => !open)}
       openState={open}
       {...props}
