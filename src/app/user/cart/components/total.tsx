@@ -6,13 +6,13 @@ import { FC } from "react";
 
 const Total: FC = () => {
   const cart = useAppSelector(selectCart);
-  if (!cart.cart || cart.cart?.length === 0) return null;
+  if (!cart || cart?.length === 0) return null;
 
   const totalArray: number[] = [];
   const discountArray: number[] = [];
   const gstArray: number[] = [];
 
-  cart.cart.map((cartItem) => {
+  cart.map((cartItem) => {
     const combination =
       cartItem.product.varients.variations.find(
         (variation) =>
@@ -44,7 +44,7 @@ const Total: FC = () => {
     <div className="flex w-full flex-col gap-3 border-gray-300 max-lg:border-t-[1px] max-lg:pt-5 lg:h-full lg:max-w-sm lg:border-l-[1px] lg:pl-5">
       <div className="text-xs font-semibold text-gray-500">
         PAYMENT DETAILS (
-        {cart.cart.length !== 1 ? `${cart.cart.length} items` : `${cart} item`})
+        {cart.length !== 1 ? `${cart.length} items` : `${cart} item`})
       </div>
       <div className="flex w-full flex-col gap-3 [&>*]:flex [&>*]:w-full [&>*]:justify-between">
         <div>

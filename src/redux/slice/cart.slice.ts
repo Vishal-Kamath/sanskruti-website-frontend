@@ -29,6 +29,6 @@ export const cart = createSlice({
 
 export const { setCart } = cart.actions;
 
-export const selectCart = (state: RootState) => state.cart;
+export const selectCart = (state: RootState) => state.cart.cart;
 
 export default cart.reducer;

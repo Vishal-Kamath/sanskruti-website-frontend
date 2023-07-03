@@ -24,7 +24,7 @@ const ShoppingCartPage: FC = () => {
           Please verify your mobile number before proceding
         </div>
       )}
-      {cart.cart?.map((cartItem, index) => (
+      {cart?.map((cartItem, index) => (
         <CartProduct
           key={cartItem.product.name + index + "cart item"}
           {...cartItem}
