@@ -1,5 +1,6 @@
 "use client";
 
+import UIButton from "@/components/common/button";
 import { CartItem, CartType, setCart } from "@/redux/slice/cart.slice";
 import { useAppDispatch } from "@/redux/store/hooks";
 import axios from "axios";
@@ -142,19 +143,19 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
   };
 
   return (
-    <div className="flex w-full gap-3 rounded-md border-[1px] border-gray-300 p-3">
-      <Link href={link} className="aspect-[2/2.5] h-32">
+    <div className="flex w-full gap-3 rounded-md border-[1px] border-gray-300 p-2">
+      <Link href={link}>
         <Image
           src={product.images[0]}
           alt={product.name}
           width={100}
           height={100}
-          className="h-32 rounded-[4px]"
+          className="h-full w-[8rem] rounded-[4px] bg-slate-200 object-contain object-center"
         />
       </Link>
       <div className="flex w-full flex-col gap-3">
         <div className="flex flex-col gap-1">
-          <Link href={link} className="text-lg font-medium">
+          <Link href={link} className="w-fit text-lg font-medium">
             {product.name.length > 35
               ? `${product.name.slice(0, 35)}...`
               : product.name}
@@ -164,58 +165,62 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
           </div>
         </div>
 
-        {/* Variations */}
-        <div className="flex w-full flex-wrap gap-2">
-          {/* variants */}
-          {filteredAttributes.map((attr, index) => (
-            <select
-              key={attr.name + index + product.name}
-              onChange={(e) => updateVariant(index, e.target.value)}
-              defaultValue={combination.combinationString[index]}
-            >
-              {filteredAttributes[index].childern.map((child) => (
-                <option
-                  key={attr.name + child.value + product.name}
-                  value={child.value}
-                >
-                  {attr.name}: {child.value}
-                </option>
-              ))}
-            </select>
-          ))}
-
-          {/* quantity */}
-          <div className="flex h-5 w-fit rounded-md border-[1px] border-gray-400 bg-slate-100 [&>*]:h-5 [&>*]:w-5">
-            <button
-              onClick={() => incrementQuantity(quantityState + 1)}
-              className="grid place-content-center border-r-[1px] border-gray-400"
-            >
-              +
-            </button>
-            <span className="grid place-content-center border-r-[1px] border-gray-400">
-              {quantityState}
-            </span>
-            <button
-              onClick={() => decrementQuantity(quantityState - 1)}
-              className="grid place-content-center"
-            >
-              -
-            </button>
-          </div>
-        </div>
-
-        <div>
+        {/* Price */}
+        <div className="font-normal">
           {combination.discount ? (
-            <div className="flex items-baseline gap-2 text-[14px]">
+            <div className="flex gap-2">
               <span>&#8377;{price}</span>
               <s className="text-gray-500">&#8377;{combination.price}</s>
-              <span className="font-bold text-red-800">
+              <span className="font-medium text-red-800">
                 ({combination.discount}% OFF)
               </span>
             </div>
           ) : (
-            <span className="text-[14px]">&#8377;{price}</span>
+            <span>&#8377;{price}</span>
           )}
+        </div>
+
+        {/* Variations */}
+        <div className="flex w-full flex-wrap gap-2 text-xs">
+          {/* variants */}
+          {filteredAttributes.map((attr, index) => (
+            <div className="rounded-full border-[1px] border-slate-300 bg-slate-50 p-1">
+              <select
+                key={attr.name + index + product.name}
+                onChange={(e) => updateVariant(index, e.target.value)}
+                defaultValue={combination.combinationString[index]}
+                className="bg-transparent outline-none"
+              >
+                {filteredAttributes[index].childern.map((child) => (
+                  <option
+                    key={attr.name + child.value + product.name}
+                    value={child.value}
+                  >
+                    {attr.name}: {child.value}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+
+          {/* quantity */}
+          <div className="flex w-fit items-center gap-1 rounded-full border-[1px] border-slate-300 bg-slate-50 p-1 [&>*]:h-4 [&>*]:w-4">
+            <UIButton
+              onClick={() => incrementQuantity(quantityState + 1)}
+              className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
+            >
+              +
+            </UIButton>
+            <span className="grid w-fit place-content-center leading-none">
+              {quantity}
+            </span>
+            <UIButton
+              onClick={() => decrementQuantity(quantityState - 1)}
+              className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
+            >
+              -
+            </UIButton>
+          </div>
         </div>
       </div>
 

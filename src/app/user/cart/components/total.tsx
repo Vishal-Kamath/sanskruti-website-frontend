@@ -41,31 +41,33 @@ const Total: FC = () => {
 
   const finalValue = total - discount + gst;
   return (
-    <div className="w-full max-w-md">
-      <table>
-        <tbody>
-          <tr>
-            <td>Total MRP</td>
-            <td>{total}</td>
-          </tr>
-          {!!discount && (
-            <tr>
-              <td>Discount</td>
-              <td>-{discount}</td>
-            </tr>
-          )}
-          {!!gst && (
-            <tr>
-              <td>GST</td>
-              <td>{gst}</td>
-            </tr>
-          )}
-          <tr>
-            <td>Total Amount</td>
-            <td>{finalValue}</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="flex w-full flex-col gap-3 border-gray-300 max-lg:border-t-[1px] max-lg:pt-5 lg:h-full lg:max-w-sm lg:border-l-[1px] lg:pl-5">
+      <div className="text-xs font-semibold text-gray-500">
+        PAYMENT DETAILS (
+        {cart.cart.length !== 1 ? `${cart.cart.length} items` : `${cart} item`})
+      </div>
+      <div className="flex w-full flex-col gap-3 [&>*]:flex [&>*]:w-full [&>*]:justify-between">
+        <div>
+          <span>Total MRP</span>
+          <span>&#8377;{total}</span>
+        </div>
+        {!!discount && (
+          <div>
+            <span>Discount</span>
+            <span className="text-green-400">-&#8377;{discount}</span>
+          </div>
+        )}
+        {!!gst && (
+          <div>
+            <span>GST</span>
+            <span></span>&#8377;{gst}
+          </div>
+        )}
+        <div className="border-t-[1px] border-gray-300 pt-5 font-bold">
+          <span>Total Amount</span>
+          <span>&#8377;{finalValue}</span>
+        </div>
+      </div>
     </div>
   );
 };
