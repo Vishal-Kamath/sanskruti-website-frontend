@@ -30,7 +30,7 @@ const AddressDropdown: FC<Props> = ({
         {/* Main */}
         <button
           onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 100)}
+          onBlur={() => setTimeout(() => setOpen(false), 300)}
           className="flex w-full items-center justify-between rounded-md border-[1px] border-slate-300 px-3 py-2 outline-none outline-offset-0 hover:outline-4 hover:outline-gray-100 focus:border-slate-500"
         >
           <div className="flex flex-col gap-1">
