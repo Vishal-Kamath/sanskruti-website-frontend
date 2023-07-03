@@ -52,25 +52,31 @@ const AddressDropdown: FC<Props> = ({
           )}
         >
           <div className="flex max-h-[20rem] w-full flex-col overflow-y-auto rounded-md border-[1px] border-slate-500 bg-white shadow-lg shadow-gray-300">
-            {options.map((option, index) => (
-              <button
-                key={option.title + index + title}
-                onClick={() => {
-                  setAddress(option.id);
-                  setOpen(false);
-                }}
-                className="flex flex-col gap-1 px-2 py-1 outline-none hover:bg-slate-50"
-              >
-                <h3 className="text-left text-[14px] font-medium">
-                  {option.title}
-                </h3>
-                <p className="text-left text-xs text-gray-500">
-                  {option.content.length > 35
-                    ? `${option.content.slice(0, 35)}...`
-                    : option.content}
-                </p>
-              </button>
-            ))}
+            {!!options.length ? (
+              options.map((option, index) => (
+                <button
+                  key={option.title + index + title}
+                  onClick={() => {
+                    setAddress(option.id);
+                    setOpen(false);
+                  }}
+                  className="flex flex-col gap-1 px-2 py-1 outline-none hover:bg-slate-50"
+                >
+                  <h3 className="text-left text-[14px] font-medium">
+                    {option.title}
+                  </h3>
+                  <p className="text-left text-xs text-gray-500">
+                    {option.content.length > 35
+                      ? `${option.content.slice(0, 35)}...`
+                      : option.content}
+                  </p>
+                </button>
+              ))
+            ) : (
+              <h3 className="px-2 py-1 text-left text-[14px] font-medium">
+                Empty list
+              </h3>
+            )}
           </div>
         </div>
       </div>
