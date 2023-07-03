@@ -21,7 +21,7 @@ interface Props {
   product: ProductType;
 }
 const ProductCard: FC<Props> = ({ className, product }) => {
-  const disptach = useAppDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const userWishlistIds = useAppSelector(selectWishlistIds);
   const isAuthenticated = useAppSelector(selectisAuthenticated);
@@ -52,7 +52,7 @@ const ProductCard: FC<Props> = ({ className, product }) => {
         }
       )
       .then((res) => {
-        disptach(setWishlistIds({ ids: res.data.ids }));
+        dispatch(setWishlistIds({ ids: res.data.ids }));
       })
       .catch(() => {});
   };
@@ -69,7 +69,7 @@ const ProductCard: FC<Props> = ({ className, product }) => {
         }
       )
       .then((res) => {
-        disptach(setWishlistIds({ ids: res.data.ids }));
+        dispatch(setWishlistIds({ ids: res.data.ids }));
       })
       .catch(() => {});
   };
@@ -86,8 +86,8 @@ const ProductCard: FC<Props> = ({ className, product }) => {
           {product.images.length !== 0 ? (
             <Image
               src={product.images[0]}
-              width={500}
-              height={500}
+              width={150}
+              height={150}
               className="aspect-[2/2.5] h-full w-full object-cover object-top"
               alt="Product image"
             />
@@ -148,8 +148,8 @@ export const DummyProductCard: FC<DummyProps> = ({ className }) => {
         <div className="bg-gray-100">
           <Image
             src={filters[5].image}
-            width={500}
-            height={500}
+            width={150}
+            height={150}
             className="aspect-[2/2.5] h-full w-full object-cover object-top"
             alt="Product image"
           />
