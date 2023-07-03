@@ -14,7 +14,7 @@ const AboutUsPage: NextPage = () => {
         guidelines Rules, 2011 that require publishing the rules and
         regulations, privacy policy and Terms of Use for access or usage of
         Sanskruti marketplace platform - www.Sanskruti.com (hereinafter referred
-        to as "Platform")
+        to as &quot;Platform&quot;)
         <br />
         The Platform is owned by Sanskruti Designs Private Limited, having its
         registered office at Buildings Alyssa, Begonia and Clover situated in
@@ -23,18 +23,19 @@ const AboutUsPage: NextPage = () => {
         82 A - 2nd and 3rd Floor, Sector 18 Gurugram Haryana, India.
         <br />
         Your use of the Sanskruti and services and tools are governed by the
-        following terms and conditions "Terms of Use" as applicable to the
-        Sanskruti including the applicable policies which are incorporated
+        following terms and conditions &quot;Terms of Use&quot; as applicable to
+        the Sanskruti including the applicable policies which are incorporated
         herein by way of reference. By mere use of the Sanskruti, You shall be
         contracting with Sanskruti Designs Private Limited, the owner of the
         Platform. These terms and conditions including the policies constitute
         Your binding obligations, with Sanskruti.
         <br />
         For the purpose of these Terms of Use, wherever the context so requires
-        "You" or "User" shall mean any natural or legal person who has agreed to
-        become a buyer on Platform by providing data while registering on the
-        Platform as Registered User. The term "Sanskruti","We","Us","Our" shall
-        mean Sanskruti Designs Private Limited and its affiliates.
+        &quot;You&quot; or &quot;User&quot; shall mean any natural or legal
+        person who has agreed to become a buyer on Platform by providing data
+        while registering on the Platform as Registered User. The term
+        &quot;Sanskruti&quot;,&quot;We&quot;,&quot;Us&quot;,&quot;Our&quot;
+        shall mean Sanskruti Designs Private Limited and its affiliates.
         <br />
         When You use any of the services provided by Us through the Platform,
         including but not limited to, e.g. Product Reviews, Seller Reviews, You
