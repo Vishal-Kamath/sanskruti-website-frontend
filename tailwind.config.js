@@ -12,6 +12,8 @@ module.exports = {
       },
       colors: {
         facebook: "#4267B2",
+        sanskrutiRed: "#da2335",
+        sanskrutiRedLight: "#da233555",
       },
       boxShadow: {
         top: "0 -5px 10px rgba(0, 0, 0, 0.05)",
