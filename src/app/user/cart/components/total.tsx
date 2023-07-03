@@ -1,8 +1,10 @@
 "use client";
 
+import UIButton from "@/components/common/button";
 import { selectCart } from "@/redux/slice/cart.slice";
 import { useAppSelector } from "@/redux/store/hooks";
 import { FC } from "react";
+import { AiOutlineTag } from "react-icons/ai";
 
 const Total: FC = () => {
   const cart = useAppSelector(selectCart);
@@ -42,6 +44,18 @@ const Total: FC = () => {
   const finalValue = total - discount + gst;
   return (
     <div className="flex w-full flex-col gap-3 border-gray-300 max-lg:border-t-[1px] max-lg:pt-5 lg:h-full lg:max-w-sm lg:border-l-[1px] lg:pl-5">
+      {/* coupons */}
+      <div className="text-xs font-medium text-gray-500">COUPONS</div>
+      <div className="flex justify-between border-b-[1px] border-gray-300 pb-3 text-xs">
+        <div className="flex items-center gap-2 font-bold">
+          <AiOutlineTag className="h-4 w-4" />
+          Apply Coupons
+        </div>
+
+        <UIButton className="w-fit rounded-sm border-[1px] border-sanskrutiRed px-3 py-1 text-sanskrutiRed hover:outline-sanskrutiRedLight">
+          Apply
+        </UIButton>
+      </div>
       <div className="text-xs font-semibold text-gray-500">
         PAYMENT DETAILS (
         {cart.length !== 1 ? `${cart.length} items` : `${cart} item`})
