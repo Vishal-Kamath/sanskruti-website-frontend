@@ -184,7 +184,10 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
         <div className="flex w-full flex-wrap gap-2 text-xs">
           {/* variants */}
           {filteredAttributes.map((attr, index) => (
-            <div className="rounded-full border-[1px] border-slate-300 bg-slate-50 p-1">
+            <div
+              key={attr.name + index + product.name}
+              className="rounded-full border-[1px] border-slate-300 bg-slate-50 p-1"
+            >
               <select
                 key={attr.name + index + product.name}
                 onChange={(e) => updateVariant(index, e.target.value)}
