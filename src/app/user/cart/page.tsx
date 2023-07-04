@@ -18,14 +18,27 @@ const ShoppingCartPage: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const completeVerification = () => {
-    dispatch(
-      setNotification({
-        message: "Please verify your email and mobile number",
-        type: "warning",
-      })
-    );
-    dispatch(showNotification());
+  const completeVerificationAndCart = () => {
+    if (!user.email_verified || !user.Mobile_No_verified) {
+      dispatch(
+        setNotification({
+          message: "Please verify your email and mobile number",
+          type: "warning",
+        })
+      );
+      return dispatch(showNotification());
+    }
+
+    if (!cart?.length) {
+      dispatch(
+        setNotification({
+          message: "Empty cart",
+          type: "warning",
+          content: "Please add items to your cart before proceeding",
+        })
+      );
+      return dispatch(showNotification());
+    }
   };
 
   return (
@@ -46,7 +59,7 @@ const ShoppingCartPage: FC = () => {
           {...cartItem}
         />
       ))}
-      {/* {user.email_verified && user.Mobile_No_verified ? ( */}
+      {/* {user.email_verified && user.Mobile_No_verified && !!cart?.length ? ( */}
       <Link href="/user/cart/address" className="w-full">
         <UIButton className="w-full rounded-sm border-none bg-sanskrutiRed font-bold text-white hover:outline-sanskrutiRedLight">
           PROCEED
@@ -54,7 +67,7 @@ const ShoppingCartPage: FC = () => {
       </Link>
       {/* ) : (
         <UIButton
-          onClick={completeVerification}
+          onClick={completeVerificationAndCart}
           className="dfont-bold w-full rounded-sm border-none bg-red-900 text-white hover:outline-sanskrutiRedLight"
         >
           PROCEED
