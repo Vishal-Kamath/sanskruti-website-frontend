@@ -5,25 +5,17 @@ import { selectUser } from "@/redux/slice/user.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { FC } from "react";
 import AddressDropdown from "../components/addressDropdown";
-import {
-  selectBilling,
-  selectShipping,
-  setBillingAddress,
-  setShippingAddress,
-} from "@/redux/slice/cart.slice";
 import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
+import { useAddressState } from "../utils/hook";
 
 const CartAddressPage: FC = () => {
   const router = useRouter();
   const user = useAppSelector(selectUser);
-
-  const reduxInitialShipping = useAppSelector(selectShipping);
-  const reduxInitialBilling = useAppSelector(selectBilling);
 
   const addresses = user.address.map((addr) => ({
     id: addr.id,
@@ -37,27 +29,13 @@ const CartAddressPage: FC = () => {
     ].join(" "),
   }));
 
+  const [shipping, setShipping] = useAddressState("shippingAddress");
   const shippingInAddresses = addresses.find(
-    (addr) => addr.id === reduxInitialShipping?.id
+    (addr) => addr.id === shipping?.id
   );
-  const shipping =
-    !!reduxInitialShipping && !!shippingInAddresses
-      ? shippingInAddresses
-      : {
-          title: "Shipping Address",
-          content: "Select a shipping address",
-        };
 
-  const billingInAddresses = addresses.find(
-    (addr) => addr.id === reduxInitialBilling?.id
-  );
-  const billing =
-    !!reduxInitialBilling && !!billingInAddresses
-      ? billingInAddresses
-      : {
-          title: "Billing Address",
-          content: "Select a billing address",
-        };
+  const [billing, setBilling] = useAddressState("billingAddress");
+  const billingInAddresses = addresses.find((addr) => addr.id === billing?.id);
 
   const dispatch = useAppDispatch();
 
@@ -71,14 +49,14 @@ const CartAddressPage: FC = () => {
     const address = user.address.find((addr) => addr.id === id);
     if (!address) return;
 
-    dispatch(setShippingAddress({ address }));
+    setShipping(address);
   };
 
   const handleSetBillingAddress = (id: string) => {
     const address = user.address.find((addr) => addr.id === id);
     if (!address) return;
 
-    dispatch(setBillingAddress({ address }));
+    setBilling(address);
   };
 
   const fillAllDetails = () => {
@@ -114,13 +92,23 @@ const CartAddressPage: FC = () => {
 
       <div className="flex w-full flex-col gap-3 md:flex-row lg:flex-col xl:flex-row">
         <AddressDropdown
-          main={shipping}
+          main={
+            shippingInAddresses || {
+              title: "Shipping Address",
+              content: "Select a shipping address",
+            }
+          }
           title="Shipping Address"
           options={addresses}
           setAddress={handleSetShippingAddress}
         />
         <AddressDropdown
-          main={billing}
+          main={
+            billingInAddresses || {
+              title: "Billing Address",
+              content: "Select a billing address",
+            }
+          }
           title="Billing Address"
           options={addresses}
           setAddress={handleSetBillingAddress}
