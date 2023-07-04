@@ -135,7 +135,7 @@ const AddAddressPage: FC = () => {
 
   return (
     <Container containerTitle="Add New Address">
-      <div className="mx-auto flex w-full flex-col gap-4 md:max-w-lg">
+      <div className="mx-auto flex w-full flex-col gap-4 pt-6 md:max-w-lg">
         <Input
           input_type="text"
           placeholder="Full Name"
@@ -188,7 +188,7 @@ const AddAddressPage: FC = () => {
         />
         <UIButton
           onClick={submit}
-          className="ml-auto w-full bg-sky-100 hover:outline-sky-200"
+          className="ml-auto w-fit rounded-md border-none bg-sanskrutiRed px-5 text-white hover:outline-sanskrutiRedLight"
         >
           SUBMIT
         </UIButton>

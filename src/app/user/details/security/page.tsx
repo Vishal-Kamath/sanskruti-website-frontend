@@ -128,7 +128,7 @@ const SecurityPage: FC = () => {
 
           <UIButton
             onClick={submit}
-            className="mx-auto w-full rounded-full bg-gray-700 px-4 text-white hover:outline-sky-200"
+            className="ml-auto w-fit rounded-md border-none bg-sanskrutiRed px-5 text-white hover:outline-sanskrutiRedLight"
           >
             SUBMIT
           </UIButton>
