@@ -117,14 +117,14 @@ const CartAddressPage: FC = () => {
 
       {!!shippingInAddresses && !!billingInAddresses ? (
         <Link href="/user/cart/payment" className="w-full">
-          <UIButton className="w-full rounded-sm border-none bg-sanskrutiRed font-bold text-white hover:outline-sanskrutiRedLight">
+          <UIButton className="ml-auto w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
             PROCEED
           </UIButton>
         </Link>
       ) : (
         <UIButton
           onClick={fillAllDetails}
-          className="dfont-bold w-full rounded-sm border-none bg-red-900 text-white hover:outline-sanskrutiRedLight"
+          className="ml-auto w-fit rounded-sm border-none bg-red-900 px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
         >
           PROCEED
         </UIButton>

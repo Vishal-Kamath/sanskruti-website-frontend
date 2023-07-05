@@ -26,13 +26,10 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
 
   const [quantityState, setQuantityState] = useState(quantity);
 
-  const combination =
-    product.varients.variations.find(
-      (variation) =>
-        JSON.stringify(variation.combinationString) === JSON.stringify(variant)
-    ) || product.varients.variations[0];
-
-  console.log(combination);
+  const combination = product.varients.variations.find(
+    (variation) =>
+      JSON.stringify(variation.combinationString) === JSON.stringify(variant)
+  )!;
 
   const price = !!combination?.discount
     ? combination?.price * ((100 - combination?.discount) / 100)
