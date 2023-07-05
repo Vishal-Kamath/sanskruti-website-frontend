@@ -32,6 +32,7 @@ const UserLayout: FC<Props> = ({ children }) => {
           )}
           <DashboardElement path="/user/wishlist">WishList</DashboardElement>
           <DashboardElement path="/user/cart">Shopping Cart</DashboardElement>
+          <DashboardElement path="/user/order">Order History</DashboardElement>
           <DashboardElement className="hover:bg-red-100" path="/user/signout">
             Sign Out
           </DashboardElement>
