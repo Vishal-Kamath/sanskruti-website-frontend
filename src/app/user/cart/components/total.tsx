@@ -5,43 +5,14 @@ import { selectCart } from "@/redux/slice/cart.slice";
 import { useAppSelector } from "@/redux/store/hooks";
 import { FC } from "react";
 import { AiOutlineTag } from "react-icons/ai";
+import { getAmounts } from "../utils/calculation";
 
 const Total: FC = () => {
   const cart = useAppSelector(selectCart);
   if (!cart || cart?.length === 0) return null;
 
-  const totalArray: number[] = [];
-  const discountArray: number[] = [];
-  const gstArray: number[] = [];
+  const { total, discount, gst, finalValue } = getAmounts(cart);
 
-  cart.map((cartItem) => {
-    const combination =
-      cartItem.product.varients.variations.find(
-        (variation) =>
-          JSON.stringify(variation.combinationString) ===
-          JSON.stringify(cartItem.variant)
-      ) || cartItem.product.varients.variations[0];
-    totalArray.push(combination.price * cartItem.quantity);
-    discountArray.push(
-      ((combination.discount * combination.price) / 100) * cartItem.quantity
-    );
-    gstArray.push(
-      ((cartItem.product.gst_percent *
-        (combination.price -
-          (combination.discount * combination.price) / 100)) /
-        100) *
-        cartItem.quantity
-    );
-  });
-
-  const total = totalArray.reduce((total, currentVal) => total + currentVal, 0);
-  const discount = discountArray.reduce(
-    (total, currentVal) => total + currentVal,
-    0
-  );
-  const gst = gstArray.reduce((total, currentVal) => total + currentVal, 0);
-
-  const finalValue = total - discount + gst;
   return (
     <div className="flex w-full flex-col gap-3 border-gray-300 max-lg:border-t-[1px] max-lg:pt-5 lg:h-full lg:max-w-sm lg:border-l-[1px] lg:pl-5">
       {/* coupons */}
