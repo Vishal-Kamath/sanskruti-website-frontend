@@ -39,7 +39,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     getCartDetails();
-  }, []);
+  }, [pathname]);
 
   return (
     <div className="flex w-full flex-col gap-5">
