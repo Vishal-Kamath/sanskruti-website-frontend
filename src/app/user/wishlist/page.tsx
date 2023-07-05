@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import Container from "../components/container";
 import UIButton from "@/components/common/button";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
@@ -24,7 +24,10 @@ const WishListPage: FC = () => {
   const wishlistIds = useAppSelector(selectWishlistIds);
   const wishlistProduct = useAppSelector(selectWishlistList);
 
+  const cacheIds = useRef(JSON.stringify(wishlistIds));
+
   useEffect(() => {
+    if (cacheIds.current === JSON.stringify(wishlistIds)) return;
     axios
       .get<{ ids: string[]; list: ProductType[] }>(
         `${process.env.ENDPOINT}/api/v1/user/wishlist`,
@@ -37,9 +40,10 @@ const WishListPage: FC = () => {
       )
       .then((res) => {
         dispatch(setWishlist({ ids: res.data.ids, list: res.data.list }));
+        cacheIds.current = JSON.stringify(res.data.ids);
       })
       .catch(() => {});
-  }, [wishlistIds]);
+  }, [wishlistIds, cacheIds]);
 
   const addToCart = async (productId: string, variant: string[]) => {
     const cartResponse = await axios.post<NotificationType>(
