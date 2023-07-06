@@ -2,13 +2,13 @@
 
 import { FC, useEffect, useState } from "react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
-import "swiper/css";
 import "swiper/css/autoplay";
 import Image from "next/image";
 import axios from "axios";
+import SwiperContainer from "./common/swiperContainer";
 
 type Banner = {
   isPublished: boolean;
@@ -47,7 +47,7 @@ const Carousel: FC = () => {
 
   return (
     <div className="h-fit bg-gradient-to-b from-gray-200 to-white">
-      <Swiper
+      <SwiperContainer
         modules={[Autoplay]}
         loop={true}
         autoplay={{
@@ -55,12 +55,11 @@ const Carousel: FC = () => {
           disableOnInteraction: false,
         }}
         slidesPerView={1}
-        className="flex"
       >
         {banners?.map((banner, index) => {
           const val = isMobile ? "mobileImage" : "desktopImage";
           return (
-            <SwiperSlide key={"banner slide " + index}>
+            <SwiperSlide className="-z-10" key={"banner slide " + index}>
               <Image
                 src={banner[val]}
                 alt={"banner image" + index}
@@ -71,7 +70,7 @@ const Carousel: FC = () => {
             </SwiperSlide>
           );
         })}
-      </Swiper>
+      </SwiperContainer>
     </div>
   );
 };
