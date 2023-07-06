@@ -66,7 +66,7 @@ const Carousel: FC = () => {
                 alt={"banner image" + index}
                 width={500}
                 height={500}
-                className="h-full w-full object-contain max-md:object-top xl:max-h-[70vh]"
+                className="h-full w-full object-cover max-md:object-top xl:max-h-[70vh]"
               />
             </SwiperSlide>
           );
