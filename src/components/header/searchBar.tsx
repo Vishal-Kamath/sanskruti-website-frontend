@@ -10,9 +10,9 @@ const SearchBar: React.FC<{
 }> = ({ search, setSearch, searchFocused, setSearchFocused, classname }) => {
   return (
     <div
-      className={`${classname} text-md flex h-9 w-full items-center gap-1 rounded-full border-2 px-2 md:max-w-lg ${
+      className={`${classname} text-md flex h-9 w-full items-center gap-1 rounded-md border-2 px-2 md:max-w-lg ${
         searchFocused ? "border-gray-600" : "border-gray-300"
-      } bg-white`}
+      } bg-slate-50`}
     >
       <AiOutlineSearch
         className={`aspect-sqaure text-xl ${
