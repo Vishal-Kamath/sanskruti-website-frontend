@@ -12,7 +12,7 @@ const SearchBar: React.FC<{
     <div
       className={`${classname} text-md flex h-9 w-full items-center gap-1 rounded-full border-2 px-2 md:max-w-lg ${
         searchFocused ? "border-gray-600" : "border-gray-300"
-      } bg-gray-100`}
+      } bg-white`}
     >
       <AiOutlineSearch
         className={`aspect-sqaure text-xl ${
@@ -26,7 +26,7 @@ const SearchBar: React.FC<{
         className="w-full border-none bg-transparent outline-none"
         onFocus={() => setSearchFocused(true)}
         onBlur={() => setTimeout(() => setSearchFocused(false), 500)}
-        placeholder="Search for products, brands, styles and more"
+        placeholder="Search for products, brands and more"
       />
     </div>
   );

@@ -3,14 +3,13 @@
 import { FC, useState, useEffect } from "react";
 import CategoryCard from "./categoryCard";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
-import "swiper/css";
 import "swiper/css/autoplay";
-import { filters } from "@/data/filterlist";
 import { useAppSelector } from "@/redux/store/hooks";
 import { selectCategory } from "@/redux/slice/category.slice";
+import SwiperContainer from "@/components/common/swiperContainer";
 
 const CategoryBar: FC = () => {
   const [numberSlides, setNumberSlides] = useState(4);
@@ -39,12 +38,12 @@ const CategoryBar: FC = () => {
   }, []);
 
   return (
-    <div className="w-full bg-white px-[3vw]">
+    <div id="category" className="w-full bg-white px-[3vw]">
       <div className="flex flex-col gap-3">
         <h3 className="font-ysabeau text-center text-2xl font-semibold">
           Shop by categories
         </h3>
-        <Swiper
+        <SwiperContainer
           modules={[Autoplay]}
           spaceBetween={10}
           slidesPerView={numberSlides}
@@ -59,7 +58,7 @@ const CategoryBar: FC = () => {
               <CategoryCard {...category} />
             </SwiperSlide>
           ))}
-        </Swiper>
+        </SwiperContainer>
       </div>
     </div>
   );

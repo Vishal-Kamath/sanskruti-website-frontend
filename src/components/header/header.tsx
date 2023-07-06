@@ -119,7 +119,7 @@ const Header: FC = () => {
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
 
-      <div className="flex h-12 items-center justify-between gap-24 bg-white px-[3vw]">
+      <div className="flex h-12 w-full items-center justify-between bg-white px-[3vw]">
         <div className="flex items-center gap-2">
           <div className={cn("md:hidden", sideBarBlocked && "hidden")}>
             {sideBarOpen ? (
@@ -135,30 +135,32 @@ const Header: FC = () => {
             )}
           </div>
 
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="h-full w-[5rem] flex-shrink-0">
             <Image
               src="/assets/logo.png"
               alt="Sanskruti Logo"
               width={100}
               height={100}
-              className="h-16"
+              className="aspect-auto h-full w-full"
             />
           </Link>
         </div>
 
-        <div className="flex items-center gap-3 md:w-full">
+        <Navbar />
+
+        <div className="flex w-fit items-center gap-2">
           <SearchBar
-            classname="ml-auto max-md:hidden min-w-[25rem]"
+            classname="max-md:hidden min-w-[20rem] ml-auto md:w-full"
             searchFocused={searchFocused}
             setSearchFocused={setSearchFocused}
             search={search}
             setSearch={handleSearchInput}
           />
           <Link href={userRedirect}>
-            <HiOutlineUserCircle className="h-6 w-6" />
+            <HiOutlineUserCircle className="h-5 w-5" />
           </Link>
           <Link href={userRedirectWishList} className="relative">
-            <AiOutlineHeart className="h-6 w-6" />
+            <AiOutlineHeart className="h-5 w-5" />
             <div
               className={cn(
                 "absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-sky-200 text-xs font-bold",
@@ -169,7 +171,7 @@ const Header: FC = () => {
             </div>
           </Link>
           <Link href={userRedirectCart}>
-            <MdOutlineShoppingBag className="h-7 w-7" />
+            <MdOutlineShoppingBag className="h-5 w-5" />
           </Link>
         </div>
       </div>
@@ -182,7 +184,6 @@ const Header: FC = () => {
           setSearchFocused={setSearchFocused}
         />
       </div>
-      <Navbar />
       <SearchResults
         searchResults={searchResults}
         className={cn((!search || !searchFocused) && "hidden")}
