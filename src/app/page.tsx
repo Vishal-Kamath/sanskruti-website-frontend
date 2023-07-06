@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
-    <main className="flex flex-col gap-5 pb-10 pt-[93px] max-md:pt-28">
+    <main className="flex flex-col gap-5 pb-10 pt-[76px] max-md:pt-28">
       <Carousel />
 
       <div className="flex justify-evenly py-5">

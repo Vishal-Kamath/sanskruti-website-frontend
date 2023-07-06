@@ -2,7 +2,7 @@ import { NextPage } from "next";
 
 const TermsAndConditionsPage: NextPage = () => {
   return (
-    <div className="flex flex-col gap-5 px-[3vw] pb-10 pt-[93px] max-md:pt-28">
+    <div className="flex flex-col gap-5 px-[3vw] pb-10 pt-[76px] max-md:pt-28">
       <h1 className="flex items-baseline gap-4 border-b-2 border-gray-300 py-5">
         <span className="text-xl font-bold">TERMS AND CONDITIONS</span>
       </h1>
