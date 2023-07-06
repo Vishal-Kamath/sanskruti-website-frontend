@@ -2,10 +2,12 @@
 
 import { selectSidebarOpen } from "@/redux/slice/sidebar.slice";
 import { useAppSelector } from "@/redux/store/hooks";
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import FilterList from "./filtersList";
 
-const FilterBar: FC = () => {
+const FilterBar: FC<{
+  setDesc: Dispatch<SetStateAction<string>>;
+}> = ({ setDesc }) => {
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   return (
     <div
@@ -17,7 +19,7 @@ const FilterBar: FC = () => {
         FILTERS
       </h3>
 
-      <FilterList />
+      <FilterList setDesc={setDesc} />
     </div>
   );
 };

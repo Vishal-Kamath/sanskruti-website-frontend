@@ -1,8 +1,7 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import FilterItem from "./filterItem";
-import { filters } from "@/data/filterlist";
 import { useParams } from "next/navigation";
 import SortItem from "./sortItem";
 import axios from "axios";
@@ -10,7 +9,9 @@ import VariantItem, { VariantType } from "./variantItem";
 import { useAppSelector } from "@/redux/store/hooks";
 import { selectCategory } from "@/redux/slice/category.slice";
 
-const FilterList: FC = () => {
+const FilterList: FC<{ setDesc: Dispatch<SetStateAction<string>> }> = ({
+  setDesc,
+}) => {
   const params = useParams();
 
   const { categories } = useAppSelector(selectCategory);
@@ -20,12 +21,13 @@ const FilterList: FC = () => {
   const [variants, setVariants] = useState<VariantType[]>([]);
 
   useEffect(() => {
-    setMain(
+    const cat =
       categories?.find(
         (category) =>
           category.Title === decodeURIComponent(params["categoryName"])
-      ) || categories[0]
-    );
+      ) || categories[0];
+    setMain(cat);
+    setDesc(cat?.Meta_Description);
   }, [params, categories]);
 
   useEffect(() => {

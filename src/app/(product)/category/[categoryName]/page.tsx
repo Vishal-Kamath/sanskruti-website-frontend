@@ -6,6 +6,7 @@ import { FC, useState, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { ProductType } from "@/components/header/header";
+import CategoryBar from "@/components/sidebars/categoryBar/categoryBar";
 
 const CategoryPage: FC = () => {
   const params = useParams();
@@ -13,15 +14,26 @@ const CategoryPage: FC = () => {
   const searchParams = useSearchParams();
   const [products, setProducts] = useState<ProductType[]>([]);
 
+  const [desc, setDesc] = useState("");
+  const [route, setRoute] = useState(["Home"]);
+
   useEffect(() => {
     const current = new URLSearchParams(searchParams.toString());
+
+    const subCategory = searchParams.get(categoryName)!;
+    console.log(subCategory);
+    setRoute(
+      !subCategory
+        ? ["Home", categoryName]
+        : ["Home", categoryName, subCategory]
+    );
 
     current.delete(categoryName);
     const query = `?MainCategory=${categoryName}&page=1${
       !!current.toString() ? `&${current.toString()}` : ""
     }${
       !!searchParams.get(categoryName)
-        ? `&SubCategory=${encodeURIComponent(searchParams.get(categoryName)!)}`
+        ? `&SubCategory=${encodeURIComponent(subCategory)}`
         : ""
     }`;
 
@@ -44,29 +56,13 @@ const CategoryPage: FC = () => {
   }, [categoryName, searchParams]);
 
   return (
-    <div className="mb-10 border-b-2 border-gray-300 pt-[93px] max-md:pt-28">
-      <div className="grid h-[5rem] w-full place-content-center bg-slate-800">
-        <span className="font-poppins text-2xl font-semibold capitalize text-white">
-          {categoryName}
-        </span>
-      </div>
-      <div className="flex">
-        <FilterBar />
+    <div className="flex flex-col pb-10">
+      <div className="mb-10 flex border-b-2 border-gray-300 pt-[76px] max-md:pt-28">
+        <FilterBar setDesc={setDesc} />
         <div className="flex w-full flex-col gap-3 px-[3vw] pb-10 pt-5 text-justify sm:pl-4">
           {/* Descriptiom */}
-          <div className="text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
-            sequi officia dolorem temporibus reiciendis tenetur aliquid rerum
-            placeat esse eligendi quod quos voluptate, corrupti distinctio quae
-            provident! Debitis, dolore repellendus. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Laudantium fugiat laborum aut
-            provident amet odio, vero earum corporis voluptatibus maiores
-            expedita, odit iusto qui quae neque illo incidunt, debitis quisquam.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto eaque
-            voluptatum, sapiente fuga dolore assumenda aspernatur! Consequatur
-            nesciunt assumenda reiciendis temporibus sunt. Perspiciatis veniam,
-            dolorem unde numquam neque aliquam a.
-          </div>
+          <div className="font-semibold capitalize">{route.join(" / ")}</div>
+          <div className="text-gray-500">{desc}</div>
 
           <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {products.map((product) => (
@@ -80,6 +76,7 @@ const CategoryPage: FC = () => {
           </div>
         </div>
       </div>
+      <CategoryBar />
     </div>
   );
 };
