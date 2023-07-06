@@ -18,6 +18,7 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
+import Link from "next/link";
 
 const WishListPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -110,8 +111,13 @@ const WishListPage: FC = () => {
             ))}
           </>
         ) : (
-          <div className="col-span-full text-lg font-semibold">
-            No Products in wishlist...
+          <div className="col-span-full text-center text-lg font-normal">
+            <span>
+              Wishlist is currently empty. Explore and find your fashion at
+            </span>{" "}
+            <Link href="/" className="text-sanskrutiRed underline">
+              Sanskruti
+            </Link>
           </div>
         )}
       </div>

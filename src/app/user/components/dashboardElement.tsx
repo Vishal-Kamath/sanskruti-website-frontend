@@ -21,7 +21,7 @@ export const DashboardElement: FC<ElementProps> = ({
   return (
     <div className="flex h-9 gap-1">
       <div
-        className={cn("h-full w-1 rounded-full", isActive && "bg-sky-400")}
+        className={cn("h-full w-1 rounded-full", isActive && "bg-sanskrutiRed")}
       ></div>
       <Link
         href={path || "#"}

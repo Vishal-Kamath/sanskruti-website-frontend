@@ -188,7 +188,7 @@ const AddAddressPage: FC = () => {
         />
         <UIButton
           onClick={submit}
-          className="ml-auto w-fit rounded-md border-none bg-sanskrutiRed px-5 text-white hover:outline-sanskrutiRedLight"
+          className="ml-auto w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
         >
           SUBMIT
         </UIButton>

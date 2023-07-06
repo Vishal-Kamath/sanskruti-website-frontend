@@ -41,7 +41,7 @@ const ShoppingCartPage: FC = () => {
     }
   };
 
-  return (
+  return !!cart?.length ? (
     <div className="flex w-full flex-col gap-3">
       {!user.email_verified && (
         <div className="rounded-md border-[1px] border-amber-300 p-3 text-amber-600">
@@ -73,6 +73,13 @@ const ShoppingCartPage: FC = () => {
           PROCEED
         </UIButton>
       )} */}
+    </div>
+  ) : (
+    <div className="w-full pt-5 text-center text-lg font-normal">
+      <span>Cart is currently empty. Explore and find your fashion at</span>{" "}
+      <Link href="/" className="text-sanskrutiRed underline">
+        Sanskruti
+      </Link>
     </div>
   );
 };
