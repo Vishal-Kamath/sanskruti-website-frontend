@@ -116,10 +116,10 @@ const Header: FC = () => {
   const userWishlistIds = useAppSelector(selectWishlistIds);
 
   return (
-    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-300 text-black">
+    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
 
-      <div className="flex h-12 w-full items-center justify-between bg-white px-[3vw]">
+      <div className="flex h-14 items-center justify-between gap-24 bg-white px-[3vw]">
         <div className="flex items-center gap-2">
           <div className={cn("md:hidden", sideBarBlocked && "hidden")}>
             {sideBarOpen ? (
@@ -135,7 +135,7 @@ const Header: FC = () => {
             )}
           </div>
 
-          <Link href="/" className="h-full w-[5rem] flex-shrink-0">
+          <Link href="/" className="h-full w-[7rem] flex-shrink-0">
             <Image
               src="/assets/logo.png"
               alt="Sanskruti Logo"
@@ -146,11 +146,9 @@ const Header: FC = () => {
           </Link>
         </div>
 
-        <Navbar />
-
-        <div className="flex w-fit items-center gap-2">
+        <div className="flex items-center gap-3 md:w-full">
           <SearchBar
-            classname="max-md:hidden min-w-[20rem] ml-auto md:w-full"
+            classname="ml-auto max-md:hidden min-w-[25rem]"
             searchFocused={searchFocused}
             setSearchFocused={setSearchFocused}
             search={search}
@@ -171,7 +169,7 @@ const Header: FC = () => {
             </div>
           </Link>
           <Link href={userRedirectCart}>
-            <MdOutlineShoppingBag className="h-6 w-6" />
+            <MdOutlineShoppingBag className="h-7 w-7" />
           </Link>
         </div>
       </div>
@@ -184,6 +182,7 @@ const Header: FC = () => {
           setSearchFocused={setSearchFocused}
         />
       </div>
+      <Navbar />
       <SearchResults
         searchResults={searchResults}
         className={cn((!search || !searchFocused) && "hidden")}
