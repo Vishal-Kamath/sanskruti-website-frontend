@@ -84,7 +84,7 @@ const Navbar: FC = () => {
         >
           More <AiOutlineArrowDown />
         </button>
-        <div className="fixed left-1/2 top-[75px] hidden h-[25rem] w-full max-w-[60rem] -translate-x-1/2 border-x-2 border-b-2 border-gray-300 bg-white peer-hover:block">
+        <div className="fixed left-1/2 top-[70px] hidden h-[25rem] w-full max-w-[60rem] -translate-x-1/2 bg-white shadow-md peer-hover:block hover:block">
           <div className="flex h-full w-full gap-3 overflow-hidden p-5">
             <div className="flex w-full flex-col gap-3">
               <h3 className="text-lg font-semibold">
@@ -97,7 +97,7 @@ const Navbar: FC = () => {
                     href={`/category/${displayCategory?.Title}?${
                       displayCategory?.Title
                     }=${encodeURIComponent(item)}`}
-                    className="capitalize"
+                    className="w-fit capitalize hover:text-sanskrutiRed hover:underline hover:decoration-sanskrutiRed hover:underline-offset-4"
                   >
                     {item}
                   </Link>

@@ -116,7 +116,7 @@ const Header: FC = () => {
   const userWishlistIds = useAppSelector(selectWishlistIds);
 
   return (
-    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
+    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-300 text-black">
       <TopBanner />
 
       <div className="flex h-12 w-full items-center justify-between bg-white px-[3vw]">
@@ -157,10 +157,10 @@ const Header: FC = () => {
             setSearch={handleSearchInput}
           />
           <Link href={userRedirect}>
-            <HiOutlineUserCircle className="h-5 w-5" />
+            <HiOutlineUserCircle className="h-6 w-6" />
           </Link>
           <Link href={userRedirectWishList} className="relative">
-            <AiOutlineHeart className="h-5 w-5" />
+            <AiOutlineHeart className="h-6 w-6" />
             <div
               className={cn(
                 "absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-sky-200 text-xs font-bold",
@@ -171,7 +171,7 @@ const Header: FC = () => {
             </div>
           </Link>
           <Link href={userRedirectCart}>
-            <MdOutlineShoppingBag className="h-5 w-5" />
+            <MdOutlineShoppingBag className="h-6 w-6" />
           </Link>
         </div>
       </div>

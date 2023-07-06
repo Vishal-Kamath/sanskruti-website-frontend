@@ -74,7 +74,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
                 href={`/category/${displayCategory?.Title}?${
                   displayCategory?.Title
                 }=${encodeURIComponent(item)}`}
-                className="text-lg capitalize"
+                className="w-fit text-lg capitalize hover:text-sanskrutiRed hover:underline hover:decoration-sanskrutiRed hover:underline-offset-4"
               >
                 {item}
               </Link>
