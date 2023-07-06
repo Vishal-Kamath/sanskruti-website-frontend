@@ -46,21 +46,11 @@ const FilterList: FC<{ setDesc: Dispatch<SetStateAction<string>> }> = ({
   }, []);
 
   return (
-    <div className="flex flex-col">
-      {!!main && (
-        <FilterItem
-          main={main.Title}
-          sub={main.subCategory}
-          classname="pl-[3vw] pr-2"
-        />
-      )}
-      <SortItem className="pl-[3vw] pr-2" />
+    <div className="flex flex-col pl-[3vw] pr-2">
+      {!!main && <FilterItem main={main.Title} sub={main.subCategory} />}
+      <SortItem />
       {variants.map((variant, index) => (
-        <VariantItem
-          key={variant.varientName + index}
-          {...variant}
-          className="pl-[3vw] pr-2"
-        />
+        <VariantItem key={variant.varientName + index} {...variant} />
       ))}
     </div>
   );

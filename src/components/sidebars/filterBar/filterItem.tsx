@@ -8,8 +8,7 @@ import { BsFillCheckSquareFill } from "react-icons/bs";
 const FilterItem: FC<{
   main: string;
   sub: string[];
-  classname?: string;
-}> = ({ main, sub, classname }) => {
+}> = ({ main, sub }) => {
   const [selected, setSelected] = useState("");
 
   const router = useRouter();
@@ -47,21 +46,11 @@ const FilterItem: FC<{
   }, [searchParams, main]);
 
   return (
-    <div className="flex flex-col gap-2 border-t-2 border-gray-100 py-2 first:border-0">
-      <h5
-        className={cn(
-          "flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal",
-          classname
-        )}
-      >
+    <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
+      <h5 className="flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal">
         {main}
       </h5>
-      <div
-        className={cn(
-          "flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400",
-          classname
-        )}
-      >
+      <div className="flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400">
         {sub.map((subItem) => (
           <span
             key={subItem}

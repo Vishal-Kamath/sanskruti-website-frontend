@@ -10,11 +10,7 @@ export type VariantType = {
   value: string[];
 };
 
-const VariantItem: FC<
-  VariantType & {
-    className?: string;
-  }
-> = ({ varientName, value, className }) => {
+const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
   const [selected, setSelected] = useState("");
 
   const router = useRouter();
@@ -52,21 +48,11 @@ const VariantItem: FC<
   }, [searchParams, varientName]);
 
   return (
-    <div className="flex flex-col gap-2 border-t-2 border-gray-100 py-2 first:border-0">
-      <h5
-        className={cn(
-          "flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal",
-          className
-        )}
-      >
+    <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
+      <h5 className="flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal">
         {varientName}
       </h5>
-      <div
-        className={cn(
-          "flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400",
-          className
-        )}
-      >
+      <div className="flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400">
         {value.map((valueItem) => (
           <span
             key={valueItem}
