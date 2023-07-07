@@ -37,15 +37,19 @@ const Carousel: FC = () => {
     };
   }, []);
 
-  const getBanners = async () => {
+  const getBanners = () => {
     dispatch(startLoading());
-    const { banners } = (
-      await axios.get<{ banners: Banner[] }>(
+    axios
+      .get<{ banners: Banner[] }>(
         `${process.env.ENDPOINT}/api/v1/user/getAllBanners`
       )
-    ).data;
-    dispatch(completeLoading());
-    setBanners(banners);
+      .then((res) => {
+        dispatch(completeLoading());
+        setBanners(res.data.banners);
+      })
+      .catch(() => {
+        dispatch(completeLoading());
+      });
   };
 
   useEffect(() => {
