@@ -127,7 +127,7 @@ const CartPaymemtPage: FC = () => {
           return (
             <div
               key={cartItem.product._id + cartItem.variant.toString()}
-              className="flex gap-2 rounded-sm border-[1px] border-gray-300 p-2"
+              className="flex gap-2 rounded-md border-[1px] border-gray-300 p-3"
             >
               <Image
                 src={cartItem.product.images[0]}
@@ -147,16 +147,16 @@ const CartPaymemtPage: FC = () => {
                   {cartItem.product.brand_name}
                 </p>
 
-                <div className="flex flex-wrap gap-1">
+                <div className="mt-auto flex flex-wrap gap-1 text-xs">
                   {filteredAttributes.map((attr, index) => (
                     <span
                       key={attr.name + cartItem.product.name + index}
-                      className="rounded-sm border-[1px] border-slate-300 bg-slate-50 p-1"
+                      className="rounded-full border-[1px] border-slate-300 bg-slate-50 px-2 py-1"
                     >
                       {attr.name}: {combination.combinationString[index]}
                     </span>
                   ))}
-                  <span className="rounded-sm border-[1px] border-slate-300 bg-slate-50 p-1">
+                  <span className="rounded-full border-[1px] border-slate-300 bg-slate-50 px-2 py-1">
                     quantity: {cartItem.quantity}
                   </span>
                 </div>
@@ -168,7 +168,7 @@ const CartPaymemtPage: FC = () => {
 
       <div className="flex flex-col gap-2">
         <span>Shipping Address</span>
-        <div className="flex flex-col gap-1 border-[1px] border-gray-300 p-1">
+        <div className="flex flex-col gap-1 rounded-md border-[1px] border-gray-300 px-3 py-2">
           <h2>{shippingAddress?.fullName}</h2>
           <p className="text-gray-500">
             {shippingAddress?.landmark} {shippingAddress?.nearBy}{" "}
@@ -177,7 +177,7 @@ const CartPaymemtPage: FC = () => {
           </p>
         </div>
         <span>Billing Address</span>
-        <div className="flex flex-col gap-1 border-[1px] border-gray-300 p-1">
+        <div className="flex flex-col gap-1 rounded-md border-[1px] border-gray-300 px-3 py-2">
           <h2>{billingAddress?.fullName}</h2>
           <p className="text-gray-500">
             {billingAddress?.landmark} {billingAddress?.nearBy}{" "}

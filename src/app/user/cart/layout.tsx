@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { FC, ReactNode, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import Total from "./components/total";
+import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 
 const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
       : 0;
 
   const getCartDetails = async () => {
+    dispatch(startLoading());
     const cartDetails = await axios.get<CartType>(
       `${process.env.ENDPOINT}/api/v1/user/cart`,
       {
@@ -33,6 +35,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
         withCredentials: true,
       }
     );
+    dispatch(completeLoading());
     if (cartDetails.status !== 200) return dispatch(setCart({ cart: [] }));
     dispatch(setCart({ cart: cartDetails.data.cart }));
   };
