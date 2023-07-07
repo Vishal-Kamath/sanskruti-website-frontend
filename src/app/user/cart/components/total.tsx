@@ -28,8 +28,8 @@ const Total: FC = () => {
         </UIButton>
       </div>
       <div className="text-xs font-semibold text-gray-500">
-        PAYMENT DETAILS (
-        {cart.length !== 1 ? `${cart.length} items` : `${cart} item`})
+        PAYMENT DETAILS ({cart.length !== 1 ? `${cart.length} items` : `1 item`}
+        )
       </div>
       <div className="flex w-full flex-col gap-3 [&>*]:flex [&>*]:w-full [&>*]:justify-between">
         <div>
