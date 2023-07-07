@@ -26,7 +26,7 @@ const Home: NextPage = () => {
         <Link href="#" className="flex h-full flex-col items-center gap-2">
           <Image
             className="h-8 w-8 object-center lg:h-10 lg:w-10"
-            src="/assets/customFitting.svg"
+            src="/assets/easyReturn.svg"
             alt="shipping truck"
             width={50}
             height={50}
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
         <Link href="#" className="flex h-full flex-col items-center gap-2">
           <Image
             className="h-8 w-8 object-center lg:h-10 lg:w-10"
-            src="/assets/easyReturn.svg"
+            src="/assets/customFitting.svg"
             alt="easy return"
             width={50}
             height={50}
