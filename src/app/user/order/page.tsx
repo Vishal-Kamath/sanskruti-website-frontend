@@ -1,21 +1,36 @@
 "use client";
 
-import { ProductType } from "@/components/header/header";
 import { Address } from "@/redux/slice/user.slice";
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import Container from "../components/container";
 import OrderComponet from "../components/orderComponent";
+import { useAppDispatch } from "@/redux/store/hooks";
+import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 
 export type Order = {
-  orders: {
+  order: {
+    _id: string;
     orderId: string;
     userId: string;
     product: {
+      id: string;
+      slug: string;
+      name: string;
+      brand_name: string;
+      images: string[];
+      gst_percent: number;
       quantity: number;
-      product: ProductType;
-      varient: any[];
+      varient: {
+        price: number;
+        discount?: number;
+        variations: Record<string, string>;
+      };
+    };
+    deliveryInfo: {
+      date: string;
+      status: "Pending" | "Delivered";
     };
     cancellationInfo: {
       isCancelled: boolean;
@@ -26,7 +41,7 @@ export type Order = {
       status: string;
       Amount_refunded: boolean;
     };
-  }[];
+  };
   payment: {
     paymentMethod: string;
     orderId: string;
@@ -55,8 +70,10 @@ export type Order = {
 
 const OrderHistoryPage: NextPage = () => {
   const [orders, setOrders] = useState<Order[]>();
+  const dispatch = useAppDispatch();
 
   const getOrders = () => {
+    dispatch(startLoading());
     axios
       .get<{ orders: Order[] }>(
         `${process.env.ENDPOINT}/api/v1/user/order/history`,
@@ -69,8 +86,11 @@ const OrderHistoryPage: NextPage = () => {
       )
       .then((res) => {
         setOrders(res.data.orders);
+        dispatch(completeLoading());
       })
-      .catch((err) => {});
+      .catch((err) => {
+        dispatch(completeLoading());
+      });
   };
 
   useEffect(() => {
