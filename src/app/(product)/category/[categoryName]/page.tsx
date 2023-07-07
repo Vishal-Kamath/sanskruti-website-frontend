@@ -6,7 +6,6 @@ import { FC, useState, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { ProductType } from "@/components/header/header";
-import CategoryBar from "@/components/sidebars/categoryBar/categoryBar";
 
 const CategoryPage: FC = () => {
   const params = useParams();
@@ -76,7 +75,6 @@ const CategoryPage: FC = () => {
           </div>
         </div>
       </div>
-      <CategoryBar />
     </div>
   );
 };
