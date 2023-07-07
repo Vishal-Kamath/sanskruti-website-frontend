@@ -9,6 +9,8 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 import axios from "axios";
 import SwiperContainer from "./common/swiperContainer";
+import { useAppDispatch } from "@/redux/store/hooks";
+import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 
 type Banner = {
   isPublished: boolean;
@@ -19,6 +21,8 @@ type Banner = {
 const Carousel: FC = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [isMobile, setIsMobile] = useState<boolean>();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,13 +38,16 @@ const Carousel: FC = () => {
   }, []);
 
   const getBanners = async () => {
+    dispatch(startLoading());
     const { banners } = (
       await axios.get<{ banners: Banner[] }>(
         `${process.env.ENDPOINT}/api/v1/user/getAllBanners`
       )
     ).data;
+    dispatch(completeLoading());
     setBanners(banners);
   };
+
   useEffect(() => {
     getBanners();
   }, []);

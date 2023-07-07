@@ -1,15 +1,17 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/redux/store";
 
 type LoadingType = {
   loading: boolean;
-  value: number;
+  total: number;
+  complete: number;
 };
 
 // Define the initial state using that type
 const initialState: LoadingType = {
   loading: true,
-  value: 0,
+  total: 0,
+  complete: 0,
 };
 
 export const loading = createSlice({
@@ -17,14 +19,30 @@ export const loading = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setLoading: (state, action: PayloadAction<LoadingType>) => {
-      state.loading = action.payload.loading;
-      state.value = action.payload.value;
+    startLoading: (state) => {
+      state.loading = true;
+      state.total += 1;
+    },
+    completeLoading: (state) => {
+      state.complete += 1;
+
+      if (state.total === state.complete) {
+        state.loading = false;
+        state.total = 0;
+        state.complete = 0;
+      }
+    },
+    stopLoading: (state) => {
+      if (state.total === state.complete) {
+        state.loading = false;
+        state.total = 0;
+        state.complete = 0;
+      }
     },
   },
 });
 
-export const { setLoading } = loading.actions;
+export const { startLoading, completeLoading, stopLoading } = loading.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoadingState = (state: RootState) => state.loading;

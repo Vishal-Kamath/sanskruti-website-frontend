@@ -1,7 +1,11 @@
 "use client";
 
 import { CategoryStateType, setCategory } from "@/redux/slice/category.slice";
-import { setLoading } from "@/redux/slice/loading.slice";
+import {
+  completeLoading,
+  startLoading,
+  stopLoading,
+} from "@/redux/slice/loading.slice";
 import { closeSidebar } from "@/redux/slice/sidebar.slice";
 import {
   UserType,
@@ -26,6 +30,8 @@ const AuthComponent: FC<Props> = ({ children }) => {
   dispatch(closeSidebar());
 
   const getUser = async () => {
+    dispatch(startLoading());
+    dispatch(startLoading());
     await axios
       .get<{ userTrimmend: UserType }>(`${process.env.ENDPOINT}/api/v1/user/`, {
         headers: {
@@ -46,27 +52,12 @@ const AuthComponent: FC<Props> = ({ children }) => {
           })
         );
         dispatch(loggedIn());
-
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 20 })),
-          200
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 75 })),
-          1000
-        );
+        dispatch(completeLoading());
       })
       .catch(() => {
         dispatch(setUser({ address: [] }));
         dispatch(loggedOut());
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 20 })),
-          200
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 75 })),
-          1000
-        );
+        dispatch(completeLoading());
       });
 
     await axios
@@ -84,56 +75,25 @@ const AuthComponent: FC<Props> = ({ children }) => {
           })
         );
 
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 100 })),
-          1600
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: false, value: 0 })),
-          1650
-        );
+        dispatch(completeLoading());
       })
       .catch(() => {
         dispatch(setWishlist({ ids: [], list: [] }));
-        setTimeout(
-          () => dispatch(setLoading({ loading: true, value: 100 })),
-          1600
-        );
-        setTimeout(
-          () => dispatch(setLoading({ loading: false, value: 0 })),
-          1650
-        );
+        dispatch(completeLoading());
       });
 
     firstFetch.current = false;
   };
 
   useEffect(() => {
-    dispatch(setLoading({ loading: true, value: 0 }));
     if (firstFetch.current || pathname.includes("/user")) {
       getUser();
-    } else {
-      setTimeout(() => dispatch(setLoading({ loading: true, value: 20 })), 200);
-      setTimeout(
-        () => dispatch(setLoading({ loading: true, value: 55 })),
-        1000
-      );
-      setTimeout(
-        () => dispatch(setLoading({ loading: true, value: 75 })),
-        1400
-      );
-      setTimeout(
-        () => dispatch(setLoading({ loading: true, value: 100 })),
-        1600
-      );
-      setTimeout(
-        () => dispatch(setLoading({ loading: false, value: 0 })),
-        1650
-      );
     }
+    dispatch(stopLoading());
   }, [pathname]);
 
   const getCategories = async () => {
+    dispatch(startLoading());
     const { categories } = (
       await axios.get<CategoryStateType>(
         `${process.env.ENDPOINT}/api/v1/user/categories`
@@ -142,22 +102,25 @@ const AuthComponent: FC<Props> = ({ children }) => {
 
     await Promise.all(
       categories.map(async (category, index) => {
+        dispatch(startLoading());
         const subCategories = (
           await axios.get<{ subCategories: { Title: string }[] }>(
             `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
           )
         ).data;
+        dispatch(completeLoading());
         categories[index].subCategory = subCategories.subCategories.map(
           (subCat) => subCat.Title
         );
       })
     );
-
+    dispatch(completeLoading());
     dispatch(setCategory({ categories: categories }));
   };
 
   useEffect(() => {
     getCategories();
+    dispatch(stopLoading());
   }, []);
 
   return <>{children}</>;

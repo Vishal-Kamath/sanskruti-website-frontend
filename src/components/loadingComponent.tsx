@@ -22,13 +22,20 @@ const LoadingComponent: FC = () => {
         height={500}
         className="aspect-square h-[15rem] w-fit drop-shadow-lg"
       />
-      <div className="h-2 w-[90vw] max-w-lg rounded-full bg-slate-400">
-        <div
-          style={{
-            width: `${loading.value}%`,
-          }}
-          className="h-full rounded-full bg-amber-400"
-        ></div>
+      <div className="flex flex-col items-center justify-center gap-3">
+        <div className="h-2 w-[90vw] max-w-lg rounded-full bg-slate-400">
+          <div
+            style={{
+              width: `${
+                loading.total ? (loading.complete / loading.total) * 100 : 0
+              }%`,
+            }}
+            className="h-full rounded-full bg-amber-400"
+          ></div>
+        </div>
+        <span className="text-lg">
+          {loading.complete} / {loading.total} items fetched...
+        </span>
       </div>
     </div>
   );
