@@ -44,8 +44,11 @@ const WishListPage: FC = () => {
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-5">
         {wishlistProduct.length !== 0 ? (
           <>
-            {wishlistProduct.map((product) => (
-              <ProductCard product={product} />
+            {wishlistProduct.map((product, index) => (
+              <ProductCard
+                key={product.name + index + "wishlist"}
+                product={product}
+              />
             ))}
           </>
         ) : (
