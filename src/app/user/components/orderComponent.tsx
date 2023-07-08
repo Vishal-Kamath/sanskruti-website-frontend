@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { dateFormater } from "@/utils/dateFormater";
+import { MdCancel } from "react-icons/md";
+import { cn } from "@/utils/lib";
 
 const OrderComponet: FC<{ order: Order }> = ({ order }) => {
   const variations: string[] = [];
@@ -16,6 +18,7 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
       ? order.order.product.varient.price *
         ((100 - order.order.product.varient.discount) / 100)
       : order.order.product.varient.price) * order.order.product.quantity;
+
   return (
     <Link
       href={`/user/order/${order.order._id}`}
@@ -30,10 +33,10 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
           height={50}
           className="h-[8rem] w-[10rem] overflow-hidden object-contain object-center"
         />
-        <div className="flex w-full items-start justify-between gap-2 max-lg:flex-col">
+        <div className="flex- flex w-full items-start justify-between gap-2 max-lg:flex-col">
           <div className="flex w-full flex-col gap-3">
             <div className="flex flex-col gap-1">
-              <h3 className="text-[14px] font-semibold">
+              <h3 className="text-xs font-semibold lg:text-[14px]">
                 {order.order.product.name.length > 30
                   ? `${order.order.product.name.slice(0, 30)}...`
                   : order.order.product.name}
@@ -57,7 +60,7 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
               </span>
             </div>
           </div>
-          <div className="flex w-full gap-1 text-[14px] font-semibold lg:justify-center">
+          <div className="flex w-full gap-1 text-xs font-semibold lg:justify-center">
             {!!order.order.product.varient.discount ? (
               <div className="flex items-baseline gap-2">
                 <span>&#8377;{price}</span>
@@ -77,16 +80,52 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
         </div>
       </div>
 
-      <div className="flex flex-shrink-0 gap-2 text-right max-md:w-full max-md:items-baseline max-md:justify-center md:flex-col">
-        <div className="flex items-center gap-2 text-[14px] font-semibold">
-          {order.order.deliveryInfo.status === "Delivered" ? (
-            <BsFillCheckCircleFill className="h-3 w-3 text-sanskrutiRed" />
+      <div className="flex flex-shrink-0 gap-2 text-right max-md:w-full max-md:items-baseline max-md:justify-center md:flex-col lg:min-w-[15rem]">
+        <div className="flex items-baseline justify-end gap-2 text-xs font-semibold md:items-center lg:text-[14px]">
+          {order.order.cancellationInfo.isCancelled ? (
+            <MdCancel className="h-3 w-3 text-sanskrutiRed" />
+          ) : (order.order.deliveryInfo.status === "Delivered" &&
+              !order.order.returnInfo?.isReturned) ||
+            order.order.returnInfo?.status === "Refund credited" ? (
+            <BsFillCheckCircleFill className="h-3 w-3 text-green-400" />
           ) : (
-            <div className="h-3 w-3 rounded-full border-[1px] border-sanskrutiRed"></div>
+            <div className="h-3 w-3 rounded-full border-[1px] border-gray-500"></div>
           )}
-          <span>Your order is {order.order.deliveryInfo.status}</span>
+          {order.order.cancellationInfo.isCancelled ? (
+            <span className="text-red-500">
+              Your{" "}
+              {order.order.returnInfo?.isReturned ? "return request" : "order"}{" "}
+              is Cancelled
+            </span>
+          ) : order.order.returnInfo?.isReturned ? (
+            <span
+              className={cn(
+                order.order.returnInfo.status === "Refund credited" &&
+                  "text-green-500"
+              )}
+            >
+              Your return request is {order.order.returnInfo.status}
+            </span>
+          ) : (
+            <span
+              className={cn(
+                order.order.deliveryInfo.status === "Delivered" &&
+                  "text-green-500"
+              )}
+            >
+              Your order is {order.order.deliveryInfo.status}
+            </span>
+          )}
         </div>
-        {order.order.deliveryInfo.status === "Delivered" && (
+        {order.order.cancellationInfo.isCancelled ? (
+          <div className="text-xs text-gray-500">
+            on {dateFormater(new Date(order.order.cancellationInfo.date))}
+          </div>
+        ) : order.order.returnInfo?.isReturned ? (
+          <div className="text-xs text-gray-500">
+            on {dateFormater(new Date(order.order.returnInfo.date))}
+          </div>
+        ) : (
           <div className="text-xs text-gray-500">
             on {dateFormater(new Date(order.order.deliveryInfo.date))}
           </div>
