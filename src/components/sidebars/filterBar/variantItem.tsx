@@ -24,7 +24,7 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
 
   const selectVariant = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
-    current.set(varientName, value);
+    current.set("var." + varientName, value);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
     setSelected(value);
@@ -34,14 +34,14 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
     setSelected("");
 
     const current = new URLSearchParams(searchParams.toString());
-    current.delete(varientName);
+    current.delete("var." + varientName);
     const query = !!current.toString() ? `?${current.toString()}` : "";
     router.push(`${pathname}/${query}`);
   };
 
   useEffect(() => {
     const selectedTagFromQuery = decodeURIComponent(
-      searchParams.get(varientName) || ""
+      searchParams.get("var." + varientName) || ""
     );
     if (!selectedTagFromQuery) return;
     setSelected(selectedTagFromQuery);
