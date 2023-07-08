@@ -31,7 +31,7 @@ export type Order = {
     };
     deliveryInfo: {
       date: string;
-      status: "Pending" | "Delivered";
+      status: "Pending" | "Confirmed" | "Out for deivery" | "Delivered";
     };
     cancellationInfo: {
       isCancelled: boolean;
