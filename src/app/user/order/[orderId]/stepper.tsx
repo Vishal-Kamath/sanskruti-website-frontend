@@ -7,7 +7,7 @@ const Stepper: FC<{ statuses: string[]; currentStep: number }> = ({
   statuses,
 }) => {
   return (
-    <div className="mx-auto flex h-fit w-full max-w-3xl text-[10px]">
+    <div className="mx-auto flex h-fit w-full max-w-3xl items-start text-[10px]">
       {statuses.map((step, index) => (
         <div
           className="step-item relative flex w-full flex-col items-center justify-center gap-1"
@@ -36,7 +36,7 @@ const Stepper: FC<{ statuses: string[]; currentStep: number }> = ({
               index + 1
             )}
           </div>
-          <div className="text-gray-500">{step}</div>
+          <div className="px-[2px] text-center text-gray-600">{step}</div>
         </div>
       ))}
     </div>

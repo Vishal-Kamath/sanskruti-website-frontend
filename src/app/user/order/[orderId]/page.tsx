@@ -11,6 +11,12 @@ import UIButton from "@/components/common/button";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 import { dateFormater } from "@/utils/dateFormater";
+import {
+  NotificationType,
+  setNotification,
+  showNotification,
+} from "@/redux/slice/notification.slice";
+import { cn } from "@/utils/lib";
 
 const OrderDetailsPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +30,13 @@ const OrderDetailsPage: NextPage = () => {
     ? statuses.indexOf(order.order.deliveryInfo.status)
     : 0;
 
-  const returnStatuses = ["Pending", "Confirmed", "Out for return", "Returned"];
+  const returnStatuses = [
+    "Pending",
+    "Confirmed",
+    "Out for pickup",
+    "Refund initiated",
+    "Refund credited",
+  ];
   const currentReturnStep =
     order && order.order.returnInfo
       ? statuses.indexOf(order.order.returnInfo.status)
@@ -65,22 +77,55 @@ const OrderDetailsPage: NextPage = () => {
         ((100 - order.order.product.varient.discount) / 100)
       : order.order.product.varient.price) * order.order.product.quantity;
 
-  const isCancel = order?.order.deliveryInfo.status !== "Delivered";
-
+  const toCancel = order?.order.deliveryInfo.status !== "Delivered";
+  const isCancelled = order?.order.cancellationInfo.isCancelled;
   const requestedReturn = order?.order.returnInfo?.isReturned;
+
+  const requestCancel = () => {
+    axios
+      .get<NotificationType & { order: Order["order"] }>(
+        `${process.env.ENDPOINT}/api/v1/user/order/requestCancel/${orderId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setOrder((order) => ({
+          order: res.data.order,
+          payment: order?.payment!,
+        }));
+        dispatch(setNotification(res.data));
+        dispatch(showNotification());
+      })
+      .catch((err) => {
+        dispatch(setNotification(err.response.data));
+        dispatch(showNotification());
+      });
+  };
 
   // Cancel
   const handleCancelProduct = () => {
     const userWantsToCancel = confirm(
-      "Are you sure you want to cancel your order?"
+      `Are you sure you want to CANCEL your ${
+        requestedReturn ? "return request" : "order"
+      }? Warning this is an irreversible action.`
     );
+
+    if (!userWantsToCancel) return;
+    requestCancel();
   };
 
   // Return
   const handleReturnProduct = () => {
     const userWantsToReturn = confirm(
-      "Are you sure you want to return your order?"
+      "Are you sure you want to RETURN your order? Warning this is an irreversible action."
     );
+
+    if (!userWantsToReturn) return;
+    requestCancel();
   };
 
   return (
@@ -196,11 +241,18 @@ const OrderDetailsPage: NextPage = () => {
           <div className="flex w-full flex-col gap-5">
             <h3 className="text-[14px] font-semibold">Order Status</h3>
             <Stepper statuses={statuses} currentStep={currentStep} />
-            {order?.order.deliveryInfo.status === "Delivered" && (
-              <p className="ml-auto text-gray-500">
-                on {dateFormater(new Date(order.order.deliveryInfo.date))}
-              </p>
-            )}
+            {order &&
+              (!isCancelled ? (
+                <p className="ml-auto text-gray-500">
+                  {order.order.deliveryInfo.status} on{" "}
+                  {dateFormater(new Date(order.order.deliveryInfo.date))}
+                </p>
+              ) : (
+                <p className="ml-auto text-red-500">
+                  Order Cancelled on{" "}
+                  {dateFormater(new Date(order.order.cancellationInfo.date))}
+                </p>
+              ))}
           </div>
         ) : (
           <div className="flex w-full flex-col gap-5">
@@ -209,12 +261,17 @@ const OrderDetailsPage: NextPage = () => {
               statuses={returnStatuses}
               currentStep={currentReturnStep}
             />
-            {order.order.returnInfo &&
-              order?.order.returnInfo.status === "Returned" && (
-                <p className="ml-auto text-gray-500">
-                  on {dateFormater(new Date(order.order.returnInfo.date))}
-                </p>
-              )}
+            {order.order.returnInfo && !isCancelled ? (
+              <p className="ml-auto text-gray-500">
+                {order.order.returnInfo.status} on{" "}
+                {dateFormater(new Date(order.order.returnInfo.date))}
+              </p>
+            ) : (
+              <p className="ml-auto text-red-500">
+                Return Cancelled on{" "}
+                {dateFormater(new Date(order.order.cancellationInfo.date))}
+              </p>
+            )}
           </div>
         )}
       </div>
@@ -235,18 +292,25 @@ const OrderDetailsPage: NextPage = () => {
           </div>
         </div>
 
-        <div className="flex w-full flex-col rounded-md border-[1px] border-red-300 text-sanskrutiRed [&>*]:p-5">
+        <div
+          className={cn(
+            "flex w-full flex-col rounded-md border-[1px] border-red-300 text-sanskrutiRed [&>*]:p-5",
+            isCancelled && "opacity-50 grayscale"
+          )}
+        >
           <h3 className="border-b-[1px] border-red-300 font-semibold">
-            Danger Zone ({isCancel ? "Cancel" : "Return"} Product)
+            {toCancel || requestedReturn ? "Cancel" : "Return"}{" "}
+            {requestedReturn ? "Request" : "Product"}
           </h3>
-          {isCancel ? (
+          {toCancel || requestedReturn ? (
             <div className="flex h-full flex-col gap-3">
               <p className="text-gray-500">
-                Warning! the button below will cancel your ordered product.
-                Please confirm your decision before taking any action.
+                Warning! the button below will cancel your{" "}
+                {requestedReturn ? "return request" : "ordered product"}. Please
+                confirm your decision before taking any action.
               </p>
               <UIButton
-                onClick={handleCancelProduct}
+                onClick={() => !isCancelled && handleCancelProduct()}
                 className="mt-auto rounded-sm border-[1px] border-sanskrutiRed hover:outline-sanskrutiRedLight"
               >
                 Cancel
@@ -260,7 +324,7 @@ const OrderDetailsPage: NextPage = () => {
                 certain before proceeding with this action.
               </p>
               <UIButton
-                onClick={handleReturnProduct}
+                onClick={() => !isCancelled && handleReturnProduct()}
                 className="mt-auto rounded-sm border-[1px] border-sanskrutiRed hover:outline-sanskrutiRedLight"
               >
                 Return

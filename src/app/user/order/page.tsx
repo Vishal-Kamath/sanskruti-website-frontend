@@ -41,7 +41,12 @@ export type Order = {
     returnInfo?: {
       isReturned: boolean;
       date: string;
-      status: "Pending" | "Confirmed" | "Out for return" | "Returned";
+      status:
+        | "Pending"
+        | "Confirmed"
+        | "Out for pickup"
+        | "Refund initiated"
+        | "Refund credited";
       Amount_refunded: boolean;
     };
   };
