@@ -2,6 +2,7 @@ import ProductCarousel from "@/components/common/productCarousel";
 import VisitOurStore from "@/components/footer/visitOurStore";
 import Carousel from "@/components/mainCarousel";
 import CategoryBar from "@/components/sidebars/categoryBar/categoryBar";
+import SubBanner from "@/components/subBanners";
 import UserReviewCarousel from "@/components/userReviewCarousel";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -47,6 +48,7 @@ const Home: NextPage = () => {
 
       <CategoryBar />
       <ProductCarousel />
+      <SubBanner />
       <ProductCarousel />
       <UserReviewCarousel />
 
