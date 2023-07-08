@@ -3,6 +3,7 @@ import { Order } from "../order/page";
 import Image from "next/image";
 import Link from "next/link";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { dateFormater } from "@/utils/dateFormater";
 
 const OrderComponet: FC<{ order: Order }> = ({ order }) => {
   const variations: string[] = [];
@@ -87,7 +88,7 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
         </div>
         {order.order.deliveryInfo.status === "Delivered" && (
           <div className="text-xs text-gray-500">
-            on {new Date(order.order.deliveryInfo.date).toISOString()}
+            on {dateFormater(new Date(order.order.deliveryInfo.date))}
           </div>
         )}
       </div>

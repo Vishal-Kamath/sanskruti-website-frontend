@@ -25,7 +25,7 @@ const Stepper: FC<{ statuses: string[]; currentStep: number }> = ({
           {/* content */}
           <div
             className={cn(
-              "grid h-4 w-4 place-content-center rounded-full bg-sky-100 text-xs font-bold",
+              "grid h-4 w-4 place-content-center rounded-full bg-sky-100 font-bold",
               index <= currentStep && "bg-sky-500 text-white",
               index > currentStep && "bg-slate-300"
             )}

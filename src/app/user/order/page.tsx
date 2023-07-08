@@ -35,10 +35,12 @@ export type Order = {
     };
     cancellationInfo: {
       isCancelled: boolean;
+      date: string;
       Amount_refunded: boolean;
     };
     returnInfo?: {
       isReturned: boolean;
+      date: string;
       status: "Pending" | "Confirmed" | "Out for return" | "Returned";
       Amount_refunded: boolean;
     };

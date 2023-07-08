@@ -8,8 +8,13 @@ import axios from "axios";
 import Stepper from "./stepper";
 import Image from "next/image";
 import UIButton from "@/components/common/button";
+import { useAppDispatch } from "@/redux/store/hooks";
+import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
+import { dateFormater } from "@/utils/dateFormater";
 
 const OrderDetailsPage: NextPage = () => {
+  const dispatch = useAppDispatch();
+
   const [order, setOrder] = useState<Order>();
   const params = useParams();
   const orderId = params["orderId"];
@@ -19,13 +24,15 @@ const OrderDetailsPage: NextPage = () => {
     ? statuses.indexOf(order.order.deliveryInfo.status)
     : 0;
 
-  const returnStatuses = ["Pending", "Confirmed", "Delivered"];
-  const currentReturnStep = order
-    ? statuses.indexOf(order.order.deliveryInfo.status)
-    : 0;
+  const returnStatuses = ["Pending", "Confirmed", "Out for return", "Returned"];
+  const currentReturnStep =
+    order && order.order.returnInfo
+      ? statuses.indexOf(order.order.returnInfo.status)
+      : 0;
 
   useEffect(() => {
     if (!orderId) return;
+    dispatch(startLoading());
     axios
       .get<Order>(
         `${process.env.ENDPOINT}/api/v1/user/order/history/${orderId}`,
@@ -37,7 +44,11 @@ const OrderDetailsPage: NextPage = () => {
         }
       )
       .then((res) => {
+        dispatch(completeLoading());
         setOrder(res.data);
+      })
+      .catch(() => {
+        dispatch(completeLoading());
       });
   }, [orderId]);
 
@@ -54,9 +65,9 @@ const OrderDetailsPage: NextPage = () => {
         ((100 - order.order.product.varient.discount) / 100)
       : order.order.product.varient.price) * order.order.product.quantity;
 
-  const isCancel =
-    order?.order.deliveryInfo.status !== "Delivered" &&
-    !order?.order.returnInfo?.isReturned;
+  const isCancel = order?.order.deliveryInfo.status !== "Delivered";
+
+  const requestedReturn = order?.order.returnInfo?.isReturned;
 
   // Cancel
   const handleCancelProduct = () => {
@@ -181,7 +192,31 @@ const OrderDetailsPage: NextPage = () => {
             </div>
           </div>
         </div>
-        <Stepper statuses={statuses} currentStep={currentStep} />
+        {!requestedReturn ? (
+          <div className="flex w-full flex-col gap-5">
+            <h3 className="text-[14px] font-semibold">Order Status</h3>
+            <Stepper statuses={statuses} currentStep={currentStep} />
+            {order?.order.deliveryInfo.status === "Delivered" && (
+              <p className="ml-auto text-gray-500">
+                on {dateFormater(new Date(order.order.deliveryInfo.date))}
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="flex w-full flex-col gap-5">
+            <h3 className="text-[14px] font-semibold">Return Status</h3>
+            <Stepper
+              statuses={returnStatuses}
+              currentStep={currentReturnStep}
+            />
+            {order.order.returnInfo &&
+              order?.order.returnInfo.status === "Returned" && (
+                <p className="ml-auto text-gray-500">
+                  on {dateFormater(new Date(order.order.returnInfo.date))}
+                </p>
+              )}
+          </div>
+        )}
       </div>
 
       <div className="flex gap-5 max-lg:flex-col">
