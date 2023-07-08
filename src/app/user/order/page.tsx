@@ -39,7 +39,7 @@ export type Order = {
     };
     returnInfo?: {
       isReturned: boolean;
-      status: string;
+      status: "Pending" | "Confirmed" | "Out for return" | "Returned";
       Amount_refunded: boolean;
     };
   };
@@ -74,13 +74,17 @@ const OrderHistoryPage: NextPage = () => {
   const dispatch = useAppDispatch();
 
   const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("No filter");
 
   const orderList =
     (orders &&
-      orders.filter((order) =>
-        order.order.product.name
-          .toLocaleLowerCase()
-          .includes(search.toLocaleLowerCase())
+      orders.filter(
+        (order) =>
+          (order.order.product.name
+            .toLocaleLowerCase()
+            .includes(search.toLocaleLowerCase()) &&
+            filter === "No filter") ||
+          order.order.deliveryInfo.status === filter
       )) ||
     [];
 
@@ -112,15 +116,38 @@ const OrderHistoryPage: NextPage = () => {
   return (
     <Container containerTitle="Order History">
       <div className="flex flex-col gap-2 pt-1">
-        <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 bg-slate-50 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
-          <AiOutlineSearch className="aspect-sqaure text-xl" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            type="text"
-            className="w-full border-none bg-transparent outline-none"
-            placeholder="Search for past orders"
-          />
+        <div className="flex gap-2">
+          <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 bg-slate-50 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
+            <AiOutlineSearch className="aspect-sqaure text-xl" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="text"
+              className="w-full border-none bg-transparent outline-none"
+              placeholder="Search for past orders"
+            />
+          </div>
+          <div className="flex w-[10rem] items-center justify-center rounded-md border-2 border-gray-300 bg-slate-50">
+            <select
+              name="filter"
+              id="filter"
+              defaultValue="No filter"
+              onChange={(e) => setFilter(e.target.value)}
+              className="bg-transparent outline-none"
+            >
+              {[
+                "Pending",
+                "Confirmed",
+                "Out for deivery",
+                "Delivered",
+                "No filter",
+              ].map((val) => (
+                <option key={"filter " + val} value={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         {orderList.length ? (
           orderList.map((order) => (
