@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/utils/lib";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
@@ -72,7 +71,9 @@ const FilterItem: FC<{
                 <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
               )}
             </div>
-            <span className="capitalize">{subItem}</span>
+            <label htmlFor={subItem + " filter sidebar"} className="capitalize">
+              {subItem}
+            </label>
           </span>
         ))}
       </div>

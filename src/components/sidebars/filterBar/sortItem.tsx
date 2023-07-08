@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/utils/lib";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
@@ -57,7 +56,7 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
           type="radio"
           name="Sort"
           checked={selected}
-          id={sortItem.name + " filter sidebar"}
+          id={sortItem.name + " sort filter sidebar"}
           className="absolute left-0 top-0 h-full w-full opacity-0"
           onClick={() => onClick()}
           onChange={() => {}}
@@ -68,7 +67,12 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
           <div className="h-full w-full rounded-sm border-2 border-gray-300"></div>
         )}
       </div>
-      {sortItem.name}
+      <label
+        className="capitalize"
+        htmlFor={sortItem.name + " sort filter sidebar"}
+      >
+        {sortItem.name}
+      </label>
     </span>
   );
 };

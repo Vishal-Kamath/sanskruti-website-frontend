@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/utils/lib";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
@@ -63,7 +62,7 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
                 type="radio"
                 name={varientName}
                 checked={selected === valueItem}
-                id={valueItem + " filter sidebar"}
+                id={valueItem + " variant filter sidebar"}
                 className="absolute left-0 top-0 h-full w-full opacity-0"
                 onClick={() => onClick(valueItem)}
                 onChange={() => {}}
@@ -74,7 +73,12 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
                 <div className="h-full w-full rounded-sm border-2 border-gray-300"></div>
               )}
             </div>
-            {valueItem}
+            <label
+              className="capitalize"
+              htmlFor={valueItem + " variant filter sidebar"}
+            >
+              {valueItem}
+            </label>
           </span>
         ))}
       </div>
