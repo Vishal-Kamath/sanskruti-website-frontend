@@ -52,7 +52,7 @@ export type Order = {
     shippingAddress: Address;
     billingAddress: Address;
     orderInfo: {
-      Date: Date;
+      Date: string;
       status: string;
       SubTotal: number;
       ShippingCost: number;
@@ -103,7 +103,12 @@ const OrderHistoryPage: NextPage = () => {
         }
       )
       .then((res) => {
-        setOrders(res.data.orders);
+        const sortByDate = res.data.orders.sort((order1, order2) => {
+          const orderDate1 = new Date(order1.payment.orderInfo.Date).getTime();
+          const orderDate2 = new Date(order2.payment.orderInfo.Date).getTime();
+          return orderDate2 - orderDate1;
+        });
+        setOrders(sortByDate);
         dispatch(completeLoading());
       })
       .catch((err) => {
