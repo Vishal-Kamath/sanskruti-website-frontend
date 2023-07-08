@@ -227,7 +227,7 @@ const OrderDetailsPage: NextPage = () => {
           <div className="flex h-full flex-col gap-3">
             <p className="text-gray-500">
               Click the button below to generate your product invoice instantly.
-              It's just one clicks away!
+              It&apos;s just one clicks away!
             </p>
             <UIButton className="mt-auto rounded-sm border-[1px]">
               Download
