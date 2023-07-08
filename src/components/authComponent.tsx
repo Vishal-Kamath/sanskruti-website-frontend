@@ -3,6 +3,7 @@
 import { CategoryStateType, setCategory } from "@/redux/slice/category.slice";
 import {
   completeLoading,
+  endLoading,
   startLoading,
   stopLoading,
 } from "@/redux/slice/loading.slice";
@@ -93,29 +94,33 @@ const AuthComponent: FC<Props> = ({ children }) => {
   }, [pathname]);
 
   const getCategories = async () => {
-    dispatch(startLoading());
-    const { categories } = (
-      await axios.get<CategoryStateType>(
-        `${process.env.ENDPOINT}/api/v1/user/categories`
-      )
-    ).data;
+    try {
+      dispatch(startLoading());
+      const { categories } = (
+        await axios.get<CategoryStateType>(
+          `${process.env.ENDPOINT}/api/v1/user/categories`
+        )
+      ).data;
 
-    await Promise.all(
-      categories.map(async (category, index) => {
-        dispatch(startLoading());
-        const subCategories = (
-          await axios.get<{ subCategories: { Title: string }[] }>(
-            `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
-          )
-        ).data;
-        dispatch(completeLoading());
-        categories[index].subCategory = subCategories.subCategories.map(
-          (subCat) => subCat.Title
-        );
-      })
-    );
-    dispatch(completeLoading());
-    dispatch(setCategory({ categories: categories }));
+      await Promise.all(
+        categories.map(async (category, index) => {
+          dispatch(startLoading());
+          const subCategories = (
+            await axios.get<{ subCategories: { Title: string }[] }>(
+              `${process.env.ENDPOINT}/api/v1/user/subCategories?keyword=${category.Title}`
+            )
+          ).data;
+          dispatch(completeLoading());
+          categories[index].subCategory = subCategories.subCategories.map(
+            (subCat) => subCat.Title
+          );
+        })
+      );
+      dispatch(completeLoading());
+      dispatch(setCategory({ categories: categories }));
+    } catch {
+      dispatch(endLoading());
+    }
   };
 
   useEffect(() => {

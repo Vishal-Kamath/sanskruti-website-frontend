@@ -39,10 +39,15 @@ export const loading = createSlice({
         state.complete = 0;
       }
     },
+    endLoading: (state) => {
+      state.complete = state.total;
+      state.loading = false;
+    },
   },
 });
 
-export const { startLoading, completeLoading, stopLoading } = loading.actions;
+export const { startLoading, completeLoading, stopLoading, endLoading } =
+  loading.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoadingState = (state: RootState) => state.loading;
