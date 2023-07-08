@@ -83,7 +83,7 @@ const CartPaymemtPage: FC = () => {
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
-        router.replace("/user/cart");
+        router.replace("/user/order");
       })
       .catch((err) => {
         const response = err.response.data;
