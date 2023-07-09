@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import z from "zod";
 import PhoneInput from "react-phone-input-2";
 import "@/app/high-res.css";
+import Link from "next/link";
 
 const AddAddressPage: FC = () => {
   const dispatch = useAppDispatch();
@@ -134,66 +135,66 @@ const AddAddressPage: FC = () => {
   };
 
   return (
-    <Container containerTitle="Add New Address">
-      <div className="mx-auto flex w-full flex-col gap-4 pt-6 md:max-w-lg">
-        <Input
-          input_type="text"
-          placeholder="Full Name"
-          setValue={setfullName}
-          value={fullName}
-        />
-        <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
-          <PhoneInput
-            country={"in"}
-            value={contactNo}
-            onChange={setcontactNo}
-          />
-          <label
-            id="mobileLabel"
-            htmlFor="mobile"
-            className="absolute left-3 top-0 z-10 -translate-y-1/2 bg-white px-2 text-xs"
-          >
-            Contact Number
-          </label>
-        </div>
-        <Input
-          input_type="text"
-          placeholder="Landmark"
-          setValue={setlandmark}
-          value={landmark}
-        />
-        <Input
-          input_type="text"
-          placeholder="Near By"
-          setValue={setnearBy}
-          value={nearBy}
-        />
-        <Input
-          input_type="text"
-          placeholder="City"
-          setValue={setcity}
-          value={city}
-        />
-        <Input
-          input_type="text"
-          placeholder="State"
-          setValue={setstate}
-          value={state}
-        />
-        <Input
-          input_type="number"
-          placeholder="Pincode"
-          setValue={setpincode}
-          value={pincode}
-        />
-        <UIButton
-          onClick={submit}
-          className="ml-auto w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
-        >
-          SUBMIT
-        </UIButton>
+    <div className="mx-auto flex w-full flex-col justify-center gap-4 pt-6 md:max-w-lg">
+      <div className="flex justify-between">
+        <h3 className="text-lg font-semibold">Add a new address</h3>
+        <Link href="/user/address">
+          <UIButton className="w-fit border-slate-400 px-5">Back</UIButton>
+        </Link>
       </div>
-    </Container>
+      <Input
+        input_type="text"
+        placeholder="Full Name"
+        setValue={setfullName}
+        value={fullName}
+      />
+      <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
+        <PhoneInput country={"in"} value={contactNo} onChange={setcontactNo} />
+        <label
+          id="mobileLabel"
+          htmlFor="mobile"
+          className="absolute left-3 top-0 z-10 -translate-y-1/2 bg-white px-2 text-xs"
+        >
+          Contact Number
+        </label>
+      </div>
+      <Input
+        input_type="text"
+        placeholder="Landmark"
+        setValue={setlandmark}
+        value={landmark}
+      />
+      <Input
+        input_type="text"
+        placeholder="Near By"
+        setValue={setnearBy}
+        value={nearBy}
+      />
+      <Input
+        input_type="text"
+        placeholder="City"
+        setValue={setcity}
+        value={city}
+      />
+      <Input
+        input_type="text"
+        placeholder="State"
+        setValue={setstate}
+        value={state}
+      />
+      <Input
+        input_type="number"
+        placeholder="Pincode"
+        setValue={setpincode}
+        value={pincode}
+      />
+      <UIButton
+        onClick={submit}
+        className="ml-auto w-fit border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
+      >
+        SUBMIT
+      </UIButton>
+    </div>
   );
 };
 
