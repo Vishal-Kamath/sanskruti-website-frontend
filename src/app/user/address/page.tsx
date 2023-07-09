@@ -3,25 +3,45 @@
 import Container from "@/app/user/components/container";
 import { selectUser } from "@/redux/slice/user.slice";
 import { useAppSelector } from "@/redux/store/hooks";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { AddressComponent } from "../components/addressComponent";
-import { GrAdd } from "react-icons/gr";
 import Link from "next/link";
+import { AiOutlineSearch } from "react-icons/ai";
+import UIButton from "@/components/common/button";
 
 const AddressPage: FC = () => {
   const user = useAppSelector(selectUser);
+  const [search, setSearch] = useState("");
+
+  const address = user.address.filter((addr) =>
+    addr.fullName.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+  );
+
   return (
     <Container containerTitle="Address">
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {user.address.map((address) => (
-          <AddressComponent key={address.id} {...address} />
-        ))}
-        <Link
-          href="/user/address/add"
-          className="flex aspect-square h-full w-full flex-col items-center justify-center rounded border-2 border-gray-200 hover:border-sky-300 hover:bg-sky-50"
-        >
-          <GrAdd /> <span>Add a new address</span>
-        </Link>
+      <div className="flex flex-col gap-3">
+        <div className="flex gap-3">
+          <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 bg-slate-50 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
+            <AiOutlineSearch className="aspect-sqaure text-xl" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="text"
+              className="w-full border-none bg-transparent outline-none"
+              placeholder="Search for past orders"
+            />
+          </div>
+          <Link href="/user/address/add">
+            <UIButton className="flex h-9 w-[10rem] items-center justify-center border-sanskrutiRed text-sanskrutiRed hover:outline-sanskrutiRedLight">
+              Add a new address
+            </UIButton>
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {address.map((address) => (
+            <AddressComponent key={address.id} {...address} />
+          ))}
+        </div>
       </div>
     </Container>
   );

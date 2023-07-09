@@ -61,7 +61,7 @@ export const AddressComponent: FC<Address> = ({
   };
 
   return (
-    <div className="flex aspect-square h-full w-full flex-col rounded border-2 border-gray-200 p-3">
+    <div className="flex h-full min-h-[15rem] w-full flex-col rounded border-2 border-gray-200 p-3">
       <h2 className="text-lg font-medium">{fullName}</h2>
       <h3 className="text-xs text-gray-500">{contactNo}</h3>
       <div className="text-sm text-gray-500">
