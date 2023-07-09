@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         source: "/user",
-        destination: "/user/details",
+        destination: "/user/account",
         permanent: true,
       },
     ];

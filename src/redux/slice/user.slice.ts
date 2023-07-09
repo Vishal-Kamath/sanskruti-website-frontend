@@ -68,5 +68,6 @@ export const { setUser, setAddress, loggedIn, loggedOut } = user.actions;
 export const selectisAuthenticated = (state: RootState) =>
   state.user.isAuthenticated;
 export const selectUser = (state: RootState) => state.user;
+export const selectUsername = (state: RootState) => state.user.username;
 
 export default user.reducer;

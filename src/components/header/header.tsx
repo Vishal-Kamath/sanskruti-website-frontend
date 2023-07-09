@@ -4,9 +4,6 @@ import { useState, FC, useCallback } from "react";
 import TopBanner from "./topBanner";
 import SearchBar from "./searchBar";
 import Link from "next/link";
-import { AiOutlineHeart } from "react-icons/ai";
-import { HiOutlineUserCircle } from "react-icons/hi";
-import { MdOutlineShoppingBag } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
@@ -16,14 +13,13 @@ import {
   selectSidebarOpen,
 } from "@/redux/slice/sidebar.slice";
 import Image from "next/image";
-import { selectisAuthenticated } from "@/redux/slice/user.slice";
 import Navbar from "./navbar";
 import axios from "axios";
 import SearchResults from "./searchResults";
 import { cn } from "@/utils/lib";
 import { NavbarDrawer } from "./navbarDrawer";
 import { usePathname } from "next/navigation";
-import { selectWishlistIds } from "@/redux/slice/wishlist.slice";
+import Account from "./account";
 
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -105,16 +101,6 @@ const Header: FC = () => {
   const sideBarBlocked =
     pathname.includes("/auth") || pathname.includes("/user");
 
-  const isAuthenticated = useAppSelector(selectisAuthenticated);
-
-  const userRedirect = !isAuthenticated ? "/auth/login" : "/user/details";
-  const userRedirectCart = !isAuthenticated ? "/auth/login" : "/user/cart";
-  const userRedirectWishList = !isAuthenticated
-    ? "/auth/login"
-    : "/user/wishlist";
-
-  const userWishlistIds = useAppSelector(selectWishlistIds);
-
   return (
     <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
       <TopBanner />
@@ -154,23 +140,7 @@ const Header: FC = () => {
             search={search}
             setSearch={handleSearchInput}
           />
-          <Link href={userRedirect}>
-            <HiOutlineUserCircle className="h-6 w-6" />
-          </Link>
-          <Link href={userRedirectWishList} className="relative">
-            <AiOutlineHeart className="h-6 w-6" />
-            <div
-              className={cn(
-                "absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-sky-200 text-xs font-bold",
-                !userWishlistIds?.length && "hidden"
-              )}
-            >
-              {userWishlistIds?.length}
-            </div>
-          </Link>
-          <Link href={userRedirectCart}>
-            <MdOutlineShoppingBag className="h-7 w-7" />
-          </Link>
+          <Account />
         </div>
       </div>
 

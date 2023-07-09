@@ -12,13 +12,13 @@ const AddressPage: FC = () => {
   const user = useAppSelector(selectUser);
   return (
     <Container containerTitle="Address">
-      <div className="flex gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {user.address.map((address) => (
           <AddressComponent key={address.id} {...address} />
         ))}
         <Link
           href="/user/address/add"
-          className="flex aspect-square h-full max-h-[20rem] w-full max-w-[20rem] flex-col items-center justify-center rounded border-2 border-gray-200 hover:border-sky-300 hover:bg-sky-50"
+          className="flex aspect-square h-full w-full flex-col items-center justify-center rounded border-2 border-gray-200 hover:border-sky-300 hover:bg-sky-50"
         >
           <GrAdd /> <span>Add a new address</span>
         </Link>

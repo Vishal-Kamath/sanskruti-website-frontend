@@ -51,7 +51,7 @@ const DetailsPage: FC = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <Container containerTitle="User Details">
+      <Container containerTitle="Account">
         <div className="mt-4 flex w-full flex-col gap-6">
           <div className="text-justify text-gray-500">
             Ensure your profile information is accurate and up-to-date.
