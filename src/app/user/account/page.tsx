@@ -59,9 +59,9 @@ const DetailsPage: FC = () => {
             Keeping your profile information current helps us provide you with a
             better user experience. Stay connected with the latest updates!
           </div>
-          <div className="flex items-center gap-7 text-sm max-lg:flex-col max-lg:items-center">
-            <BsPerson className="aspect-square h-[10rem] w-full shrink-0 rounded-[1rem] border-2 border-slate-300 bg-slate-50 p-9 text-sky-400 lg:h-[15rem] lg:w-[15rem]" />
-            <div className="flex w-full flex-col gap-1 text-sm md:text-lg">
+          <div className="flex items-center gap-7 text-sm max-md:flex-col max-md:items-center">
+            <BsPerson className="aspect-square h-[10rem] w-full shrink-0 rounded-[1rem] border-2 border-slate-300 bg-slate-50 p-9 text-sky-400 md:h-[15rem] md:w-[15rem]" />
+            <div className="flex h-full w-full flex-col gap-1 text-sm md:text-lg">
               <div className="flex justify-between">
                 <h4 className="font-normal">Username</h4>
                 <div className="text-gray-500">{user.username}</div>
@@ -74,9 +74,12 @@ const DetailsPage: FC = () => {
                 <h4 className="font-normal">Mobile Number</h4>
                 <div className="text-gray-500">{user.Mobile_No}</div>
               </div>
-              <Link href="/user/account/edit" className="ml-auto mt-7">
-                <UIButton className="flex w-fit items-center gap-1 border-gray-300 px-3 py-1 text-blue-500 hover:outline-blue-200">
-                  <span>Edit</span>
+              <Link
+                href="/user/account/edit"
+                className="ml-auto mt-auto w-full max-w-[15rem]"
+              >
+                <UIButton className="flex w-full gap-2 border-sky-300 bg-sky-50 text-sm hover:outline-sky-100">
+                  <span>EDIT PROFILE</span>
                   <AiFillEdit />
                 </UIButton>
               </Link>
@@ -84,7 +87,7 @@ const DetailsPage: FC = () => {
           </div>
         </div>
       </Container>
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {!user.email_verified && (
           <Container containerTitle="Email Verification" className="h-full">
             <div className="flex h-full flex-col gap-4">
@@ -94,7 +97,7 @@ const DetailsPage: FC = () => {
                 this link will only be valid for the next 15 minutes)
               </div>
               <UIButton
-                className="mt-auto bg-amber-50"
+                className="ml-auto mt-auto w-full max-w-[15rem] border-sky-300 bg-sky-50 hover:outline-sky-100"
                 onClick={_requestEmailVerification}
               >
                 SEND VERIFICATION LINK
@@ -113,7 +116,9 @@ const DetailsPage: FC = () => {
                 the button below to request an OTP. (Please note this OTP will
                 only be valid for the next 15 minutes)
               </div>
-              <UIButton className="mt-auto bg-amber-50">SEND OTP</UIButton>
+              <UIButton className="ml-auto mt-auto w-full max-w-[15rem] border-sky-300 bg-sky-50 hover:outline-sky-100">
+                SEND OTP
+              </UIButton>
             </div>
           </Container>
         )}
