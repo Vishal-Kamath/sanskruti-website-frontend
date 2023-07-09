@@ -2,7 +2,6 @@
 
 import UIButton from "@/components/common/button";
 import { Input } from "@/components/common/input";
-import Container from "@/app/user/components/container";
 import { selectUser } from "@/redux/slice/user.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { FC, useState } from "react";
@@ -15,6 +14,7 @@ import axios from "axios";
 import z from "zod";
 import PhoneInput from "react-phone-input-2";
 import "@/app/high-res.css";
+import Link from "next/link";
 
 const EditProfile: FC = () => {
   const user = useAppSelector(selectUser);
@@ -109,51 +109,55 @@ const EditProfile: FC = () => {
   };
 
   return (
-    <Container containerTitle="Edit Profile Details">
-      <div className="mt-4 flex w-full flex-col gap-6">
-        <div className="text-justify text-gray-500">
-          Ensure your profile information is accurate and up-to-date.
-          Periodically review and update your details to ensure relevancy.
-          Keeping your profile information current helps us provide you with a
-          better user experience. Stay connected with the latest updates!
-        </div>
-        <div className="flex w-full shrink-0 flex-col gap-6 md:max-w-lg">
-          <Input
-            input_type="text"
-            placeholder="Update Username"
-            value={username}
-            setValue={setUsername}
-          />
-          <Input
-            input_type="text"
-            placeholder="Update Email"
-            value={email}
-            setValue={setEmail}
-          />
-          <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
-            <PhoneInput
-              country={"in"}
-              value={mobileNumber}
-              onChange={setMobileNumber}
-            />
-            <label
-              id="mobileLabel"
-              htmlFor="mobile"
-              className="absolute left-3 top-0 z-10 -translate-y-1/2 bg-white px-2 text-xs"
-            >
-              Update Mobile Number
-            </label>
-          </div>
-
-          <UIButton
-            onClick={submit}
-            className="ml-auto w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
-          >
-            SUBMIT
-          </UIButton>
-        </div>
+    <div className="mx-auto mt-4 flex w-full flex-col justify-center gap-6 md:max-w-lg">
+      <div className="flex w-full justify-between">
+        <h3 className="text-lg font-semibold">Edit profile</h3>
+        <Link href="/user/account">
+          <UIButton className="w-fit border-slate-400 px-5">Back</UIButton>
+        </Link>
       </div>
-    </Container>
+      <div className="text-justify text-gray-500">
+        Ensure your profile information is accurate and up-to-date. Periodically
+        review and update your details to ensure relevancy. Keeping your profile
+        information current helps us provide you with a better user experience.
+        Stay connected with the latest updates!
+      </div>
+      <div className="flex w-full shrink-0 flex-col gap-6">
+        <Input
+          input_type="text"
+          placeholder="Update Username"
+          value={username}
+          setValue={setUsername}
+        />
+        <Input
+          input_type="text"
+          placeholder="Update Email"
+          value={email}
+          setValue={setEmail}
+        />
+        <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
+          <PhoneInput
+            country={"in"}
+            value={mobileNumber}
+            onChange={setMobileNumber}
+          />
+          <label
+            id="mobileLabel"
+            htmlFor="mobile"
+            className="absolute left-3 top-0 z-10 -translate-y-1/2 bg-white px-2 text-xs"
+          >
+            Update Mobile Number
+          </label>
+        </div>
+
+        <UIButton
+          onClick={submit}
+          className="ml-auto w-fit border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
+        >
+          SUBMIT
+        </UIButton>
+      </div>
+    </div>
   );
 };
 
