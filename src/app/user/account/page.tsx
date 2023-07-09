@@ -74,7 +74,7 @@ const DetailsPage: FC = () => {
                 <h4 className="font-normal">Mobile Number</h4>
                 <div className="text-gray-500">{user.Mobile_No}</div>
               </div>
-              <Link href="/user/details/edit" className="ml-auto mt-7">
+              <Link href="/user/account/edit" className="ml-auto mt-7">
                 <UIButton className="flex w-fit items-center gap-1 border-gray-300 px-3 py-1 text-blue-500 hover:outline-blue-200">
                   <span>Edit</span>
                   <AiFillEdit />
