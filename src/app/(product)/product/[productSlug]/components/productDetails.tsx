@@ -121,7 +121,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         ))}
       </div>
 
-      <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
+      <div className="isolate z-20 flex max-w-md gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
         {isAuthenticated ? (
           <>
             <UIButton
