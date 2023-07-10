@@ -200,7 +200,7 @@ const Account: FC = () => {
           !dropdownOpen && "hidden"
         )}
       >
-        <h3 className="break-words border-b-[1px] border-gray-300 p-4 text-right text-[16px] capitalize">
+        <h3 className="break-words border-b-[1px] border-gray-300 p-5 text-right text-[16px] capitalize">
           Hello, {isAuthenticated && username ? username : "Guest"}
         </h3>
         {isAuthenticated
