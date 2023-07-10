@@ -171,8 +171,16 @@ const OrderHistoryPage: NextPage = () => {
           </div>
         </div>
         {orderList.length ? (
-          orderList.map((order) => (
-            <OrderComponet key={order.payment.orderId} order={order} />
+          orderList.map((order, index) => (
+            <OrderComponet
+              key={
+                "order list element" +
+                order.payment.orderId +
+                order.order._id +
+                index
+              }
+              order={order}
+            />
           ))
         ) : (
           <div className="mt-5 text-center text-lg font-semibold">
