@@ -15,13 +15,15 @@ const LoadingComponent: FC = () => {
         !loading.loading ? "hidden" : "z-[999]"
       )}
     >
-      <Image
-        src="/assets/logo.svg"
-        alt="Sanskruti Logo"
-        width={500}
-        height={500}
-        className="aspect-square h-[15rem] w-fit drop-shadow-lg"
-      />
+      <div className="flex aspect-square items-center justify-center rounded-full bg-amber-50 p-[1rem] shadow-lg">
+        <Image
+          src="/assets/logo.png"
+          alt="Sanskruti Logo"
+          width={500}
+          height={500}
+          className="w-[13rem]"
+        />
+      </div>
       <div className="flex flex-col items-center justify-center gap-3">
         <div className="h-2 w-[90vw] max-w-lg rounded-full bg-slate-400">
           <div
