@@ -25,12 +25,17 @@ const OrderDetailsPage: NextPage = () => {
   const params = useParams();
   const orderId = params["orderId"];
 
-  const statuses = ["Pending", "Confirmed", "Out for deivery", "Delivered"];
+  const statuses: Order["order"]["deliveryInfo"]["status"][] = [
+    "Pending",
+    "Confirmed",
+    "Out for delivery",
+    "Delivered",
+  ];
   const currentStep = order
     ? statuses.indexOf(order.order.deliveryInfo.status)
     : 0;
 
-  const returnStatuses = [
+  const returnStatuses: Order["order"]["returnInfo"]["status"][] = [
     "Pending",
     "Confirmed",
     "Out for pickup",
@@ -38,8 +43,8 @@ const OrderDetailsPage: NextPage = () => {
     "Refund credited",
   ];
   const currentReturnStep =
-    order && order.order.returnInfo
-      ? statuses.indexOf(order.order.returnInfo.status)
+    order && order.order.returnInfo.status
+      ? returnStatuses.indexOf(order.order.returnInfo.status)
       : 0;
 
   useEffect(() => {

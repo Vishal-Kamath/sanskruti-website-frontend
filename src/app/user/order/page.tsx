@@ -32,14 +32,14 @@ export type Order = {
     };
     deliveryInfo: {
       date: string;
-      status: "Pending" | "Confirmed" | "Out for deivery" | "Delivered";
+      status: "Pending" | "Confirmed" | "Out for delivery" | "Delivered";
     };
     cancellationInfo: {
       isCancelled: boolean;
       date: string;
       Amount_refunded: boolean;
     };
-    returnInfo?: {
+    returnInfo: {
       isReturned: boolean;
       date: string;
       status:
