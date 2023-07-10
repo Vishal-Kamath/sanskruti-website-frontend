@@ -9,6 +9,7 @@ import OrderComponet from "../components/orderComponent";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 import { AiOutlineSearch } from "react-icons/ai";
+import { HiOutlineRefresh } from "react-icons/hi";
 
 export type Order = {
   order: {
@@ -128,8 +129,8 @@ const OrderHistoryPage: NextPage = () => {
   return (
     <Container containerTitle="Order History">
       <div className="flex flex-col gap-2 pt-1">
-        <div className="flex gap-2">
-          <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 bg-slate-50 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
+        <div className="flex gap-2 max-md:flex-col">
+          <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
             <AiOutlineSearch className="aspect-sqaure text-xl" />
             <input
               value={search}
@@ -139,13 +140,14 @@ const OrderHistoryPage: NextPage = () => {
               placeholder="Search for past orders"
             />
           </div>
-          <div className="flex w-[10rem] items-center justify-center rounded-md border-2 border-gray-300 bg-slate-50">
+          <div className="flex h-full gap-2 max-md:w-full">
             <select
               name="filter"
               id="filter"
+              title="Filter by status"
               defaultValue="No filter"
               onChange={(e) => setFilter(e.target.value)}
-              className="bg-transparent outline-none"
+              className="h-9 w-full rounded-md border-2 border-gray-300 bg-transparent px-2 outline-none focus-within:border-gray-600 md:w-[10rem]"
             >
               {[
                 "Pending",
@@ -159,6 +161,13 @@ const OrderHistoryPage: NextPage = () => {
                 </option>
               ))}
             </select>
+            <button
+              title="Refresh"
+              onClick={getOrders}
+              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md border-2 border-gray-300 outline-none"
+            >
+              <HiOutlineRefresh className="h-4 w-4" />
+            </button>
           </div>
         </div>
         {orderList.length ? (
