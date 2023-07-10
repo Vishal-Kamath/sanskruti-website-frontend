@@ -33,55 +33,71 @@ const AuthComponent: FC<Props> = ({ children }) => {
   const getUser = async () => {
     dispatch(startLoading());
     dispatch(startLoading());
-    await axios
-      .get<{ userTrimmend: UserType }>(`${process.env.ENDPOINT}/api/v1/user/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        dispatch(
-          setUser({
-            username: response.data.userTrimmend.username,
-            email: response.data.userTrimmend.email,
-            email_verified: response.data.userTrimmend.email_verified,
-            Mobile_No: response.data.userTrimmend.Mobile_No,
-            Mobile_No_verified: response.data.userTrimmend.Mobile_No_verified,
-            address: response.data.userTrimmend.address,
-            provider: response.data.userTrimmend.provider,
-          })
-        );
-        dispatch(loggedIn());
-        dispatch(completeLoading());
-      })
-      .catch(() => {
-        dispatch(setUser({ address: [] }));
-        dispatch(loggedOut());
-        dispatch(completeLoading());
-      });
+    try {
+      await axios
+        .get<{ userTrimmend: UserType }>(
+          `${process.env.ENDPOINT}/api/v1/user/`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          dispatch(
+            setUser({
+              username: response.data.userTrimmend.username,
+              email: response.data.userTrimmend.email,
+              email_verified: response.data.userTrimmend.email_verified,
+              Mobile_No: response.data.userTrimmend.Mobile_No,
+              Mobile_No_verified: response.data.userTrimmend.Mobile_No_verified,
+              address: response.data.userTrimmend.address,
+              provider: response.data.userTrimmend.provider,
+            })
+          );
+          dispatch(loggedIn());
+          dispatch(completeLoading());
+        })
+        .catch(() => {
+          dispatch(setUser({ address: [] }));
+          dispatch(loggedOut());
+          dispatch(completeLoading());
+        });
+    } catch (err) {
+      console.log(err);
+      dispatch(setUser({ address: [] }));
+      dispatch(loggedOut());
+      dispatch(completeLoading());
+    }
 
-    await axios
-      .get<WishlistType>(`${process.env.ENDPOINT}/api/v1/user/wishlist`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((response) => {
-        dispatch(
-          setWishlist({
-            ids: response.data.ids,
-            list: response.data.list,
-          })
-        );
+    try {
+      await axios
+        .get<WishlistType>(`${process.env.ENDPOINT}/api/v1/user/wishlist`, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          dispatch(
+            setWishlist({
+              ids: response.data.ids,
+              list: response.data.list,
+            })
+          );
 
-        dispatch(completeLoading());
-      })
-      .catch(() => {
-        dispatch(setWishlist({ ids: [], list: [] }));
-        dispatch(completeLoading());
-      });
+          dispatch(completeLoading());
+        })
+        .catch(() => {
+          dispatch(setWishlist({ ids: [], list: [] }));
+          dispatch(completeLoading());
+        });
+    } catch (err) {
+      console.log(err);
+      dispatch(setWishlist({ ids: [], list: [] }));
+      dispatch(completeLoading());
+    }
 
     firstFetch.current = false;
   };
