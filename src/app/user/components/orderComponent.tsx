@@ -80,7 +80,7 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
         </div>
       </div>
 
-      <div className="flex flex-shrink-0 gap-2 text-right max-md:w-full max-md:items-baseline max-md:justify-center md:flex-col lg:min-w-[15rem]">
+      <div className="flex flex-shrink-0 flex-wrap gap-2 text-right max-md:w-full max-md:items-baseline max-md:justify-center md:flex-col lg:min-w-[15rem]">
         <div className="flex items-baseline justify-end gap-2 text-xs font-semibold md:items-center lg:text-[14px]">
           {order.order.cancellationInfo.isCancelled ? (
             <MdCancel className="h-3 w-3 text-sanskrutiRed" />
