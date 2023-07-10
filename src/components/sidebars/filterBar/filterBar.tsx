@@ -4,6 +4,7 @@ import { selectSidebarOpen } from "@/redux/slice/sidebar.slice";
 import { useAppSelector } from "@/redux/store/hooks";
 import { Dispatch, FC, SetStateAction } from "react";
 import FilterList from "./filtersList";
+import Image from "next/image";
 
 const FilterBar: FC<{
   setDesc: Dispatch<SetStateAction<string>>;
@@ -13,13 +14,30 @@ const FilterBar: FC<{
     <div
       className={`${
         !sideBarOpen && "max-sm:hidden"
-      } isolate z-30 flex min-h-full w-full flex-col overflow-x-hidden overflow-y-scroll bg-white scrollbar-none max-sm:fixed max-sm:left-0 max-sm:top-0 max-sm:min-h-screen max-sm:pt-28 sm:max-w-[50vw] md:max-w-[30vw] lg:max-w-[25vw] xl:max-w-[18vw]`}
+      } isolate z-30 flex min-h-full w-full flex-col gap-3 overflow-x-hidden overflow-y-scroll bg-white pb-10 scrollbar-none max-sm:fixed max-sm:left-0 max-sm:top-0 max-sm:max-h-screen max-sm:min-h-screen max-sm:pt-28 sm:max-w-[30vw] md:max-w-[30vw] lg:max-w-[25vw] xl:max-w-[18vw]`}
     >
       <h3 className="w-full pl-[3vw] pr-4 pt-6 text-[16px] font-semibold">
         FILTERS
       </h3>
 
       <FilterList setDesc={setDesc} />
+
+      <div className="flex flex-col gap-6 max-sm:hidden">
+        <Image
+          src="/assets/sidebar2.png"
+          alt="sidebar image 1"
+          width={300}
+          height={300}
+          className="w-full pl-[3vw] pr-4"
+        />
+        <Image
+          src="/assets/sidebar1.png"
+          alt="sidebar image 1"
+          width={300}
+          height={300}
+          className="w-full pl-[3vw] pr-4"
+        />
+      </div>
     </div>
   );
 };
