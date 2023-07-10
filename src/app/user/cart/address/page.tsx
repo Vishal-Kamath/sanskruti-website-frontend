@@ -72,12 +72,12 @@ const CartAddressPage: FC = () => {
   return (
     <div className="flex w-full flex-col gap-5">
       <div className="flex justify-between">
-        <Link href="/user/cart">
+        <Link href="/user/cart" className="w-fit">
           <UIButton className="w-fit rounded-sm border-[1px] border-slate-400 px-5">
             Back
           </UIButton>
         </Link>
-        <Link href="/user/address/add">
+        <Link href="/user/address/add" className="w-fit">
           <UIButton className="flex w-fit gap-2 rounded-sm border-[1px] border-sanskrutiRed px-5 text-sanskrutiRed hover:outline-sanskrutiRedLight">
             <span>Add a new address</span>
           </UIButton>
@@ -116,8 +116,8 @@ const CartAddressPage: FC = () => {
       </div>
 
       {!!shippingInAddresses && !!billingInAddresses ? (
-        <Link href="/user/cart/payment" className="w-full">
-          <UIButton className="ml-auto w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
+        <Link href="/user/cart/payment" className="ml-auto w-fit">
+          <UIButton className="w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
             PROCEED
           </UIButton>
         </Link>

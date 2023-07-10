@@ -60,8 +60,8 @@ const ShoppingCartPage: FC = () => {
         />
       ))}
       {/* {user.email_verified && user.Mobile_No_verified && !!cart?.length ? ( */}
-      <Link href="/user/cart/address" className="w-full">
-        <UIButton className="ml-auto w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
+      <Link href="/user/cart/address" className="ml-auto w-fit">
+        <UIButton className="w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
           PROCEED
         </UIButton>
       </Link>
