@@ -3,11 +3,15 @@
 import UIButton from "@/components/common/button";
 import { CartItem, CartType, setCart } from "@/redux/slice/cart.slice";
 import { useAppDispatch } from "@/redux/store/hooks";
+import { cn } from "@/utils/lib";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { FC, useCallback, useState } from "react";
+import { BsBoxArrowUpLeft } from "react-icons/bs";
+import { MdRemoveShoppingCart } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
+import { setWishlistIds } from "@/redux/slice/wishlist.slice";
 
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -125,6 +129,10 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
   };
 
   // Remove Form cart
+  const [open, setOpen] = useState(false);
+  const openDropdown = () => setOpen(true);
+  const closeDropdown = () => setTimeout(() => setOpen(false), 300);
+
   const removeFromCart = async () => {
     const cartDetails = await axios.delete<CartType>(
       `${process.env.ENDPOINT}/api/v1/user/cart?productId=${product._id}&variant=${combination.combinationString}`,
@@ -137,6 +145,28 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
     );
     if (cartDetails.status !== 200) return;
     dispatch(setCart({ cart: cartDetails.data.cart }));
+  };
+
+  const moveToWishlist = () => {
+    axios
+      .post<{ ids: string[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/wishlist`,
+        {
+          productId: product._id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        dispatch(setWishlistIds({ ids: res.data.ids }));
+      })
+      .catch(() => {});
+
+    removeFromCart();
   };
 
   return (
@@ -224,7 +254,32 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
         </div>
       </div>
 
-      <RxCross1 onClick={removeFromCart} className="h-5 w-5" />
+      <button
+        className="relative h-6 w-6 flex-shrink-0"
+        onFocus={openDropdown}
+        onBlur={closeDropdown}
+      >
+        <RxCross1 className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border-[1px] border-gray-300 p-1 hover:border-gray-600" />
+        <div
+          className={cn(
+            "absolute right-0 top-7 w-[12rem] rounded-md border-[1px] border-gray-300 bg-white shadow-lg",
+            !open && "hidden"
+          )}
+        >
+          <button
+            onClick={removeFromCart}
+            className="flex w-full gap-3 border-b-[1px] border-gray-300 p-3 hover:bg-red-100"
+          >
+            <MdRemoveShoppingCart /> Remove from cart
+          </button>
+          <button
+            onClick={moveToWishlist}
+            className="flex w-full gap-3 p-3 hover:bg-sky-100"
+          >
+            <BsBoxArrowUpLeft /> Move to wishlist
+          </button>
+        </div>
+      </button>
     </div>
   );
 };
