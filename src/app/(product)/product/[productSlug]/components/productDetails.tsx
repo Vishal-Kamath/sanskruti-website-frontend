@@ -14,6 +14,7 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
+import { usePathname } from "next/navigation";
 
 const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -73,6 +74,8 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         dispatch(showNotification());
       });
   };
+
+  const pathname = usePathname();
 
   return (
     <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
@@ -135,7 +138,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
             </UIButton>
           </>
         ) : (
-          <Link href="/auth/login" className="w-full">
+          <Link
+            href={`/auth/login?redirect=${encodeURIComponent(pathname)}`}
+            className="w-full"
+          >
             <UIButton className="w-full bg-white text-lg font-semibold text-black">
               SIGN IN
             </UIButton>

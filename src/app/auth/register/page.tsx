@@ -8,7 +8,7 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { NextPage } from "next";
 import z from "zod";
 import { validateType } from "./components/utils";
@@ -30,6 +30,12 @@ const RegisterPage: NextPage = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const searchParams = useSearchParams();
+  const query = searchParams.get("redirect");
+  const redirect = query
+    ? `/auth/login?redirect=${encodeURIComponent(query)}`
+    : "/auth/login";
 
   const _submit = async () => {
     // check if input fields are empty
@@ -100,7 +106,7 @@ const RegisterPage: NextPage = () => {
           })
         );
         dispatch(showNotification());
-        if (res.status === 201) return router.replace("/auth/login");
+        if (res.status === 201) return router.replace(redirect);
       })
       .catch((err) => {
         const response = err.response.data;
@@ -126,7 +132,7 @@ const RegisterPage: NextPage = () => {
   return (
     <div className="mt-9 flex w-full flex-col justify-center gap-4 rounded-md">
       <div className="relative flex items-baseline justify-between">
-        <Link href="/">
+        <Link href={query || "/"}>
           <UIButton className="h-8 gap-2 border-gray-400 px-3 py-2 text-black">
             <BiArrowBack />
             <span>Back</span>
@@ -208,7 +214,7 @@ const RegisterPage: NextPage = () => {
       <div className="flex justify-center gap-1">
         Already have an account?
         <Link
-          href="/auth/login"
+          href={redirect}
           className="font-semibold text-blue-700 hover:text-blue-500 hover:underline"
         >
           login here

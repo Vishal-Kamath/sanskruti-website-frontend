@@ -17,7 +17,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { cn } from "@/utils/lib";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
 import { AiOutlineFileDone, AiOutlineHeart } from "react-icons/ai";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
@@ -172,15 +172,18 @@ const Account: FC = () => {
     },
   ];
 
+  const pathname = usePathname();
+  const redirect =
+    pathname === "/" ? "" : `?redirect=${encodeURIComponent(pathname)}`;
   const userLoggedOutDropdown: AccoutElementType[] = [
     {
       title: "Login In",
-      ref: "/auth/login",
+      ref: `/auth/login${redirect}`,
       icon: BiLogIn,
     },
     {
       title: "Register",
-      ref: "/auth/register",
+      ref: `/auth/register${redirect}`,
       icon: BsFillPersonPlusFill,
     },
   ];
