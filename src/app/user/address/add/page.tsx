@@ -12,7 +12,7 @@ import {
 } from "@/redux/slice/notification.slice";
 import axios from "axios";
 import { Address, setAddress } from "@/redux/slice/user.slice";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import z from "zod";
 import PhoneInput from "react-phone-input-2";
 import "@/app/high-res.css";
@@ -29,6 +29,9 @@ const AddAddressPage: FC = () => {
   const [landmark, setlandmark] = useState("");
   const [city, setcity] = useState("");
   const [state, setstate] = useState("");
+
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/user/address";
 
   const validateTypes = (): { valid: boolean } & NotificationType => {
     const mobileNumberSchema = z
@@ -120,7 +123,7 @@ const AddAddressPage: FC = () => {
         );
         dispatch(showNotification());
         dispatch(setAddress(response.address));
-        router.push("/user/address");
+        router.push(redirect);
       })
       .catch((err) => {
         const response = err.response.data;
@@ -138,7 +141,7 @@ const AddAddressPage: FC = () => {
     <div className="mx-auto flex w-full flex-col justify-center gap-4 pt-6 md:max-w-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-semibold">Add a new address</h3>
-        <Link href="/user/address">
+        <Link href={redirect}>
           <UIButton className="w-fit border-slate-400 px-5">Back</UIButton>
         </Link>
       </div>

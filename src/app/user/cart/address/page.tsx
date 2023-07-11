@@ -77,7 +77,12 @@ const CartAddressPage: FC = () => {
             Back
           </UIButton>
         </Link>
-        <Link href="/user/address/add" className="w-fit">
+        <Link
+          href={`/user/address/add?redirect=${encodeURIComponent(
+            "/user/cart/address"
+          )}`}
+          className="w-fit"
+        >
           <UIButton className="flex w-fit gap-2 rounded-sm border-[1px] border-sanskrutiRed px-5 text-sanskrutiRed hover:outline-sanskrutiRedLight">
             <span>Add a new address</span>
           </UIButton>
