@@ -38,9 +38,19 @@ const AddressPage: FC = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {address.map((address) => (
-            <AddressComponent key={address.id} {...address} />
-          ))}
+          {address.length ? (
+            address.map((address) => (
+              <AddressComponent key={address.id} {...address} />
+            ))
+          ) : user.address.length ? (
+            <div className="col-span-full mt-5 text-center text-lg font-normal">
+              <span>No addresses found</span>
+            </div>
+          ) : (
+            <div className="col-span-full mt-5 text-center text-lg font-normal">
+              <span>Address list empty. Add a new address to get started</span>
+            </div>
+          )}
         </div>
       </div>
     </Container>
