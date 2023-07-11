@@ -64,8 +64,8 @@ export const AddressComponent: FC<Address> = ({
     <div className="flex h-full min-h-[15rem] w-full flex-col rounded border-2 border-gray-200 p-3">
       <h2 className="text-lg font-medium">{fullName}</h2>
       <h3 className="text-xs text-gray-500">{contactNo}</h3>
-      <div className="text-sm text-gray-500">
-        {landmark} {nearBy} {city} {state} {pincode}
+      <div className="break-words text-sm text-gray-500">
+        {landmark + " " + nearBy + " " + city + " " + state + " " + pincode}
       </div>
       <div className="ml-auto mt-auto flex gap-2">
         <Link href={`/user/address/edit?id=${id}`}>
