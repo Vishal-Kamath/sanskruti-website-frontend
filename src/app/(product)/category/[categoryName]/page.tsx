@@ -6,12 +6,23 @@ import { FC, useState, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { ProductType } from "@/components/header/header";
+import Pagination from "@/components/common/pagination";
 
+type ResultType = {
+  totalPages: number;
+  currentPage: number;
+  products: ProductType[];
+};
 const CategoryPage: FC = () => {
   const params = useParams();
   const categoryName = decodeURIComponent(params["categoryName"]);
   const searchParams = useSearchParams();
-  const [products, setProducts] = useState<ProductType[]>([]);
+  const [result, setResult] = useState<ResultType>({
+    totalPages: 1,
+    currentPage: 1,
+    products: [],
+  });
+  const products = result.products;
 
   const [desc, setDesc] = useState("");
   const [route, setRoute] = useState(["Home"]);
@@ -28,7 +39,7 @@ const CategoryPage: FC = () => {
     );
 
     current.delete(categoryName);
-    const query = `?MainCategory=${categoryName}&page=1${
+    const query = `?MainCategory=${categoryName}${
       !!current.toString() ? `&${current.toString()}` : ""
     }${
       !!searchParams.get(categoryName)
@@ -37,11 +48,7 @@ const CategoryPage: FC = () => {
     }`;
 
     axios
-      .get<{
-        totalPages: number;
-        currentPage: number;
-        products: ProductType[];
-      }>(
+      .get<ResultType>(
         `${process.env.ENDPOINT}/api/v1/user/getallProductsFromFilters${query}`,
         {
           headers: {
@@ -50,12 +57,12 @@ const CategoryPage: FC = () => {
         }
       )
       .then((res) => {
-        setProducts(res.data.products);
+        setResult(res.data);
       });
   }, [categoryName, searchParams]);
 
   return (
-    <div className="flex flex-col pb-10">
+    <div className="flex flex-col pb-5">
       <div className="mb-10 flex pt-[117px] max-md:pt-32">
         <FilterBar setDesc={setDesc} />
         <div className="flex w-full flex-col gap-3 px-[3vw] pb-10 pt-5 text-justify sm:pl-4">
@@ -67,12 +74,17 @@ const CategoryPage: FC = () => {
             {products.map((product) => (
               <ProductCard key={product.name} product={product} />
             ))}
-            {Array(30)
+            {Array(30 - products.length)
               .fill(null)
               .map((_, index) => (
                 <DummyProductCard key={index} />
               ))}
           </div>
+
+          <Pagination
+            currentPage={result.currentPage}
+            totalPages={result.totalPages}
+          />
         </div>
       </div>
     </div>
