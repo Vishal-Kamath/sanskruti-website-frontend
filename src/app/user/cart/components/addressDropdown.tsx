@@ -14,6 +14,8 @@ interface Props {
     content: string;
   }[];
   setAddress: (id: string) => void;
+  openAndClose: (action: "open" | "close") => void;
+  state: boolean;
 }
 const AddressDropdown: FC<Props> = ({
   main,
@@ -21,16 +23,16 @@ const AddressDropdown: FC<Props> = ({
   className,
   options,
   setAddress,
+  state,
+  openAndClose,
 }) => {
-  const [open, setOpen] = useState(false);
   return (
     <div className="flex w-full flex-col gap-2">
       <div className="font-semibold">{title}</div>
       <div className={cn("relative w-full bg-white", className)}>
         {/* Main */}
         <button
-          onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 300)}
+          onClick={() => openAndClose("open")}
           className="flex w-full items-center justify-between rounded-md border-[1px] border-slate-300 px-3 py-2 outline-none outline-offset-0 hover:outline-4 hover:outline-gray-100 focus:border-slate-500"
         >
           <div className="flex flex-col gap-1">
@@ -41,14 +43,14 @@ const AddressDropdown: FC<Props> = ({
                 : main.content}
             </p>
           </div>
-          <FaAngleDown className={cn(open && "rotate-180")} />
+          <FaAngleDown className={cn(state && "rotate-180")} />
         </button>
 
         {/* Options */}
         <div
           className={cn(
             "absolute bottom-0 z-30 w-full translate-y-full pt-2",
-            !open && "hidden"
+            !state && "hidden"
           )}
         >
           <div className="flex max-h-[20rem] w-full flex-col overflow-y-auto rounded-md border-[1px] border-slate-500 bg-white shadow-lg shadow-gray-300">
@@ -58,7 +60,7 @@ const AddressDropdown: FC<Props> = ({
                   key={option.title + index + title}
                   onClick={() => {
                     setAddress(option.id);
-                    setOpen(false);
+                    openAndClose("close");
                   }}
                   className="flex flex-col gap-1 px-2 py-1 outline-none hover:bg-slate-50"
                 >

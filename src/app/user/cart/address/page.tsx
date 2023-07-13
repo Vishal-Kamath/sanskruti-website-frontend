@@ -5,7 +5,7 @@ import { selectUser } from "@/redux/slice/user.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FC } from "react";
+import { FC, useState } from "react";
 import AddressDropdown from "../components/addressDropdown";
 import {
   setNotification,
@@ -69,6 +69,30 @@ const CartAddressPage: FC = () => {
     dispatch(showNotification());
   };
 
+  // dropdown open logic
+  const [shippingOpen, setShippingOpen] = useState(false);
+  const [billingOpen, setBillingOpen] = useState(false);
+
+  const openAndCloseShipping = (action: "open" | "close") => {
+    if (action === "open") {
+      setShippingOpen(true);
+      setBillingOpen(false);
+    }
+    if (action === "close") {
+      setShippingOpen(false);
+    }
+  };
+
+  const openAndCloseBilling = (action: "open" | "close") => {
+    if (action === "open") {
+      setBillingOpen(true);
+      setShippingOpen(false);
+    }
+    if (action === "close") {
+      setBillingOpen(false);
+    }
+  };
+
   return (
     <div className="flex w-full flex-col gap-5">
       <div className="flex justify-between">
@@ -106,6 +130,8 @@ const CartAddressPage: FC = () => {
           title="Shipping Address"
           options={addresses}
           setAddress={handleSetShippingAddress}
+          state={shippingOpen}
+          openAndClose={openAndCloseShipping}
         />
         <AddressDropdown
           main={
@@ -117,6 +143,8 @@ const CartAddressPage: FC = () => {
           title="Billing Address"
           options={addresses}
           setAddress={handleSetBillingAddress}
+          state={billingOpen}
+          openAndClose={openAndCloseBilling}
         />
       </div>
 
