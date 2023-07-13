@@ -15,7 +15,7 @@ interface Props {
   }[];
   setAddress: (id: string) => void;
   openAndClose: (action: "open" | "close") => void;
-  state: boolean;
+  open: boolean;
 }
 const AddressDropdown: FC<Props> = ({
   main,
@@ -23,7 +23,7 @@ const AddressDropdown: FC<Props> = ({
   className,
   options,
   setAddress,
-  state,
+  open,
   openAndClose,
 }) => {
   return (
@@ -32,7 +32,7 @@ const AddressDropdown: FC<Props> = ({
       <div className={cn("relative w-full bg-white", className)}>
         {/* Main */}
         <button
-          onClick={() => openAndClose("open")}
+          onClick={() => (open ? openAndClose("close") : openAndClose("open"))}
           className="flex w-full items-center justify-between rounded-md border-[1px] border-slate-300 px-3 py-2 outline-none outline-offset-0 hover:outline-4 hover:outline-gray-100 focus:border-slate-500"
         >
           <div className="flex flex-col gap-1">
@@ -43,14 +43,14 @@ const AddressDropdown: FC<Props> = ({
                 : main.content}
             </p>
           </div>
-          <FaAngleDown className={cn(state && "rotate-180")} />
+          <FaAngleDown className={cn(open && "rotate-180")} />
         </button>
 
         {/* Options */}
         <div
           className={cn(
             "absolute bottom-0 z-30 w-full translate-y-full pt-2",
-            !state && "hidden"
+            !open && "hidden"
           )}
         >
           <div className="flex max-h-[20rem] w-full flex-col overflow-y-auto rounded-md border-[1px] border-slate-500 bg-white shadow-lg shadow-gray-300">

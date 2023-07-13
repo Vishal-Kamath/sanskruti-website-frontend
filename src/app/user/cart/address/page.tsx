@@ -130,7 +130,7 @@ const CartAddressPage: FC = () => {
           title="Shipping Address"
           options={addresses}
           setAddress={handleSetShippingAddress}
-          state={shippingOpen}
+          open={shippingOpen}
           openAndClose={openAndCloseShipping}
         />
         <AddressDropdown
@@ -143,7 +143,7 @@ const CartAddressPage: FC = () => {
           title="Billing Address"
           options={addresses}
           setAddress={handleSetBillingAddress}
-          state={billingOpen}
+          open={billingOpen}
           openAndClose={openAndCloseBilling}
         />
       </div>
