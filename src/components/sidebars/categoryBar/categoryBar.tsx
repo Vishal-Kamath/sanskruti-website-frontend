@@ -41,7 +41,7 @@ const CategoryBar: FC = () => {
     <div id="category" className="w-full bg-white px-[3vw]">
       <div className="flex flex-col gap-3">
         <h3 className="font-ysabeau text-center text-2xl font-semibold">
-          Shop by categories
+          Shop by Category
         </h3>
         <SwiperContainer
           modules={[Autoplay]}
