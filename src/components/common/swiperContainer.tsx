@@ -42,15 +42,15 @@ const SwiperContainer: FC<SwiperProps> = ({
 
       <button
         onClick={handlePrev}
-        className="prev_swiper absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white p-4 opacity-75 hover:opacity-100"
+        className="prev_swiper absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white py-3 pl-1 pr-3 opacity-50 hover:opacity-75"
       >
-        <FaAngleLeft className="h-4 w-4 lg:h-7 lg:w-7" />
+        <FaAngleLeft className="h-6 w-6" />
       </button>
       <button
         onClick={handleNext}
-        className="next_swiper absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white p-4 opacity-75 hover:opacity-100"
+        className="next_swiper absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white py-3 pl-3 pr-1 opacity-50 hover:opacity-75"
       >
-        <FaAngleRight className="h-4 w-4 lg:h-7 lg:w-7" />
+        <FaAngleRight className="h-6 w-6" />
       </button>
     </Swiper>
   );
