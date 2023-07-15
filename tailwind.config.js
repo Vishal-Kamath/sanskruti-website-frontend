@@ -12,6 +12,9 @@ module.exports = {
       },
       colors: {
         facebook: "#4267B2",
+        twitter: "#1DA1F2",
+        whatsapp: "#25D366",
+        pinterest: "#E60023",
         sanskrutiRed: "#da2335",
         sanskrutiRedLight: "#da233555",
       },

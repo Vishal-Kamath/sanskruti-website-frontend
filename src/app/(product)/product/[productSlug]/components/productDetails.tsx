@@ -14,7 +14,8 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import LinksButton from "./links";
 
 const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   const dispatch = useAppDispatch();
@@ -76,6 +77,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   };
 
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentURL = `https://sanskrutinx.in${pathname}${
+    searchParams.toString() ? `?${searchParams.toString()}` : ""
+  }`;
 
   return (
     <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
@@ -84,6 +89,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         <h3 className="text-md font-semibold text-gray-600">
           {product?.brand_name}
         </h3>
+      </div>
+
+      <div>
+        <LinksButton deepLinkUrl={currentURL} imageLink={product.images[0]} />
       </div>
 
       <div className="flex flex-col gap-1">
