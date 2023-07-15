@@ -70,11 +70,11 @@ const CategoryPage: FC = () => {
           <div className="font-semibold capitalize">{route.join(" / ")}</div>
           <div className="text-gray-500">{desc}</div>
 
-          <div className="grid grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.name} product={product} />
             ))}
-            {Array(30 - products.length)
+            {Array(24 - products.length)
               .fill(null)
               .map((_, index) => (
                 <DummyProductCard key={index} />
