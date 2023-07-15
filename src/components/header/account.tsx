@@ -189,30 +189,38 @@ const Account: FC = () => {
   ];
 
   return (
-    <div className="relative">
-      <button
-        onClick={openDropdown}
-        className="rounded-full border-2 border-gray-300 bg-slate-50 p-[6px] outline-none hover:border-sky-300 hover:bg-sky-100"
+    <div
+      className="relative h-full"
+      onMouseOver={openDropdown}
+      onMouseLeave={closeDropdown}
+    >
+      <div
+        className={cn(
+          "rounded-full border-2 border-gray-300 bg-slate-50 p-[6px] outline-none",
+          dropdownOpen && "border-sky-300 bg-sky-100"
+        )}
       >
         <HiOutlineUserCircle className="h-6 w-6" />
-      </button>
+      </div>
 
       <div
         className={cn(
-          "absolute right-0 top-12 z-40 w-[15rem] overflow-hidden rounded-md border-[1px] border-gray-300 bg-white shadow-lg",
+          "absolute right-0 top-10 z-40 pt-2",
           !dropdownOpen && "hidden"
         )}
       >
-        <h3 className="break-words border-b-[1px] border-gray-300 p-5 text-right text-[16px] capitalize">
-          Hello, {isAuthenticated && username ? username : "Guest"}
-        </h3>
-        {isAuthenticated
-          ? userLoggedInDropdown.map((element, index) => (
-              <AccoutElement key={element.title + index} element={element} />
-            ))
-          : userLoggedOutDropdown.map((element, index) => (
-              <AccoutElement key={element.title + index} element={element} />
-            ))}
+        <div className=" w-[15rem] overflow-hidden rounded-md border-[1px] border-gray-300 bg-white shadow-lg">
+          <h3 className="break-words border-b-[1px] border-gray-300 p-5 text-right text-[16px] capitalize">
+            Hello, {isAuthenticated && username ? username : "Guest"}
+          </h3>
+          {isAuthenticated
+            ? userLoggedInDropdown.map((element, index) => (
+                <AccoutElement key={element.title + index} element={element} />
+              ))
+            : userLoggedOutDropdown.map((element, index) => (
+                <AccoutElement key={element.title + index} element={element} />
+              ))}
+        </div>
       </div>
     </div>
   );
