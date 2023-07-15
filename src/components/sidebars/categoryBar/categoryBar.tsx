@@ -45,7 +45,7 @@ const CategoryBar: FC = () => {
         </h3>
         <SwiperContainer
           modules={[Autoplay]}
-          spaceBetween={10}
+          spaceBetween={15}
           slidesPerView={numberSlides}
           className="flex w-full"
           autoplay={{

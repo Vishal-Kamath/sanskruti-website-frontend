@@ -33,7 +33,7 @@ const ProductCarousel: FC = () => {
     <div className="flex flex-col gap-3 px-[3vw]">
       <h3 className="text-xl font-semibold">Similar Products</h3>
       <Swiper
-        spaceBetween={10}
+        spaceBetween={15}
         slidesPerView={numberSlides}
         className="flex w-full"
       >
