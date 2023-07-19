@@ -134,7 +134,7 @@ const Header: FC = () => {
 
         <div className="flex items-center gap-3 md:w-full">
           <SearchBar
-            classname="ml-auto max-md:hidden min-w-[25rem]"
+            classname="ml-auto max-md:hidden min-w-[20rem]"
             searchFocused={searchFocused}
             setSearchFocused={setSearchFocused}
             search={search}

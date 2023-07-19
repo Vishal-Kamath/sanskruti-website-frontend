@@ -22,7 +22,7 @@ import { FC, useEffect, useState } from "react";
 import { AiOutlineFileDone, AiOutlineHeart } from "react-icons/ai";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { BsFillPersonFill, BsFillPersonPlusFill } from "react-icons/bs";
-import { FaRegAddressCard } from "react-icons/fa";
+import { FaAngleDown, FaRegAddressCard } from "react-icons/fa";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { IconType } from "react-icons/lib";
 import { MdShoppingCart } from "react-icons/md";
@@ -189,37 +189,88 @@ const Account: FC = () => {
   ];
 
   return (
-    <div
-      className="relative h-full"
-      onMouseOver={openDropdown}
-      onMouseLeave={closeDropdown}
-    >
-      <div
-        className={cn(
-          "rounded-full border-2 border-gray-300 bg-slate-50 p-[6px] outline-none",
-          dropdownOpen && "border-sky-300 bg-sky-100"
-        )}
-      >
-        <HiOutlineUserCircle className="h-6 w-6" />
-      </div>
+    <div className="flex gap-2">
+      {isAuthenticated && (
+        <>
+          <Link
+            href="/user/wishlist"
+            title="Wishlist"
+            className="relative flex items-center gap-2 rounded-full border-2 border-gray-300 bg-slate-50 p-[6px] outline-none hover:border-sky-300 hover:bg-sky-100"
+          >
+            <AiOutlineHeart className="h-6 w-6" />
+            <div
+              className={cn(
+                "absolute -right-[6px] -top-[6px] flex items-center justify-center rounded-full bg-sanskrutiRed text-xs text-white",
+                userWishlistIds.length === 0 && "hidden",
+                userWishlistIds.length > 99 ? "p-[2px]" : "h-4 w-4"
+              )}
+            >
+              {userWishlistIds.length > 99 ? "99+" : userWishlistIds.length}
+            </div>
+          </Link>
 
+          <Link
+            href="/user/cart"
+            title="Cart"
+            className="relative flex items-center gap-2 rounded-full border-2 border-gray-300 bg-slate-50 p-[6px] outline-none hover:border-sky-300 hover:bg-sky-100"
+          >
+            <MdShoppingCart className="h-6 w-6" />
+            <div
+              className={cn(
+                "absolute -right-[6px] -top-[6px] flex items-center justify-center rounded-full bg-sanskrutiRed text-xs text-white",
+                cart.length === 0 && "hidden",
+                cart.length > 99 ? "p-[2px]" : "h-4 w-4"
+              )}
+            >
+              {cart.length > 99 ? "99+" : cart.length}
+            </div>
+          </Link>
+        </>
+      )}
       <div
-        className={cn(
-          "absolute right-0 top-10 z-40 pt-2",
-          !dropdownOpen && "hidden"
-        )}
+        className="relative h-full"
+        onMouseOver={openDropdown}
+        onMouseLeave={closeDropdown}
       >
-        <div className=" w-[15rem] overflow-hidden rounded-md border-[1px] border-gray-300 bg-white shadow-lg">
-          <h3 className="break-words border-b-[1px] border-gray-300 p-5 text-right text-[16px] capitalize">
-            Hello, {isAuthenticated && username ? username : "Guest"}
-          </h3>
-          {isAuthenticated
-            ? userLoggedInDropdown.map((element, index) => (
-                <AccoutElement key={element.title + index} element={element} />
-              ))
-            : userLoggedOutDropdown.map((element, index) => (
-                <AccoutElement key={element.title + index} element={element} />
-              ))}
+        <div
+          className={cn(
+            "flex items-center gap-2 rounded-full border-2 border-gray-300 bg-slate-50 p-[6px] outline-none",
+            dropdownOpen && "border-sky-300 bg-sky-100"
+          )}
+        >
+          <HiOutlineUserCircle className="h-6 w-6" />
+          <FaAngleDown
+            className={cn(
+              "h-4 w-4 transition-all duration-300",
+              dropdownOpen && "rotate-180"
+            )}
+          />
+        </div>
+
+        <div
+          className={cn(
+            "absolute right-0 top-10 z-40 pt-2",
+            !dropdownOpen && "hidden"
+          )}
+        >
+          <div className=" w-[15rem] overflow-hidden rounded-md border-[1px] border-gray-300 bg-white shadow-lg">
+            <h3 className="break-words border-b-[1px] border-gray-300 p-5 text-right text-[16px] capitalize">
+              Hello, {isAuthenticated && username ? username : "Guest"}
+            </h3>
+            {isAuthenticated
+              ? userLoggedInDropdown.map((element, index) => (
+                  <AccoutElement
+                    key={element.title + index}
+                    element={element}
+                  />
+                ))
+              : userLoggedOutDropdown.map((element, index) => (
+                  <AccoutElement
+                    key={element.title + index}
+                    element={element}
+                  />
+                ))}
+          </div>
         </div>
       </div>
     </div>
