@@ -10,10 +10,10 @@ import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
-    <main className="flex flex-col gap-5 pb-10 pt-[117px] max-md:pt-32">
+    <main className="flex flex-col gap-5 pb-10 pt-36">
       <Carousel />
 
-      <div className="flex justify-evenly py-5">
+      <div className="flex justify-evenly pb-5">
         <Link href="#" className="flex h-full flex-col items-center gap-2">
           <Image
             className="h-8 w-8 object-center lg:h-10 lg:w-10"

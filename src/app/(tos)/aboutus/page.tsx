@@ -2,7 +2,7 @@ import { NextPage } from "next";
 
 const AboutUsPage: NextPage = () => {
   return (
-    <div className="flex flex-col gap-5 px-[3vw] pb-10 pt-[117px] max-md:pt-32">
+    <div className="flex flex-col gap-5 px-[3vw] pb-10 pt-36">
       <h1 className="flex items-baseline gap-4 border-b-2 border-gray-300 py-5">
         <span className="text-xl font-bold">ABOUT US</span>
       </h1>

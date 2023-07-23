@@ -5,7 +5,7 @@ import TopBanner from "./topBanner";
 import SearchBar from "./searchBar";
 import Link from "next/link";
 import { RxCross2 } from "react-icons/rx";
-import { BiMenuAltLeft } from "react-icons/bi";
+import { AiOutlineMenu } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import {
   closeSidebar,
@@ -102,10 +102,10 @@ const Header: FC = () => {
     pathname.includes("/auth") || pathname.includes("/user");
 
   return (
-    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-2 border-gray-200 text-black">
+    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-[1px] border-gray-500 text-black">
       <TopBanner />
 
-      <div className="flex h-14 items-center justify-between gap-24 bg-white px-[3vw]">
+      <div className="flex h-16 items-center justify-between gap-24 bg-white px-[3vw]">
         <div className="flex items-center gap-2">
           <div className={cn("md:hidden", sideBarBlocked && "hidden")}>
             {sideBarOpen ? (
@@ -114,14 +114,14 @@ const Header: FC = () => {
                 onClick={() => dispatch(closeSidebar())}
               />
             ) : (
-              <BiMenuAltLeft
+              <AiOutlineMenu
                 className="text-2xl"
                 onClick={() => dispatch(openSidebar())}
               />
             )}
           </div>
 
-          <Link href="/" className="h-full w-[7rem] flex-shrink-0">
+          <Link href="/" className="h-full flex-shrink-0 py-1">
             <Image
               src="/assets/logo.png"
               alt="Sanskruti Logo"
@@ -144,7 +144,7 @@ const Header: FC = () => {
         </div>
       </div>
 
-      <div className="bg-white px-[3vw] pb-2 md:hidden">
+      <div className="flex h-12 items-center bg-white px-[3vw] md:hidden">
         <SearchBar
           search={search}
           setSearch={handleSearchInput}

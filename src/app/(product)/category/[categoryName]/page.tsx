@@ -63,7 +63,7 @@ const CategoryPage: FC = () => {
 
   return (
     <div className="flex flex-col pb-5">
-      <div className="mb-10 flex pt-[117px] max-md:pt-32">
+      <div className="mb-10 flex pt-36">
         <FilterBar setDesc={setDesc} />
         <div className="flex w-full flex-col gap-3 px-[3vw] pb-10 pt-5 text-justify sm:pl-4">
           {/* Descriptiom */}

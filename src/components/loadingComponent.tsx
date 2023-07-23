@@ -20,7 +20,7 @@ const LoadingComponent: FC = () => {
         alt="Sanskruti Logo"
         width={500}
         height={500}
-        className="h-full max-h-screen w-full object-contain"
+        className="h-full max-h-screen w-full object-contain object-center"
       />
     </div>
   );

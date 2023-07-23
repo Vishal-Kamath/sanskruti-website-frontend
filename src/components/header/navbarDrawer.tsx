@@ -7,11 +7,13 @@ import { FaAngleDown } from "react-icons/fa";
 import UIButton from "../common/button";
 import Link from "next/link";
 import { cn } from "@/utils/lib";
-import { useAppSelector } from "@/redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { CategoryType, selectCategory } from "@/redux/slice/category.slice";
+import { closeSidebar } from "@/redux/slice/sidebar.slice";
 
 export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
 
   const { categories } = useAppSelector(selectCategory);
   const [displayCategory, setDisplayCategory] = useState<CategoryType>();
@@ -21,7 +23,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
   return (
     <div
       className={cn(
-        "fixed left-0 top-0 -z-30 max-h-screen min-h-screen w-full overflow-auto bg-white px-[3vw] pt-32 scrollbar-none md:hidden",
+        "fixed left-0 top-0 -z-30 max-h-screen min-h-screen w-full overflow-auto bg-white px-[3vw] pt-40 scrollbar-none md:hidden",
         !sidebarOpen && "hidden",
         isBlocked && "max-sm:hidden"
       )}
@@ -74,6 +76,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
                 href={`/category/${displayCategory?.Title}?${
                   displayCategory?.Title
                 }=${encodeURIComponent(item)}`}
+                onClick={() => dispatch(closeSidebar())}
                 className="w-fit text-lg capitalize hover:text-sanskrutiRed hover:underline hover:decoration-sanskrutiRed hover:underline-offset-4"
               >
                 {item}

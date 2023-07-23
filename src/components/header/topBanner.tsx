@@ -18,16 +18,16 @@ const TopBanner: React.FC = () => {
         disableOnInteraction: false,
       }}
       slidesPerView={1}
-      className="flex w-full bg-black text-white [&>*>*]:py-1"
+      className="flex w-full bg-slate-200 text-black"
     >
       <SwiperSlide>
-        <div className="flex items-center justify-center gap-2 text-sm">
+        <div className="flex h-8 items-center justify-center gap-2 text-sm">
           <FiPhoneCall />
           <span>+91-1234567890</span>
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="flex items-center justify-center gap-2 text-sm">
+        <div className="flex h-8 items-center justify-center gap-2 text-sm">
           <Image
             src="/assets/truck.svg"
             alt="Shipping truck"
@@ -41,7 +41,7 @@ const TopBanner: React.FC = () => {
       <SwiperSlide>
         <a
           href="#visitOurStore"
-          className="flex items-center justify-center gap-2 text-sm"
+          className="flex h-8 items-center justify-center gap-2 text-sm"
         >
           <MdLocationOn className="text-lg" />
           <span>Visit Our Store</span>
