@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        quicksand: "var(--quicksand-font)",
+        dosis: "var(--dosis-font)",
       },
       colors: {
         facebook: "#4267B2",

@@ -6,14 +6,14 @@ import Footer from "@/components/footer/footer";
 import NotificationComponent from "@/components/notification/notificationComponent";
 import { cn } from "@/utils/lib";
 
-import { Quicksand } from "next/font/google";
+import { Dosis } from "next/font/google";
 import AuthComponent from "@/components/authComponent";
 import LoadingComponent from "@/components/loadingComponent";
 
-const quicksand = Quicksand({
+const dosis = Dosis({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--quicksand-font",
+  variable: "--dosis-font",
 });
 
 export const metadata: Metadata = {
@@ -57,8 +57,8 @@ export default function RootLayout({
         <AuthComponent>
           <body
             className={cn(
-              quicksand.variable,
-              "relative flex min-h-screen select-none flex-col bg-white font-quicksand text-xs font-medium text-black md:text-[14px]"
+              dosis.variable,
+              "relative flex min-h-screen select-none flex-col bg-white font-dosis text-xs font-medium text-black md:text-[14px]"
             )}
           >
             <LoadingComponent />
