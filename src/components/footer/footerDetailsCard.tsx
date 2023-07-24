@@ -16,10 +16,10 @@ const FooterDetailsCard: FC<{
 }> = ({ title, list }) => {
   return (
     <div className="flex flex-col">
-      <h5 className="flex items-center justify-between py-2 font-bold">
+      <h5 className="flex items-center justify-between py-2 font-semibold">
         <span>{title}</span>
       </h5>
-      <div className="text-500 flex flex-col gap-1 py-1">
+      <div className="flex flex-col gap-1 py-1">
         {list.map((listItem) => {
           return !listItem.link ? (
             <span key={listItem.title} className="leading-none">
