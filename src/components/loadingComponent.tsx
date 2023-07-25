@@ -15,13 +15,24 @@ const LoadingComponent: FC = () => {
         !loading.loading ? "hidden" : "z-[999]"
       )}
     >
-      <Image
-        src="/assets/SanskrutiLoadingAnimation.gif"
-        alt="Sanskruti Logo"
-        width={500}
-        height={500}
-        className="h-full max-h-screen w-full object-contain object-center"
-      />
+      <div className="relative isolate h-fit w-fit">
+        <Image
+          src="/assets/sanskrutiLoadingCutout.png"
+          alt="Sanskruti Logo"
+          width={500}
+          height={500}
+          className="h-full max-h-[15rem] w-full object-contain object-center"
+        />
+        <div
+          style={{
+            width: `${
+              loading.total ? (loading.complete / loading.total) * 100 : 0
+            }%`,
+          }}
+          className="absolute left-0 top-0 -z-10 h-full bg-sanskrutiRed"
+        ></div>
+        <div className="absolute left-0 top-0 -z-20 h-full w-full bg-slate-400"></div>
+      </div>
     </div>
   );
 };
