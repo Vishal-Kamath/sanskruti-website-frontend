@@ -39,7 +39,10 @@ const CategoryBar: FC = () => {
   }, []);
 
   return (
-    <div id="category" className="w-full bg-white px-[3vw]">
+    <div
+      id="category"
+      className="w-full bg-gradient-to-t from-white via-orange-200 via-20% to-white to-95% px-[3vw]"
+    >
       <div className="flex flex-col gap-3">
         <UIHeader title="Shop by Category" />
         <SwiperContainer
