@@ -48,14 +48,14 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
 
   return (
     <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
-      <h5 className="flex items-center justify-between text-[16px] font-medium capitalize sm:text-sm sm:font-normal">
+      <h5 className="flex items-center justify-between text-lg font-medium capitalize sm:text-[16px] sm:font-normal">
         {varientName}
       </h5>
       <div className="flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400">
         {value.map((valueItem) => (
           <span
             key={valueItem}
-            className="flex items-center gap-4 font-extralight capitalize sm:gap-3 sm:text-xs"
+            className="flex items-center gap-4 font-extralight capitalize max-sm:text-[16px] sm:gap-3"
           >
             <div className="relative h-[14px] w-[14px]">
               <input

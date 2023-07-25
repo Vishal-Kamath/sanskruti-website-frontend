@@ -49,7 +49,7 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
   return (
     <span
       key={sortItem.name}
-      className="flex items-center gap-4 font-extralight sm:gap-3 sm:text-xs"
+      className="flex items-center gap-4 font-extralight max-sm:text-[16px] sm:gap-3"
     >
       <div className="relative h-[14px] w-[14px]">
         <input
@@ -95,7 +95,7 @@ const SortItem: FC = () => {
 
   return (
     <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
-      <h5 className="flex items-center justify-between text-[16px] font-medium sm:text-sm sm:font-normal">
+      <h5 className="flex items-center justify-between text-lg font-medium sm:text-[16px] sm:font-normal">
         Sort
       </h5>
       <div className="flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400">

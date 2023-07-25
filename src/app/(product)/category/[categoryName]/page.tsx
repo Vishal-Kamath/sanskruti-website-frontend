@@ -67,7 +67,9 @@ const CategoryPage: FC = () => {
         <FilterBar setDesc={setDesc} />
         <div className="flex w-full flex-col gap-3 px-[3vw] pb-10 pt-5 text-justify sm:pl-4">
           {/* Descriptiom */}
-          <div className="font-semibold capitalize">{route.join(" / ")}</div>
+          <div className="text-lg font-semibold capitalize">
+            {route.join(" / ")}
+          </div>
           <div className="text-gray-500">{desc}</div>
 
           <div className="grid grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">

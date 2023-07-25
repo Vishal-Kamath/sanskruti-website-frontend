@@ -100,10 +100,10 @@ const ProductCard: FC<Props> = ({ className, product }) => {
         </div>
 
         <div className="flex h-full flex-col gap-2">
-          <div className="text-[0.8rem] font-medium text-gray-500">
+          <div className="text-sm font-medium text-gray-500">
             {product.name}
           </div>
-          <div className="mt-auto flex items-center gap-2 text-sm font-[550]">
+          <div className="mt-auto flex items-center gap-2 text-[16px] font-[550]">
             {!!product.varients.variations[0]?.discount ? (
               <div className="flex items-baseline gap-2">
                 <span>&#8377;{price}</span>
@@ -161,11 +161,11 @@ export const DummyProductCard: FC<DummyProps> = ({ className }) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="text-[0.8rem] font-medium text-gray-500">
+          <div className="text-sm font-medium text-gray-500">
             Mint Green Printed Palazzo Suit In Chanderi With Embroidery Mint
             Green Printed
           </div>
-          <div className="flex items-center gap-2 text-sm font-[550]">
+          <div className="flex items-center gap-2 text-[16px] font-[550]">
             <span>&#8377;4,000</span>
             <s className="text-gray-500">&#8377;4,440</s>
           </div>
