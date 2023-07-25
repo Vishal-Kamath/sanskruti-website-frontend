@@ -1,12 +1,11 @@
+import UIHeader from "@/components/common/header";
 import { NextPage } from "next";
 
 const TermsAndConditionsPage: NextPage = () => {
   return (
-    <div className="flex flex-col gap-5 px-[3vw] pb-10 pt-36">
-      <h1 className="flex items-baseline gap-4 border-b-2 border-gray-300 py-5">
-        <span className="text-xl font-bold">TERMS AND CONDITIONS</span>
-      </h1>
-      <div className="text-md text-justify">
+    <div className="mx-auto flex max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-lg">
+      <UIHeader title="TERMS AND CONDITIONS" />
+      <div className="text-justify">
         Welcome to Sanskruti.This document is an electronic record in terms of
         Information Technology Act, 2000 and published in accordance with the
         provisions of Rule 3 of the Information Technology (Intermediaries

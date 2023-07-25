@@ -1,12 +1,11 @@
 import UIHeader from "@/components/common/header";
 import { NextPage } from "next";
 
-const AboutUsPage: NextPage = () => {
+const PaymentPolicyPage: NextPage = () => {
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-lg">
-      <UIHeader title="ABOUT US" />
+      <UIHeader title="PAYMENT POLICY" />
       <div className="text-justify text-lg">
-        <div className="font-semibold">Sanskruti nx</div>
         Welcome to Sanskruti.This document is an electronic record in terms of
         Information Technology Act, 2000 and published in accordance with the
         provisions of Rule 3 of the Information Technology Intermediaries
@@ -57,4 +56,4 @@ const AboutUsPage: NextPage = () => {
   );
 };
 
-export default AboutUsPage;
+export default PaymentPolicyPage;

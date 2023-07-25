@@ -1,11 +1,11 @@
 import UIHeader from "@/components/common/header";
 import { NextPage } from "next";
 
-const ReturnPolicyPage: NextPage = () => {
+const ShippingPage: NextPage = () => {
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-lg">
-      <UIHeader title="RETURN POLICY" />
-      <div className="text-justify text-lg">
+      <UIHeader title="SHIPPING POLICY" />
+      <div className="text-justify">
         <div className="font-semibold">Sanskruti nx</div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, magni
         culpa officia beatae rem non qui quod illo amet consequuntur vero ipsum
@@ -22,4 +22,4 @@ const ReturnPolicyPage: NextPage = () => {
   );
 };
 
-export default ReturnPolicyPage;
+export default ShippingPage;

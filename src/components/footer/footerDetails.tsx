@@ -28,11 +28,11 @@ const FooterDetails: FC = () => {
             {
               inWebsiteLink: false,
               title: "Blog",
-              link: "#",
+              link: "/blog",
             },
             {
               inWebsiteLink: true,
-              title: "testimonial",
+              title: "Testimonial",
               link: "/testimonial",
             },
           ]}
@@ -53,8 +53,18 @@ const FooterDetails: FC = () => {
             },
             {
               inWebsiteLink: true,
+              title: "Customization",
+              link: "/customFitting",
+            },
+            {
+              inWebsiteLink: true,
               title: "Return Policy",
               link: "/return",
+            },
+            {
+              inWebsiteLink: true,
+              title: "Payment Policy",
+              link: "/paymentPolicy",
             },
             {
               inWebsiteLink: true,
