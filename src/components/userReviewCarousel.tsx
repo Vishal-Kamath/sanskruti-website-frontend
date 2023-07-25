@@ -12,6 +12,7 @@ import Image from "next/image";
 import { userReviews } from "@/data/userReview";
 import UIHeader from "./common/header";
 import SwiperContainer from "./common/swiperContainer";
+import { FcGoogle } from "react-icons/fc";
 
 const UserReviewCarousel: FC = () => {
   const [slideNum, setSlideNum] = useState(3);
@@ -51,21 +52,23 @@ const UserReviewCarousel: FC = () => {
         >
           {userReviews.map((review, index) => (
             <SwiperSlide key={review.image + index}>
-              <div className="flex w-full flex-col items-center gap-5 overflow-hidden rounded-xl border-[1px] border-gray-400 px-5 py-12">
-                <Image
-                  src={review.image}
-                  alt={review.name}
-                  width={500}
-                  height={500}
-                  className="h-[5rem] w-[5rem] rounded-full object-cover object-top"
-                />
+              <div className="flex w-full flex-col items-center gap-5 overflow-hidden rounded-xl border-[1px] border-gray-400 px-5 py-7">
+                <div className="flex w-full items-center gap-4">
+                  <Image
+                    src={review.image}
+                    alt={review.name}
+                    width={500}
+                    height={500}
+                    className="h-[3rem] w-[3rem] rounded-full object-cover object-top"
+                  />
+                  <div className="text-lg font-medium">{review.name}</div>
+                  <FcGoogle className="ml-auto h-6 w-6" />
+                </div>
                 <div className="flex w-full flex-col items-center justify-center gap-5">
-                  <i className="text-center text-lg text-gray-700">
+                  <i className="text-left text-lg text-gray-700">
                     &quot;{review.review}&quot;
                   </i>
-                  <div className="border-t-4 border-slate-400 pt-5 text-[16px]">
-                    {review.name}
-                  </div>
+                  <div className="h-1 w-16 bg-slate-300"></div>
                 </div>
               </div>
             </SwiperSlide>
