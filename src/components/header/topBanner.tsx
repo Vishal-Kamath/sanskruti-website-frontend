@@ -7,6 +7,7 @@ import { Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/autoplay";
 import Image from "next/image";
+import Link from "next/link";
 
 const TopBanner: React.FC = () => {
   return (
@@ -18,16 +19,22 @@ const TopBanner: React.FC = () => {
         disableOnInteraction: false,
       }}
       slidesPerView={1}
-      className="flex w-full bg-slate-200 text-black"
+      className="flex w-full bg-slate-100 text-black"
     >
       <SwiperSlide>
-        <div className="flex h-8 items-center justify-center gap-2 text-sm">
+        <a
+          href="tel:911234567890"
+          className="flex h-8 items-center justify-center gap-2 text-sm"
+        >
           <FiPhoneCall />
           <span>+91-1234567890</span>
-        </div>
+        </a>
       </SwiperSlide>
       <SwiperSlide>
-        <div className="flex h-8 items-center justify-center gap-2 text-sm">
+        <Link
+          href="/shipping"
+          className="flex h-8 items-center justify-center gap-2 text-sm"
+        >
           <Image
             src="/assets/truck.svg"
             alt="Shipping truck"
@@ -36,16 +43,16 @@ const TopBanner: React.FC = () => {
             className="h-fit w-fit"
           />
           <span>Free Shipping in India</span>
-        </div>
+        </Link>
       </SwiperSlide>
       <SwiperSlide>
-        <a
-          href="#visitOurStore"
+        <Link
+          href="/store"
           className="flex h-8 items-center justify-center gap-2 text-sm"
         >
           <MdLocationOn className="text-lg" />
           <span>Visit Our Store</span>
-        </a>
+        </Link>
       </SwiperSlide>
     </Swiper>
   );

@@ -30,7 +30,9 @@ const StorePage: FC = () => {
                 target="_blank"
                 href="https://goo.gl/maps/LaGnDHJ6WhTNJDsGA"
               >
-                <UIButton className="w-fit px-3">Get Directions</UIButton>
+                <UIButton className="w-fit border-[1px] border-gray-400 px-3">
+                  Get Directions
+                </UIButton>
               </a>
             </div>
             <UIGoogleMap

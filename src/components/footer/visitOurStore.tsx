@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { FC } from "react";
 import { BiLinkExternal } from "react-icons/bi";
+import UIHeader from "../common/header";
+import Link from "next/link";
 
 const VisitOurStore: FC = () => {
   return (
@@ -8,10 +10,9 @@ const VisitOurStore: FC = () => {
       id="visitOurStore"
       className="isolate flex flex-col gap-4 px-[3vw] py-5"
     >
-      <div className="text-center text-lg font-bold">VISIT OUR STORE</div>
-      <a
-        target="_blank"
-        href="https://goo.gl/maps/LaGnDHJ6WhTNJDsGA"
+      <UIHeader title="Visit our Store" />
+      <Link
+        href={"/store"}
         title="Shop No. 2, 3, 4, Yashoda Vinayak Sankul, Agra Rd, Opposite Suchak Petrol Pump, Kalyan(West), Maharashtra 421301"
         className="relative w-full overflow-hidden"
       >
@@ -33,7 +34,7 @@ const VisitOurStore: FC = () => {
           View Details
           <BiLinkExternal />
         </div>
-      </a>
+      </Link>
     </div>
   );
 };
