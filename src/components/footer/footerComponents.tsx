@@ -1,6 +1,6 @@
 "use client";
 
-import { category, selectCategory } from "@/redux/slice/category.slice";
+import { selectCategory } from "@/redux/slice/category.slice";
 import { useAppSelector } from "@/redux/store/hooks";
 import Link from "next/link";
 import { FC } from "react";
@@ -31,7 +31,7 @@ export const FooterNewArrivals: FC = () => {
   const { categories } = useAppSelector(selectCategory);
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="font-semibold">NEW ARRIVAL'S</h3>
+      <h3 className="font-semibold">NEW ARRIVAL&apos;S</h3>
       <div className="flex flex-wrap">
         {categories.map((category, index) => (
           <Link
@@ -51,7 +51,7 @@ export const FooterBestSellers: FC = () => {
   const { categories } = useAppSelector(selectCategory);
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="font-semibold">BEST SELLER'S</h3>
+      <h3 className="font-semibold">BEST SELLER&apos;S</h3>
       <div className="flex flex-wrap">
         {categories.map((category, index) => (
           <Link
