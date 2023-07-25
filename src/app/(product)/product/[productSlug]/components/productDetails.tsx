@@ -82,17 +82,22 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
     searchParams.toString() ? `?${searchParams.toString()}` : ""
   }`;
 
+  const titleForLinks = `Shop ${product.name} at Sanskruti nx`;
+
   return (
     <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
-      <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold">{product?.name}</h1>
-        <h3 className="text-md font-semibold text-gray-600">
-          {product?.brand_name}
-        </h3>
-      </div>
-
-      <div>
-        <LinksButton deepLinkUrl={currentURL} imageLink={product.images[0]} />
+      <div className="flex justify-between gap-3">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl font-bold">{product?.name}</h1>
+          <h3 className="text-md font-semibold text-gray-600">
+            {product?.brand_name}
+          </h3>
+        </div>
+        <LinksButton
+          deepLinkUrl={currentURL}
+          imageLink={product.images[0]}
+          title={titleForLinks}
+        />
       </div>
 
       <div className="flex flex-col gap-1">
@@ -133,7 +138,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         ))}
       </div>
 
-      <div className="isolate z-20 flex max-w-md gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
+      <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
         {isAuthenticated ? (
           <>
             <UIButton
@@ -151,14 +156,14 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
             href={`/auth/login?redirect=${encodeURIComponent(pathname)}`}
             className="w-full"
           >
-            <UIButton className="w-full bg-white text-lg font-semibold text-black">
+            <UIButton className="mx-auto w-full max-w-sm bg-white text-lg font-semibold text-black">
               SIGN IN
             </UIButton>
           </Link>
         )}
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col text-lg">
         <DropdownComponent main="Product Description" open>
           <span>{product?.description || ""}</span>
         </DropdownComponent>

@@ -2,7 +2,8 @@ import UIButton from "@/components/common/button";
 import { cn } from "@/utils/lib";
 import { FC, useState } from "react";
 import { AiOutlineLink } from "react-icons/ai";
-import { BsFacebook, BsPinterest, BsTwitter, BsWhatsapp } from "react-icons/bs";
+import { BiLogoFacebook } from "react-icons/bi";
+import { BsPinterest, BsTwitter, BsWhatsapp } from "react-icons/bs";
 import { IoMdShareAlt } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 import {
@@ -12,10 +13,11 @@ import {
   PinterestShareButton,
 } from "react-share";
 
-const LinksButton: FC<{ deepLinkUrl: string; imageLink: string }> = ({
-  deepLinkUrl,
-  imageLink,
-}) => {
+const LinksButton: FC<{
+  deepLinkUrl: string;
+  imageLink: string;
+  title: string;
+}> = ({ deepLinkUrl, imageLink, title }) => {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -27,34 +29,35 @@ const LinksButton: FC<{ deepLinkUrl: string; imageLink: string }> = ({
 
   return (
     <div>
-      <UIButton onClick={() => setOpen(true)} className="flex gap-2 p-2">
-        <IoMdShareAlt className="h-4 w-4" />
-        Share
-      </UIButton>
+      <IoMdShareAlt
+        onClick={() => setOpen(true)}
+        className="h-7 w-7 cursor-pointer rounded-full border-[1px] border-gray-500 p-1 hover:outline hover:outline-4 hover:outline-slate-200"
+      />
       <div
         className={cn(
-          "fixed left-0 top-0 z-[100] flex min-h-screen w-full items-center justify-center bg-black bg-opacity-25 p-[3vw]",
+          "fixed left-0 top-0 z-[100] flex min-h-screen w-full items-center justify-center bg-black bg-opacity-30 p-[3vw]",
           !open && "hidden"
         )}
       >
-        <div className="relative flex w-full max-w-[20rem] flex-col items-center gap-6 rounded-sm bg-white p-6">
+        <div className="relative flex w-full max-w-md flex-col items-center gap-6 rounded-lg bg-white p-8">
           <RxCross1
             onClick={() => setOpen(false)}
-            className="absolute right-2 top-2 h-5 w-5"
+            className="absolute right-4 top-4 h-5 w-5"
           />
 
-          <h4 className="text-xl font-semibold">Share</h4>
+          <h4 className="text-xl font-semibold">SHARE</h4>
 
           <div className="flex h-9 w-full gap-1">
             <input
               type="text"
-              value={deepLinkUrl}
-              contentEditable={false}
-              className="h-9 w-full rounded-md border-[1px] border-gray-300 p-2 outline-none"
+              defaultValue={deepLinkUrl}
+              readOnly
+              className="h-11 w-full rounded-md border-[1px] border-gray-300 px-3 text-[16px] outline-none"
             />
             <AiOutlineLink
+              title="Add to clipboard"
               className={cn(
-                "h-9 w-9 cursor-pointer rounded-md border-[1px] p-2",
+                "h-11 w-11 cursor-pointer rounded-md border-[1px] p-2",
                 copied
                   ? "border-green-600 bg-green-100 text-green-600"
                   : "border-gray-300"
@@ -63,21 +66,53 @@ const LinksButton: FC<{ deepLinkUrl: string; imageLink: string }> = ({
             />
           </div>
 
-          <div className="flex w-full justify-evenly [&>*>*]:h-7 [&>*>*]:w-7">
-            <FacebookShareButton url={deepLinkUrl}>
-              <BsFacebook className="fill-facebook" />
+          <div className="grid w-full grid-cols-2 gap-2 text-lg [&>*]:w-full">
+            <FacebookShareButton
+              url={deepLinkUrl}
+              quote={title}
+              hashtag="#sanskrutinx"
+            >
+              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-facebook text-white">
+                <BiLogoFacebook
+                  title="Share on facebook"
+                  className="h-7 w-7 fill-white"
+                />
+                Facebook
+              </UIButton>
             </FacebookShareButton>
 
-            <TwitterShareButton url={deepLinkUrl}>
-              <BsTwitter className="fill-twitter" />
+            <TwitterShareButton title={title} hashtags={[]} url={deepLinkUrl}>
+              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-twitter text-white">
+                <BsTwitter
+                  title="Share on twitter"
+                  className="h-7 w-7 fill-white"
+                />
+                Twitter
+              </UIButton>
             </TwitterShareButton>
 
-            <WhatsappShareButton url={deepLinkUrl}>
-              <BsWhatsapp className="fill-whatsapp" />
+            <WhatsappShareButton title={title} url={deepLinkUrl}>
+              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-whatsapp text-white">
+                <BsWhatsapp
+                  title="Share on whatsapp"
+                  className="h-7 w-7 fill-white"
+                />
+                Whatsapp
+              </UIButton>
             </WhatsappShareButton>
 
-            <PinterestShareButton url={deepLinkUrl} media={imageLink}>
-              <BsPinterest className="fill-pinterest" />
+            <PinterestShareButton
+              description={title}
+              url={deepLinkUrl}
+              media={imageLink}
+            >
+              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-pinterest text-white">
+                <BsPinterest
+                  title="Share on pinterest"
+                  className="h-7 w-7 fill-white"
+                />
+                Pinterest
+              </UIButton>
             </PinterestShareButton>
           </div>
         </div>

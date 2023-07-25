@@ -38,7 +38,7 @@ const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
         />
       )}
       <div className="mb-10 flex flex-col gap-6 pt-40">
-        <div className="flex items-start gap-5 max-md:flex-col">
+        <div className="mx-auto flex w-full max-w-7xl items-start gap-5 max-md:flex-col">
           <ProductImageDisplay
             setFullscreenImageOpen={setFullscreenImageOpen}
             images={product?.images || []}

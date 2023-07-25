@@ -14,7 +14,7 @@ const DropdownComponent: React.FC<{
   return (
     <div className="flex flex-col border-b-2 border-gray-300">
       <button
-        className="flex items-center justify-between py-3 font-bold outline-none"
+        className="flex items-center justify-between py-2 font-bold outline-none"
         onClick={() => setCardOpen((openState) => !openState)}
       >
         <span>{main}</span>
@@ -23,7 +23,7 @@ const DropdownComponent: React.FC<{
         </span>
       </button>
       <div
-        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden pb-3 text-gray-600 ${classname} ${
+        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden pb-3 text-[16px] text-gray-600 ${classname} ${
           !cardOpen && "hidden"
         }`}
       >
