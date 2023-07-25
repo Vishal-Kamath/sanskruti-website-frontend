@@ -13,42 +13,52 @@ const Home: NextPage = () => {
     <main className="flex flex-col gap-5 pb-10 pt-36">
       <Carousel />
 
-      <div className="flex justify-evenly pb-5">
-        <Link href="#" className="flex h-full flex-col items-center gap-2">
+      <div className="flex justify-evenly py-5">
+        <Link
+          href="/shipping"
+          className="flex h-full flex-col items-center gap-2"
+        >
           <Image
-            className="h-8 w-8 object-center lg:h-10 lg:w-10"
+            className="h-8 w-8 object-center lg:h-14 lg:w-14"
             src="/assets/shippingTruck.svg"
             alt="shipping truck"
             width={50}
             height={50}
           />
-          <div className="max-lg:text-xs">Free Shipping</div>
+          <div className="max-lg:text-xs lg:text-lg">Free Shipping</div>
         </Link>
-        <Link href="#" className="flex h-full flex-col items-center gap-2">
+        <Link
+          href="/return"
+          className="flex h-full flex-col items-center gap-2"
+        >
           <Image
-            className="h-8 w-8 object-center lg:h-10 lg:w-10"
+            className="h-8 w-8 object-center lg:h-14 lg:w-14"
             src="/assets/easyReturn.svg"
             alt="shipping truck"
             width={50}
             height={50}
           />
-          <div className="max-lg:text-xs">Easy Return</div>
+          <div className="max-lg:text-xs lg:text-lg">Easy Return</div>
         </Link>
-        <Link href="#" className="flex h-full flex-col items-center gap-2">
+        <Link
+          href="/customFitting"
+          className="flex h-full flex-col items-center gap-2"
+        >
           <Image
-            className="h-8 w-8 object-center lg:h-10 lg:w-10"
+            className="h-8 w-8 object-center lg:h-14 lg:w-14"
             src="/assets/customFitting.svg"
             alt="easy return"
             width={50}
             height={50}
           />
-          <div className="max-lg:text-xs">Custom Fitting</div>
+          <div className="max-lg:text-xs lg:text-lg">Custom Fitting</div>
         </Link>
       </div>
 
       <CategoryBar />
-      <ProductCarousel />
       <SubBanner />
+      <ProductCarousel />
+      <ProductCarousel />
       <ProductCarousel />
       <UserReviewCarousel />
 
