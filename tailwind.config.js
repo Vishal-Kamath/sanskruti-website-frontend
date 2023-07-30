@@ -15,7 +15,7 @@ module.exports = {
         twitter: "#1DA1F2",
         whatsapp: "#25D366",
         pinterest: "#E60023",
-        sanskrutiRed: "#da2335",
+        sanskrutiRed: "#ED1C24",
         sanskrutiRedLight: "#da233555",
       },
       boxShadow: {

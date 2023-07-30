@@ -121,18 +121,18 @@ const Header: FC = () => {
             )}
           </div>
 
-          <Link href="/" className="h-full flex-shrink-0 py-1">
+          <Link href="/" className="h-full w-fit flex-shrink-0 py-1">
             <Image
-              src="/assets/logo.png"
+              src="/assets/sanskruti-logo.svg"
               alt="Sanskruti Logo"
               width={100}
               height={100}
-              className="aspect-auto h-full w-full"
+              className="aspect-auto md:h-full md:w-full md:max-w-[10rem]"
             />
           </Link>
         </div>
 
-        <div className="flex items-center gap-3 md:w-full">
+        <div className="flex h-full items-center gap-3 md:w-full">
           <SearchBar
             classname="ml-auto max-md:hidden min-w-[20rem]"
             searchFocused={searchFocused}
