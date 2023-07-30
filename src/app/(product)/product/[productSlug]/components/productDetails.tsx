@@ -16,9 +16,11 @@ import {
 } from "@/redux/slice/notification.slice";
 import { usePathname, useSearchParams } from "next/navigation";
 import LinksButton from "./links";
+import { useRouter } from "next/navigation";
 
 const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const isAuthenticated = useAppSelector(selectisAuthenticated);
 
@@ -37,14 +39,14 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         JSON.stringify(variations)
     ) || product.varients.variations[0];
 
-  const addToCart = () => {
+  const addToCart = async () => {
     const body = {
       productId: product._id,
       quantity: 1,
       variant: combination.combinationString,
     };
 
-    axios
+    await axios
       .post<NotificationType>(
         `${process.env.ENDPOINT}/api/v1/user/cart`,
         body,
@@ -74,6 +76,11 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         );
         dispatch(showNotification());
       });
+  };
+
+  const handleBuyNow = async () => {
+    await addToCart();
+    router.push("/user/cart");
   };
 
   const pathname = usePathname();
@@ -147,7 +154,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
             >
               ADD TO CART
             </UIButton>
-            <UIButton className="w-full bg-black text-lg font-semibold text-white">
+            <UIButton
+              className="w-full bg-black text-lg font-semibold text-white"
+              onClick={handleBuyNow}
+            >
               BUY NOW
             </UIButton>
           </>
