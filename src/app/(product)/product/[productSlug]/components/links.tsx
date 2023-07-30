@@ -1,4 +1,3 @@
-import UIButton from "@/components/common/button";
 import { cn } from "@/utils/lib";
 import { FC, useState } from "react";
 import { AiOutlineLink } from "react-icons/ai";
@@ -72,33 +71,33 @@ const LinksButton: FC<{
               quote={title}
               hashtag="#sanskrutinx"
             >
-              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-facebook text-white">
+              <div className="flex w-full cursor-pointer justify-center gap-2 rounded-md border-0 bg-facebook p-2 text-white">
                 <BiLogoFacebook
                   title="Share on facebook"
                   className="h-7 w-7 fill-white"
                 />
                 Facebook
-              </UIButton>
+              </div>
             </FacebookShareButton>
 
             <TwitterShareButton title={title} hashtags={[]} url={deepLinkUrl}>
-              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-twitter text-white">
+              <div className="flex w-full cursor-pointer justify-center gap-2 rounded-md border-0 bg-twitter p-2 text-white">
                 <BsTwitter
                   title="Share on twitter"
                   className="h-7 w-7 fill-white"
                 />
                 Twitter
-              </UIButton>
+              </div>
             </TwitterShareButton>
 
             <WhatsappShareButton title={title} url={deepLinkUrl}>
-              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-whatsapp text-white">
+              <div className="flex w-full cursor-pointer justify-center gap-2 rounded-md border-0 bg-whatsapp p-2 text-white">
                 <BsWhatsapp
                   title="Share on whatsapp"
                   className="h-7 w-7 fill-white"
                 />
                 Whatsapp
-              </UIButton>
+              </div>
             </WhatsappShareButton>
 
             <PinterestShareButton
@@ -106,13 +105,13 @@ const LinksButton: FC<{
               url={deepLinkUrl}
               media={imageLink}
             >
-              <UIButton className="flex w-full gap-2 rounded-md border-0 bg-pinterest text-white">
+              <div className="flex w-full cursor-pointer justify-center gap-2 rounded-md border-0 bg-pinterest p-2 text-white">
                 <BsPinterest
                   title="Share on pinterest"
                   className="h-7 w-7 fill-white"
                 />
                 Pinterest
-              </UIButton>
+              </div>
             </PinterestShareButton>
           </div>
         </div>
