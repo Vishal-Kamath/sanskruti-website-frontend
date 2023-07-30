@@ -189,13 +189,13 @@ const Account: FC = () => {
   ];
 
   return (
-    <div className="flex gap-2">
+    <div className="flex h-full items-center gap-2">
       {isAuthenticated && (
         <>
           <Link
             href="/user/wishlist"
             title="Wishlist"
-            className="relative flex items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100 max-md:hidden"
+            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100 max-md:hidden"
           >
             <AiOutlineHeart className="h-6 w-6" />
             <div
@@ -212,7 +212,7 @@ const Account: FC = () => {
           <Link
             href="/user/cart"
             title="Cart"
-            className="relative flex items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100 max-md:hidden"
+            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100 max-md:hidden"
           >
             <MdShoppingCart className="h-6 w-6" />
             <div
@@ -228,7 +228,7 @@ const Account: FC = () => {
         </>
       )}
       <div
-        className="relative h-full"
+        className="relative flex h-full items-center"
         onMouseOver={openDropdown}
         onMouseLeave={closeDropdown}
       >
@@ -249,7 +249,7 @@ const Account: FC = () => {
 
         <div
           className={cn(
-            "absolute right-0 top-10 z-40 pt-2",
+            "absolute right-0 top-14 z-40 pt-2",
             !dropdownOpen && "hidden"
           )}
         >
