@@ -6,9 +6,11 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 import "swiper/css";
 import "swiper/css/navigation";
+import { cn } from "@/utils/lib";
 
 const ProductImageDisplay: React.FC<{
   images: string[];
+  imageIndex: number;
   handleNext: () => void;
   handlePrev: () => void;
   handleSet: (index: number) => void;
@@ -17,6 +19,7 @@ const ProductImageDisplay: React.FC<{
   onIndexChange: VoidFunction;
 }> = ({
   images,
+  imageIndex,
   handleNext,
   handlePrev,
   handleSet,
@@ -66,7 +69,10 @@ const ProductImageDisplay: React.FC<{
             width={50}
             height={50}
             key={index}
-            className="aspect-auto h-20 w-auto"
+            className={cn(
+              "aspect-auto h-20 w-auto",
+              imageIndex !== index && "opacity-70"
+            )}
             onClick={() => handleSet(index)}
           />
         ))}

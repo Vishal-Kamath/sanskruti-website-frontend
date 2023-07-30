@@ -43,6 +43,9 @@ const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
   return (
     <>
       <ProductImageFullScreen
+        images={product?.images || []}
+        imageIndex={imageIndex}
+        handleSet={handleSet}
         image={product?.images[imageIndex] || ""}
         handleNext={handleNext}
         handlePrev={handlePrev}
@@ -54,6 +57,7 @@ const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
           <ProductImageDisplay
             setFullscreenImageOpen={setFullscreenImageOpen}
             images={product?.images || []}
+            imageIndex={imageIndex}
             sliderRef={sliderRef}
             handleNext={handleNext}
             handlePrev={handlePrev}

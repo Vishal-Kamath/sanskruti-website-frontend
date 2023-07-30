@@ -4,14 +4,27 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 import { cn } from "@/utils/lib";
 import ImageZoom from "./imageZoom";
+import Image from "next/image";
 
 const ProductImageFullScreen: React.FC<{
+  images: string[];
+  imageIndex: number;
   image: string;
+  handleSet: (index: number) => void;
   handleNext: () => void;
   handlePrev: () => void;
   setFullscreenImageOpen: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
-}> = ({ image, handleNext, handlePrev, setFullscreenImageOpen, className }) => {
+}> = ({
+  image,
+  handleNext,
+  handleSet,
+  imageIndex,
+  images,
+  handlePrev,
+  setFullscreenImageOpen,
+  className,
+}) => {
   return (
     <div
       className={cn(
@@ -19,8 +32,31 @@ const ProductImageFullScreen: React.FC<{
         className
       )}
     >
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex h-full max-h-screen w-full flex-col items-center justify-center gap-3 py-4">
         <ImageZoom src={image} alt="product image" />
+        <Image
+          width={500}
+          height={500}
+          src={image}
+          alt="product image"
+          className="h-full object-contain md:hidden"
+        />
+        <div className="custom_scrollbar flex h-fit max-w-[50vw] gap-2 overflow-x-auto overflow-y-hidden max-md:px-[3vw]">
+          {images.map((imageSrc, index) => (
+            <Image
+              src={imageSrc}
+              alt={index + " product image"}
+              width={50}
+              height={50}
+              key={index}
+              className={cn(
+                "aspect-auto h-20 w-auto",
+                imageIndex !== index && "opacity-60"
+              )}
+              onClick={() => handleSet(index)}
+            />
+          ))}
+        </div>
       </div>
       <button
         onClick={handlePrev}

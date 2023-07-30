@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { FC, useRef, useState } from "react";
 
 const ImageZoom: FC<{ src: string; alt: string }> = ({ src, alt }) => {
@@ -33,7 +34,7 @@ const ImageZoom: FC<{ src: string; alt: string }> = ({ src, alt }) => {
 
   return (
     <div
-      className={`relative h-screen w-fit cursor-zoom-in overflow-hidden`}
+      className={`relative h-full w-fit cursor-zoom-in overflow-hidden max-md:hidden`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMouseMove={handleMouseMove}
@@ -41,7 +42,9 @@ const ImageZoom: FC<{ src: string; alt: string }> = ({ src, alt }) => {
         if (ref) containerRef.current = ref;
       }}
     >
-      <img
+      <Image
+        width={500}
+        height={500}
         src={src}
         alt={alt}
         className="h-full object-contain"
