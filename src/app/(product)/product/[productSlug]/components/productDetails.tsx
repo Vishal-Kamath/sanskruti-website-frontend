@@ -164,10 +164,76 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
       </div>
 
       <div className="flex flex-col text-lg">
-        <DropdownComponent main="Product Description" open>
+        <DropdownComponent main="Product Details" open>
           <span>{product?.description || ""}</span>
+          <table className="w-full border-none">
+            <tbody>
+              <tr>
+                <td>Name: </td>
+                <td>{product?.name}</td>
+              </tr>
+              <tr>
+                <td>Category: </td>
+                <td>{product?.MainCategory}</td>
+              </tr>
+              <tr>
+                <td>Sub Category: </td>
+                <td>{product?.SubCategory}</td>
+              </tr>
+            </tbody>
+          </table>
         </DropdownComponent>
 
+        <DropdownComponent main="Prices">
+          <table className="border-none">
+            <thead>
+              <tr>
+                <th className="text-left capitalize">
+                  {filteredAttributes.map((data) => data.name).join(", ")}
+                </th>
+                <th className="text-center">Discount</th>
+                <th className="text-right">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {product.varients.variations.map((variant, index) => (
+                <tr
+                  key={
+                    variant.combinationString.toString() + index + product.name
+                  }
+                  className="text-sm"
+                >
+                  <td className="text-left capitalize">
+                    {variant.combinationString.join(", ")}
+                  </td>
+                  {variant?.discount ? (
+                    <td className="text-center text-green-400">{`-${variant.discount}%`}</td>
+                  ) : (
+                    <td className="text-center">-</td>
+                  )}
+                  {variant?.discount ? (
+                    <td className="flex items-baseline justify-end gap-2">
+                      <span>
+                        &#8377;
+                        {variant?.price *
+                          ((100 - (variant?.discount || 0)) / 100)}
+                      </span>
+                      <s className="text-gray-500">
+                        &#8377;
+                        {variant?.price}
+                      </s>
+                      <span className="text-red-800">
+                        ({variant?.discount}% OFF)
+                      </span>
+                    </td>
+                  ) : (
+                    <td className="text-right">&#8377;{variant?.price}</td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </DropdownComponent>
         <DropdownComponent main="Style & Fit Tips">
           <span>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum

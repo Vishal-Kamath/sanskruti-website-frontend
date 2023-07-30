@@ -1,49 +1,64 @@
 "use client";
 
 import { ProductType } from "@/components/header/header";
-import { FC, useState } from "react";
+import { FC, useCallback, useRef, useState } from "react";
 import ProductImageFullScreen from "./productImageFullScreen";
 import ProductImageDisplay from "./productImagesDisplay";
 import ProductDetails from "./productDetails";
 import ProductCarousel from "@/components/common/productCarousel";
+import { SwiperRef, Swiper } from "swiper/react";
+import { cn } from "@/utils/lib";
 
 const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
 
-  const prevSlide = () => {
-    if (!product) return;
-    const isFirstSlide = currentImageIndex === 0;
-    const newIndex = isFirstSlide
-      ? product.images.length - 1
-      : currentImageIndex - 1;
-    setCurrentImageIndex(newIndex);
-  };
+  const sliderRef = useRef<SwiperRef>(null);
+  const [imageIndex, setImageIndex] = useState(
+    sliderRef.current?.swiper.realIndex
+      ? sliderRef.current?.swiper.realIndex
+      : 0
+  );
 
-  const nextSlide = () => {
-    if (!product) return;
-    const isLastSlide = currentImageIndex === product.images.length - 1;
-    const newIndex = isLastSlide ? 0 : currentImageIndex + 1;
-    setCurrentImageIndex(newIndex);
-  };
+  const handleSet = useCallback((index: number) => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slideTo(index);
+  }, []);
+
+  const handlePrev = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slidePrev();
+  }, []);
+
+  const handleNext = useCallback(() => {
+    if (!sliderRef.current) return;
+    sliderRef.current.swiper.slideNext();
+  }, []);
+
+  const onIndexChange = () =>
+    sliderRef.current &&
+    sliderRef.current.swiper.realIndex !== null &&
+    sliderRef.current.swiper.realIndex !== undefined &&
+    setImageIndex(sliderRef.current.swiper.realIndex);
 
   return (
     <>
-      {fullscreenImageOpen && (
-        <ProductImageFullScreen
-          imageSrc={product?.images[currentImageIndex] || ""}
-          nextSlide={nextSlide}
-          prevSlide={prevSlide}
-          setFullscreenImageOpen={setFullscreenImageOpen}
-        />
-      )}
-      <div className="mb-10 flex flex-col gap-6 pt-40">
+      <ProductImageFullScreen
+        image={product?.images[imageIndex] || ""}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+        setFullscreenImageOpen={setFullscreenImageOpen}
+        className={cn(!fullscreenImageOpen && "hidden")}
+      />
+      <div className="mb-10 flex flex-col gap-6 pt-36 md:pt-40">
         <div className="mx-auto flex w-full max-w-7xl items-start gap-5 max-md:flex-col">
           <ProductImageDisplay
             setFullscreenImageOpen={setFullscreenImageOpen}
             images={product?.images || []}
-            currentImageIndex={currentImageIndex}
-            setCurrentImageIndex={setCurrentImageIndex}
+            sliderRef={sliderRef}
+            handleNext={handleNext}
+            handlePrev={handlePrev}
+            handleSet={handleSet}
+            onIndexChange={onIndexChange}
           />
           <ProductDetails product={product} />
         </div>
