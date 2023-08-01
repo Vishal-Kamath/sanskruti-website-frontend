@@ -17,7 +17,7 @@ export const FooterCategory: FC = () => {
           <Link
             href={`/category/${category.Title}`}
             key={category.Title}
-            className="capitalize leading-none"
+            className="w-fit capitalize leading-none"
           >
             {category.Title}
           </Link>
@@ -37,7 +37,7 @@ export const FooterNewArrivals: FC = () => {
           <Link
             key={"New Arrival " + category.Title + index}
             href={`/category/${category.Title}?is_new_arrival=true`}
-            className="my-1 mr-3 border-r-2 border-gray-300 pr-3 capitalize last:border-none"
+            className="my-1 mr-3 w-fit border-r-2 border-gray-300 pr-3 capitalize last:border-none"
           >
             Latest {category.Title}
           </Link>
@@ -57,7 +57,7 @@ export const FooterBestSellers: FC = () => {
           <Link
             key={"Best Seller " + category.Title + index}
             href={`/category/${category.Title}?is_best_seller=true`}
-            className="my-1 mr-3 border-r-2 border-gray-300 pr-3 capitalize last:border-none"
+            className="my-1 mr-3 w-fit border-r-2 border-gray-300 pr-3 capitalize last:border-none"
           >
             Best Selling {category.Title}
           </Link>

@@ -29,7 +29,7 @@ const FooterDetailsCard: FC<{
             <Link
               href={listItem.link}
               key={listItem.title}
-              className="leading-none"
+              className="w-fit leading-none"
             >
               {listItem.title}
             </Link>
@@ -38,7 +38,7 @@ const FooterDetailsCard: FC<{
               href={listItem.link}
               target="_blank"
               key={listItem.title}
-              className="leading-none"
+              className="w-fit leading-none"
             >
               {listItem.title}
             </a>
