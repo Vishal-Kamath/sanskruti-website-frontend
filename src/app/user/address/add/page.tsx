@@ -138,7 +138,7 @@ const AddAddressPage: FC = () => {
   };
 
   return (
-    <div className="mx-auto flex w-full flex-col justify-center gap-4 pt-6 md:max-w-lg">
+    <div className="mx-auto flex h-full w-full flex-col justify-center gap-4 pt-6 md:max-w-lg">
       <div className="flex justify-between">
         <h3 className="text-lg font-semibold">Add a new address</h3>
         <Link href={redirect}>

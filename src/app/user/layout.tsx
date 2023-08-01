@@ -15,7 +15,7 @@ const UserLayout: FC<Props> = ({ children }) => {
   }, [isAuthenticated]);
 
   return (
-    <div className="mx-auto flex h-full min-h-screen w-full max-w-7xl gap-5 px-[3vw] pb-10 pt-28 max-md:flex-col">
+    <div className="mx-auto flex h-full min-h-screen w-full max-w-7xl gap-5 px-[3vw] pb-10 pt-40 max-md:flex-col md:pt-28">
       {children}
     </div>
   );

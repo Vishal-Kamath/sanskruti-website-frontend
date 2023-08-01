@@ -45,7 +45,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
   }, [pathname]);
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex h-full w-full flex-col gap-5">
       <div className="mx-auto flex w-full max-w-xl">
         {steps.map((step, index) => (
           <div

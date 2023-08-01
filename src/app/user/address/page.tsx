@@ -19,7 +19,7 @@ const AddressPage: FC = () => {
 
   return (
     <Container containerTitle="Address">
-      <div className="flex flex-col gap-3">
+      <div className="flex h-full flex-col gap-3">
         <div className="flex gap-3">
           <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 bg-slate-50 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
             <AiOutlineSearch className="aspect-sqaure text-xl" />

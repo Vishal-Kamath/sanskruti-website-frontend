@@ -109,7 +109,7 @@ const EditProfile: FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-4 flex w-full flex-col justify-center gap-6 md:max-w-lg">
+    <div className="mx-auto mt-4 flex h-full w-full flex-col justify-center gap-6 md:max-w-lg">
       <div className="flex w-full justify-between">
         <h3 className="text-lg font-semibold">Edit profile</h3>
         <Link href="/user/account">

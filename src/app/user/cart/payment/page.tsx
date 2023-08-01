@@ -98,7 +98,7 @@ const CartPaymemtPage: FC = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex h-full w-full flex-col gap-5">
       <Link href="/user/cart/address" className="w-fit">
         <UIButton className="w-fit rounded-sm border-[1px] border-slate-400 px-5">
           Back

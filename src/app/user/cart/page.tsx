@@ -42,7 +42,7 @@ const ShoppingCartPage: FC = () => {
   };
 
   return !!cart?.length ? (
-    <div className="flex w-full flex-col gap-3">
+    <div className="flex h-full w-full flex-col gap-3">
       {!user.email_verified && (
         <div className="rounded-md border-[1px] border-amber-300 p-3 text-amber-600">
           Please verify your email before proceding

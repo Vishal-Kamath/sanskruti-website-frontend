@@ -134,7 +134,7 @@ const OrderDetailsPage: NextPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex h-full w-full flex-col gap-5">
       {/* Address */}
       <div className="[&>*]:min-w-md flex w-full rounded-md border-[1px] border-gray-300 max-lg:flex-col [&>*]:w-full [&>*]:p-5">
         <div className="flex flex-col gap-3 border-gray-300 max-lg:border-b-[1px] lg:border-r-[1px]">

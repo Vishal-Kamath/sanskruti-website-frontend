@@ -50,7 +50,7 @@ const DetailsPage: FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex h-full flex-col gap-6">
       <Container containerTitle="Account">
         <div className="mt-4 flex w-full flex-col gap-6">
           <div className="text-justify text-gray-500">

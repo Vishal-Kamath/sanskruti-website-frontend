@@ -94,7 +94,7 @@ const CartAddressPage: FC = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex h-full w-full flex-col gap-5">
       <div className="flex justify-between">
         <Link href="/user/cart" className="w-fit">
           <UIButton className="w-fit rounded-sm border-[1px] border-slate-400 px-5">
