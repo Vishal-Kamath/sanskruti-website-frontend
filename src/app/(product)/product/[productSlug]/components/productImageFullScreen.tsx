@@ -69,16 +69,21 @@ const ProductImageFullScreen: React.FC<{
         </div>
         <button
           onClick={handlePrev}
-          className="absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white py-3 pl-1 pr-3 opacity-50 hover:opacity-75"
+          className="group absolute left-0 top-0 flex h-full w-[25%] items-center justify-start"
         >
-          <FaAngleLeft className="h-6 w-6" />
+          <div className="z-50 w-fit rounded-r-full bg-white py-3 pl-1 pr-3 opacity-50 group-hover:opacity-80">
+            <FaAngleLeft className="h-6 w-6" />
+          </div>
         </button>
         <button
           onClick={handleNext}
-          className="absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white py-3 pl-3 pr-1 opacity-50 hover:opacity-75"
+          className="group absolute right-0 top-0 flex h-full w-[25%] items-center justify-end"
         >
-          <FaAngleRight className="h-6 w-6" />
+          <div className="z-50 w-fit rounded-l-full bg-white py-3 pl-3 pr-1 opacity-50 group-hover:opacity-80">
+            <FaAngleRight className="h-6 w-6" />
+          </div>
         </button>
+
         <button
           onClick={() => setFullscreenImageOpen(false)}
           className="absolute right-5 top-5 z-10 rounded-full bg-white bg-opacity-50 p-3 text-2xl text-slate-700 hover:bg-opacity-100"
