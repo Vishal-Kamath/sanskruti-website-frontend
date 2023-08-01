@@ -21,7 +21,7 @@ const LoadingComponent: FC = () => {
   return (
     <div
       className={cn(
-        "fixed left-0 top-0 flex min-h-screen w-full flex-col items-center justify-evenly gap-7 bg-white",
+        "fixed left-0 top-0 flex h-full max-h-screen w-full flex-col items-center justify-evenly gap-7 bg-white",
         loading.loading || loadingState ? "z-[999]" : "hidden"
       )}
     >

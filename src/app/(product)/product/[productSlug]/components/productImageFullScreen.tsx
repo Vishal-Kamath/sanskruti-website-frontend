@@ -28,11 +28,11 @@ const ProductImageFullScreen: React.FC<{
   return (
     <div
       className={cn(
-        "fixed left-0 top-0 z-50 grid h-full max-h-screen min-h-screen w-full place-content-center",
+        "fixed left-0 top-0 z-50 flex h-full max-h-screen w-full items-center justify-center",
         className
       )}
     >
-      <div className="relative isolate h-screen w-screen bg-slate-950">
+      <div className="relative isolate h-full w-full bg-slate-950">
         {/* Background Image */}
         <Image
           width={50}
