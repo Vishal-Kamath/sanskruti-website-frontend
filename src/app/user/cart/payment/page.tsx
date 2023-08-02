@@ -59,42 +59,44 @@ const CartPaymemtPage: FC = () => {
 
   const payment = async () => {
     const { total, discount, gst, finalValue } = getAmounts(cart);
+    window.open(
+      "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction"
+    );
+    // const body = {
+    //   paymentMethod,
+    //   shippingAddress,
+    //   billingAddress,
+    //   SubTotal: total,
+    //   discount,
+    //   gst,
+    //   Amount: finalValue,
+    // };
 
-    const body = {
-      paymentMethod,
-      shippingAddress,
-      billingAddress,
-      SubTotal: total,
-      discount,
-      gst,
-      Amount: finalValue,
-    };
-
-    axios
-      .post(`${process.env.ENDPOINT}/api/v1/user/order`, body, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        const response = res.data;
-        dispatch(
-          setNotification({ message: response.message, type: response.type })
-        );
-        dispatch(showNotification());
-        router.replace("/user/order");
-      })
-      .catch((err) => {
-        const response = err.response.data;
-        dispatch(
-          setNotification({
-            message: response.message,
-            type: response.type,
-          })
-        );
-        dispatch(showNotification());
-      });
+    // axios
+    //   .post(`${process.env.ENDPOINT}/api/v1/user/order`, body, {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     withCredentials: true,
+    //   })
+    //   .then((res) => {
+    //     const response = res.data;
+    //     dispatch(
+    //       setNotification({ message: response.message, type: response.type })
+    //     );
+    //     dispatch(showNotification());
+    //     router.replace("/user/order");
+    //   })
+    //   .catch((err) => {
+    //     const response = err.response.data;
+    //     dispatch(
+    //       setNotification({
+    //         message: response.message,
+    //         type: response.type,
+    //       })
+    //     );
+    //     dispatch(showNotification());
+    //   });
   };
 
   return (
