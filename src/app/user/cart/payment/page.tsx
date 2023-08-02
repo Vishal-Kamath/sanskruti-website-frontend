@@ -14,6 +14,28 @@ import {
 import { getAmounts } from "../utils/calculation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import crypto from "crypto";
+
+function getAlgorithm(keyBase64: string) {
+  var key = Buffer.from(keyBase64, "base64");
+  switch (key.length) {
+    case 16:
+      return "aes-128-cbc";
+    case 32:
+      return "aes-256-cbc";
+  }
+  throw new Error("Invalid key length: " + key.length);
+}
+
+function encrypt(plainText: string, keyBase64: string, ivBase64: string) {
+  const key = Buffer.from(keyBase64, "base64");
+  const iv = Buffer.from(ivBase64, "base64");
+
+  const cipher = crypto.createCipheriv(getAlgorithm(keyBase64), key, iv);
+  let encrypted = cipher.update(plainText, "utf8", "hex");
+  encrypted += cipher.final("hex");
+  return encrypted;
+}
 
 const CartPaymemtPage: FC = () => {
   const router = useRouter();
@@ -59,9 +81,30 @@ const CartPaymemtPage: FC = () => {
 
   const payment = async () => {
     const { total, discount, gst, finalValue } = getAmounts(cart);
+    // router.push("/user/checkout");
+    const merchant_id = process.env.MERCHANT_ID;
+    const access_code = process.env.ACCESS_CODE;
+    const working_key = process.env.WORKING_KEY;
+    const oreder_id = 1;
+
+    if (!merchant_id || !access_code || !working_key) return;
+
+    //Generate Md5 hash for the key and then convert in base64 string
+    var md5 = crypto.createHash("md5").update(working_key).digest();
+    var keyBase64 = Buffer.from(md5).toString("base64");
+
+    //Initializing Vector and then convert in base64 string
+    var ivBase64 = Buffer.from([
+      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b,
+      0x0c, 0x0d, 0x0e, 0x0f,
+    ]).toString("base64");
+    const encString = `merchant_id=${merchant_id}&order_id=${oreder_id}&currency=INR&amount=1.00&redirect_url=https://sanskrutinx.in/user/order/&cancel_url=https://sanskrutinx.in/`;
+    const encRequest = encrypt(encString, keyBase64, ivBase64);
+
     window.open(
-      "https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction"
+      `https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=${encRequest}&access_code=${access_code}`
     );
+
     // window.open("http://localhost:3000/api/ccavRequestHandler");
     // const body = {
     //   paymentMethod,
