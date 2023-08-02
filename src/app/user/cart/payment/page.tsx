@@ -60,8 +60,9 @@ const CartPaymemtPage: FC = () => {
   const payment = async () => {
     const { total, discount, gst, finalValue } = getAmounts(cart);
     window.open(
-      "https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction"
+      "https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction"
     );
+    // window.open("http://localhost:3000/api/ccavRequestHandler");
     // const body = {
     //   paymentMethod,
     //   shippingAddress,
