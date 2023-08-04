@@ -254,7 +254,7 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
         </div>
       </div>
 
-      <button
+      <div
         className="relative h-6 w-6 flex-shrink-0"
         onFocus={openDropdown}
         onBlur={closeDropdown}
@@ -279,7 +279,7 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
             <BsBoxArrowUpLeft /> Move to wishlist
           </button>
         </div>
-      </button>
+      </div>
     </div>
   );
 };
