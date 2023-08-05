@@ -16,9 +16,6 @@ const nextConfig = {
   },
   env: {
     ENDPOINT: process.env.ENDPOINT,
-    MERCHANT_ID: process.env.MERCHANT_ID,
-    ACCESS_CODE: process.env.ACCESS_CODE,
-    WORKING_KEY: process.env.WORKING_KEY,
   },
 };
 
