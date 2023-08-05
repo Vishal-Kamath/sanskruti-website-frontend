@@ -14,7 +14,7 @@ const AddressPage: FC = () => {
   const [search, setSearch] = useState("");
 
   const address = user.address.filter((addr) =>
-    addr.fullName.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    addr.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
   );
 
   return (

@@ -22,13 +22,14 @@ const AddAddressPage: FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const [fullName, setfullName] = useState("");
-  const [contactNo, setcontactNo] = useState("");
-  const [pincode, setpincode] = useState("");
-  const [nearBy, setnearBy] = useState("");
-  const [landmark, setlandmark] = useState("");
-  const [city, setcity] = useState("");
-  const [state, setstate] = useState("");
+  const [name, setName] = useState("");
+  const [address, setaddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+  const [country, setCountry] = useState("");
+  const [tel, setTel] = useState("");
+  const [email, setEmail] = useState("");
 
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/user/address";
@@ -38,7 +39,7 @@ const AddAddressPage: FC = () => {
       .number()
       .refine((number) => number.toString().length > 10);
     try {
-      mobileNumberSchema.parse(Number(contactNo));
+      mobileNumberSchema.parse(Number(tel));
     } catch {
       return {
         valid: false,
@@ -48,7 +49,20 @@ const AddAddressPage: FC = () => {
       };
     }
 
-    const pincodeSchema = z
+    const emailSchema = z.string().email();
+    try {
+      emailSchema.parse(email);
+    } catch {
+      return {
+        valid: false,
+        message: "not a valid email",
+        type: "warning",
+        content:
+          "the email you have provide is not a valid email format an example of a valid email is: ashokkumar@email.com",
+      };
+    }
+
+    const zipSchema = z
       .number()
       .refine(
         (number) =>
@@ -56,14 +70,14 @@ const AddAddressPage: FC = () => {
           number.toString().length === 6
       );
     try {
-      pincodeSchema.parse(Number(pincode));
+      zipSchema.parse(Number(zip));
     } catch {
       return {
         valid: false,
-        message: "Not a valid pincode",
+        message: "Not a valid zip",
         type: "warning",
         content:
-          "According to indian standard, a valid pincode is a 6-digit number. example: 123456",
+          "According to indian standard, a valid zip is a 6-digit number. example: 123456",
       };
     }
 
@@ -72,13 +86,14 @@ const AddAddressPage: FC = () => {
 
   const submit = async () => {
     if (
-      !fullName.trim() ||
-      !contactNo.trim() ||
-      !pincode.trim() ||
-      !nearBy.trim() ||
-      !landmark.trim() ||
+      !name.trim() ||
+      !address.trim() ||
       !city.trim() ||
-      !state.trim()
+      !state.trim() ||
+      !zip.trim() ||
+      !country.trim() ||
+      !tel.trim() ||
+      !email.trim()
     ) {
       dispatch(
         setNotification({
@@ -101,13 +116,14 @@ const AddAddressPage: FC = () => {
       .post<NotificationType & { address: Address[] }>(
         `${process.env.ENDPOINT}/api/v1/user/address`,
         {
-          fullName,
-          contactNo: Number(contactNo),
-          pincode: Number(pincode),
-          nearBy,
-          landmark,
+          name,
+          tel: Number(tel),
+          zip,
+          address,
           city,
           state,
+          country,
+          email,
         },
         {
           headers: {
@@ -148,11 +164,11 @@ const AddAddressPage: FC = () => {
       <Input
         input_type="text"
         placeholder="Full Name"
-        setValue={setfullName}
-        value={fullName}
+        setValue={setName}
+        value={name}
       />
       <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
-        <PhoneInput country={"in"} value={contactNo} onChange={setcontactNo} />
+        <PhoneInput country={"in"} value={tel} onChange={setTel} />
         <label
           id="mobileLabel"
           htmlFor="mobile"
@@ -163,33 +179,39 @@ const AddAddressPage: FC = () => {
       </div>
       <Input
         input_type="text"
-        placeholder="Landmark"
-        setValue={setlandmark}
-        value={landmark}
+        placeholder="Email"
+        setValue={setEmail}
+        value={email}
       />
       <Input
         input_type="text"
-        placeholder="Near By"
-        setValue={setnearBy}
-        value={nearBy}
+        placeholder="Address"
+        setValue={setaddress}
+        value={address}
       />
       <Input
         input_type="text"
         placeholder="City"
-        setValue={setcity}
+        setValue={setCity}
         value={city}
       />
       <Input
         input_type="text"
         placeholder="State"
-        setValue={setstate}
+        setValue={setState}
         value={state}
       />
       <Input
+        input_type="text"
+        placeholder="Country"
+        setValue={setCountry}
+        value={country}
+      />
+      <Input
         input_type="number"
-        placeholder="Pincode"
-        setValue={setpincode}
-        value={pincode}
+        placeholder="Zip"
+        setValue={setZip}
+        value={zip}
       />
       <UIButton
         onClick={submit}

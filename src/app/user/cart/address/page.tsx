@@ -19,14 +19,10 @@ const CartAddressPage: FC = () => {
 
   const addresses = user.address.map((addr) => ({
     id: addr.id,
-    title: addr.fullName,
-    content: [
-      addr.landmark,
-      addr.nearBy,
-      addr.city,
-      addr.state,
-      addr.pincode,
-    ].join(" "),
+    title: addr.name,
+    content: [addr.address, addr.city, addr.state, addr.country, addr.zip].join(
+      " "
+    ),
   }));
 
   const [shipping, setShipping] = useAddressState("shippingAddress");

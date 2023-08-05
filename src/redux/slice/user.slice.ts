@@ -7,13 +7,14 @@ export type UserAuthType = {
 
 export type Address = {
   id: string;
-  fullName: string;
-  contactNo: number;
-  pincode: number;
-  nearBy: string;
-  landmark: string;
+  name: string;
+  address: string;
   city: string;
   state: string;
+  zip: string;
+  country: string;
+  tel: number;
+  email: string;
 };
 
 export type UserType = {

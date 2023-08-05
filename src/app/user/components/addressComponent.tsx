@@ -12,21 +12,23 @@ import axios from "axios";
 import Link from "next/link";
 import { FC } from "react";
 import { AiFillEdit } from "react-icons/ai";
+import { BsDot } from "react-icons/bs";
 
 export const AddressComponent: FC<Address> = ({
-  fullName,
+  name,
   id,
   city,
-  contactNo,
-  landmark,
-  nearBy,
-  pincode,
+  tel,
+  address,
+  country,
+  email,
+  zip,
   state,
 }) => {
   const dispatch = useAppDispatch();
   const deleteAddress = async () => {
     const doesUserWantToDeleteAddress = confirm(
-      `Are you sure you want to delete ${fullName} address?`
+      `Are you sure you want to delete "${name}" address?`
     );
     if (!doesUserWantToDeleteAddress) return;
 
@@ -62,10 +64,14 @@ export const AddressComponent: FC<Address> = ({
 
   return (
     <div className="flex h-full min-h-[15rem] w-full flex-col rounded border-2 border-gray-200 p-3">
-      <h2 className="text-lg font-medium">{fullName}</h2>
-      <h3 className="text-xs text-gray-500">{contactNo}</h3>
+      <h2 className="text-lg font-medium">{name}</h2>
+      <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+        <span>{email}</span>
+        <BsDot className="h-4 w-4" />
+        <span>+{tel}</span>
+      </h4>
       <div className="break-words text-sm text-gray-500">
-        {landmark + " " + nearBy + " " + city + " " + state + " " + pincode}
+        {address} {city} {state} {country} {zip}
       </div>
       <div className="ml-auto mt-auto flex gap-2">
         <Link href={`/user/address/edit?id=${id}`}>

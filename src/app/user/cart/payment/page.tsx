@@ -8,34 +8,14 @@ import Link from "next/link";
 import { FC, useState } from "react";
 import { useAddressState } from "../utils/hook";
 import {
+  NotificationType,
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
 import { getAmounts } from "../utils/calculation";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import crypto from "crypto";
-
-function getAlgorithm(keyBase64: string) {
-  var key = Buffer.from(keyBase64, "base64");
-  switch (key.length) {
-    case 16:
-      return "aes-128-cbc";
-    case 32:
-      return "aes-256-cbc";
-  }
-  throw new Error("Invalid key length: " + key.length);
-}
-
-function encrypt(plainText: string, keyBase64: string, ivBase64: string) {
-  const key = Buffer.from(keyBase64, "base64");
-  const iv = Buffer.from(ivBase64, "base64");
-
-  const cipher = crypto.createCipheriv(getAlgorithm(keyBase64), key, iv);
-  let encrypted = cipher.update(plainText, "utf8", "hex");
-  encrypted += cipher.final("hex");
-  return encrypted;
-}
+import { BsDot } from "react-icons/bs";
 
 const CartPaymemtPage: FC = () => {
   const router = useRouter();
@@ -81,66 +61,48 @@ const CartPaymemtPage: FC = () => {
 
   const payment = async () => {
     const { total, discount, gst, finalValue } = getAmounts(cart);
-    // router.push("/user/checkout");
-    const merchant_id = process.env.MERCHANT_ID;
-    const access_code = process.env.ACCESS_CODE;
-    const working_key = process.env.WORKING_KEY;
-    const oreder_id = 1;
 
-    if (!merchant_id || !access_code || !working_key) return;
+    const body = {
+      paymentMethod,
+      shippingAddress,
+      billingAddress,
+      SubTotal: total,
+      discount,
+      gst,
+      Amount: finalValue,
+    };
 
-    //Generate Md5 hash for the key and then convert in base64 string
-    var md5 = crypto.createHash("md5").update(working_key).digest();
-    var keyBase64 = Buffer.from(md5).toString("base64");
+    axios
+      .post<{ link?: string } & NotificationType>(
+        `${process.env.ENDPOINT}/api/v1/user/order`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        const response = res.data;
+        if (response.link) return (window.location.href = response.link);
 
-    //Initializing Vector and then convert in base64 string
-    var ivBase64 = Buffer.from([
-      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b,
-      0x0c, 0x0d, 0x0e, 0x0f,
-    ]).toString("base64");
-    const encString = `merchant_id=${merchant_id}&order_id=${oreder_id}&currency=INR&amount=1.00&redirect_url=https://sanskrutinx.in/user/order/&cancel_url=https://sanskrutinx.in/`;
-    const encRequest = encrypt(encString, keyBase64, ivBase64);
-
-    window.open(
-      `https://test.ccavenue.com/transaction/transaction.do?command=initiateTransaction&encRequest=${encRequest}&access_code=${access_code}`
-    );
-
-    // window.open("http://localhost:3000/api/ccavRequestHandler");
-    // const body = {
-    //   paymentMethod,
-    //   shippingAddress,
-    //   billingAddress,
-    //   SubTotal: total,
-    //   discount,
-    //   gst,
-    //   Amount: finalValue,
-    // };
-
-    // axios
-    //   .post(`${process.env.ENDPOINT}/api/v1/user/order`, body, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     withCredentials: true,
-    //   })
-    //   .then((res) => {
-    //     const response = res.data;
-    //     dispatch(
-    //       setNotification({ message: response.message, type: response.type })
-    //     );
-    //     dispatch(showNotification());
-    //     router.replace("/user/order");
-    //   })
-    //   .catch((err) => {
-    //     const response = err.response.data;
-    //     dispatch(
-    //       setNotification({
-    //         message: response.message,
-    //         type: response.type,
-    //       })
-    //     );
-    //     dispatch(showNotification());
-    //   });
+        dispatch(
+          setNotification({ message: response.message, type: response.type })
+        );
+        dispatch(showNotification());
+        router.replace("/user/order");
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
   };
 
   return (
@@ -215,20 +177,30 @@ const CartPaymemtPage: FC = () => {
       <div className="flex flex-col gap-2">
         <span>Shipping Address</span>
         <div className="flex flex-col gap-1 rounded-md border-[1px] border-gray-300 px-3 py-2">
-          <h2>{shippingAddress?.fullName}</h2>
+          <h2>{shippingAddress?.name}</h2>
+          <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+            <span>{shippingAddress?.email}</span>
+            <BsDot className="h-4 w-4" />
+            <span>+{shippingAddress?.tel}</span>
+          </h4>
           <p className="text-gray-500">
-            {shippingAddress?.landmark} {shippingAddress?.nearBy}{" "}
-            {shippingAddress?.city} {shippingAddress?.state}{" "}
-            {shippingAddress?.pincode}
+            {shippingAddress?.address} {shippingAddress?.city}{" "}
+            {shippingAddress?.state} {shippingAddress?.zip}{" "}
+            {shippingAddress?.country}
           </p>
         </div>
         <span>Billing Address</span>
         <div className="flex flex-col gap-1 rounded-md border-[1px] border-gray-300 px-3 py-2">
-          <h2>{billingAddress?.fullName}</h2>
+          <h2>{billingAddress?.name}</h2>
+          <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+            <span>{billingAddress?.email}</span>
+            <BsDot className="h-4 w-4" />
+            <span>+{billingAddress?.tel}</span>
+          </h4>
           <p className="text-gray-500">
-            {billingAddress?.landmark} {billingAddress?.nearBy}{" "}
-            {billingAddress?.city} {billingAddress?.state}{" "}
-            {billingAddress?.pincode}
+            {billingAddress?.address} {billingAddress?.city}{" "}
+            {billingAddress?.state} {billingAddress?.zip}{" "}
+            {billingAddress?.country}
           </p>
         </div>
       </div>

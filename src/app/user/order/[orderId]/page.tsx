@@ -17,6 +17,7 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 import { cn } from "@/utils/lib";
+import { BsDot } from "react-icons/bs";
 
 const OrderDetailsPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -141,21 +142,19 @@ const OrderDetailsPage: NextPage = () => {
           <h3 className="text-[14px] font-semibold">Shipping Address</h3>
           <div className="flex flex-col gap-1">
             <h3 className="text-[14px] font-semibold">
-              {order?.payment.shippingAddress.fullName}
+              {order?.payment.shippingAddress.name}
             </h3>
+            <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+              <span>{order?.payment.shippingAddress.email}</span>
+              <BsDot className="h-4 w-4" />
+              <span>+{order?.payment.shippingAddress.tel}</span>
+            </h4>
             <p className="text-gray-500">
-              {order?.payment.shippingAddress.landmark}{" "}
-              {order?.payment.shippingAddress.nearBy}{" "}
+              {order?.payment.shippingAddress.address}{" "}
               {order?.payment.shippingAddress.city}{" "}
               {order?.payment.shippingAddress.state}{" "}
-              {order?.payment.shippingAddress.pincode}
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <h3 className="text-[14px] font-semibold">Phone Number</h3>
-            <p className="text-gray-500">
-              +{order?.payment.shippingAddress.contactNo}
+              {order?.payment.shippingAddress.zip}{" "}
+              {order?.payment.shippingAddress.country}
             </p>
           </div>
         </div>
@@ -163,21 +162,19 @@ const OrderDetailsPage: NextPage = () => {
           <h3 className="text-[14px] font-semibold">Billing Address</h3>
           <div className="flex flex-col gap-1">
             <h3 className="text-[14px] font-semibold">
-              {order?.payment.billingAddress.fullName}
+              {order?.payment.billingAddress.name}
             </h3>
+            <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+              <span>{order?.payment.billingAddress.email}</span>
+              <BsDot className="h-4 w-4" />
+              <span>+{order?.payment.billingAddress.tel}</span>
+            </h4>
             <p className="text-gray-500">
-              {order?.payment.billingAddress.landmark}{" "}
-              {order?.payment.billingAddress.nearBy}{" "}
+              {order?.payment.billingAddress.address}{" "}
               {order?.payment.billingAddress.city}{" "}
               {order?.payment.billingAddress.state}{" "}
-              {order?.payment.billingAddress.pincode}
-            </p>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <h3 className="text-[14px] font-semibold">Phone Number</h3>
-            <p className="text-gray-500">
-              +{order?.payment.billingAddress.contactNo}
+              {order?.payment.billingAddress.zip}{" "}
+              {order?.payment.billingAddress.country}
             </p>
           </div>
         </div>
