@@ -25,12 +25,15 @@ const LoadingComponent: FC = () => {
         loading.loading || loadingState ? "z-[999]" : "hidden"
       )}
     >
-      <div className="relative isolate h-fit w-fit">
+      <div className="relative isolate h-fit w-fit overflow-hidden">
         <Image
           src="/assets/sanskrutiLoadingCutout.png"
           alt="Sanskruti Logo"
           width={500}
           height={500}
+          style={{
+            filter: "drop-shadow(3px 3px 4px #00000077)",
+          }}
           className="h-full max-h-[15rem] w-full object-contain object-center"
         />
         <div
