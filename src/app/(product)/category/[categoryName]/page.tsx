@@ -73,14 +73,15 @@ const CategoryPage: FC = () => {
           <div className="text-gray-500">{desc}</div>
 
           <div className="grid grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product.name} product={product} />
-            ))}
-            {Array(24 - products.length)
-              .fill(null)
-              .map((_, index) => (
-                <DummyProductCard key={index} />
-              ))}
+            {products.length ? (
+              products.map((product) => (
+                <ProductCard key={product.name} product={product} />
+              ))
+            ) : (
+              <h3 className="col-span-full mt-6 text-center text-xl">
+                NO PRODUCTS FOUND
+              </h3>
+            )}
           </div>
 
           <Pagination

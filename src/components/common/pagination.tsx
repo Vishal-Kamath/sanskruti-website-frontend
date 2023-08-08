@@ -50,7 +50,7 @@ const Pagination: FC<{ currentPage: number; totalPages: number }> = ({
   };
 
   return (
-    <div className="mx-auto mt-10 flex w-full max-w-md items-center justify-center gap-3">
+    <div className="mx-auto mt-auto flex w-full max-w-md items-center justify-center gap-3 pt-10">
       {currentPage > 1 && (
         <Link href={getLink(currentPage - 1)}>
           <UIButton className="w-fit rounded-full border-[1px] p-1">
