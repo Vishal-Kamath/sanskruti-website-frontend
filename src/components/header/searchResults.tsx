@@ -11,7 +11,7 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
   return (
     <div
       className={cn(
-        "fixed top-[78px] grid max-h-[30rem] w-full bg-white shadow-lg max-md:top-28 md:right-[3vw] md:max-w-[39rem] md:grid-cols-2",
+        "fixed top-24 grid max-h-[30rem] w-full bg-white shadow-lg max-md:top-36 md:right-[3vw] md:max-w-[42.3rem] md:grid-cols-2 md:rounded-md md:border-[1px] md:border-gray-300",
         className
       )}
       {...props}
@@ -28,7 +28,7 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
               <Link
                 key={product.slug}
                 href={`/product/${product.slug}`}
-                className="flex gap-3 p-2 hover:bg-slate-100"
+                className="flex gap-3 p-2 hover:bg-slate-100 max-md:px-[3vw]"
               >
                 <div className="h-[6rem] w-[4rem]">
                   <Image
