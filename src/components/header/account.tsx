@@ -195,7 +195,7 @@ const Account: FC = () => {
           <Link
             href="/user/wishlist"
             title="Wishlist"
-            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100 max-md:hidden"
+            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100"
           >
             <AiOutlineHeart className="h-6 w-6" />
             <div
@@ -212,7 +212,7 @@ const Account: FC = () => {
           <Link
             href="/user/cart"
             title="Cart"
-            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100 max-md:hidden"
+            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100"
           >
             <MdShoppingCart className="h-6 w-6" />
             <div
