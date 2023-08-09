@@ -13,14 +13,14 @@ const Home: NextPage = () => {
     <main className="flex flex-col gap-5 pb-10 pt-36">
       <Carousel />
 
-      <div className="flex justify-evenly py-5">
+      <div className="flex justify-between px-[9vw] py-5">
         <Link
           href="/shipping"
           className="flex h-full flex-col items-center gap-2"
         >
           <Image
             className="h-8 w-8 object-center lg:h-14 lg:w-14"
-            src="/assets/shippingTruck.svg"
+            src="/assets/free-delivery.png"
             alt="shipping truck"
             width={50}
             height={50}
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
         >
           <Image
             className="h-8 w-8 object-center lg:h-14 lg:w-14"
-            src="/assets/easyReturn.svg"
+            src="/assets/easy-return.png"
             alt="shipping truck"
             width={50}
             height={50}
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
         >
           <Image
             className="h-8 w-8 object-center lg:h-14 lg:w-14"
-            src="/assets/customFitting.svg"
+            src="/assets/custom-fitting.svg"
             alt="easy return"
             width={50}
             height={50}
