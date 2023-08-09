@@ -131,7 +131,7 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
   // Remove Form cart
   const [open, setOpen] = useState(false);
   const openDropdown = () => setOpen(true);
-  const closeDropdown = () => setTimeout(() => setOpen(false), 300);
+  const closeDropdown = () => setTimeout(() => setOpen(false), 200);
 
   const removeFromCart = async () => {
     const cartDetails = await axios.delete<CartType>(
@@ -254,7 +254,7 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
         </div>
       </div>
 
-      <div
+      <button
         className="relative h-6 w-6 flex-shrink-0"
         onFocus={openDropdown}
         onBlur={closeDropdown}
@@ -266,20 +266,20 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
             !open && "hidden"
           )}
         >
-          <button
+          <div
             onClick={removeFromCart}
             className="flex w-full gap-3 border-b-[1px] border-gray-300 p-3 hover:bg-red-100"
           >
             <MdRemoveShoppingCart /> Remove from cart
-          </button>
-          <button
+          </div>
+          <div
             onClick={moveToWishlist}
             className="flex w-full gap-3 p-3 hover:bg-sky-100"
           >
             <BsBoxArrowUpLeft /> Move to wishlist
-          </button>
+          </div>
         </div>
-      </div>
+      </button>
     </div>
   );
 };
