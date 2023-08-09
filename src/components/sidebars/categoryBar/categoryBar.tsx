@@ -22,9 +22,9 @@ const CategoryBar: FC = () => {
     const handleResize = () => {
       if (window.innerWidth > 1280) {
         setNumberSlides(5);
-      } else if (window.innerWidth > 1024) {
-        setNumberSlides(4);
       } else if (window.innerWidth > 768) {
+        setNumberSlides(4);
+      } else if (window.innerWidth > 550) {
         setNumberSlides(3);
       } else {
         setNumberSlides(2);
