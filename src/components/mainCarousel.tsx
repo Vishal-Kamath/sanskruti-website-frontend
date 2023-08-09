@@ -1,8 +1,8 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 
-import { SwiperSlide } from "swiper/react";
+import { SwiperRef, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
 import "swiper/css/autoplay";
@@ -21,6 +21,7 @@ type Banner = {
 const Carousel: FC = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
   const [isMobile, setIsMobile] = useState<boolean>();
+  const swiperRef = useRef<SwiperRef>(null);
 
   const dispatch = useAppDispatch();
 
@@ -29,7 +30,6 @@ const Carousel: FC = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -56,13 +56,29 @@ const Carousel: FC = () => {
     getBanners();
   }, []);
 
+  const handleMouseEnter = () => {
+    if (swiperRef && swiperRef.current) {
+      swiperRef.current.swiper.autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef && swiperRef.current) {
+      swiperRef.current.swiper.autoplay.start();
+    }
+  };
+
   return (
-    <div className="h-fit bg-gradient-to-b from-gray-200 to-white">
+    <div
+      className="h-fit bg-gradient-to-b from-gray-200 to-white"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <SwiperContainer
+        getRef={swiperRef}
         modules={[Autoplay]}
-        loop={true}
         autoplay={{
-          delay: 5000,
+          delay: 2500,
           disableOnInteraction: false,
         }}
         slidesPerView={1}

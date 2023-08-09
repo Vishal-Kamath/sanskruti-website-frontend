@@ -9,13 +9,10 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const SwiperContainer: FC<SwiperProps> = ({
-  children,
-  className,
-  modules,
-  ...props
-}) => {
-  const sliderRef = useRef<SwiperRef>(null);
+const SwiperContainer: FC<
+  SwiperProps & { getRef?: React.RefObject<SwiperRef> }
+> = ({ children, className, modules, getRef, ...props }) => {
+  const sliderRef = getRef ? getRef : useRef<SwiperRef>(null);
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return;

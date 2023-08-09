@@ -1,9 +1,9 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import CategoryCard from "./categoryCard";
 
-import { SwiperSlide } from "swiper/react";
+import { SwiperRef, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 
 import "swiper/css/autoplay";
@@ -14,6 +14,7 @@ import UIHeader from "@/components/common/header";
 
 const CategoryBar: FC = () => {
   const [numberSlides, setNumberSlides] = useState(4);
+  const swiperRef = useRef<SwiperRef>(null);
 
   const { categories } = useAppSelector(selectCategory);
 
@@ -38,14 +39,29 @@ const CategoryBar: FC = () => {
     };
   }, []);
 
+  const handleMouseEnter = () => {
+    if (swiperRef && swiperRef.current) {
+      swiperRef.current.swiper.autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef && swiperRef.current) {
+      swiperRef.current.swiper.autoplay.start();
+    }
+  };
+
   return (
     <div
       id="category"
       className="w-full bg-gradient-to-t from-white via-orange-200 via-20% to-white to-95% px-[3vw]"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="flex flex-col gap-3">
         <UIHeader title="Shop by Category" />
         <SwiperContainer
+          getRef={swiperRef}
           modules={[Autoplay]}
           spaceBetween={15}
           slidesPerView={numberSlides}
