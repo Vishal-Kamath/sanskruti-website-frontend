@@ -3,12 +3,13 @@ import "./globals.css";
 import ProviderComponent from "@/components/providerComponent";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import NotificationComponent from "@/components/notification/notificationComponent";
 import { cn } from "@/utils/lib";
 
 import { Dosis } from "next/font/google";
 import AuthComponent from "@/components/authComponent";
 import LoadingComponent from "@/components/loadingComponent";
+import ScrollToTheTopButton from "@/components/common/scrollToTpopButton";
+import Notification from "@/components/notification/notification";
 
 const dosis = Dosis({
   weight: ["300", "400", "500", "600", "700"],
@@ -63,9 +64,10 @@ export default function RootLayout({
           >
             <LoadingComponent />
             <Header />
-            <NotificationComponent />
+            <Notification />
             {children}
             <Footer />
+            <ScrollToTheTopButton />
           </body>
         </AuthComponent>
       </ProviderComponent>
