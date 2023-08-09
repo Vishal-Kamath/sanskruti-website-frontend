@@ -7,7 +7,7 @@ const CategoryCard: FC<CategoryType> = (category) => {
   return (
     <Link
       href={`/category/${category.Title}`}
-      className="group relative isolate flex aspect-[2/3] h-full w-full overflow-hidden rounded-b-md rounded-t-[6rem] p-2"
+      className="group relative isolate flex aspect-[2/3] h-full w-full overflow-hidden rounded-b-md rounded-t-full p-2"
     >
       <Image
         src={category.Image}
