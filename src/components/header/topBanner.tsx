@@ -1,3 +1,5 @@
+"use client";
+
 import { FiPhoneCall } from "react-icons/fi";
 import { MdLocationOn } from "react-icons/md";
 
@@ -8,8 +10,30 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import Image from "next/image";
 import Link from "next/link";
+import { FC, useState, useEffect } from "react";
 
-const TopBanner: React.FC = () => {
+const TopBanner: FC = () => {
+  const [displayNum, setDisplayNum] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
+        setDisplayNum(3);
+      } else if (window.innerWidth > 768) {
+        setDisplayNum(2);
+      } else {
+        setDisplayNum(1);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <Swiper
       modules={[Autoplay]}
@@ -18,7 +42,7 @@ const TopBanner: React.FC = () => {
         delay: 2500,
         disableOnInteraction: false,
       }}
-      slidesPerView={1}
+      slidesPerView={displayNum}
       className="flex w-full bg-slate-100 text-black"
     >
       <SwiperSlide>
