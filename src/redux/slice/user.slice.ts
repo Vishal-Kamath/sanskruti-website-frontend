@@ -21,7 +21,7 @@ export type UserType = {
   username?: string;
   email?: string;
   email_verified?: boolean;
-  address: Address[];
+  address?: Address[];
   Mobile_No?: number;
   Mobile_No_verified?: boolean;
   provider?: "Email/Number" | "google";
@@ -42,13 +42,27 @@ export const user = createSlice({
   reducers: {
     // user
     setUser: (state, action: PayloadAction<UserType>) => {
-      state.email = action.payload.email;
-      state.email_verified = action.payload.email_verified;
-      state.username = action.payload.username;
-      state.Mobile_No = action.payload.Mobile_No;
-      state.Mobile_No_verified = action.payload.Mobile_No_verified;
-      state.address = action.payload.address;
-      state.provider = action.payload.provider;
+      state.email = action.payload.email ? action.payload.email : state.email;
+      state.email_verified =
+        action.payload.email_verified !== undefined
+          ? action.payload.email_verified
+          : state.email_verified;
+      state.username = action.payload.username
+        ? action.payload.username
+        : state.username;
+      state.Mobile_No = action.payload.Mobile_No
+        ? action.payload.Mobile_No
+        : state.Mobile_No;
+      state.Mobile_No_verified =
+        action.payload.Mobile_No_verified !== undefined
+          ? action.payload.Mobile_No_verified
+          : state.Mobile_No_verified;
+      state.address = action.payload.address
+        ? action.payload.address
+        : state.address;
+      state.provider = action.payload.provider
+        ? action.payload.provider
+        : state.provider;
     },
     setAddress: (state, action: PayloadAction<Address[]>) => {
       state.address = action.payload;

@@ -14,6 +14,10 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
+import Image from "next/image";
+import EditProfileComponent from "./component/editProfile";
+import { cn } from "@/utils/lib";
+import ChangePasswordComponent from "./component/changePassword";
 
 const DetailsPage: FC = () => {
   const user = useAppSelector(selectUser);
@@ -49,79 +53,151 @@ const DetailsPage: FC = () => {
       });
   };
 
+  const Initials = user.username
+    ? user.username
+        .split(" ")
+        .map((name) => name[0].toLocaleUpperCase())
+        .slice(0, 2)
+        .join("")
+    : "G";
+
+  const imageSrc = `/assets/rangoli/rangoli-${
+    Math.floor(Math.random() * 4) + 1
+  }.png`;
+
   return (
-    <div className="flex h-full flex-col gap-6">
-      <Container containerTitle="Account">
-        <div className="mt-4 flex w-full flex-col gap-6">
-          <div className="text-justify text-gray-500">
-            Ensure your profile information is accurate and up-to-date.
-            Periodically review and update your details to ensure relevancy.
-            Keeping your profile information current helps us provide you with a
-            better user experience. Stay connected with the latest updates!
+    <div className="mx-auto flex w-full max-w-4xl flex-col md:border-x-[1px] md:border-gray-300">
+      {/* Backeground Image */}
+      <div className="relative isolate h-[12.5rem] w-full overflow-hidden">
+        <Image
+          src={imageSrc}
+          alt="rangoli image"
+          width={300}
+          height={300}
+          className="absolute bottom-0 left-[6rem] z-20 h-[25rem] w-[25rem] -translate-x-1/2 translate-y-1/2"
+        />
+        <Image
+          src={imageSrc}
+          alt="rangoli image"
+          width={300}
+          height={300}
+          className="absolute left-0 top-0 z-10 aspect-square w-[30rem] -translate-x-1/3 -translate-y-1/2 blur-sm"
+        />
+        <Image
+          src={imageSrc}
+          alt="rangoli image"
+          width={300}
+          height={300}
+          className="absolute bottom-0 right-0 z-0 aspect-square w-[30rem] translate-x-1/4 translate-y-1/2 blur-md sm:w-full"
+        />
+      </div>
+      <div className="relative pt-[5.5rem]">
+        <div className="absolute left-[6rem] top-0 flex h-[9rem] w-[9rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[1px] border-sky-950 bg-sky-100 text-4xl text-sky-950 outline outline-8 outline-white">
+          {Initials}
+        </div>
+
+        <EditProfileComponent
+          className="absolute right-5 top-5"
+          emailprop={user.email}
+          mobileprop={user.Mobile_No}
+          usernameprop={user.username}
+        />
+
+        <div className="flex flex-col gap-2 border-b-[1px] border-gray-300 px-6 pb-5">
+          <span className="text-2xl font-semibold">{user.username}</span>
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              user.email_verified
+                ? "font-medium text-gray-800"
+                : "text-gray-400"
+            )}
+          >
+            <span>{user.email}</span>
+            {!user.email_verified && (
+              <span className="rounded-full border-[1px] border-gray-400 px-3 py-1 text-xs">
+                Not Verified
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-7 text-sm max-md:flex-col max-md:items-center">
-            <BsPerson className="aspect-square h-[10rem] w-full shrink-0 rounded-[1rem] border-2 border-slate-300 bg-slate-50 p-9 text-sky-400 md:h-[15rem] md:w-[15rem]" />
-            <div className="flex h-full w-full flex-col gap-1 text-sm md:text-lg">
-              <div className="flex justify-between">
-                <h4 className="font-normal">Username</h4>
-                <div className="text-gray-500">{user.username}</div>
-              </div>
-              <div className="flex justify-between">
-                <h4 className="font-normal">Email</h4>
-                <div className="text-gray-500">{user.email}</div>
-              </div>
-              <div className="flex justify-between">
-                <h4 className="font-normal">Mobile Number</h4>
-                <div className="text-gray-500">{user.Mobile_No}</div>
-              </div>
-              <Link
-                href="/user/account/edit"
-                className="ml-auto mt-auto w-full max-w-[15rem]"
-              >
-                <UIButton className="flex w-full gap-2 border-sky-300 bg-sky-50 text-sm hover:outline-sky-100">
-                  <span>EDIT PROFILE</span>
-                  <AiFillEdit />
-                </UIButton>
-              </Link>
-            </div>
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              user.Mobile_No_verified
+                ? "font-medium text-gray-800"
+                : "text-gray-400"
+            )}
+          >
+            <span>+{user.Mobile_No}</span>
+            {!user.Mobile_No_verified && (
+              <span className="rounded-full border-[1px] border-gray-400 px-3 py-1 text-xs">
+                Not Verified
+              </span>
+            )}
           </div>
         </div>
-      </Container>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {!user.email_verified && (
-          <Container containerTitle="Email Verification" className="h-full">
-            <div className="flex h-full flex-col gap-4">
-              <div className="text-justify text-sm text-gray-500">
-                It appears that your email is not verified. Please click the
-                button below to request an email verification link. (Please note
-                this link will only be valid for the next 15 minutes)
+
+        {(!user.Mobile_No_verified || !user.email_verified) && (
+          <div className="flex w-full gap-6 px-6 py-5 max-sm:flex-col">
+            {!user.email_verified && (
+              <div className="flex h-full w-full max-w-lg flex-col gap-4">
+                <h4 className="border-b-[1px] border-gray-600 pb-2 text-lg text-gray-600">
+                  Verify Email
+                </h4>
+                <p className="text-justify text-sm text-gray-400">
+                  It appears that your email is not verified. Please click the
+                  button below to request an email verification link. (Please
+                  note this link will only be valid for the next 15 minutes)
+                </p>
+                <UIButton
+                  onClick={_requestEmailVerification}
+                  className="ml-auto mt-auto w-fit rounded-full border-[1px] border-gray-600 px-3 text-gray-600 hover:border-sanskrutiRed hover:text-sanskrutiRed hover:outline-sanskrutiRedLight"
+                >
+                  Send Verification Email
+                </UIButton>
               </div>
-              <UIButton
-                className="ml-auto mt-auto w-full max-w-[15rem] border-sky-300 bg-sky-50 hover:outline-sky-100"
-                onClick={_requestEmailVerification}
-              >
-                SEND VERIFICATION LINK
-              </UIButton>
-            </div>
-          </Container>
-        )}
-        {!user.Mobile_No_verified && (
-          <Container
-            containerTitle="Mobile Number Verification"
-            className="h-full"
-          >
-            <div className="flex h-full flex-col gap-4">
-              <div className="text-justify text-sm text-gray-500">
-                It appears that your mobile number is not verified. Please click
-                the button below to request an OTP. (Please note this OTP will
-                only be valid for the next 15 minutes)
+            )}
+            {!user.Mobile_No_verified && (
+              <div className="flex h-full w-full max-w-lg flex-col gap-4">
+                <h4 className="border-b-[1px] border-gray-600 pb-2 text-lg text-gray-600">
+                  Verify Mobile Number
+                </h4>
+                <p className="text-justify text-sm text-gray-400">
+                  It appears that your mobile number is not verified. Please
+                  click the button below to request an OTP. (Please note this
+                  OTP will only be valid for the next 15 minutes)
+                </p>
+                <UIButton className="ml-auto mt-auto w-fit rounded-full border-[1px] border-gray-600 px-3 text-gray-600 hover:border-sanskrutiRed hover:text-sanskrutiRed hover:outline-sanskrutiRedLight">
+                  Send Verification OTP
+                </UIButton>
               </div>
-              <UIButton className="ml-auto mt-auto w-full max-w-[15rem] border-sky-300 bg-sky-50 hover:outline-sky-100">
-                SEND OTP
-              </UIButton>
-            </div>
-          </Container>
+            )}
+          </div>
         )}
+
+        <div className="flex flex-col gap-4 px-6 py-5">
+          <h4 className="border-b-[1px] border-gray-600 pb-2 text-lg text-gray-600">
+            Coupons
+          </h4>
+          <div className="flex gap-4">
+            <div className="h-[8rem] w-full rounded-md border-[1px] border-yellow-400 bg-yellow-100"></div>
+            <div className="h-[8rem] w-full rounded-md border-[1px] border-yellow-400 bg-yellow-100"></div>
+            <div className="h-[8rem] w-full rounded-md border-[1px] border-yellow-400 bg-yellow-100 max-md:hidden"></div>
+          </div>
+        </div>
+
+        <div className="flex h-full w-full max-w-lg flex-col gap-4 px-6 py-5">
+          <h4 className="border-b-[1px] border-gray-600 pb-2 text-lg text-gray-600">
+            Security
+          </h4>
+          <p className="text-justify text-sm text-gray-400">
+            Please note that it&apos;s essential to regularly update your
+            password for increased security. Remember to choose a strong, unique
+            combination of characters, numbers, and symbols. Stay proactive and
+            safeguard your account by changing your password periodically.
+          </p>
+          <ChangePasswordComponent className="ml-auto w-fit" />
+        </div>
       </div>
     </div>
   );
