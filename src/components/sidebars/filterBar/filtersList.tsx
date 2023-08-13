@@ -9,9 +9,7 @@ import VariantItem, { VariantType } from "./variantItem";
 import { useAppSelector } from "@/redux/store/hooks";
 import { selectCategory } from "@/redux/slice/category.slice";
 
-const FilterList: FC<{ setDesc: Dispatch<SetStateAction<string>> }> = ({
-  setDesc,
-}) => {
+const FilterList: FC = () => {
   const params = useParams();
 
   const { categories } = useAppSelector(selectCategory);
@@ -27,7 +25,6 @@ const FilterList: FC<{ setDesc: Dispatch<SetStateAction<string>> }> = ({
           category.Title === decodeURIComponent(params["categoryName"])
       ) || categories[0];
     setMain(cat);
-    setDesc(cat?.Meta_Description);
   }, [params, categories]);
 
   useEffect(() => {

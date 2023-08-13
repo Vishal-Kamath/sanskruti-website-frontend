@@ -2,13 +2,11 @@
 
 import { selectSidebarOpen } from "@/redux/slice/sidebar.slice";
 import { useAppSelector } from "@/redux/store/hooks";
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC } from "react";
 import FilterList from "./filtersList";
 import Image from "next/image";
 
-const FilterBar: FC<{
-  setDesc: Dispatch<SetStateAction<string>>;
-}> = ({ setDesc }) => {
+const FilterBar: FC = () => {
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   return (
     <div
@@ -20,7 +18,7 @@ const FilterBar: FC<{
         FILTERS
       </h3>
 
-      <FilterList setDesc={setDesc} />
+      <FilterList />
 
       <div className="flex flex-col gap-6 pt-7 max-sm:hidden">
         <Image
