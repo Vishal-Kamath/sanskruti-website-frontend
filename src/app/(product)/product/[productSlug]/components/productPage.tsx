@@ -8,6 +8,7 @@ import ProductDetails from "./productDetails";
 import ProductCarousel from "@/components/common/productCarousel";
 import { SwiperRef, Swiper } from "swiper/react";
 import { cn } from "@/utils/lib";
+import ProductReview from "./review/productReview";
 
 const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
   const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
@@ -64,7 +65,10 @@ const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
             handleSet={handleSet}
             onIndexChange={onIndexChange}
           />
-          <ProductDetails product={product} />
+          <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
+            <ProductDetails product={product} />
+            <ProductReview id={product._id} />
+          </div>
         </div>
         <ProductCarousel />
       </div>
