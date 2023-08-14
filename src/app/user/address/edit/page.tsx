@@ -29,7 +29,8 @@ const EditAddressPage: FC = () => {
   if (!id) router.push("/user/address/add");
 
   const user = useAppSelector(selectUser);
-  const foundAddress = user.address.find((address) => address.id === id);
+  const foundAddress =
+    user.address && user.address.find((address) => address.id === id);
 
   const [name, setName] = useState(foundAddress?.name || "");
   const [address, setaddress] = useState(foundAddress?.address || "");

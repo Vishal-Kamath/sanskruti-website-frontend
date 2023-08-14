@@ -13,9 +13,11 @@ const AddressPage: FC = () => {
   const user = useAppSelector(selectUser);
   const [search, setSearch] = useState("");
 
-  const address = user.address.filter((addr) =>
-    addr.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-  );
+  const address =
+    user.address &&
+    user.address.filter((addr) =>
+      addr.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    );
 
   return (
     <Container containerTitle="Address">
@@ -38,11 +40,11 @@ const AddressPage: FC = () => {
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {address.length ? (
+          {address && address.length ? (
             address.map((address) => (
               <AddressComponent key={address.id} {...address} />
             ))
-          ) : user.address.length ? (
+          ) : user.address && user.address.length ? (
             <div className="col-span-full mt-5 text-center text-lg font-normal">
               <span>No addresses found</span>
             </div>

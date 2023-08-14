@@ -8,11 +8,13 @@ interface Props {
   main: { title: string; content: string };
   title: string;
   className?: string;
-  options: {
-    id: string;
-    title: string;
-    content: string;
-  }[];
+  options:
+    | {
+        id: string;
+        title: string;
+        content: string;
+      }[]
+    | undefined;
   setAddress: (id: string) => void;
   openAndClose: (action: "open" | "close") => void;
   open: boolean;
@@ -54,7 +56,7 @@ const AddressDropdown: FC<Props> = ({
           )}
         >
           <div className="flex max-h-[20rem] w-full flex-col overflow-y-auto rounded-md border-[1px] border-slate-500 bg-white shadow-lg shadow-gray-300">
-            {!!options.length ? (
+            {options && !!options.length ? (
               options.map((option, index) => (
                 <button
                   key={option.title + index + title}

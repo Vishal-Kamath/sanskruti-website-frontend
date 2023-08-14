@@ -1,7 +1,6 @@
 "use client";
 
 import { FC, useState } from "react";
-import Container from "../../components/container";
 import { Input } from "@/components/common/input";
 import UIButton from "@/components/common/button";
 import { useAppDispatch } from "@/redux/store/hooks";

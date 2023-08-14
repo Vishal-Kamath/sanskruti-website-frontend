@@ -17,21 +17,27 @@ const CartAddressPage: FC = () => {
   const router = useRouter();
   const user = useAppSelector(selectUser);
 
-  const addresses = user.address.map((addr) => ({
-    id: addr.id,
-    title: addr.name,
-    content: [addr.address, addr.city, addr.state, addr.country, addr.zip].join(
-      " "
-    ),
-  }));
+  const addresses =
+    user.address &&
+    user.address.map((addr) => ({
+      id: addr.id,
+      title: addr.name,
+      content: [
+        addr.address,
+        addr.city,
+        addr.state,
+        addr.country,
+        addr.zip,
+      ].join(" "),
+    }));
 
   const [shipping, setShipping] = useAddressState("shippingAddress");
-  const shippingInAddresses = addresses.find(
-    (addr) => addr.id === shipping?.id
-  );
+  const shippingInAddresses =
+    addresses && addresses.find((addr) => addr.id === shipping?.id);
 
   const [billing, setBilling] = useAddressState("billingAddress");
-  const billingInAddresses = addresses.find((addr) => addr.id === billing?.id);
+  const billingInAddresses =
+    addresses && addresses.find((addr) => addr.id === billing?.id);
 
   const dispatch = useAppDispatch();
 
@@ -42,14 +48,14 @@ const CartAddressPage: FC = () => {
   // }
 
   const handleSetShippingAddress = (id: string) => {
-    const address = user.address.find((addr) => addr.id === id);
+    const address = user.address && user.address.find((addr) => addr.id === id);
     if (!address) return;
 
     setShipping(address);
   };
 
   const handleSetBillingAddress = (id: string) => {
-    const address = user.address.find((addr) => addr.id === id);
+    const address = user.address && user.address.find((addr) => addr.id === id);
     if (!address) return;
 
     setBilling(address);
