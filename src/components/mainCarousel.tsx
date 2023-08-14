@@ -8,7 +8,7 @@ import { Autoplay } from "swiper";
 import "swiper/css/autoplay";
 import Image from "next/image";
 import axios from "axios";
-import SwiperContainer from "./common/swiperContainer";
+import { SwiperContainerRef } from "./common/swiperContainer";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 
@@ -74,8 +74,8 @@ const Carousel: FC = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <SwiperContainer
-        getRef={swiperRef}
+      <SwiperContainerRef
+        sliderRef={swiperRef}
         modules={[Autoplay]}
         autoplay={{
           delay: 2500,
@@ -97,7 +97,7 @@ const Carousel: FC = () => {
             </SwiperSlide>
           );
         })}
-      </SwiperContainer>
+      </SwiperContainerRef>
     </div>
   );
 };

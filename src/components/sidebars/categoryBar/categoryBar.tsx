@@ -9,7 +9,7 @@ import { Autoplay } from "swiper";
 import "swiper/css/autoplay";
 import { useAppSelector } from "@/redux/store/hooks";
 import { selectCategory } from "@/redux/slice/category.slice";
-import SwiperContainer from "@/components/common/swiperContainer";
+import { SwiperContainerRef } from "@/components/common/swiperContainer";
 import UIHeader from "@/components/common/header";
 
 const CategoryBar: FC = () => {
@@ -60,8 +60,8 @@ const CategoryBar: FC = () => {
     >
       <div className="flex flex-col gap-3">
         <UIHeader title="Shop by Category" />
-        <SwiperContainer
-          getRef={swiperRef}
+        <SwiperContainerRef
+          sliderRef={swiperRef}
           modules={[Autoplay]}
           spaceBetween={15}
           slidesPerView={numberSlides}
@@ -76,7 +76,7 @@ const CategoryBar: FC = () => {
               <CategoryCard {...category} />
             </SwiperSlide>
           ))}
-        </SwiperContainer>
+        </SwiperContainerRef>
       </div>
     </div>
   );
