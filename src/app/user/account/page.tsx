@@ -1,13 +1,9 @@
 "use client";
 
 import UIButton from "@/components/common/button";
-import Container from "@/app/user/components/container";
 import { selectUser } from "@/redux/slice/user.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
-import Link from "next/link";
-import { FC } from "react";
-import { AiFillEdit } from "react-icons/ai";
-import { BsPerson } from "react-icons/bs";
+import { FC, Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import {
   NotificationType,
@@ -18,10 +14,25 @@ import Image from "next/image";
 import EditProfileComponent from "./component/editProfile";
 import { cn } from "@/utils/lib";
 import ChangePasswordComponent from "./component/changePassword";
+import CouponComponent from "./component/couponComponent";
+import SwiperContainer from "@/components/common/swiperContainer";
+import { SwiperSlide } from "swiper/react";
+
+export interface Coupon {
+  code: string;
+  type: "oneTime" | "multiple";
+  discountType: "percentage" | "price";
+  value: number;
+  minPurchase: number;
+  expirationDate: Date;
+  usedBy: string[];
+}
 
 const DetailsPage: FC = () => {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
+
+  const [coupons, setCoupons] = useState<Coupon[]>();
 
   const _requestEmailVerification = () => {
     axios
@@ -64,6 +75,26 @@ const DetailsPage: FC = () => {
   const imageSrc = `/assets/rangoli/rangoli-${
     Math.floor(Math.random() * 4) + 1
   }.png`;
+
+  const fetchCoupons = async () => {
+    axios
+      .get<{ coupons: Coupon[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/coupons`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setCoupons(res.data.coupons);
+      })
+      .catch((err) => {});
+  };
+  useEffect(() => {
+    fetchCoupons();
+  }, []);
 
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col md:border-x-[1px] md:border-gray-300">
@@ -179,11 +210,22 @@ const DetailsPage: FC = () => {
           <h4 className="border-b-[1px] border-gray-600 pb-2 text-lg text-gray-600">
             Coupons
           </h4>
-          <div className="flex gap-4">
-            <div className="h-[8rem] w-full rounded-md border-[1px] border-yellow-400 bg-yellow-100"></div>
-            <div className="h-[8rem] w-full rounded-md border-[1px] border-yellow-400 bg-yellow-100"></div>
-            <div className="h-[8rem] w-full rounded-md border-[1px] border-yellow-400 bg-yellow-100 max-md:hidden"></div>
-          </div>
+          {coupons && coupons?.length ? (
+            <SwiperContainer
+              className="w-full"
+              slidesPerView={3}
+              spaceBetween={10}
+              modules={[]}
+            >
+              {coupons.map((coupon, index) => (
+                <SwiperSlide className="w-full" key={coupon.code + index}>
+                  <CouponComponent {...coupon} />
+                </SwiperSlide>
+              ))}
+            </SwiperContainer>
+          ) : (
+            <span className="w-full text-center">No Coupons found</span>
+          )}
         </div>
 
         <div className="flex h-full w-full max-w-lg flex-col gap-4 px-6 py-5">
