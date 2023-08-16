@@ -143,30 +143,34 @@ const Total: FC = () => {
               Apply
             </UIButton>
           </div>
-          <div className="relative overflow-hidden rounded-b-xl rounded-t-md">
-            <div className="flex h-full max-h-[12.5rem] flex-col gap-1 overflow-y-scroll pb-2 scrollbar-none">
-              {coupons?.map((coupon, index) => (
-                <CouponCartComponent
-                  key={coupon.code + index}
-                  className="flex-shrink-0"
-                  applyCoupon={() => applyCode(coupon.code)}
-                  {...coupon}
-                />
-              ))}
+          {coupons && coupons.length ? (
+            <div className="relative overflow-hidden rounded-b-xl rounded-t-md">
+              <div className="flex h-full max-h-[12.5rem] flex-col gap-1 overflow-y-scroll pb-2 scrollbar-none">
+                {coupons?.map((coupon, index) => (
+                  <CouponCartComponent
+                    key={coupon.code + index}
+                    className="flex-shrink-0"
+                    applyCoupon={() => applyCode(coupon.code)}
+                    {...coupon}
+                  />
+                ))}
+              </div>
+              <div
+                style={{
+                  boxShadow: "0px -10px 5px #0000002f inset",
+                }}
+                className="absolute bottom-0 left-0 h-5 w-full rounded-b-xl"
+              ></div>
+              <div
+                style={{
+                  boxShadow: "0px 5px #00000011 inset",
+                }}
+                className="absolute left-0 top-0 h-2 w-full rounded-t-md"
+              ></div>
             </div>
-            <div
-              style={{
-                boxShadow: "0px -10px 5px #0000002f inset",
-              }}
-              className="absolute bottom-0 left-0 h-5 w-full rounded-b-xl"
-            ></div>
-            <div
-              style={{
-                boxShadow: "0px 5px #00000011 inset",
-              }}
-              className="absolute left-0 top-0 h-2 w-full rounded-t-md"
-            ></div>
-          </div>
+          ) : (
+            <span className="text-center">No coupons found</span>
+          )}
         </div>
       )}
       <div className="border-t-[1px] border-gray-300 pt-3 text-xs font-semibold text-gray-500">

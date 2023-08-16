@@ -18,9 +18,10 @@ export function dateFormater(date: Date) {
   const day = days[date.getDay()];
   const dayNumber = date.getDate();
   const month = months[date.getMonth()];
+  const year = date.getFullYear();
   const formattedDate = `${day}, ${dayNumber}${getDaySuffix(
     dayNumber
-  )} ${month}`;
+  )} ${month} ${year}`;
   return formattedDate;
 }
 

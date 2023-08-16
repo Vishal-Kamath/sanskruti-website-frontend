@@ -1,7 +1,11 @@
 "use client";
 
 import UIButton from "@/components/common/button";
-import { selectCart, selectCouponDiscount } from "@/redux/slice/cart.slice";
+import {
+  selectCart,
+  selectCouponDiscount,
+  setCouponDiscount,
+} from "@/redux/slice/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
@@ -69,6 +73,7 @@ const CartPaymemtPage: FC = () => {
       billingAddress,
       SubTotal: total,
       discount,
+      couponCode: couponDiscount.code,
       gst,
       Amount: finalValue,
     };
@@ -87,6 +92,12 @@ const CartPaymemtPage: FC = () => {
       .then((res) => {
         const response = res.data;
         if (response.link) return (window.location.href = response.link);
+        dispatch(
+          setCouponDiscount({
+            code: "",
+            discount: 0,
+          })
+        );
 
         dispatch(
           setNotification({ message: response.message, type: response.type })
