@@ -1,7 +1,7 @@
 "use client";
 
 import UIButton from "@/components/common/button";
-import { selectCart } from "@/redux/slice/cart.slice";
+import { selectCart, selectCouponDiscount } from "@/redux/slice/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +22,7 @@ const CartPaymemtPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const cart = useAppSelector(selectCart);
+  const couponDiscount = useAppSelector(selectCouponDiscount);
 
   const [shippingAddress] = useAddressState("shippingAddress");
   const [billingAddress] = useAddressState("billingAddress");

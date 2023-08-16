@@ -10,10 +10,18 @@ export type CartItem = {
 
 export type CartType = {
   cart: CartItem[];
+  coupon: {
+    discount: number;
+    code: string;
+  };
 };
 
 const initialState: CartType = {
   cart: [],
+  coupon: {
+    discount: 0,
+    code: "",
+  },
 };
 
 export const cart = createSlice({
@@ -24,11 +32,23 @@ export const cart = createSlice({
     setCart: (state, action: PayloadAction<CartType>) => {
       state.cart = action.payload.cart;
     },
+
+    setCouponDiscount: (
+      state,
+      action: PayloadAction<{
+        discount: number;
+        code: string;
+      }>
+    ) => {
+      state.coupon.discount = action.payload.discount;
+      state.coupon.code = action.payload.code;
+    },
   },
 });
 
-export const { setCart } = cart.actions;
+export const { setCart, setCouponDiscount } = cart.actions;
 
 export const selectCart = (state: RootState) => state.cart.cart;
+export const selectCouponDiscount = (state: RootState) => state.cart.coupon;
 
 export default cart.reducer;
