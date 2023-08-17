@@ -23,7 +23,7 @@ const DropdownComponent: React.FC<{
         </span>
       </button>
       <div
-        className={`custom_scrollbar flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden pb-3 text-[16px] text-gray-600 ${classname} ${
+        className={`custom_scrollbar flex flex-col gap-1 overflow-y-auto overflow-x-hidden pb-3 text-[16px] text-gray-600 ${classname} ${
           !cardOpen && "hidden"
         }`}
       >

@@ -195,14 +195,14 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         </DropdownComponent>
 
         <DropdownComponent main="Prices">
-          <table className="border-none">
+          <table className="border-collapse border-[1px] border-slate-200 [&>*>*>*]:border-[1px] [&>*>*>*]:border-slate-200 [&>*>*>*]:p-2 [&>*>*]:border-[1px] [&>*>*]:border-slate-200 [&>*]:border-[1px] [&>*]:border-slate-200">
             <thead>
               <tr>
-                <th className="text-left capitalize">
+                <th className="text-center capitalize">
                   {filteredAttributes.map((data) => data.name).join(", ")}
                 </th>
                 <th className="text-center">Discount</th>
-                <th className="text-right">Price</th>
+                <th className="text-center">Price</th>
               </tr>
             </thead>
             <tbody>
@@ -213,7 +213,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
                   }
                   className="text-sm"
                 >
-                  <td className="text-left capitalize">
+                  <td className="text-center capitalize">
                     {variant.combinationString.join(", ")}
                   </td>
                   {variant?.discount ? (
@@ -222,7 +222,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
                     <td className="text-center">-</td>
                   )}
                   {variant?.discount ? (
-                    <td className="flex items-baseline justify-end gap-2">
+                    <td className="flex items-baseline justify-center gap-2 border-none">
                       <span>
                         &#8377;
                         {variant?.price *
@@ -237,7 +237,12 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
                       </span>
                     </td>
                   ) : (
-                    <td className="text-right">&#8377;{variant?.price}</td>
+                    <td
+                      className="text-center
+                    "
+                    >
+                      &#8377;{variant?.price}
+                    </td>
                   )}
                 </tr>
               ))}
