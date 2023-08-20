@@ -10,7 +10,7 @@ export type CartItem = {
 
 export type CartType = {
   cart: CartItem[];
-  coupon: {
+  coupon?: {
     discount: number;
     code: string;
   };
@@ -40,8 +40,7 @@ export const cart = createSlice({
         code: string;
       }>
     ) => {
-      state.coupon.discount = action.payload.discount;
-      state.coupon.code = action.payload.code;
+      state.coupon = action.payload;
     },
   },
 });
