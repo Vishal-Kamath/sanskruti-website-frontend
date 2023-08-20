@@ -22,6 +22,7 @@ const MainFilters: FC<{
     const current = new URLSearchParams(searchParams.toString());
     const query = current.toString() ? `?${current.toString()}` : "";
     pathnameArray[2] = value;
+    pathnameArray[3] = "_";
     const newPath = pathnameArray.join("/");
     router.push(`${newPath}/${query}`);
   };
@@ -30,6 +31,7 @@ const MainFilters: FC<{
     const current = new URLSearchParams(searchParams.toString());
     const query = !!current.toString() ? `?${current.toString()}` : "";
     pathnameArray[2] = "_";
+    pathnameArray[3] = "_";
     const newPath = pathnameArray.join("/");
     router.push(`${newPath}/${query}`);
   };
