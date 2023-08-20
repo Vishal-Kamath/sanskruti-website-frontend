@@ -6,7 +6,7 @@ import { FC } from "react";
 import FilterList from "./filtersList";
 import Image from "next/image";
 
-const FilterBar: FC = () => {
+const FilterBar: FC<{ params: string[] }> = ({ params }) => {
   const sideBarOpen = useAppSelector(selectSidebarOpen);
   return (
     <div
@@ -18,7 +18,7 @@ const FilterBar: FC = () => {
         FILTERS
       </h3>
 
-      <FilterList />
+      <FilterList params={params} />
 
       <div className="flex flex-col gap-6 pt-7 max-sm:hidden">
         <Image

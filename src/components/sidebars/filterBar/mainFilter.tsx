@@ -1,15 +1,13 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 
-const FilterItem: FC<{
+const MainFilters: FC<{
   categoriesList: string[];
-  main: string;
-  sub: string[];
   selected: string;
-}> = ({ main, sub, selected }) => {
+}> = ({ categoriesList, selected }) => {
   const router = useRouter();
   const pathname = usePathname();
   const pathnameArray = pathname.split("/");
@@ -23,7 +21,7 @@ const FilterItem: FC<{
   const selectVariant = (value: string) => {
     const current = new URLSearchParams(searchParams.toString());
     const query = current.toString() ? `?${current.toString()}` : "";
-    pathnameArray[3] = value;
+    pathnameArray[2] = value;
     const newPath = pathnameArray.join("/");
     router.push(`${newPath}/${query}`);
   };
@@ -31,7 +29,7 @@ const FilterItem: FC<{
   const deSelectVariant = () => {
     const current = new URLSearchParams(searchParams.toString());
     const query = !!current.toString() ? `?${current.toString()}` : "";
-    pathnameArray[3] = "_";
+    pathnameArray[2] = "_";
     const newPath = pathnameArray.join("/");
     router.push(`${newPath}/${query}`);
   };
@@ -39,32 +37,35 @@ const FilterItem: FC<{
   return (
     <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
       <h5 className="flex items-center justify-between text-lg font-medium capitalize sm:text-[16px] sm:font-normal">
-        {main}
+        Categories
       </h5>
       <div className="flex max-h-[15rem] flex-col gap-1 overflow-y-auto overflow-x-hidden py-1 pr-4 scrollbar-thin scrollbar-track-gray-400">
-        {sub.map((subItem) => (
+        {categoriesList.map((category) => (
           <span
-            key={subItem}
+            key={category}
             className="flex items-center gap-4 font-extralight max-sm:text-[16px] sm:gap-3"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
                 type="radio"
-                name={main}
-                checked={selected === subItem}
-                id={subItem + " filter sidebar"}
+                name={"categories"}
+                checked={selected === category}
+                id={category + " filter sidebar"}
                 className="absolute left-0 top-0 h-full w-full opacity-0"
-                onClick={() => onClick(subItem)}
+                onClick={() => onClick(category)}
                 onChange={() => {}}
               />
-              {selected === subItem ? (
+              {selected === category ? (
                 <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
               ) : (
                 <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
               )}
             </div>
-            <label htmlFor={subItem + " filter sidebar"} className="capitalize">
-              {subItem}
+            <label
+              htmlFor={category + " filter sidebar"}
+              className="capitalize"
+            >
+              {category}
             </label>
           </span>
         ))}
@@ -73,4 +74,4 @@ const FilterItem: FC<{
   );
 };
 
-export default FilterItem;
+export default MainFilters;
