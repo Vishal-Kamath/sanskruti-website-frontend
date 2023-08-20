@@ -73,9 +73,9 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
             {displayCategory?.subCategory.map((item, index) => (
               <Link
                 key={item + index + displayCategory?.Title + " sidebar"}
-                href={`/category/${displayCategory?.Title}?${
+                href={`/category/${encodeURIComponent(
                   displayCategory?.Title
-                }=${encodeURIComponent(item)}`}
+                )}?${encodeURIComponent(item)}`}
                 onClick={() => dispatch(closeSidebar())}
                 className="w-fit text-lg capitalize hover:text-sanskrutiRed hover:underline hover:decoration-sanskrutiRed hover:underline-offset-4"
               >

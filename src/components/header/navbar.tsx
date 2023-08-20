@@ -64,9 +64,9 @@ const Navbar: FC = () => {
                   {displayCategory?.subCategory.map((item, index) => (
                     <Link
                       key={item + index + displayCategory?.Title}
-                      href={`/category/${displayCategory?.Title}?${
+                      href={`/category/${encodeURIComponent(
                         displayCategory?.Title
-                      }=${encodeURIComponent(item)}`}
+                      )}/${encodeURIComponent(item)}`}
                       className="w-fit capitalize hover:font-medium hover:text-sanskrutiRed hover:underline hover:underline-offset-4"
                       onClick={() => setHover(false)}
                     >
