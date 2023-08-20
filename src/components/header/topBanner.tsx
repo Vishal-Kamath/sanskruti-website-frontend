@@ -48,7 +48,7 @@ const TopBanner: FC = () => {
       <SwiperSlide>
         <a
           href="tel:911234567890"
-          className="flex h-8 items-center justify-center gap-2 text-sm"
+          className="mx-auto flex h-8 w-fit items-center justify-center gap-2 text-sm"
         >
           <FiPhoneCall />
           <span>+91-1234567890</span>
@@ -57,7 +57,7 @@ const TopBanner: FC = () => {
       <SwiperSlide>
         <Link
           href="/shipping"
-          className="flex h-8 items-center justify-center gap-2 text-sm"
+          className="mx-auto flex h-8 w-fit items-center justify-center gap-2 text-sm"
         >
           <Image
             src="/assets/truck.svg"
@@ -72,7 +72,7 @@ const TopBanner: FC = () => {
       <SwiperSlide>
         <Link
           href="/store"
-          className="flex h-8 items-center justify-center gap-2 text-sm"
+          className="mx-auto flex h-8 w-fit items-center justify-center gap-2 text-sm"
         >
           <MdLocationOn className="text-lg" />
           <span>Visit Our Store</span>
