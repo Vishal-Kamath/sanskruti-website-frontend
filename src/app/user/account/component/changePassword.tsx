@@ -13,6 +13,7 @@ import axios from "axios";
 import z from "zod";
 import "@/app/high-res.css";
 import { cn } from "@/utils/lib";
+import { RxCross2 } from "react-icons/rx";
 
 const ChangePasswordComponent: FC<{
   className?: string;
@@ -128,18 +129,12 @@ const ChangePasswordComponent: FC<{
         <div className="relative flex w-full max-w-lg flex-col items-start gap-6 rounded-lg bg-white p-8">
           <div className="flex w-full justify-between">
             <h3 className="text-lg font-semibold">Change Paasword</h3>
-            <UIButton
-              className="w-fit border-slate-400 px-5"
+            <button
+              className="border-none px-2 outline-none"
               onClick={() => setOpen(false)}
             >
-              Back
-            </UIButton>
-          </div>
-          <div className="text-justify text-gray-500">
-            Please note that it&apos;s essential to regularly update your
-            password for increased security. Remember to choose a strong, unique
-            combination of characters, numbers, and symbols. Stay proactive and
-            safeguard your account by changing your password periodically.
+              <RxCross2 className="h-6 w-6 text-gray-600 hover:text-black" />
+            </button>
           </div>
           <div className="flex w-full shrink-0 flex-col gap-6 md:max-w-lg">
             <Input

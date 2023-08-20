@@ -228,7 +228,7 @@ const DetailsPage: FC = () => {
           )}
         </div>
 
-        <div className="flex h-full w-full max-w-lg flex-col gap-4 px-6 py-5">
+        <div className="flex w-full max-w-lg flex-col gap-4 px-6 py-5">
           <h4 className="border-b-[1px] border-gray-600 pb-2 text-lg text-gray-600">
             Security
           </h4>
