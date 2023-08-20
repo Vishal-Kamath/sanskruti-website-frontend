@@ -9,8 +9,8 @@ import {
 
 const FooterDetails: FC = () => {
   return (
-    <div className="flex w-full flex-col gap-6 bg-gray-100 px-[3vw] py-10 text-[16px] font-normal">
-      <div className="grid w-full grid-cols-2 justify-between gap-10 md:grid-cols-5">
+    <div className="flex w-full flex-col items-center gap-6 bg-gray-100 px-[3vw] py-10 text-sm font-normal">
+      <div className="grid w-full max-w-5xl grid-cols-2 justify-between gap-10 md:grid-cols-5">
         <FooterCategory />
         <FooterDetailsCard
           title="ABOUT US"
@@ -120,11 +120,11 @@ const FooterDetails: FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex max-w-5xl flex-col gap-5">
         <FooterNewArrivals />
         <FooterBestSellers />
       </div>
-      <div className="mt-7 flex justify-between gap-2 max-md:flex-col">
+      <div className="mt-7 flex w-full max-w-5xl justify-between gap-2 max-md:flex-col">
         <span>Design and development by 🖤 Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>
