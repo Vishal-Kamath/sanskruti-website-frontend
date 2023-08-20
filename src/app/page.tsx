@@ -13,45 +13,48 @@ const Home: NextPage = () => {
     <main className="flex flex-col gap-5 pb-10 pt-36">
       <Carousel />
 
-      <div className="flex justify-between px-[9vw] py-5">
+      <div className="grid grid-cols-2 justify-between gap-10 px-[9vw] py-5 md:grid-cols-3">
         <Link
           href="/shipping"
-          className="flex h-full flex-col items-center gap-2"
+          className="group relative isolate mx-auto flex h-full w-fit flex-col items-center gap-2 transition-all duration-300 ease-in-out"
         >
           <Image
-            className="h-8 w-8 object-center lg:h-14 lg:w-14"
+            className="h-14 w-14 object-center"
             src="/assets/free-delivery.png"
             alt="shipping truck"
             width={50}
             height={50}
           />
           <div className="max-lg:text-xs lg:text-lg">Free Shipping</div>
+          <div className="absolute left-1/2 top-1/2 -z-10 h-0 w-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-100 transition-all duration-300 ease-in-out group-hover:h-24 group-hover:w-24"></div>{" "}
         </Link>
         <Link
           href="/return"
-          className="flex h-full flex-col items-center gap-2"
+          className="group relative isolate mx-auto flex h-full w-fit flex-col items-center gap-2 transition-all duration-300 ease-in-out"
         >
           <Image
-            className="h-8 w-8 object-center lg:h-14 lg:w-14"
+            className="h-14 w-14 object-center"
             src="/assets/easy-return.png"
             alt="shipping truck"
             width={50}
             height={50}
           />
           <div className="max-lg:text-xs lg:text-lg">Easy Return</div>
+          <div className="absolute left-1/2 top-1/2 -z-10 h-0 w-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-100 transition-all duration-300 ease-in-out group-hover:h-24 group-hover:w-24"></div>{" "}
         </Link>
         <Link
           href="/customFitting"
-          className="flex h-full flex-col items-center gap-2"
+          className="group relative isolate mx-auto flex h-full w-fit flex-col items-center gap-2 transition-all duration-300 ease-in-out max-md:col-span-full"
         >
           <Image
-            className="h-8 w-8 object-center lg:h-14 lg:w-14"
+            className="h-14 w-14 object-center"
             src="/assets/custom-fitting.svg"
             alt="easy return"
             width={50}
             height={50}
           />
           <div className="max-lg:text-xs lg:text-lg">Custom Fitting</div>
+          <div className="absolute left-1/2 top-1/2 -z-10 h-0 w-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-slate-100 transition-all duration-300 ease-in-out group-hover:h-24 group-hover:w-24"></div>
         </Link>
       </div>
 
