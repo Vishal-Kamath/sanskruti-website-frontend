@@ -5,16 +5,32 @@ import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import { cn } from "@/utils/lib";
 
-import { Dosis } from "next/font/google";
+import {
+  Open_Sans,
+  Montserrat,
+  Playfair_Display,
+} from "next/font/google";
 import AuthComponent from "@/components/authComponent";
 import LoadingComponent from "@/components/loadingComponent";
 import ScrollToTheTopButton from "@/components/common/scrollToTpopButton";
 import Notification from "@/components/notification/notification";
 
-const dosis = Dosis({
+const open_sans = Open_Sans({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--dosis-font",
+  variable: "--open-sans-font",
+});
+
+const montserrat = Montserrat({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--montserrat-font",
+});
+
+const playfair_display = Playfair_Display({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--playfair-display-font",
 });
 
 export const metadata: Metadata = {
@@ -58,8 +74,10 @@ export default function RootLayout({
         <AuthComponent>
           <body
             className={cn(
-              dosis.variable,
-              "relative flex min-h-screen select-none flex-col bg-white font-dosis text-xs font-medium text-black md:text-[14px]"
+              open_sans.variable,
+              montserrat.variable,
+              playfair_display.variable,
+              "relative flex min-h-screen select-none flex-col bg-white font-open-sans text-xs font-medium text-black md:text-[14px]"
             )}
           >
             <LoadingComponent />

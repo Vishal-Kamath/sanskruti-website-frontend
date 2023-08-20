@@ -8,7 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        dosis: "var(--dosis-font)",
+        "open-sans": "var(--open-sans-font)",
+        "montserrat": "var(--montserrat-font)",
+        "playfair-display": "var(--playfair-display-font)",
       },
       colors: {
         facebook: "#4267B2",
