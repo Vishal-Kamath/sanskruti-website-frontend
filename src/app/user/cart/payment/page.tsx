@@ -73,7 +73,7 @@ const CartPaymemtPage: FC = () => {
       billingAddress,
       SubTotal: total,
       discount,
-      couponCode: couponDiscount.code,
+      couponCode: couponDiscount?.code,
       gst,
       Amount: finalValue,
     };

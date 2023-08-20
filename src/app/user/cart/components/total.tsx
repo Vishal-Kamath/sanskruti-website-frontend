@@ -37,9 +37,10 @@ const Total: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!couponDiscount.discount) return;
+    if (!couponDiscount || !couponDiscount.discount || !couponDiscount.code)
+      return;
     applyCode(couponDiscount.code);
-  }, [finalValue, couponDiscount.discount, couponDiscount.code]);
+  }, [finalValue, couponDiscount]);
 
   const fetchCoupons = async () => {
     axios
@@ -188,7 +189,7 @@ const Total: FC = () => {
             <span className="text-green-400">-&#8377;{discount}</span>
           </div>
         )}
-        {!!couponDiscount.discount && (
+        {couponDiscount && !!couponDiscount.discount && (
           <div>
             <span>Coupon Discount</span>
             <span className="text-green-400">
