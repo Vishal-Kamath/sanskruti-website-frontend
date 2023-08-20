@@ -52,7 +52,7 @@ const UserReviewCarousel: FC = () => {
         >
           {userReviews.map((review, index) => (
             <SwiperSlide key={review.image + index}>
-              <div className="flex w-full flex-col items-center gap-5 overflow-hidden rounded-xl border-[1px] border-gray-400 px-5 py-7">
+              <div className="flex w-full flex-col items-center gap-7 overflow-hidden rounded-xl border-[1px] border-gray-400 px-5 py-7">
                 <div className="flex w-full items-center gap-4">
                   <Image
                     src={review.image}
@@ -61,13 +61,13 @@ const UserReviewCarousel: FC = () => {
                     height={500}
                     className="h-[3rem] w-[3rem] rounded-full object-cover object-top"
                   />
-                  <div className="text-lg font-medium">{review.name}</div>
+                  <div className="text-[16px] font-semibold">{review.name}</div>
                   <FcGoogle className="ml-auto h-6 w-6" />
                 </div>
-                <div className="flex w-full flex-col items-center justify-center gap-5">
-                  <i className="text-left text-lg text-gray-700">
+                <div className="flex w-full flex-col items-center justify-center gap-6">
+                  <p className="text-justify font-normal text-gray-700">
                     &quot;{review.review}&quot;
-                  </i>
+                  </p>
                   <div className="h-1 w-16 bg-slate-300"></div>
                 </div>
               </div>
