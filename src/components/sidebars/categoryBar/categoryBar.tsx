@@ -54,11 +54,11 @@ const CategoryBar: FC = () => {
   return (
     <div
       id="category"
-      className="w-full bg-gradient-to-t from-white via-orange-200 via-20% to-white to-95% px-[3vw]"
+      className="w-full bg-gradient-to-t from-white via-orange-300 via-20% to-white to-95% px-[3vw]"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-8">
         <UIHeader title="Shop by Category" />
         <SwiperContainerRef
           sliderRef={swiperRef}
