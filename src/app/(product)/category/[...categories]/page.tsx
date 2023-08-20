@@ -6,7 +6,7 @@ import Pagination from "@/components/common/pagination";
 import { Metadata } from "next";
 import { CategoryStateType } from "@/redux/slice/category.slice";
 
-type ResultType = {
+export type ResultType = {
   totalPages: number;
   currentPage: number;
   products: ProductType[];
@@ -15,18 +15,18 @@ type ResultType = {
 export async function generateMetadata({
   params,
 }: {
-  params: { categoryName: string };
+  params: { categories: string[] };
 }): Promise<Metadata> {
   const { categories } = (
     await axios.get<CategoryStateType>(
-      `${process.env.ENDPOINT}/api/v1/user/categories?keyword=${params.categoryName}`
+      `${process.env.ENDPOINT}/api/v1/user/categories?keyword=${params.categories[0]}`
     )
   ).data;
   const category = categories[0];
   return {
     title:
       category?.Meta_Title ||
-      `Sanskruti Nx - ${decodeURIComponent(params.categoryName)}`,
+      `Sanskruti Nx - ${decodeURIComponent(params.categories[0])}`,
     description: category?.Meta_Description,
   };
 }
@@ -35,21 +35,19 @@ const CategoryPage = async ({
   params,
   searchParams,
 }: {
-  params: { categoryName: string };
+  params: { categories: string[] };
   searchParams: { [key: string]: string };
 }) => {
-  const current = new URLSearchParams(searchParams);
-  const categoryName = params.categoryName;
-  const subCategory = searchParams[decodeURIComponent(params.categoryName)];
+  const categoriesArgs = params.categories;
+  const MainCategory =
+    categoriesArgs[0] !== "_" ? `MainCategory=${categoriesArgs[0]}` : "";
+  const SubCategory =
+    categoriesArgs[1] !== "_" ? `&SubCategory=${categoriesArgs[1]}` : "";
+  const searchQuery = new URLSearchParams(searchParams).toString()
+    ? `&${new URLSearchParams(searchParams).toString()}`
+    : "";
 
-  current.delete(categoryName);
-  const query = `?MainCategory=${categoryName}${
-    !!current.toString() ? `&${current.toString()}` : ""
-  }${
-    !!searchParams[categoryName]
-      ? `&SubCategory=${encodeURIComponent(subCategory)}`
-      : ""
-  }`;
+  const query = `?${MainCategory}${SubCategory}${searchQuery}`;
   const result = (
     await axios.get<ResultType>(
       `${process.env.ENDPOINT}/api/v1/user/getallProductsFromFilters${query}`,
