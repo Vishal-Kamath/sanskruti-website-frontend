@@ -1,7 +1,7 @@
 import { cn } from "@/utils/lib";
-import { FC, HTMLAttributes } from "react";
+import { ButtonHTMLAttributes, FC } from "react";
 
-interface Props extends HTMLAttributes<HTMLButtonElement> {}
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}
 const UIButton: FC<Props> = ({ className, children, ...props }) => {
   return (
     <button
