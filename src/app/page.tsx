@@ -1,12 +1,14 @@
-import ProductCarousel from "@/components/common/productCarousel";
 import VisitOurStore from "@/components/footer/visitOurStore";
 import Carousel from "@/components/mainCarousel";
+import NewArrival from "@/app/component/newArrivals";
 import CategoryBar from "@/components/sidebars/categoryBar/categoryBar";
 import SubBanner from "@/components/subBanners";
 import UserReviewCarousel from "@/components/userReviewCarousel";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import BestSellers from "./component/bestSeller";
+import FeaturedProducts from "./component/featured";
 
 const Home: NextPage = () => {
   return (
@@ -60,9 +62,9 @@ const Home: NextPage = () => {
 
       <CategoryBar />
       <SubBanner />
-      <ProductCarousel />
-      <ProductCarousel />
-      <ProductCarousel />
+      <NewArrival />
+      <BestSellers />
+      <FeaturedProducts />
       <UserReviewCarousel />
 
       <a href="" className="px-[3vw]" target="_blank">
