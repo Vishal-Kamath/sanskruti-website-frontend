@@ -42,15 +42,15 @@ const SwiperContainer: FC<SwiperProps> = ({
 
       <button
         onClick={handlePrev}
-        className="prev_swiper absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white py-3 pl-1 pr-3 opacity-40 hover:opacity-75"
+        className="prev_swiper absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white py-2 pl-1 pr-2 opacity-40 hover:opacity-75"
       >
-        <FaAngleLeft className="h-6 w-6" />
+        <FaAngleLeft className="h-5 w-5" />
       </button>
       <button
         onClick={handleNext}
-        className="next_swiper absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white py-3 pl-3 pr-1 opacity-40 hover:opacity-75"
+        className="next_swiper absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white py-2 pl-2 pr-1 opacity-40 hover:opacity-75"
       >
-        <FaAngleRight className="h-6 w-6" />
+        <FaAngleRight className="h-5 w-5" />
       </button>
     </Swiper>
   );
@@ -86,15 +86,15 @@ export const SwiperContainerRef: FC<
 
       <button
         onClick={handlePrev}
-        className="prev_swiper absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white py-3 pl-1 pr-3 opacity-50 hover:opacity-75"
+        className="prev_swiper absolute left-0 top-1/2 z-50 -translate-y-1/2 rounded-r-full bg-white py-2 pl-1 pr-2 opacity-40 hover:opacity-75"
       >
-        <FaAngleLeft className="h-6 w-6" />
+        <FaAngleLeft className="h-5 w-5" />
       </button>
       <button
         onClick={handleNext}
-        className="next_swiper absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white py-3 pl-3 pr-1 opacity-50 hover:opacity-75"
+        className="next_swiper absolute right-0 top-1/2 z-50 -translate-y-1/2 rounded-l-full bg-white py-2 pl-2 pr-1 opacity-40 hover:opacity-75"
       >
-        <FaAngleRight className="h-6 w-6" />
+        <FaAngleRight className="h-5 w-5" />
       </button>
     </Swiper>
   );
