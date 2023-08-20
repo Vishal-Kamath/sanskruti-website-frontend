@@ -21,7 +21,7 @@ const Navbar: FC = () => {
   return (
     <div
       className={cn(
-        "relative flex w-full justify-center bg-white px-[3vw] max-md:hidden",
+        "relative flex w-full justify-center px-[3vw] max-md:hidden",
         block && "hidden"
       )}
     >
@@ -35,7 +35,7 @@ const Navbar: FC = () => {
             <div
               key={category.Title}
               className={cn(
-                "flex items-center justify-center gap-[2px] rounded-md p-2 text-[0.7rem] font-medium capitalize lg:text-sm",
+                "flex items-center justify-center gap-[2px] rounded-md p-2 text-[14px] font-semibold capitalize",
                 "hover:bg-red-100 hover:text-sanskrutiRed",
                 category.Title === displayCategory?.Title &&
                   "group-hover:bg-red-100 group-hover:text-sanskrutiRed"
@@ -44,7 +44,7 @@ const Navbar: FC = () => {
                 setDisplayCategory(category);
               }}
             >
-              {category.Title.toLocaleUpperCase()} <FaAngleDown />
+              {category.Title} <FaAngleDown />
             </div>
           ))}
         </nav>
@@ -54,13 +54,13 @@ const Navbar: FC = () => {
             hover && "block"
           )}
         >
-          <div className="h-[25rem] rounded-md border-[1px] border-gray-500 bg-white shadow-lg">
+          <div className="h-[25rem] rounded-md border-[1px] border-gray-200 bg-white shadow-lg">
             <div className="flex h-full w-full gap-3 overflow-hidden p-5">
               <div className="flex w-full flex-col gap-4">
-                <h3 className="text-lg font-semibold">
-                  {displayCategory?.Title.toLocaleUpperCase()}
+                <h3 className="text-lg font-semibold capitalize">
+                  {displayCategory?.Title}
                 </h3>
-                <div className="flex h-[15rem] w-full flex-col flex-wrap gap-3 text-[16px]">
+                <div className="flex h-[15rem] w-full flex-col flex-wrap gap-3 text-sm leading-none text-gray-700">
                   {displayCategory?.subCategory.map((item, index) => (
                     <Link
                       key={item + index + displayCategory?.Title}

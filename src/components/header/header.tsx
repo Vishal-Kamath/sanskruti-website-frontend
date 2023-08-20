@@ -102,10 +102,10 @@ const Header: FC = () => {
     pathname.includes("/auth") || pathname.includes("/user");
 
   return (
-    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-[1px] border-gray-500 text-black">
+    <header className="fixed top-0 isolate z-40 flex w-full flex-col border-b-[1px] border-gray-200 bg-white text-black">
       <TopBanner />
 
-      <div className="flex h-16 items-center justify-between gap-24 bg-white px-[3vw]">
+      <div className="flex h-16 items-center justify-between gap-24 px-[3vw]">
         <div className="flex items-center gap-2">
           <div className={cn("md:hidden", sideBarBlocked && "hidden")}>
             {sideBarOpen ? (

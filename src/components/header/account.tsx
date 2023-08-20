@@ -19,7 +19,7 @@ import axios from "axios";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState } from "react";
-import { AiOutlineFileDone, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineFileDone, AiOutlineHeart } from "react-icons/ai";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { BsFillPersonFill, BsFillPersonPlusFill } from "react-icons/bs";
 import { FaAngleDown, FaRegAddressCard } from "react-icons/fa";
@@ -39,7 +39,7 @@ const AccoutElement: FC<{ element: AccoutElementType }> = ({ element }) =>
   element.ref ? (
     <Link
       href={element.ref}
-      className="flex w-full items-center gap-3 border-b-[1px] border-gray-400 bg-slate-50 px-4 py-3 last:border-0 hover:bg-sky-100"
+      className="flex w-full items-center gap-3 border-b-[1px] border-gray-200 bg-slate-50 px-4 py-3 last:border-0 hover:bg-gray-100"
     >
       <element.icon className="h-5 w-5" />{" "}
       <span className="capitalize">{element.title}</span>{" "}
@@ -56,8 +56,8 @@ const AccoutElement: FC<{ element: AccoutElementType }> = ({ element }) =>
     <button
       onClick={element.onClick}
       className={cn(
-        "flex w-full items-center gap-3 border-b-[1px] border-gray-400 bg-slate-50 px-4 py-3 last:border-0",
-        element.title === "Sign Out" ? "hover:bg-red-100" : "hover:bg-sky-100"
+        "flex w-full items-center gap-3 border-b-[1px] border-gray-200 bg-slate-50 px-4 py-3 last:border-0",
+        element.title === "Sign Out" ? "hover:bg-red-100" : "hover:bg-gray-100"
       )}
     >
       <element.icon className="h-5 w-5" />{" "}
@@ -119,7 +119,7 @@ const Account: FC = () => {
           dispatch(showNotification());
           dispatch(loggedOut());
           dispatch(setUser({ address: [] }));
-          dispatch(setCart({ cart: [] }));
+          dispatch(setCart({ cart: [], coupon: { code: "", discount: 0 } }));
           dispatch(setWishlist({ ids: [], list: [] }));
           return router.replace("/");
         })
@@ -195,9 +195,10 @@ const Account: FC = () => {
           <Link
             href="/user/wishlist"
             title="Wishlist"
-            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100"
+            className="group relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-200 bg-slate-50 p-[6px] text-gray-500 outline-none hover:border-gray-600 hover:bg-gray-100 hover:text-black hover:accent-red-600"
           >
-            <AiOutlineHeart className="h-6 w-6" />
+            <AiOutlineHeart className="h-6 w-6 group-hover:hidden" />
+            <AiFillHeart className="hidden h-6 w-6 group-hover:block group-hover:text-red-600" />
             <div
               className={cn(
                 "absolute -right-[6px] -top-[6px] flex items-center justify-center rounded-full bg-sanskrutiRed text-xs text-white",
@@ -212,7 +213,7 @@ const Account: FC = () => {
           <Link
             href="/user/cart"
             title="Cart"
-            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none hover:border-sky-600 hover:bg-sky-100"
+            className="relative flex aspect-square h-fit items-center gap-2 rounded-full border-[1px] border-gray-200 bg-slate-50 p-[6px] text-gray-500 outline-none hover:border-gray-600 hover:bg-gray-100 hover:text-black"
           >
             <MdShoppingCart className="h-6 w-6" />
             <div
@@ -234,8 +235,8 @@ const Account: FC = () => {
       >
         <div
           className={cn(
-            "flex items-center gap-2 rounded-full border-[1px] border-gray-400 bg-slate-50 p-[6px] outline-none",
-            dropdownOpen && "border-sky-600 bg-sky-100"
+            "flex items-center gap-2 rounded-full border-[1px] border-gray-200 bg-slate-50 p-[6px] text-gray-500 outline-none hover:text-black",
+            dropdownOpen && "border-gray-600 bg-gray-100"
           )}
         >
           <HiOutlineUserCircle className="h-6 w-6" />
@@ -253,8 +254,8 @@ const Account: FC = () => {
             !dropdownOpen && "hidden"
           )}
         >
-          <div className=" w-[15rem] overflow-hidden rounded-md border-[1px] border-gray-400 bg-white shadow-lg">
-            <h3 className="break-words border-b-[1px] border-gray-400 p-5 text-right text-[16px] capitalize">
+          <div className=" w-[15rem] overflow-hidden rounded-md border-[1px] border-gray-200 bg-white shadow-lg">
+            <h3 className="break-words border-b-[1px] border-gray-200 p-5 text-right text-[16px] capitalize">
               Hello, {isAuthenticated && username ? username : "Guest"}
             </h3>
             {isAuthenticated
