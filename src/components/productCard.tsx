@@ -4,7 +4,14 @@ import { filters } from "@/data/filterlist";
 import { cn } from "@/utils/lib";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, HTMLAttributes, useState } from "react";
+import {
+  FC,
+  HTMLAttributes,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { ProductType } from "./header/header";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
@@ -15,6 +22,15 @@ import {
   setWishlistIds,
 } from "@/redux/slice/wishlist.slice";
 import axios from "axios";
+import UIButton from "./common/button";
+
+// Swiper
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation } from "swiper";
+import "swiper/css/autoplay";
+import "swiper/css";
+import "swiper/css/navigation";
+import { GoDotFill } from "react-icons/go";
 
 interface Props {
   className?: string;
@@ -79,23 +95,89 @@ const ProductCard: FC<Props> = ({ className, product }) => {
       ((100 - product.varients.variations[0]?.discount) / 100)
     : product.varients.variations[0]?.price;
 
+  // Image change code
+  const swiperRef = useRef<SwiperRef>(null);
+  const [imageIndex, setImageIndex] = useState(
+    swiperRef.current?.swiper.realIndex
+      ? swiperRef.current?.swiper.realIndex
+      : 0
+  );
+
+  const handleMouseEnter = () => {
+    if (swiperRef && swiperRef.current) {
+      swiperRef.current.swiper.autoplay.start();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef && swiperRef.current) {
+      swiperRef.current.swiper.autoplay.stop();
+      handleSet(0);
+    }
+  };
+
+  const handleSet = useCallback((index: number) => {
+    if (!swiperRef.current) return;
+    swiperRef.current.swiper.slideTo(index);
+  }, []);
+
+  const onIndexChange = () =>
+    swiperRef.current &&
+    swiperRef.current.swiper.realIndex !== null &&
+    swiperRef.current.swiper.realIndex !== undefined &&
+    setImageIndex(swiperRef.current.swiper.realIndex);
+
+  useEffect(() => {
+    handleMouseLeave();
+  }, []);
+
   return (
-    <div className={cn("relative w-full flex-shrink-0", className)}>
+    <div
+      className={cn("group relative w-full flex-shrink-0", className)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <Link
         href={`/product/${product.slug}`}
         className={cn("flex w-full flex-shrink-0 flex-col gap-2", className)}
       >
         <div>
-          <div className="bg-gray-100">
+          <div className="relative isolate overflow-hidden bg-gray-100">
             {product.images.length !== 0 ? (
-              <Image
-                src={product.images[0]}
-                width={150}
-                height={150}
-                className="aspect-[2/2.5] h-full w-full object-cover object-top"
-                alt="Product image"
-              />
+              <Swiper
+                ref={swiperRef}
+                modules={[Autoplay, Navigation]}
+                autoplay={{
+                  delay: 1000,
+                  disableOnInteraction: false,
+                }}
+                slidesPerView={1}
+                onRealIndexChange={onIndexChange}
+              >
+                {product.images.map((image, index) => (
+                  <SwiperSlide key={product.name + " image " + index}>
+                    <Image
+                      src={image}
+                      width={150}
+                      height={150}
+                      className="aspect-[2/2.5] h-full w-full object-cover object-top"
+                      alt="Product image"
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             ) : null}
+            <div className="absolute bottom-0 z-10 flex w-full translate-y-full flex-wrap justify-center gap-1 bg-white px-1 py-2 transition-all duration-200 ease-in-out group-hover:translate-y-0">
+              {product.images.map((_, index) => (
+                <GoDotFill
+                  key={product.name + " nav " + index}
+                  className={cn(
+                    "h-2 w-2",
+                    imageIndex === index ? "text-sanskrutiRed" : "text-gray-300"
+                  )}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
