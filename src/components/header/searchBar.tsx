@@ -29,7 +29,7 @@ const SearchBar: React.FC<{
     >
       <AiOutlineSearch
         className={cn(
-          "aspect-sqaure text-xl",
+          "aspect-sqaure h-5 w-5 flex-shrink-0",
           searchFocused ? "text-gray-600" : "text-gray-400"
         )}
       />
