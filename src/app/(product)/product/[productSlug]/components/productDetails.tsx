@@ -3,27 +3,12 @@
 import { FC, useState } from "react";
 import DropdownComponent from "@/components/common/dropdown";
 import VariantTags from "./variantTags";
-import UIButton from "@/components/common/button";
 import { ProductType } from "@/components/header/header";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
-import { selectisAuthenticated } from "@/redux/slice/user.slice";
-import Link from "next/link";
-import axios from "axios";
-import {
-  NotificationType,
-  setNotification,
-  showNotification,
-} from "@/redux/slice/notification.slice";
 import { usePathname, useSearchParams } from "next/navigation";
 import LinksButton from "./links";
-import { useRouter } from "next/navigation";
+import AddToCartAndBuyNow from "./addToCartAndBuyNow";
 
 const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-
-  const isAuthenticated = useAppSelector(selectisAuthenticated);
-
   const filteredAttributes = product.varients.attributes.filter((attr) => {
     const filterAttr = attr.childern.filter((child) => child.state);
     return !!filterAttr.length;
@@ -39,50 +24,6 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         JSON.stringify(variations)
     ) || product.varients.variations[0];
 
-  const addToCart = async () => {
-    const body = {
-      productId: product._id,
-      quantity: 1,
-      variant: combination.combinationString,
-    };
-
-    await axios
-      .post<NotificationType>(
-        `${process.env.ENDPOINT}/api/v1/user/cart`,
-        body,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        dispatch(
-          setNotification({
-            message: res.data.message,
-            type: res.data.type,
-          })
-        );
-        dispatch(showNotification());
-      })
-      .catch((err) => {
-        const response = err.response.data;
-        dispatch(
-          setNotification({
-            message: response.message,
-            type: response.type,
-          })
-        );
-        dispatch(showNotification());
-      });
-  };
-
-  const handleBuyNow = async () => {
-    await addToCart();
-    router.push("/user/cart");
-  };
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentURL = `https://sanskrutinx.in${pathname}${
@@ -95,7 +36,9 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
     <div className="flex w-full flex-col gap-5">
       <div className="flex justify-between gap-3">
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold">{product?.name}</h1>
+          <h1 className="break-words font-serif text-lg font-bold md:text-2xl">
+            {product?.name}
+          </h1>
           <h3 className="text-md font-semibold text-gray-600">
             {product?.brand_name}
           </h3>
@@ -127,7 +70,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
           <span className="text-lg">&#8377;{combination?.price}</span>
         )}
 
-        <span className="text-xs">inclusive of all taxes</span>
+        <span className="text-xs">Inclusive of all taxes</span>
       </div>
 
       <div className="flex flex-col">
@@ -145,38 +88,16 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         ))}
       </div>
 
-      <div className="isolate z-20 flex gap-3 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
-        {isAuthenticated ? (
-          <>
-            <UIButton
-              className="w-full bg-white text-lg font-semibold text-black"
-              onClick={addToCart}
-            >
-              ADD TO CART
-            </UIButton>
-            <UIButton
-              className="w-full bg-black text-lg font-semibold text-white"
-              onClick={handleBuyNow}
-            >
-              BUY NOW
-            </UIButton>
-          </>
-        ) : (
-          <Link
-            href={`/auth/login?redirect=${encodeURIComponent(pathname)}`}
-            className="w-full"
-          >
-            <UIButton className="mx-auto w-full max-w-sm bg-white text-lg font-semibold text-black">
-              SIGN IN
-            </UIButton>
-          </Link>
-        )}
-      </div>
+      <AddToCartAndBuyNow
+        _id={product._id}
+        combinationString={combination.combinationString}
+        pathname={pathname}
+      />
 
       <div className="flex flex-col text-lg">
         <DropdownComponent main="Product Details" open>
           <span>{product?.description || ""}</span>
-          <table className="w-full border-none">
+          <table className="w-full border-none capitalize">
             <tbody>
               <tr>
                 <td>Name: </td>
