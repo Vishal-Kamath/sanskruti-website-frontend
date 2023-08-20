@@ -4,7 +4,7 @@ import { FC, useState, useEffect } from "react";
 import UIHeader from "../../components/common/header";
 import { ProductType } from "../../components/header/header";
 import axios from "axios";
-import { ResultType } from "@/app/(product)/category/[categoryName]/page";
+import { ResultType } from "@/app/(product)/category/[...categories]/page";
 import SwiperContainer from "../../components/common/swiperContainer";
 import ProductCard from "../../components/productCard";
 import { SwiperSlide } from "swiper/react";
