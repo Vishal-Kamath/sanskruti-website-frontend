@@ -8,7 +8,7 @@ import {
 } from "@/redux/slice/cart.slice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { FC, Fragment, useEffect, useState } from "react";
-import { AiOutlineArrowDown, AiOutlineTag } from "react-icons/ai";
+import { AiOutlineTag } from "react-icons/ai";
 import { getAmounts } from "../utils/calculation";
 import axios from "axios";
 import { Coupon } from "../../account/page";
@@ -116,14 +116,10 @@ const Total: FC = () => {
           onClick={() => setOpen(!open)}
           className={cn(
             "h-6 w-6 rounded-full border-[1px] border-gray-500 p-1 outline-4 outline-gray-200 transition-all duration-200 ease-in-out hover:outline",
-            open && "rotate-180"
+            open ? "rotate-180" : "rotate-45"
           )}
         >
-          {open ? (
-            <RxCross2 className="h-full w-full" />
-          ) : (
-            <AiOutlineArrowDown className="h-full w-full" />
-          )}
+          <RxCross2 className="h-full w-full" />
         </button>
       </div>
       {open && (
