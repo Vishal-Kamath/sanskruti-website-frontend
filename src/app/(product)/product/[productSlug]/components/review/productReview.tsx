@@ -2,12 +2,9 @@
 
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import UserReviewContainer from "./userReviewContainer";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
-import { selectisAuthenticated } from "@/redux/slice/user.slice";
+import { AiFillStar } from "react-icons/ai";
+import { useAppDispatch } from "@/redux/store/hooks";
 import {
-  NotificationType,
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
@@ -29,11 +26,9 @@ export type Review = {
 };
 
 const ProductReview: FC<{ id: string }> = ({ id }) => {
-  const userIsAuthenticated = useAppSelector(selectisAuthenticated);
   const dispatch = useAppDispatch();
 
   const [reviews, setReviews] = useState<Review>();
-  const [userReview, setUserReview] = useState<Review["reviews"][0]>();
 
   const fetchReview = () => {
     axios
@@ -46,29 +41,9 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
       })
       .catch();
   };
-
-  const fetchUserReview = () => {
-    axios
-      .get<{ userReview: Review["reviews"][0]; reviews: Review }>(
-        `${process.env.ENDPOINT}/api/v1/user/userReview/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        const response = res.data;
-        setReviews(response.reviews);
-        setUserReview(response.userReview);
-      })
-      .catch();
-  };
   useEffect(() => {
-    if (userIsAuthenticated) fetchUserReview();
-    else fetchReview();
-  }, [userIsAuthenticated]);
+    fetchReview();
+  }, []);
 
   const handlePostReview = async (
     comment: string,
@@ -109,8 +84,7 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
           }
         )
       ).data;
-      setReviews(response.reviews);
-      setUserReview(response.userReview);
+      setReviews(response.reviews)
       return true;
     } catch (err) {
       return false;
@@ -156,52 +130,49 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
         )
       ).data;
       setReviews(response.reviews);
-      setUserReview(response.userReview);
       return true;
     } catch (err) {
       return false;
     }
   };
 
-  const handleDeleteReview = async () => {
-    const confirmIfUserWantsToDelete = confirm(
-      "Are you sure you want to delete this review?"
-    );
-    if (!confirmIfUserWantsToDelete) return;
+  // const handleDeleteReview = async () => {
+  //   const confirmIfUserWantsToDelete = confirm(
+  //     "Are you sure you want to delete this review?"
+  //   );
+  //   if (!confirmIfUserWantsToDelete) return;
 
-    try {
-      const response = (
-        await axios.delete<
-          NotificationType & {
-            reviews: Review;
-          }
-        >(
-          `${process.env.ENDPOINT}/api/v1/user/userReview/${id}?userId=${userReview?.id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        )
-      ).data;
-      dispatch(
-        setNotification({
-          message: response.message,
-          type: response.type,
-        })
-      );
-      dispatch(showNotification());
-      setReviews(response.reviews);
-      setUserReview(undefined);
-    } catch (err) {
-      return;
-    }
-  };
+  //   try {
+  //     const response = (
+  //       await axios.delete<
+  //         NotificationType & {
+  //           reviews: Review;
+  //         }
+  //       >(
+  //         `${process.env.ENDPOINT}/api/v1/user/userReview/${id}?userId=${userReview?.id}`,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           withCredentials: true,
+  //         }
+  //       )
+  //     ).data;
+  //     dispatch(
+  //       setNotification({
+  //         message: response.message,
+  //         type: response.type,
+  //       })
+  //     );
+  //     dispatch(showNotification());
+  //     setReviews(response.reviews);
+  //   } catch (err) {
+  //     return;
+  //   }
+  // };
 
   const total = reviews && reviews.totalRatings ? reviews.totalRatings : 0;
 
-  console.log(total);
   const ratingAverage =
     reviews && reviews?.ratingCounts && total
       ? (
@@ -216,10 +187,7 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
 
   return (
     <div className="flex w-full flex-col gap-5">
-      <h3 className="flex items-center gap-1 text-lg font-bold">
-        <span>RATINGS</span>
-        <AiOutlineStar className="h-5 w-5 text-yellow-300" />
-      </h3>
+      <h3 className="text-lg font-bold">RATINGS</h3>
 
       <div className="my-6 flex items-center justify-between gap-12">
         <div className="flex flex-col justify-between gap-2">
@@ -264,20 +232,13 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
       <h3 className="border-b-[1px] border-gray-300 pb-3 text-[16px]">
         CUSTOMER REVIEWS
       </h3>
-      <UserReviewContainer
-        userReview={userReview}
-        handlePostReview={handlePostReview}
-        handleUpdateReview={handleUpdateReview}
-        handleDeleteReview={handleDeleteReview}
-      />
       {reviews?.reviews && reviews.reviews.length ? (
         <div className="flex flex-col gap-2">
           {reviews.reviews.map((review, index) => (
             <ReviewComponent key={index + review.username} {...review} />
           ))}
         </div>
-      ) : (
-        !userReview && (
+      ) :  (
           <div className="flex flex-col items-center justify-center gap-1 text-[16px]">
             <div className="flex gap-1">
               <AiFillStar className="text-gray-300" />
@@ -286,10 +247,9 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
               <AiFillStar className="text-gray-300" />
               <AiFillStar className="text-gray-300" />
             </div>
-            <span>Be the first to leave a review!!!</span>
+            <span>No reviews here!!!</span>
           </div>
-        )
-      )}
+        )}
     </div>
   );
 };
