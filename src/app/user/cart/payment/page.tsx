@@ -79,7 +79,7 @@ const CartPaymemtPage: FC = () => {
     };
 
     axios
-      .post<{ link?: string } & NotificationType>(
+      .post<{ link?: string; orderId: string } & NotificationType>(
         `${process.env.ENDPOINT}/api/v1/user/order`,
         body,
         {
@@ -103,7 +103,7 @@ const CartPaymemtPage: FC = () => {
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
-        router.replace("/user/order");
+        router.replace(`/user/order/status?orderId=${response.orderId}`);
       })
       .catch((err) => {
         const response = err.response.data;

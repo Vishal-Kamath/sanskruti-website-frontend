@@ -157,7 +157,7 @@ const Account: FC = () => {
     },
     {
       title: "Orders",
-      ref: "/user/order",
+      ref: "/user/order/search",
       icon: AiOutlineFileDone,
     },
     {
