@@ -20,22 +20,9 @@ type Banner = {
 
 const Carousel: FC = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
-  const [isMobile, setIsMobile] = useState<boolean>();
   const swiperRef = useRef<SwiperRef>(null);
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const getBanners = () => {
     dispatch(startLoading());
@@ -84,15 +71,21 @@ const Carousel: FC = () => {
         slidesPerView={1}
       >
         {banners?.map((banner, index) => {
-          const val = isMobile ? "mobileImage" : "desktopImage";
           return (
             <SwiperSlide className="-z-10" key={"banner slide " + index}>
               <Image
-                src={banner[val]}
+                src={banner["mobileImage"]}
                 alt={"banner image" + index}
                 width={500}
                 height={500}
-                className="h-full w-full object-cover max-md:object-top xl:max-h-[70vh]"
+                className="h-full w-full object-cover max-md:object-top md:hidden xl:max-h-[70vh]"
+              />
+              <Image
+                src={banner["desktopImage"]}
+                alt={"banner image" + index}
+                width={500}
+                height={500}
+                className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
               />
             </SwiperSlide>
           );

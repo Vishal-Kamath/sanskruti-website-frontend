@@ -21,22 +21,8 @@ type Banner = {
 
 const SubBanner: FC = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
-  const [isMobile, setIsMobile] = useState<boolean>();
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const getBanners = () => {
     dispatch(startLoading());
@@ -72,15 +58,21 @@ const SubBanner: FC = () => {
           spaceBetween={10}
         >
           {banners?.map((banner, index) => {
-            const val = isMobile ? "mobileImage" : "desktopImage";
             return (
               <SwiperSlide className="-z-10" key={"sub banner slide " + index}>
                 <Image
-                  src={banner[val]}
+                  src={banner["mobileImage"]}
                   alt={"sub banner image" + index}
                   width={500}
                   height={500}
-                  className="h-full w-full object-cover max-md:object-top xl:max-h-[70vh]"
+                  className="h-full w-full object-cover max-md:object-top md:hidden xl:max-h-[70vh]"
+                />
+                <Image
+                  src={banner["desktopImage"]}
+                  alt={"sub banner image" + index}
+                  width={500}
+                  height={500}
+                  className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
                 />
               </SwiperSlide>
             );
