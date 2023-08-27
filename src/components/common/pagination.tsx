@@ -50,7 +50,7 @@ const Pagination: FC<{ currentPage: number; totalPages: number }> = ({
   };
 
   return (
-    <div className="mx-auto mt-auto flex w-full max-w-md items-center justify-center gap-3 pt-10">
+    <div className="mx-auto mt-auto flex w-full max-w-md items-center justify-center gap-3 pt-10 text-lg">
       {currentPage > 1 && (
         <Link href={getLink(currentPage - 1)}>
           <UIButton className="w-fit rounded-full border-[1px] p-1">
@@ -63,8 +63,8 @@ const Pagination: FC<{ currentPage: number; totalPages: number }> = ({
           href={getLink(number)}
           key={"pagination link " + number}
           className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-full hover:bg-slate-100",
-            number === currentPage ? "font-extrabold" : "font-normal"
+            "flex h-6 w-6 items-center justify-center rounded-full font-normal hover:bg-slate-100",
+            number === currentPage ? "text-black" : "text-gray-600"
           )}
         >
           {number}

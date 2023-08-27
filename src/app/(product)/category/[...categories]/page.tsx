@@ -62,14 +62,14 @@ const CategoryPage = async ({
 
   return (
     <Fragment>
-      <div className="grid grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid h-fit grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">
         {products.length ? (
           products.map((product) => (
             <ProductCard key={product.name} product={product} />
           ))
         ) : (
           <h3 className="col-span-full mt-6 text-center text-xl">
-            NO PRODUCTS FOUND
+            No Products Found
           </h3>
         )}
       </div>
