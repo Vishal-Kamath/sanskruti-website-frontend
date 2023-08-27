@@ -62,7 +62,7 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
           onChange={() => {}}
         />
         {selected ? (
-          <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
+          <BsFillCheckSquareFill className="h-full w-full fill-sky-600" />
         ) : (
           <div className="h-full w-full rounded-sm border-2 border-gray-300"></div>
         )}
