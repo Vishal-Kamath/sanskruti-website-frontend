@@ -762,7 +762,7 @@
   padding-left: 60px;
   margin-left: 0;
   background: #ffffff;
-  border: 2px solid #94a3b8;
+  border: 1px solid #94a3b8;
   border-radius: 6px;
   line-height: 25px;
   height: 2.5rem;
@@ -771,7 +771,7 @@
 }
 .react-tel-input:focus-within .form-control,
 .react-tel-input:focus-within .flag-dropdown {
-  border: 2px solid black;
+  border: 1px solid black;
 }
 .react-tel-input:focus-within + #mobileLabel {
   color: #000;
@@ -795,7 +795,7 @@
   bottom: 0;
   padding: 0;
   background-color: #fff;
-  border: 2px solid #94a3b8;
+  border: 1px solid #94a3b8;
   border-radius: 6px 0 0 6px;
 }
 .react-tel-input .flag-dropdown:hover,
