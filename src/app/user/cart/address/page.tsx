@@ -109,8 +109,8 @@ const CartAddressPage: FC = () => {
           )}`}
           className="w-fit"
         >
-          <UIButton className="flex w-fit gap-2 rounded-sm border-[1px] border-sanskrutiRed px-5 text-sanskrutiRed hover:outline-sanskrutiRedLight">
-            <span>Add a new address</span>
+          <UIButton className="w-fit rounded-sm border-[1px] border-sanskrutiRed px-5 text-sanskrutiRed hover:outline-sanskrutiRedLight">
+            Add a new address
           </UIButton>
         </Link>
       </div>

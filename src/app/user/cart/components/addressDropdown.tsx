@@ -1,7 +1,9 @@
 "use client";
 
 import { cn } from "@/utils/lib";
+import Link from "next/link";
 import { FC, useState } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
 import { FaAngleDown } from "react-icons/fa";
 
 interface Props {
@@ -77,9 +79,15 @@ const AddressDropdown: FC<Props> = ({
                 </button>
               ))
             ) : (
-              <h3 className="px-2 py-1 text-left text-[14px] font-medium">
-                Empty list
-              </h3>
+              <Link
+                href={`/user/address/add?redirect=${encodeURIComponent(
+                  "/user/cart/address"
+                )}`}
+                className="flex w-full items-center justify-center gap-2 py-2 text-lg text-gray-600 hover:bg-sky-50 hover:text-black"
+              >
+                <AiOutlinePlus className="h-5 w-5" />
+                Add a new address
+              </Link>
             )}
           </div>
         </div>
