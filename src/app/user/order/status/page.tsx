@@ -1,81 +1,105 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/utils/lib";
-// Success", "Failure", "Aborted",
-const StatusPage: NextPage = () => {
+import { FC, useEffect, useState } from "react";
+import axios from "axios";
+import {
+  NotificationType,
+  setNotification,
+  showNotification,
+} from "@/redux/slice/notification.slice";
+import { useAppDispatch } from "@/redux/store/hooks";
+import { LuPackageCheck, LuPackageX } from "react-icons/lu";
+import { TbPackageOff } from "react-icons/tb";
+import { PiWarningCircleDuotone } from "react-icons/pi";
+
+type Status = { orderId: string; status: string; amount: number };
+const StatusPage: FC = () => {
+  const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
-  const type = searchParams.get("type");
   const orderId = searchParams.get("orderId");
+
+  const [data, setData] = useState<Status>();
+
+  useEffect(() => {
+    if (orderId) {
+      axios
+        .get<Status & NotificationType>(
+          `${process.env.ENDPOINT}/api/v1/user/order/status/${orderId}`,
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          const response = res.data;
+          setData(response);
+        })
+        .catch((err) => {
+          const response = err.response.data;
+          dispatch(
+            setNotification({
+              message: response.message,
+              type: response.type,
+            })
+          );
+          dispatch(showNotification());
+        });
+    }
+  }, [orderId]);
 
   return (
     <div className="h-full w-full pt-40">
       <div
         className={cn(
-          "relative mx-auto flex w-full max-w-md flex-col items-center justify-center gap-5 rounded-md border-[1px] border-gray-300 p-4 pt-[4rem] text-xl shadow-lg",
-          type === "Success" && "border-green-500 pt-[7rem]",
-          type === "Failure" && "border-red-500",
-          type === "Aborted" && "border-yellow-500"
+          "relative mx-auto flex w-full max-w-md flex-col items-center justify-center gap-3 rounded-md p-4 pt-[4rem] text-xl shadow-lg"
         )}
       >
-        {type === "Success" ? (
-          <Image
-            alt="order successfull"
-            src="/assets/successfullOrder.png"
-            className="absolute top-0 h-[12.5rem] w-[12.5rem] -translate-y-1/2 drop-shadow-md"
-            width={500}
-            height={500}
-          />
-        ) : type === "Failure" ? (
-          <Image
-            alt="order failed"
-            src="/assets/remove.png"
-            className="absolute top-0 h-[5rem] w-[5rem] -translate-y-1/2 drop-shadow-md"
-            width={500}
-            height={500}
-          />
-        ) : type === "Aborted" ? (
-          <Image
-            alt="order cancelled"
-            src="/assets/cancelled.png"
-            className="absolute top-0 h-[5rem] w-[5rem] -translate-y-1/2 drop-shadow-md"
-            width={500}
-            height={500}
-          />
+        {data?.status === "Success" ? (
+          <LuPackageCheck className="absolute left-1/2 top-0 h-[6rem] w-[6rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-100 p-3 text-green-500" />
+        ) : data?.status === "Failure" ? (
+          <LuPackageX className="absolute left-1/2 top-0 h-[6rem] w-[6rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-100 p-3 text-red-500" />
+        ) : data?.status === "Aborted" ? (
+          <TbPackageOff className="absolute left-1/2 top-0 h-[6rem] w-[6rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-100 p-3 text-yellow-500" />
         ) : (
-          <Image
-            alt="order successfull"
-            src="/assets/warning.png"
-            className="absolute top-0 h-[5rem] w-[5rem] -translate-y-1/2 drop-shadow-md"
-            width={500}
-            height={500}
-          />
+          <PiWarningCircleDuotone className="absolute left-1/2 top-0 h-[6rem] w-[6rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-100 p-2 text-yellow-500" />
         )}
-        <div>id: {orderId}</div>
 
-        {type === "Success" ? (
+        {data?.status === "Success" ? (
           <div>
-            Order Placed <span className="text-green-400">Successfully!!!</span>
+            Order Placed <span className="text-green-600">Successfully!!!</span>
           </div>
-        ) : type === "Failure" ? (
+        ) : data?.status === "Failure" ? (
           <div>
-            Order <span className="text-red-400">Failed!!!</span>
+            Order <span className="text-red-600">Failed!!!</span>
           </div>
-        ) : type === "Aborted" ? (
+        ) : data?.status === "Aborted" ? (
           <div>
-            Order <span className="text-yellow-400">Cancelled!!!</span>
+            Order <span className="text-yellow-600">Cancelled!!!</span>
           </div>
         ) : (
           <div>Something went wrong</div>
         )}
 
-        <div className="flex gap-2 text-[16px]">
+        {data?.orderId && (
+          <div className="text-sm text-gray-600">
+            id: <u>{data?.orderId}</u>
+          </div>
+        )}
+        {data?.amount && (
+          <div className="text-sm text-gray-600">
+            Amount:{" "}
+            <span className="font-bold text-black">&#8377;{data?.amount}</span>
+          </div>
+        )}
+
+        <div className="mt-6 flex gap-2 text-[16px]">
           <Link
-            href="/user/order"
-            className="text-gray-400 underline underline-offset-2 hover:text-sanskrutiRed"
+            href="/user/order/search"
+            className="text-sm text-gray-400 underline underline-offset-2 hover:text-sanskrutiRed"
           >
             View Orders
           </Link>
