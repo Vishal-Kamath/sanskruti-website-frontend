@@ -1,9 +1,9 @@
 "use client";
 
 import { FcGoogle } from "react-icons/fc";
-import { BsFacebook } from "react-icons/bs";
+import { BsArrowLeft, BsFacebook } from "react-icons/bs";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/common/input";
 import { useAppDispatch } from "@/redux/store/hooks";
 import {
@@ -15,7 +15,6 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import UIButton from "@/components/common/button";
 import { loggedIn } from "@/redux/slice/user.slice";
-import { BiArrowBack } from "react-icons/bi";
 import z from "zod";
 import { validateType } from "../register/components/utils";
 
@@ -39,7 +38,7 @@ const LoginPage = () => {
   const redirect =
     query !== "/"
       ? `/auth/register?redirect=${encodeURIComponent(query)}`
-      : "/auth/register";
+      : `/auth/register?redirect=${encodeURIComponent("/auth/login")}`;
 
   const _submit = async () => {
     if (!emailOrNumber?.trim() || !password?.trim()) {
@@ -116,16 +115,14 @@ const LoginPage = () => {
 
   return (
     <div className="flex w-full flex-col justify-center gap-5 rounded-md">
-      <div className="relative flex items-baseline justify-between">
-        <Link href={query}>
-          <UIButton className="h-8 gap-2 border-gray-400 px-3 py-2 text-black">
-            <BiArrowBack />
-            <span>Back</span>
-          </UIButton>
+      <div className="relative flex w-full items-center justify-center">
+        <Link
+          href={query}
+          className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full px-4 py-1 hover:bg-gray-100"
+        >
+          <BsArrowLeft className="h-6 w-auto" />
         </Link>
-        <div className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
-          LOGIN
-        </div>
+        <div className="text-xl font-bold">Hello, Again!</div>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -153,7 +150,7 @@ const LoginPage = () => {
         </div>
 
         <UIButton
-          className="h-10 border-black bg-black text-white"
+          className="mt-5 h-10 border-gray-700 bg-gray-50 font-bold text-gray-700 hover:border-sky-700 hover:bg-sky-50 hover:text-sky-700 hover:outline-sky-100"
           onClick={_submit}
         >
           SUBMIT

@@ -11,10 +11,10 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { BiArrowBack } from "react-icons/bi";
 import z from "zod";
 import { validateType } from "../../register/components/utils";
 import axios from "axios";
+import { BsArrowLeft } from "react-icons/bs";
 
 const ResetPasswordPage: NextPage = () => {
   const router = useRouter();
@@ -93,6 +93,7 @@ const ResetPasswordPage: NextPage = () => {
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
+        router.replace("/auth/login");
       })
       .catch((err) => {
         const response = err.response.data;
@@ -108,16 +109,14 @@ const ResetPasswordPage: NextPage = () => {
 
   return (
     <div className="mt-9 flex w-full flex-col justify-center gap-4 rounded-md">
-      <div className="relative flex items-baseline justify-between">
-        <Link href="/auth/login">
-          <UIButton className="h-8 gap-2 border-gray-400 px-3 py-2 text-black">
-            <BiArrowBack />
-            <span>Back</span>
-          </UIButton>
+      <div className="relative flex w-full items-center justify-center">
+        <Link
+          href="/auth/login"
+          className="absolute left-0 top-1/2 -translate-y-1/2 rounded-full px-4 py-1 hover:bg-gray-100"
+        >
+          <BsArrowLeft className="h-6 w-auto" />
         </Link>
-        <div className="absolute left-1/2 -translate-x-1/2 text-xl font-bold">
-          RESET PASSWORD
-        </div>
+        <div className="text-xl font-bold">RESET PASSWORD</div>
       </div>
 
       <div className="flex flex-col gap-3">
@@ -143,7 +142,7 @@ const ResetPasswordPage: NextPage = () => {
         />
 
         <UIButton
-          className="h-10 bg-black font-bold text-white"
+          className="mt-5 h-10 border-gray-700 bg-gray-50 font-bold text-gray-700 hover:border-sky-700 hover:bg-sky-50 hover:text-sky-700 hover:outline-sky-100"
           onClick={_reset}
         >
           RESET
