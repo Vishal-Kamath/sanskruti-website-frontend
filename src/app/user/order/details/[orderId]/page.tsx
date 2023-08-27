@@ -2,7 +2,7 @@
 
 import { NextPage } from "next";
 import { useState, useEffect } from "react";
-import { Order } from "../page";
+import { Order } from "../../[search]/page";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import Stepper from "./stepper";
@@ -17,7 +17,8 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 import { cn } from "@/utils/lib";
-import { BsDot } from "react-icons/bs";
+import { BsArrowLeft, BsDot } from "react-icons/bs";
+import Link from "next/link";
 
 const OrderDetailsPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -136,6 +137,18 @@ const OrderDetailsPage: NextPage = () => {
 
   return (
     <div className="flex h-full w-full flex-col gap-5">
+      <div className="flex items-center justify-between gap-3">
+        <Link
+          href="/user/order/search"
+          className="flex items-center gap-1 rounded-full px-4 py-2 hover:bg-gray-100"
+        >
+          <BsArrowLeft className="h-5 w-auto" />
+          Back
+        </Link>
+        <span>
+          OrderId: <u className="text-gray-700">{order?.order.orderId}</u>
+        </span>
+      </div>
       {/* Address */}
       <div className="[&>*]:min-w-md flex w-full rounded-md border-[1px] border-gray-300 max-lg:flex-col [&>*]:w-full [&>*]:p-5">
         <div className="flex flex-col gap-3 border-gray-300 max-lg:border-b-[1px] lg:border-r-[1px]">

@@ -4,12 +4,15 @@ import { Address } from "@/redux/slice/user.slice";
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import Container from "../components/container";
-import OrderComponet from "../components/orderComponent";
+import Container from "../../components/container";
+import OrderComponet from "../../components/orderComponent";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 import { AiOutlineSearch } from "react-icons/ai";
 import { HiOutlineRefresh } from "react-icons/hi";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
+import { cn } from "@/utils/lib";
 
 export type Order = {
   order: {
@@ -84,16 +87,44 @@ const OrderHistoryPage: NextPage = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("No filter");
 
+  const param = useParams();
+  const searchParam = param["search"];
+  const pathname = usePathname();
+
   const orderList =
     (orders &&
-      orders.filter(
-        (order) =>
-          (order.order.product.name
-            .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase()) &&
-            filter === "No filter") ||
-          order.order.deliveryInfo.status === filter
-      )) ||
+      orders
+        .filter((order) => {
+          if (searchParam === "search") {
+            return (
+              (!order.order.cancellationInfo.isCancelled &&
+                !order.order.returnInfo.isReturned) ||
+              (order.order.cancellationInfo.isCancelled &&
+                order.order.returnInfo.isReturned)
+            );
+          }
+          if (searchParam === "cancelled") {
+            return (
+              order.order.cancellationInfo.isCancelled &&
+              !order.order.returnInfo.isReturned
+            );
+          }
+          if (searchParam === "returned") {
+            return (
+              !order.order.cancellationInfo.isCancelled &&
+              order.order.returnInfo.isReturned
+            );
+          }
+          return false;
+        })
+        .filter(
+          (order) =>
+            (order.order.product.name
+              .toLocaleLowerCase()
+              .includes(search.toLocaleLowerCase()) &&
+              filter === "No filter") ||
+            order.order.deliveryInfo.status === filter
+        )) ||
     [];
 
   const getOrders = () => {
@@ -128,9 +159,9 @@ const OrderHistoryPage: NextPage = () => {
 
   return (
     <Container containerTitle="Order History">
-      <div className="flex flex-col gap-2 pt-1">
+      <div className="flex flex-col gap-3 pt-1">
         <div className="flex gap-2 max-md:flex-col">
-          <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-2 border-gray-300 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
+          <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-[1px] border-gray-300 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
             <AiOutlineSearch className="aspect-sqaure text-xl" />
             <input
               value={search}
@@ -147,7 +178,7 @@ const OrderHistoryPage: NextPage = () => {
               title="Filter by status"
               defaultValue="No filter"
               onChange={(e) => setFilter(e.target.value)}
-              className="h-9 w-full rounded-md border-2 border-gray-300 bg-transparent px-2 outline-none focus-within:border-gray-600 md:w-[10rem]"
+              className="h-9 w-full rounded-md border-[1px] border-gray-300 bg-transparent px-2 outline-none focus-within:border-gray-600 md:w-[10rem]"
             >
               {[
                 "Pending",
@@ -164,29 +195,60 @@ const OrderHistoryPage: NextPage = () => {
             <button
               title="Refresh"
               onClick={getOrders}
-              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md border-2 border-gray-300 outline-none"
+              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md border-[1px] border-gray-300 outline-none"
             >
               <HiOutlineRefresh className="h-4 w-4" />
             </button>
           </div>
         </div>
-        {orderList.length ? (
-          orderList.map((order, index) => (
-            <OrderComponet
-              key={
-                "order list element" +
-                order.payment.orderId +
-                order.order._id +
-                index
-              }
-              order={order}
-            />
-          ))
-        ) : (
-          <div className="mt-5 text-center text-lg font-semibold">
-            No orders Found
+        <div className="flex w-full gap-3 max-md:flex-col">
+          <div className="flex h-full flex-col gap-2">
+            {[
+              {
+                link: "/user/order/search",
+                title: "Search",
+              },
+              {
+                link: "/user/order/cancelled",
+                title: "Cancelled",
+              },
+              {
+                link: "/user/order/returned",
+                title: "Return",
+              },
+            ].map((item, index) => (
+              <Link
+                key={item.link + index}
+                href={item.link}
+                className={cn(
+                  "w-full rounded-md border-[1px] border-gray-300 p-2 text-gray-500 hover:border-sky-300 hover:bg-sky-50 md:w-[15rem]",
+                  pathname === item.link && "border-gray-400 bg-gray-50"
+                )}
+              >
+                {item.title}
+              </Link>
+            ))}
           </div>
-        )}
+          <div className="flex w-full flex-col gap-2">
+            {orderList.length ? (
+              orderList.map((order, index) => (
+                <OrderComponet
+                  key={
+                    "order list element" +
+                    order.payment.orderId +
+                    order.order._id +
+                    index
+                  }
+                  order={order}
+                />
+              ))
+            ) : (
+              <div className="mt-5 text-center text-lg font-semibold">
+                No orders Found
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </Container>
   );
