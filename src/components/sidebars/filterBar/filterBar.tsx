@@ -14,8 +14,8 @@ const FilterBar: FC<{ params: string[] }> = ({ params }) => {
         !sideBarOpen && "max-sm:hidden"
       } isolate z-30 flex min-h-full w-full flex-col overflow-x-hidden overflow-y-scroll bg-white pb-10 scrollbar-none max-sm:fixed max-sm:left-0 max-sm:top-0 max-sm:max-h-screen max-sm:min-h-screen max-sm:pt-36 sm:max-w-[30vw] md:max-w-[30vw] lg:max-w-[25vw] xl:max-w-[18vw]`}
     >
-      <h3 className="w-full pl-[3vw] pr-4 pt-5 text-xl font-semibold sm:text-[16px]">
-        FILTERS
+      <h3 className="w-full pl-[3vw] pr-4 pt-5 text-xl font-semibold sm:text-lg">
+        Filters
       </h3>
 
       <FilterList params={params} />

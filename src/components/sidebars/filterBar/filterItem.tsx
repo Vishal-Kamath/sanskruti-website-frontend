@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { BsFillCheckSquareFill } from "react-icons/bs";
 
 const FilterItem: FC<{
@@ -37,7 +37,7 @@ const FilterItem: FC<{
   };
 
   return (
-    <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
+    <div className="flex flex-col py-2">
       <h5 className="flex items-center justify-between text-lg font-medium capitalize sm:text-[16px] sm:font-normal">
         {main}
       </h5>
@@ -45,7 +45,7 @@ const FilterItem: FC<{
         {sub.map((subItem) => (
           <span
             key={subItem}
-            className="flex items-center gap-4 font-extralight max-sm:text-[16px] sm:gap-3"
+            className="flex items-center gap-4 font-light max-sm:text-[16px] sm:gap-3"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
@@ -53,7 +53,7 @@ const FilterItem: FC<{
                 name={main}
                 checked={selected === subItem}
                 id={subItem + " filter sidebar"}
-                className="absolute left-0 top-0 h-full w-full opacity-0"
+                className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
                 onClick={() => onClick(subItem)}
                 onChange={() => {}}
               />
@@ -63,7 +63,10 @@ const FilterItem: FC<{
                 <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
               )}
             </div>
-            <label htmlFor={subItem + " filter sidebar"} className="capitalize">
+            <label
+              htmlFor={subItem + " filter sidebar"}
+              className="cursor-pointer capitalize text-gray-700"
+            >
               {subItem}
             </label>
           </span>

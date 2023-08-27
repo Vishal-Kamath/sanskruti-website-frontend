@@ -37,7 +37,7 @@ const MainFilters: FC<{
   };
 
   return (
-    <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
+    <div className="flex flex-col py-2">
       <h5 className="flex items-center justify-between text-lg font-medium capitalize sm:text-[16px] sm:font-normal">
         Categories
       </h5>
@@ -45,7 +45,7 @@ const MainFilters: FC<{
         {categoriesList.map((category) => (
           <span
             key={category}
-            className="flex items-center gap-4 font-extralight max-sm:text-[16px] sm:gap-3"
+            className="flex items-center gap-4 font-light max-sm:text-[16px] sm:gap-3"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
@@ -53,19 +53,19 @@ const MainFilters: FC<{
                 name={"categories"}
                 checked={selected === category}
                 id={category + " filter sidebar"}
-                className="absolute left-0 top-0 h-full w-full opacity-0"
+                className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
                 onClick={() => onClick(category)}
                 onChange={() => {}}
               />
               {selected === category ? (
-                <BsFillCheckSquareFill className="h-full w-full fill-sky-400" />
+                <BsFillCheckSquareFill className="h-full w-full fill-sky-600" />
               ) : (
-                <div className="h-full w-full rounded-sm border-2 border-gray-300 capitalize"></div>
+                <div className="h-full w-full rounded-sm border-2 border-gray-300"></div>
               )}
             </div>
             <label
               htmlFor={category + " filter sidebar"}
-              className="capitalize"
+              className="cursor-pointer capitalize text-gray-700"
             >
               {category}
             </label>

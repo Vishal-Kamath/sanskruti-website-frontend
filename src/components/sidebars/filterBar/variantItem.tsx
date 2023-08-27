@@ -47,7 +47,7 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
   }, [searchParams, varientName]);
 
   return (
-    <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
+    <div className="flex flex-col py-2">
       <h5 className="flex items-center justify-between text-lg font-medium capitalize sm:text-[16px] sm:font-normal">
         {varientName}
       </h5>
@@ -55,7 +55,7 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
         {value.map((valueItem) => (
           <span
             key={valueItem}
-            className="flex items-center gap-4 font-extralight capitalize max-sm:text-[16px] sm:gap-3"
+            className="flex items-center gap-4 font-light capitalize max-sm:text-[16px] sm:gap-3"
           >
             <div className="relative h-[14px] w-[14px]">
               <input
@@ -63,7 +63,7 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
                 name={varientName}
                 checked={selected === valueItem}
                 id={valueItem + " variant filter sidebar"}
-                className="absolute left-0 top-0 h-full w-full opacity-0"
+                className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
                 onClick={() => onClick(valueItem)}
                 onChange={() => {}}
               />
@@ -74,7 +74,7 @@ const VariantItem: FC<VariantType & {}> = ({ varientName, value }) => {
               )}
             </div>
             <label
-              className="capitalize"
+              className="cursor-pointer capitalize text-gray-700"
               htmlFor={valueItem + " variant filter sidebar"}
             >
               {valueItem}

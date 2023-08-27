@@ -49,7 +49,7 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
   return (
     <span
       key={sortItem.name}
-      className="flex items-center gap-4 font-extralight max-sm:text-[16px] sm:gap-3"
+      className="flex items-center gap-4 font-light max-sm:text-[16px] sm:gap-3"
     >
       <div className="relative h-[14px] w-[14px]">
         <input
@@ -57,7 +57,7 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
           name="Sort"
           checked={selected}
           id={sortItem.name + " sort filter sidebar"}
-          className="absolute left-0 top-0 h-full w-full opacity-0"
+          className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
           onClick={() => onClick()}
           onChange={() => {}}
         />
@@ -68,7 +68,7 @@ const SortCheckItem: FC<{ sortItem: SortType }> = ({ sortItem }) => {
         )}
       </div>
       <label
-        className="capitalize"
+        className="cursor-pointer capitalize text-gray-700"
         htmlFor={sortItem.name + " sort filter sidebar"}
       >
         {sortItem.name}
@@ -94,7 +94,7 @@ const SortItem: FC = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-2 border-b-[1px] border-slate-300 py-2">
+    <div className="flex flex-col py-2">
       <h5 className="flex items-center justify-between text-lg font-medium sm:text-[16px] sm:font-normal">
         Sort
       </h5>
