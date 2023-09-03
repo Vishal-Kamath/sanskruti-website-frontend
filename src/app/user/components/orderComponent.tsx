@@ -24,7 +24,7 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
         href={`/user/order/details/${order.order._id}`}
         className="group flex flex-col gap-2 px-2 py-4"
       >
-        <div className="flex w-full gap-2">
+        <div className="flex w-full items-center gap-2">
           <StatusAvatar
             status={
               order.order.returnInfo.isReturned &&

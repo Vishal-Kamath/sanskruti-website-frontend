@@ -6,7 +6,7 @@ import { TbPackageExport, TbPackageImport } from "react-icons/tb";
 import { HiCurrencyRupee, HiOutlineCurrencyRupee } from "react-icons/hi";
 
 const avatarVariants = cva(
-  "flex aspect-square h-full items-center justify-center rounded-full p-2",
+  "flex aspect-square h-10 w-10 items-center justify-center rounded-full p-2",
   {
     variants: {
       status: {
@@ -52,7 +52,7 @@ const StatusAvatar: FC<Props> = ({ status }) => {
   const AvatarIcon = getIcon(status);
   return (
     <div className={cn(avatarVariants({ status }))}>
-      <AvatarIcon className="h-full w-full" />
+      <AvatarIcon className="h-8 w-8" />
     </div>
   );
 };
