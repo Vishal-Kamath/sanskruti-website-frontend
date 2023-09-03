@@ -179,7 +179,7 @@ const EditProfileComponent: FC<{
               value={email}
               setValue={setEmail}
             />
-            <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-300">
+            <div className="relative h-fit w-full rounded-md hover:outline hover:outline-4 hover:outline-gray-200">
               <PhoneInput
                 country={"in"}
                 value={mobileNumber}

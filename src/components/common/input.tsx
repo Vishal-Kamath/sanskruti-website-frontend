@@ -11,7 +11,7 @@ export const Input: FC<{
     <div className="relative h-10 w-full">
       <input
         type={input_type}
-        className="peer h-full w-full rounded-md border-[1px] border-gray-400 bg-transparent px-3 outline-none outline-offset-0 hover:outline hover:outline-4 hover:outline-gray-300 focus:border-black"
+        className="peer h-full w-full rounded-md border-[1px] border-gray-400 bg-transparent px-3 outline-none outline-offset-0 hover:outline hover:outline-4 hover:outline-gray-200 focus:border-black"
         id={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
