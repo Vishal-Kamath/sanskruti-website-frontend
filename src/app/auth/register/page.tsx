@@ -124,10 +124,6 @@ const RegisterPage: NextPage = () => {
     window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
   };
 
-  const handleFacebookAuth = () => {
-    window.open(`${process.env.ENDPOINT}/api/v1/facebooklogin`, "_self");
-  };
-
   return (
     <div className="mt-9 flex w-full flex-col justify-center gap-4 rounded-md">
       <div className="relative flex items-center justify-center">
@@ -201,13 +197,12 @@ const RegisterPage: NextPage = () => {
       <span className="text-center">OR</span>
 
       <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
-        <UIButton onClick={handleGoogleAuth} className="w-full gap-2">
+        <UIButton
+          onClick={handleGoogleAuth}
+          className="w-full gap-2 font-normal"
+        >
           <FcGoogle className="h-6 w-6" />
-          <span>GOOGLE</span>
-        </UIButton>
-        <UIButton onClick={handleFacebookAuth} className="w-full gap-2">
-          <BsFacebook className="h-6 w-6 text-facebook" />
-          <span>FACEBOOK</span>
+          <span>Sign up with Gooogle</span>
         </UIButton>
       </div>
 
