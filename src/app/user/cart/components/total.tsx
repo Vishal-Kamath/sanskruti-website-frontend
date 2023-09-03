@@ -20,7 +20,7 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 
-const Total: FC = () => {
+const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
 
   const cart = useAppSelector(selectCart);
@@ -174,7 +174,7 @@ const Total: FC = () => {
         PAYMENT DETAILS ({cart.length !== 1 ? `${cart.length} items` : `1 item`}
         )
       </div>
-      <div className="flex w-full flex-col gap-3 [&>*]:flex [&>*]:w-full [&>*]:justify-between">
+      <div className="mb-6 flex w-full flex-col gap-3 [&>*]:flex [&>*]:w-full [&>*]:justify-between">
         <div>
           <span>Total MRP</span>
           <span>&#8377;{total}</span>
@@ -207,6 +207,7 @@ const Total: FC = () => {
           </span>
         </div>
       </div>
+      {children}
     </div>
   );
 };

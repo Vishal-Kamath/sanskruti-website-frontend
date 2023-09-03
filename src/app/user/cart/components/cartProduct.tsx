@@ -170,19 +170,22 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
   };
 
   return (
-    <div className="flex w-full gap-3 rounded-md border-[1px] border-gray-300 p-2">
+    <div className="flex w-full gap-3 rounded-lg border-[1px] border-gray-300 p-3">
       <Link href={link}>
         <Image
           src={product.images[0]}
           alt={product.name}
           width={100}
           height={100}
-          className="h-full w-[8rem] rounded-[4px] bg-slate-200 object-contain object-center"
+          className="aspect-auto w-[8rem] rounded-[4px] bg-slate-200 object-cover object-center md:w-[10rem] md:object-contain"
         />
       </Link>
       <div className="flex w-full flex-col gap-3">
         <div className="flex flex-col gap-1">
-          <Link href={link} className="w-fit text-lg font-medium">
+          <Link
+            href={link}
+            className="w-fit text-sm font-semibold md:text-lg md:font-medium"
+          >
             {product.name.length > 35
               ? `${product.name.slice(0, 35)}...`
               : product.name}
@@ -236,19 +239,20 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
           {/* quantity */}
           <div className="flex w-fit items-center gap-1 rounded-full border-[1px] border-slate-300 bg-slate-50 p-1 [&>*]:h-4 [&>*]:w-4">
             <UIButton
-              onClick={() => incrementQuantity(quantityState + 1)}
-              className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
-            >
-              +
-            </UIButton>
-            <span className="grid w-fit place-content-center leading-none">
-              {quantity}
-            </span>
-            <UIButton
               onClick={() => decrementQuantity(quantityState - 1)}
               className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
             >
               -
+            </UIButton>
+            <span className="grid w-fit place-content-center leading-none">
+              {quantity}
+            </span>
+
+            <UIButton
+              onClick={() => incrementQuantity(quantityState + 1)}
+              className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
+            >
+              +
             </UIButton>
           </div>
         </div>

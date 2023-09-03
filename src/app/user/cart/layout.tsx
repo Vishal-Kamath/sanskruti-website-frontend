@@ -7,7 +7,6 @@ import axios from "axios";
 import { usePathname } from "next/navigation";
 import { FC, ReactNode, useEffect } from "react";
 import { BsCheckLg } from "react-icons/bs";
-import Total from "./components/total";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 
 const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
@@ -45,7 +44,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
   }, [pathname]);
 
   return (
-    <div className="flex h-full w-full flex-col gap-5">
+    <div className="flex h-full w-full flex-col gap-12 pt-5">
       <div className="mx-auto flex w-full max-w-xl">
         {steps.map((step, index) => (
           <div
@@ -76,11 +75,7 @@ const CartLayout: FC<{ children: ReactNode }> = ({ children }) => {
         ))}
       </div>
 
-      <div className="flex w-full gap-5 max-lg:flex-col">
-        {children}
-
-        <Total />
-      </div>
+      {children}
     </div>
   );
 };

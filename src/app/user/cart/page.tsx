@@ -11,6 +11,7 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
+import Total from "./components/total";
 
 const ShoppingCartPage: FC = () => {
   const cart = useAppSelector(selectCart);
@@ -42,37 +43,41 @@ const ShoppingCartPage: FC = () => {
   };
 
   return !!cart?.length ? (
-    <div className="flex h-full w-full flex-col gap-3">
-      {!user.email_verified && (
-        <div className="rounded-md border-[1px] border-amber-300 p-3 text-amber-600">
-          Please verify your email before proceding
-        </div>
-      )}
-      {!user.Mobile_No_verified && (
-        <div className="rounded-md border-[1px] border-amber-300 p-3 text-amber-600">
-          Please verify your mobile number before proceding
-        </div>
-      )}
-      {cart?.map((cartItem, index) => (
-        <CartProduct
-          key={cartItem.product.name + index + "cart item"}
-          {...cartItem}
-        />
-      ))}
-      {/* {user.email_verified && user.Mobile_No_verified && !!cart?.length ? ( */}
-      <Link href="/user/cart/address" className="ml-auto w-fit">
-        <UIButton className="w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
-          PROCEED
-        </UIButton>
-      </Link>
-      {/* ) : (
+    <div className="flex w-full gap-5 max-lg:flex-col">
+      <div className="flex h-full w-full flex-col gap-3">
+        {!user.email_verified && (
+          <div className="rounded-md border-[1px] border-amber-300 p-3 text-amber-600">
+            Please verify your email before proceding
+          </div>
+        )}
+        {!user.Mobile_No_verified && (
+          <div className="rounded-md border-[1px] border-amber-300 p-3 text-amber-600">
+            Please verify your mobile number before proceding
+          </div>
+        )}
+        {cart?.map((cartItem, index) => (
+          <CartProduct
+            key={cartItem.product.name + index + "cart item"}
+            {...cartItem}
+          />
+        ))}
+      </div>
+      <Total>
+        {/* {user.email_verified && user.Mobile_No_verified && !!cart?.length ? ( */}
+        <Link href="/user/cart/address">
+          <UIButton className="w-full rounded-full border-none bg-sanskrutiRed font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight">
+            PROCEED
+          </UIButton>
+        </Link>
+        {/* ) : (
         <UIButton
           onClick={completeVerificationAndCart}
-          className="ml-auto w-fit rounded-sm border-none bg-red-900 px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
+          className="w-full rounded-full border-none bg-red-900 font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight"
         >
           PROCEED
         </UIButton>
       )} */}
+      </Total>
     </div>
   ) : (
     <div className="w-full pt-5 text-center text-lg font-normal">

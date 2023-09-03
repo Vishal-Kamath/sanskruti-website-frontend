@@ -12,6 +12,8 @@ import {
   showNotification,
 } from "@/redux/slice/notification.slice";
 import { useAddressState } from "../utils/hook";
+import Total from "../components/total";
+import { BsArrowLeft } from "react-icons/bs";
 
 const CartAddressPage: FC = () => {
   const router = useRouter();
@@ -96,74 +98,78 @@ const CartAddressPage: FC = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col gap-5">
-      <div className="flex justify-between">
-        <Link href="/user/cart" className="w-fit">
-          <UIButton className="w-fit rounded-sm border-[1px] border-slate-400 px-5">
-            Back
-          </UIButton>
-        </Link>
-        <Link
-          href={`/user/address/add?redirect=${encodeURIComponent(
-            "/user/cart/address"
-          )}`}
-          className="w-fit"
-        >
-          <UIButton className="w-fit rounded-sm border-[1px] border-sanskrutiRed px-5 text-sanskrutiRed hover:outline-sanskrutiRedLight">
-            Add a new address
-          </UIButton>
-        </Link>
-      </div>
+    <div className="flex w-full gap-5 max-lg:flex-col">
+      <div className="flex h-full w-full flex-col gap-5">
+        <div className="flex justify-between">
+          <Link
+            href="/user/cart"
+            className="w-fit rounded-full border-[1px] border-gray-300 px-6 py-1 hover:bg-gray-100"
+          >
+            <BsArrowLeft className="h-6 w-auto" />
+          </Link>
+          <Link
+            href={`/user/address/add?redirect=${encodeURIComponent(
+              "/user/cart/address"
+            )}`}
+            className="w-fit"
+          >
+            <UIButton className="w-fit rounded-full border-[1px] border-sanskrutiRed px-5 text-sanskrutiRed hover:outline-sanskrutiRedLight">
+              Add a new address
+            </UIButton>
+          </Link>
+        </div>
 
-      <h4 className="text-justify text-gray-500">
-        Please fill in both the billing and shipping addresses accurately to
-        ensure timely delivery. Contact our support team for assistance. Thank
-        you for choosing Sanskruti nx!
-      </h4>
+        <h4 className="text-justify text-gray-500">
+          Please fill in both the billing and shipping addresses accurately to
+          ensure timely delivery. Contact our support team for assistance. Thank
+          you for choosing Sanskruti nx!
+        </h4>
 
-      <div className="flex w-full flex-col gap-3 md:flex-row lg:flex-col xl:flex-row">
-        <AddressDropdown
-          main={
-            shippingInAddresses || {
-              title: "Shipping Address",
-              content: "Select a shipping address",
+        <div className="flex w-full flex-col gap-3 md:flex-row lg:flex-col xl:flex-row">
+          <AddressDropdown
+            main={
+              shippingInAddresses || {
+                title: "Shipping Address",
+                content: "Select a shipping address",
+              }
             }
-          }
-          title="Shipping Address"
-          options={addresses}
-          setAddress={handleSetShippingAddress}
-          open={shippingOpen}
-          openAndClose={openAndCloseShipping}
-        />
-        <AddressDropdown
-          main={
-            billingInAddresses || {
-              title: "Billing Address",
-              content: "Select a billing address",
+            title="Shipping Address"
+            options={addresses}
+            setAddress={handleSetShippingAddress}
+            open={shippingOpen}
+            openAndClose={openAndCloseShipping}
+          />
+          <AddressDropdown
+            main={
+              billingInAddresses || {
+                title: "Billing Address",
+                content: "Select a billing address",
+              }
             }
-          }
-          title="Billing Address"
-          options={addresses}
-          setAddress={handleSetBillingAddress}
-          open={billingOpen}
-          openAndClose={openAndCloseBilling}
-        />
+            title="Billing Address"
+            options={addresses}
+            setAddress={handleSetBillingAddress}
+            open={billingOpen}
+            openAndClose={openAndCloseBilling}
+          />
+        </div>
       </div>
-
-      {!!shippingInAddresses && !!billingInAddresses ? (
-        <Link href="/user/cart/payment" className="ml-auto w-fit">
-          <UIButton className="w-fit rounded-sm border-none bg-sanskrutiRed px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight">
+      <Total>
+        {!!shippingInAddresses && !!billingInAddresses ? (
+          <Link href="/user/cart/payment">
+            <UIButton className="w-full rounded-full border-none bg-sanskrutiRed font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight">
+              PROCEED
+            </UIButton>
+          </Link>
+        ) : (
+          <UIButton
+            onClick={fillAllDetails}
+            className="w-full rounded-full border-none bg-red-900 font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight"
+          >
             PROCEED
           </UIButton>
-        </Link>
-      ) : (
-        <UIButton
-          onClick={fillAllDetails}
-          className="ml-auto w-fit rounded-sm border-none bg-red-900 px-[3.25rem] font-bold text-white hover:outline-sanskrutiRedLight"
-        >
-          PROCEED
-        </UIButton>
-      )}
+        )}
+      </Total>
     </div>
   );
 };
