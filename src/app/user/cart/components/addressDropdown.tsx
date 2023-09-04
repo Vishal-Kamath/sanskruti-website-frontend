@@ -53,7 +53,7 @@ const AddressDropdown: FC<Props> = ({
         {/* Options */}
         <div
           className={cn(
-            "absolute bottom-0 z-30 w-full translate-y-full pt-2",
+            "absolute bottom-0 z-10 w-full translate-y-full pt-2",
             !open && "hidden"
           )}
         >
