@@ -153,15 +153,23 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
                 ))}
               </div>
               <div
-                style={{
-                  boxShadow: "0px -10px 5px #0000002f inset",
-                }}
+                style={
+                  coupons.length < 2
+                    ? {}
+                    : {
+                        boxShadow: "0px -10px 5px #0000002f inset",
+                      }
+                }
                 className="absolute bottom-0 left-0 h-5 w-full rounded-b-xl"
               ></div>
               <div
-                style={{
-                  boxShadow: "0px 5px #00000011 inset",
-                }}
+                style={
+                  coupons.length < 2
+                    ? {}
+                    : {
+                        boxShadow: "0px 5px #00000011 inset",
+                      }
+                }
                 className="absolute left-0 top-0 h-2 w-full rounded-t-md"
               ></div>
             </div>

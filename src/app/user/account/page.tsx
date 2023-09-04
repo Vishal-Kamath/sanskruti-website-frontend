@@ -19,6 +19,7 @@ import SwiperContainer from "@/components/common/swiperContainer";
 import { SwiperSlide } from "swiper/react";
 
 export interface Coupon {
+  name: string;
   code: string;
   type: "oneTime" | "multiple";
   discountType: "percentage" | "price";
