@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useAddressState } from "../utils/hook";
 import {
   NotificationType,
@@ -23,6 +23,11 @@ import { BsArrowLeft, BsDot } from "react-icons/bs";
 import Total from "../components/total";
 import { cn } from "@/utils/lib";
 
+type PaymentStatus = {
+  payZapp: boolean;
+  cashondelivery: boolean;
+};
+
 const CartPaymemtPage: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -34,6 +39,7 @@ const CartPaymemtPage: FC = () => {
   const [billingAddress] = useAddressState("billingAddress");
 
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentStatus, setpaymentStatus] = useState<PaymentStatus>();
 
   const handleFillAllDetails = () => {
     if (!cart || !cart.length) {
@@ -118,6 +124,23 @@ const CartPaymemtPage: FC = () => {
         dispatch(showNotification());
       });
   };
+
+  useEffect(() => {
+    axios
+      .get<PaymentStatus>(
+        `${process.env.ENDPOINT}/api/v1/user/config/paymentStatus`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setpaymentStatus(res.data);
+      })
+      .catch();
+  }, []);
 
   return (
     <div className="flex w-full gap-5 max-lg:flex-col">
@@ -221,65 +244,73 @@ const CartPaymemtPage: FC = () => {
 
         <div className="flex flex-col gap-4">
           <span>Payment Method</span>
+
+          {!paymentStatus?.cashondelivery && !paymentStatus?.payZapp && (
+            <span>No Payment Method found</span>
+          )}
           <div className="flex w-full gap-4">
-            <div className="relative w-full md:w-[12rem]">
-              <input
-                type="radio"
-                name="payment"
-                id="COD"
-                value="COD"
-                checked={"COD" === paymentMethod}
-                className="hidden"
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <label
-                htmlFor="COD"
-                className={cn(
-                  "flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-[1px] py-3",
-                  paymentMethod === "COD"
-                    ? "border-sky-600 outline outline-4 outline-sky-50 hover:outline-sky-200"
-                    : "border-gray-300 hover:border-gray-600 hover:outline hover:outline-4 hover:outline-gray-200"
-                )}
-              >
-                <Image
-                  alt="cash on delivery"
-                  src="/assets/paymentIcons/cashondelivery.png"
-                  width={100}
-                  height={100}
-                  className="h-16 w-16"
+            {paymentStatus?.cashondelivery && (
+              <div className="relative w-full md:w-[12rem]">
+                <input
+                  type="radio"
+                  name="payment"
+                  id="COD"
+                  value="COD"
+                  checked={"COD" === paymentMethod}
+                  className="hidden"
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-                <span>Cash on Delivery</span>
-              </label>
-            </div>
-            <div className="relative w-full md:w-[12rem]">
-              <input
-                type="radio"
-                name="payment"
-                id="PayZapp"
-                value="PayZapp"
-                checked={"PayZapp" === paymentMethod}
-                className="hidden"
-                onChange={(e) => setPaymentMethod(e.target.value)}
-              />
-              <label
-                htmlFor="PayZapp"
-                className={cn(
-                  "flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-[1px] py-3",
-                  paymentMethod === "PayZapp"
-                    ? "border-sky-600 outline outline-4 outline-sky-50 hover:outline-sky-200"
-                    : "border-gray-300 hover:border-gray-600 hover:outline hover:outline-4 hover:outline-gray-200"
-                )}
-              >
-                <Image
-                  alt="cash on delivery"
-                  src="/assets/paymentIcons/payzapp.png"
-                  width={100}
-                  height={100}
-                  className="h-16 w-16"
+                <label
+                  htmlFor="COD"
+                  className={cn(
+                    "flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-[1px] py-3",
+                    paymentMethod === "COD"
+                      ? "border-sky-600 outline outline-4 outline-sky-50 hover:outline-sky-200"
+                      : "border-gray-300 hover:border-gray-600 hover:outline hover:outline-4 hover:outline-gray-200"
+                  )}
+                >
+                  <Image
+                    alt="cash on delivery"
+                    src="/assets/paymentIcons/cashondelivery.png"
+                    width={100}
+                    height={100}
+                    className="h-16 w-16"
+                  />
+                  <span>Cash on Delivery</span>
+                </label>
+              </div>
+            )}
+            {paymentStatus?.payZapp && (
+              <div className="relative w-full md:w-[12rem]">
+                <input
+                  type="radio"
+                  name="payment"
+                  id="PayZapp"
+                  value="PayZapp"
+                  checked={"PayZapp" === paymentMethod}
+                  className="hidden"
+                  onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-                <span>PayZapp</span>
-              </label>
-            </div>
+                <label
+                  htmlFor="PayZapp"
+                  className={cn(
+                    "flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-[1px] py-3",
+                    paymentMethod === "PayZapp"
+                      ? "border-sky-600 outline outline-4 outline-sky-50 hover:outline-sky-200"
+                      : "border-gray-300 hover:border-gray-600 hover:outline hover:outline-4 hover:outline-gray-200"
+                  )}
+                >
+                  <Image
+                    alt="cash on delivery"
+                    src="/assets/paymentIcons/payzapp.png"
+                    width={100}
+                    height={100}
+                    className="h-16 w-16"
+                  />
+                  <span>PayZapp</span>
+                </label>
+              </div>
+            )}
           </div>
         </div>
       </div>
