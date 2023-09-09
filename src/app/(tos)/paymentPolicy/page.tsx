@@ -10,7 +10,7 @@ const PaymentPolicyPage = async () => {
 
   useEffect(() => {
     const FetchData = async () => {
-      setReply(await getData("termsAndConditions"));
+      setReply(await getData("privacyPolicy"));
     };
     FetchData();
   }, []);
