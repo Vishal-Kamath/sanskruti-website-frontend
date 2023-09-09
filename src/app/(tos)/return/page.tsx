@@ -1,23 +1,18 @@
 import UIHeader from "@/components/common/header";
-import { NextPage } from "next";
+import axios from "axios";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+("react-markdown");
 
-const ReturnPolicyPage: NextPage = () => {
+const ReturnPolicyPage = async () => {
+  const reply = (
+    await axios.get(
+      `${process.env.ENDPOINT}/api/v1/user/getMarkdown?field=returnPolicy`
+    )
+  ).data?.markdown;
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-lg">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-justify text-[16px]">
       <UIHeader title="RETURN POLICY" />
-      <div className="text-justify text-lg">
-        <div className="font-semibold">Sanskruti nx</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, magni
-        culpa officia beatae rem non qui quod illo amet consequuntur vero ipsum
-        quidem nam deleniti voluptatum eaque harum voluptas est. Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Commodi eius quasi neque,
-        facilis laboriosam, saepe molestias repellendus facere tempore illo
-        culpa deleniti in distinctio asperiores. Cum repellat laboriosam ipsa
-        eligendi? Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Maxime, ipsam eaque? Nesciunt deleniti ipsum dolor, praesentium quos
-        quia unde, accusamus asperiores aliquam quam ipsa, accusantium dolorum
-        consectetur vero debitis officiis.
-      </div>
+      <ReactMarkdown className="w-full leading-9">{reply}</ReactMarkdown>
     </div>
   );
 };
