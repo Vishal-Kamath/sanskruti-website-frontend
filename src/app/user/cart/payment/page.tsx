@@ -79,11 +79,7 @@ const CartPaymemtPage: FC = () => {
       paymentMethod,
       shippingAddress,
       billingAddress,
-      SubTotal: total,
-      discount,
       couponCode: couponDiscount?.code,
-      gst,
-      Amount: finalValue,
     };
 
     axios
