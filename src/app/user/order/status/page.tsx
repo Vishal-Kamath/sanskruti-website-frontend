@@ -21,6 +21,7 @@ const StatusPage: FC = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
+  const tracking_id = searchParams.get("tracking_id");
 
   const [data, setData] = useState<Status>();
 
@@ -28,7 +29,7 @@ const StatusPage: FC = () => {
     if (orderId) {
       axios
         .get<Status & NotificationType>(
-          `${process.env.ENDPOINT}/api/v1/user/order/status?orderId=${orderId}`,
+          `${process.env.ENDPOINT}/api/v1/user/order/status?orderId=${orderId}&tracking_id=${tracking_id}`,
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
