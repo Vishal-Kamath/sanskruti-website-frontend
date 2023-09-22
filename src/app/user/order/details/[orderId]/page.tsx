@@ -18,6 +18,8 @@ import {
 } from "@/redux/slice/notification.slice";
 import { cn } from "@/utils/lib";
 import { BsArrowLeft, BsDot } from "react-icons/bs";
+import UserReview from "./review";
+import Link from "next/link";
 
 const OrderDetailsPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -72,12 +74,6 @@ const OrderDetailsPage: NextPage = () => {
         dispatch(completeLoading());
       });
   }, [orderId]);
-
-  // Calculations
-  const variations: string[] = [];
-  for (let key in order?.order.product.varient.variations) {
-    variations.push(`${key}: ${order.order.product.varient.variations[key]}`);
-  }
 
   const price =
     order &&
@@ -300,14 +296,21 @@ const OrderDetailsPage: NextPage = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-2 text-xs">
-                  {variations.map((val) => (
-                    <span
-                      key={val + order?.order._id}
-                      className="border-r-2 border-gray-400 pr-2 capitalize"
-                    >
-                      {val}
-                    </span>
-                  ))}
+                  {order &&
+                    Object.keys(order?.order.product.varient.variations)
+                      .filter((val) => val)
+                      .map(
+                        (key) =>
+                          `${key}: ${order.order.product.varient.variations[key]}`
+                      )
+                      .map((val) => (
+                        <span
+                          key={val + order?.order._id}
+                          className="border-r-2 border-gray-400 pr-2 capitalize"
+                        >
+                          {val}
+                        </span>
+                      ))}
                   <span>Qty: {order?.order.product.quantity}</span>
                 </div>
               </div>
@@ -459,8 +462,9 @@ const OrderDetailsPage: NextPage = () => {
           </h4>
 
           {allOrders.map((order, index) => (
-            <div
-              className="grid w-full grid-cols-5 gap-3 border-b-[1px] border-gray-300 pb-3 md:gap-6 md:pb-6"
+            <Link
+              href={`/user/order/details/${order._id}`}
+              className="grid w-full cursor-pointer grid-cols-5 gap-3 border-b-[1px] border-gray-300 pb-3 md:gap-6 md:pb-6"
               key={order._id + index}
             >
               <div>
@@ -490,6 +494,7 @@ const OrderDetailsPage: NextPage = () => {
 
                   <div className="flex flex-wrap gap-2 text-[10px] md:text-xs">
                     {Object.keys(order?.product.varient.variations)
+                      .filter((val) => val)
                       .map(
                         (key) =>
                           `${key}: ${order.product.varient.variations[key]}`
@@ -513,7 +518,7 @@ const OrderDetailsPage: NextPage = () => {
                   Qty: {order?.product.quantity}
                 </span>
               </div>
-            </div>
+            </Link>
           ))}
 
           <div className="flex flex-col gap-2">
@@ -559,6 +564,9 @@ const OrderDetailsPage: NextPage = () => {
           </div>
         </div>
 
+        {/* Review */}
+        <UserReview product_id={order?.order.product.id} />
+
         {/* Cancel */}
         <div
           className={cn(
@@ -568,7 +576,7 @@ const OrderDetailsPage: NextPage = () => {
         >
           <h3 className="border-b-[1px] border-red-300 font-semibold">
             {toCancel || requestedReturn ? "Cancel" : "Return"}{" "}
-            {requestedReturn ? "Request" : "Product"}
+            {requestedReturn ? "Request" : "Order"}
           </h3>
           {toCancel || requestedReturn ? (
             <div className="flex h-full flex-col gap-3">
