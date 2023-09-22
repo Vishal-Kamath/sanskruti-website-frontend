@@ -92,10 +92,56 @@ const OrderHistoryPage: NextPage = () => {
   const searchParam = param["search"];
   const pathname = usePathname();
 
-  const orderList =
-    (orders &&
-      orders
+  const getOrders = () => {
+    dispatch(startLoading());
+    axios
+      .get<{ orders: Order[] }>(
+        `${process.env.ENDPOINT}/api/v1/user/order/history`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        try {
+          const sortByDate = res.data.orders
+            .filter((item) => item.payment.orderInfo.Date)
+            .sort((order1, order2) => {
+              const orderDate1 = new Date(
+                order1.payment.orderInfo.Date
+              ).getTime();
+              const orderDate2 = new Date(
+                order2.payment.orderInfo.Date
+              ).getTime();
+              return orderDate2 - orderDate1;
+            });
+
+          setOrders(sortByDate);
+          dispatch(completeLoading());
+        } catch (err) {
+          console.log(err);
+        }
+      })
+      .catch((err) => {
+        dispatch(completeLoading());
+      });
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
+
+  const orderList = orders?.length
+    ? orders
         .filter((order) => {
+          console.log(
+            (!order.order.cancellationInfo.isCancelled &&
+              !order.order.returnInfo.isReturned) ||
+              (order.order.cancellationInfo.isCancelled &&
+                order.order.returnInfo.isReturned)
+          );
           if (searchParam === "order") {
             return (
               (!order.order.cancellationInfo.isCancelled &&
@@ -125,38 +171,8 @@ const OrderHistoryPage: NextPage = () => {
               .includes(search.toLocaleLowerCase()) &&
               filter === "No filter") ||
             order.order.deliveryInfo.status === filter
-        )) ||
-    [];
-
-  const getOrders = () => {
-    dispatch(startLoading());
-    axios
-      .get<{ orders: Order[] }>(
-        `${process.env.ENDPOINT}/api/v1/user/order/history`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        const sortByDate = res.data.orders.sort((order1, order2) => {
-          const orderDate1 = new Date(order1.payment.orderInfo.Date).getTime();
-          const orderDate2 = new Date(order2.payment.orderInfo.Date).getTime();
-          return orderDate2 - orderDate1;
-        });
-        setOrders(sortByDate);
-        dispatch(completeLoading());
-      })
-      .catch((err) => {
-        dispatch(completeLoading());
-      });
-  };
-
-  useEffect(() => {
-    getOrders();
-  }, []);
+        )
+    : [];
 
   return (
     <Container containerTitle="Order History">

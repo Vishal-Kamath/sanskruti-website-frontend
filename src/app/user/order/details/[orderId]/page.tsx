@@ -381,11 +381,16 @@ const OrderDetailsPage: NextPage = () => {
                 <span className="text-gray-600">Pending</span>
               ))}
           </h4>
+
+          <p className="-mb-4">
+            Transaction method: {order?.payment.paymentMethod}
+          </p>
           <p
             className={cn(
               "text-gray-500",
               (order?.payment.paymentInfo.order_status === "Success" ||
-                !order?.payment.paymentInfo.order_status) &&
+                !order?.payment.paymentInfo.order_status ||
+                order.payment.paymentMethod === "COD") &&
                 "hidden"
             )}
           >
@@ -404,7 +409,8 @@ const OrderDetailsPage: NextPage = () => {
             className={cn(
               "text-gray-500",
               (order?.payment.paymentInfo.order_status === "Success" ||
-                !!order?.payment.paymentInfo.order_status) &&
+                !!order?.payment.paymentInfo.order_status ||
+                order?.payment.paymentMethod === "COD") &&
                 "hidden"
             )}
           >
@@ -418,12 +424,26 @@ const OrderDetailsPage: NextPage = () => {
             </a>{" "}
             our support team
           </p>
+          <p
+            className={cn(
+              "text-gray-500",
+              (order?.payment.paymentInfo.order_status !== "Success" ||
+                !order?.payment.paymentInfo.order_status) &&
+                order?.payment.paymentMethod !== "COD" &&
+                "hidden"
+            )}
+          >
+            Your transaction type is 'Cash on Delivery', so the transaction
+            status is {order?.payment.paymentInfo.order_status || "Pending"} and
+            will be successful upon delivery and receipt of payment.
+          </p>
 
           <UIButton
             className={cn(
               "ml-auto w-fit rounded-full border-none bg-sanskrutiRed px-6 font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight",
               (order?.payment.paymentInfo.order_status === "Success" ||
-                !order?.payment.paymentInfo.order_status) &&
+                !order?.payment.paymentInfo.order_status ||
+                order.payment.paymentMethod === "COD") &&
                 "hidden"
             )}
             onClick={repay}

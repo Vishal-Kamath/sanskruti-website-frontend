@@ -83,16 +83,18 @@ const CartPaymemtPage: FC = () => {
     };
 
     axios
-      .post<{ link?: string; orderId: string } & NotificationType>(
-        `${process.env.ENDPOINT}/api/v1/user/order`,
-        body,
+      .post<
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
+          link?: string;
+          orderId: string;
+          tracking_id: string;
+        } & NotificationType
+      >(`${process.env.ENDPOINT}/api/v1/user/order`, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         const response = res.data;
         if (response.link) return (window.location.href = response.link);
@@ -107,7 +109,9 @@ const CartPaymemtPage: FC = () => {
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
-        router.replace(`/user/order/status?orderId=${response.orderId}`);
+        router.replace(
+          `/user/order/status?orderId=${response.orderId}&tracking_id=${response.tracking_id}`
+        );
       })
       .catch((err) => {
         const response = err.response.data;

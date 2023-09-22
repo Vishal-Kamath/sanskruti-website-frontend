@@ -42,7 +42,8 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
           />
           <div className="flex flex-col gap-2 text-left max-md:w-full max-md:items-baseline max-md:justify-center lg:min-w-[15rem]">
             <div className="text-xs font-semibold lg:text-[14px]">
-              {order.payment.paymentInfo.order_status !== "Success" ? (
+              {order.payment.paymentInfo.order_status !== "Success" &&
+              order.payment.paymentMethod === "PayZapp" ? (
                 <span
                   className={cn(
                     order.payment.paymentInfo.order_status === "Failure" &&
