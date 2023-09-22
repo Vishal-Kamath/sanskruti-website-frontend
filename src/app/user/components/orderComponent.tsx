@@ -19,7 +19,12 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
       : order.order.product.varient.price) * order.order.product.quantity;
 
   return (
-    <div className="flex flex-col rounded-md bg-gray-50">
+    <div
+      className={cn(
+        "flex flex-col rounded-md bg-gray-50",
+        order.payment.paymentInfo.order_status === "Failure" && "bg-red-50"
+      )}
+    >
       <Link
         href={`/user/order/details/${order.order._id}`}
         className="group flex flex-col gap-2 px-2 py-4"
@@ -27,15 +32,34 @@ const OrderComponet: FC<{ order: Order }> = ({ order }) => {
         <div className="flex w-full items-center gap-2">
           <StatusAvatar
             status={
-              order.order.returnInfo.isReturned &&
-              !order.order.cancellationInfo.isCancelled
-                ? order.order.returnInfo.status
-                : order.order.deliveryInfo.status
+              order.payment.paymentInfo.order_status === "Success"
+                ? order.order.returnInfo.isReturned &&
+                  !order.order.cancellationInfo.isCancelled
+                  ? order.order.returnInfo.status
+                  : order.order.deliveryInfo.status
+                : order.payment.paymentInfo.order_status || "Pending"
             }
           />
           <div className="flex flex-col gap-2 text-left max-md:w-full max-md:items-baseline max-md:justify-center lg:min-w-[15rem]">
             <div className="text-xs font-semibold lg:text-[14px]">
-              {order.order.cancellationInfo.isCancelled ? (
+              {order.payment.paymentInfo.order_status !== "Success" ? (
+                <span
+                  className={cn(
+                    order.payment.paymentInfo.order_status === "Failure" &&
+                      "text-red-500"
+                  )}
+                >
+                  {order.payment.paymentInfo.order_status === "Failure"
+                    ? "Your transaction has Failed"
+                    : order.payment.paymentInfo.order_status === "Aborted"
+                    ? "Your transaction was Aborted"
+                    : order.payment.paymentInfo.order_status === "Invalid"
+                    ? "Your transaction was Invalid"
+                    : order.payment.paymentInfo.order_status === "Timeout"
+                    ? "Your transaction has Timeout"
+                    : "Your transaction is Pending"}
+                </span>
+              ) : order.order.cancellationInfo.isCancelled ? (
                 <span
                   className={cn(
                     !order.order.returnInfo?.isReturned && "text-red-500"

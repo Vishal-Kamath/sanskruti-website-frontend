@@ -55,22 +55,23 @@ export type Order = {
     };
   };
   payment: {
-    paymentMethod: string;
+    paymentMethod: "COD" | "PayZapp";
     orderId: string;
     userId: string;
     shippingAddress: Address;
     billingAddress: Address;
     orderInfo: {
-      Date: string;
-      status: string;
+      Date: Date;
       SubTotal: number;
       ShippingCost: number;
+      CouponCode?: string;
+      CouponDiscount?: number;
       Totaldiscount: number;
       TotalGST: number;
       Amount: number;
     };
     paymentInfo: {
-      status?: string;
+      order_status?: "Success" | "Failure" | "Aborted" | "Invalid" | "Timeout";
       transactionId?: string;
       amount?: number;
       currency?: string;
@@ -95,7 +96,7 @@ const OrderHistoryPage: NextPage = () => {
     (orders &&
       orders
         .filter((order) => {
-          if (searchParam === "search") {
+          if (searchParam === "order") {
             return (
               (!order.order.cancellationInfo.isCancelled &&
                 !order.order.returnInfo.isReturned) ||
@@ -159,7 +160,7 @@ const OrderHistoryPage: NextPage = () => {
 
   return (
     <Container containerTitle="Order History">
-      <div className="flex flex-col gap-3 pt-1">
+      <div className="flex flex-col gap-4 pt-1">
         <div className="flex gap-2 max-md:flex-col">
           <div className="text-md flex h-9 w-full items-center gap-1 rounded-md border-[1px] border-gray-300 px-2 text-gray-400 focus-within:border-gray-600 focus-within:text-gray-600">
             <AiOutlineSearch className="aspect-sqaure text-xl" />
@@ -205,8 +206,8 @@ const OrderHistoryPage: NextPage = () => {
           <div className="flex h-full flex-col gap-2">
             {[
               {
-                link: "/user/order/search",
-                title: "Search",
+                link: "/user/order/order",
+                title: "Orders",
               },
               {
                 link: "/user/order/cancelled",
@@ -214,7 +215,7 @@ const OrderHistoryPage: NextPage = () => {
               },
               {
                 link: "/user/order/returned",
-                title: "Return",
+                title: "Returned",
               },
             ].map((item, index) => (
               <Link

@@ -1,9 +1,9 @@
 "use client";
 
 import { NextPage } from "next";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { Order } from "../../[search]/page";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Stepper from "./stepper";
 import Image from "next/image";
@@ -18,12 +18,13 @@ import {
 } from "@/redux/slice/notification.slice";
 import { cn } from "@/utils/lib";
 import { BsArrowLeft, BsDot } from "react-icons/bs";
-import Link from "next/link";
 
 const OrderDetailsPage: NextPage = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [order, setOrder] = useState<Order>();
+  const [allOrders, setAllOrders] = useState<Order["order"][]>([]);
   const params = useParams();
   const orderId = params["orderId"];
 
@@ -53,7 +54,7 @@ const OrderDetailsPage: NextPage = () => {
     if (!orderId) return;
     dispatch(startLoading());
     axios
-      .get<Order>(
+      .get<{ order: Order; allOrders: Order["order"][] }>(
         `${process.env.ENDPOINT}/api/v1/user/order/history/${orderId}`,
         {
           headers: {
@@ -64,7 +65,8 @@ const OrderDetailsPage: NextPage = () => {
       )
       .then((res) => {
         dispatch(completeLoading());
-        setOrder(res.data);
+        setOrder(res.data.order);
+        setAllOrders(res.data.allOrders);
       })
       .catch(() => {
         dispatch(completeLoading());
@@ -135,178 +137,409 @@ const OrderDetailsPage: NextPage = () => {
     requestCancel();
   };
 
-  return (
-    <div className="flex h-full w-full flex-col gap-5">
-      <div className="flex items-center justify-between gap-3">
-        <Link
-          href="/user/order/search"
-          className="flex items-center gap-1 rounded-full px-4 py-2 hover:bg-gray-100"
-        >
-          <BsArrowLeft className="h-5 w-auto" />
-          Back
-        </Link>
-        <span>
-          OrderId: <u className="text-gray-700">{order?.order.orderId}</u>
-        </span>
-      </div>
-      {/* Address */}
-      <div className="[&>*]:min-w-md flex w-full rounded-md border-[1px] border-gray-300 max-lg:flex-col [&>*]:w-full [&>*]:p-5">
-        <div className="flex flex-col gap-3 border-gray-300 max-lg:border-b-[1px] lg:border-r-[1px]">
-          <h3 className="text-[14px] font-semibold">Shipping Address</h3>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-[14px] font-semibold">
-              {order?.payment.shippingAddress.name}
-            </h3>
-            <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
-              <span>{order?.payment.shippingAddress.email}</span>
-              <BsDot className="h-4 w-4" />
-              <span>+{order?.payment.shippingAddress.tel}</span>
-            </h4>
-            <p className="text-gray-500">
-              {order?.payment.shippingAddress.address}{" "}
-              {order?.payment.shippingAddress.city}{" "}
-              {order?.payment.shippingAddress.state}{" "}
-              {order?.payment.shippingAddress.zip}{" "}
-              {order?.payment.shippingAddress.country}
-            </p>
-          </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <h3 className="text-[14px] font-semibold">Billing Address</h3>
-          <div className="flex flex-col gap-1">
-            <h3 className="text-[14px] font-semibold">
-              {order?.payment.billingAddress.name}
-            </h3>
-            <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
-              <span>{order?.payment.billingAddress.email}</span>
-              <BsDot className="h-4 w-4" />
-              <span>+{order?.payment.billingAddress.tel}</span>
-            </h4>
-            <p className="text-gray-500">
-              {order?.payment.billingAddress.address}{" "}
-              {order?.payment.billingAddress.city}{" "}
-              {order?.payment.billingAddress.state}{" "}
-              {order?.payment.billingAddress.zip}{" "}
-              {order?.payment.billingAddress.country}
-            </p>
-          </div>
-        </div>
-      </div>
+  const repay = () => {
+    const body = {
+      orderId: order?.order.orderId,
+    };
+    axios
+      .post<{ link?: string; orderId: string } & NotificationType>(
+        `${process.env.ENDPOINT}/api/v1/user/order/repay`,
+        body,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        const response = res.data;
+        if (response.link) return (window.location.href = response.link);
 
-      {/* Order Details */}
-      <div className="flex gap-6 rounded-md border-[1px] border-gray-300 p-5 max-xl:flex-col">
-        <div className="flex w-full items-start gap-2">
-          {order && (
-            <Image
-              src={order.order.product.images[0]}
-              key={order.order.product.id + order.order.orderId}
-              alt={order.order.product.name}
-              width={50}
-              height={50}
-              className="h-[8rem] w-[10rem] overflow-hidden object-contain object-center"
-            />
-          )}
-          <div className="flex w-full flex-col items-start justify-between gap-2">
-            <div className="flex w-full flex-col gap-3">
+        dispatch(
+          setNotification({ message: response.message, type: response.type })
+        );
+        dispatch(showNotification());
+        router.replace(`/user/order/status?orderId=${response.orderId}`);
+      })
+      .catch((err) => {
+        const response = err.response.data;
+        dispatch(
+          setNotification({
+            message: response.message,
+            type: response.type,
+          })
+        );
+        dispatch(showNotification());
+      });
+  };
+
+  return (
+    <div className="flex gap-5 max-md:flex-col">
+      <div className="w-full md:max-w-sm">
+        <div className="left-0 top-0 flex w-full flex-col gap-4 pt-40 md:sticky md:max-w-sm md:pt-28">
+          <button
+            onClick={() =>
+              window.history.length < 2 || window.history
+                ? router.push("/user/order/order")
+                : router.back()
+            }
+            className="flex w-fit items-center gap-1 rounded-full border-none px-4 py-2 outline-none hover:bg-gray-100"
+          >
+            <BsArrowLeft className="h-5 w-auto" />
+            Back
+          </button>
+          {/* Address */}
+          <div className="[&>*]:min-w-md flex h-fit w-full flex-col rounded-md border-[1px] border-gray-300 md:max-w-sm [&>*]:w-full">
+            <div className="flex flex-col gap-3 border-b-[1px] border-gray-300 px-3 pb-3 pt-6 lg:px-6 lg:pb-6 lg:pt-9">
+              <h3 className="text-[14px] font-semibold">Shipping Address</h3>
               <div className="flex flex-col gap-1">
                 <h3 className="text-[14px] font-semibold">
-                  {order && order.order.product.name.length > 30
-                    ? `${order.order.product.name.slice(0, 30)}...`
-                    : order?.order.product.name}
+                  {order?.payment.shippingAddress.name}
                 </h3>
-                <span className="text-xs font-bold text-gray-500">
-                  {order?.order.product.brand_name}
-                </span>
-              </div>
-
-              <div className="flex flex-wrap gap-2 text-xs">
-                {variations.map((val) => (
-                  <span
-                    key={val + order?.order._id}
-                    className="rounded-full border-[1px] border-gray-400 bg-slate-50 px-2 py-1"
-                  >
-                    {val}
-                  </span>
-                ))}
-                <span className="rounded-full border-[1px] border-gray-400 bg-slate-50 px-2 py-1">
-                  quantity: {order?.order.product.quantity}
-                </span>
+                <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+                  <span>{order?.payment.shippingAddress.email}</span>
+                  <BsDot className="h-4 w-4" />
+                  <span>+{order?.payment.shippingAddress.tel}</span>
+                </h4>
+                <p className="text-gray-500">
+                  {order?.payment.shippingAddress.address}{" "}
+                  {order?.payment.shippingAddress.city}{" "}
+                  {order?.payment.shippingAddress.state}{" "}
+                  {order?.payment.shippingAddress.zip}{" "}
+                  {order?.payment.shippingAddress.country}
+                </p>
               </div>
             </div>
-            <div className="flex w-full gap-1 text-[14px] font-semibold">
-              {!!order?.order.product.varient.discount ? (
-                <div className="flex items-baseline gap-2">
-                  <span>&#8377;{price}</span>
-                  <s className="text-gray-500">
-                    &#8377;
-                    {order.order.product.varient.price *
-                      order.order.product.quantity}
-                  </s>
-                  <span className="text-red-800">
-                    ({order.order.product.varient.discount}% OFF)
-                  </span>
+            <div className="flex flex-col gap-3 px-3 pb-6 pt-3 lg:px-6 lg:pb-9 lg:pt-6">
+              <h3 className="text-[14px] font-semibold">Billing Address</h3>
+              <div className="flex flex-col gap-1">
+                <h3 className="text-[14px] font-semibold">
+                  {order?.payment.billingAddress.name}
+                </h3>
+                <h4 className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+                  <span>{order?.payment.billingAddress.email}</span>
+                  <BsDot className="h-4 w-4" />
+                  <span>+{order?.payment.billingAddress.tel}</span>
+                </h4>
+                <p className="text-gray-500">
+                  {order?.payment.billingAddress.address}{" "}
+                  {order?.payment.billingAddress.city}{" "}
+                  {order?.payment.billingAddress.state}{" "}
+                  {order?.payment.billingAddress.zip}{" "}
+                  {order?.payment.billingAddress.country}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-2 flex w-full flex-col rounded-md border-[1px] border-gray-300 [&>*]:p-3 [&>*]:lg:p-6">
+            <h3 className="border-b-[1px] border-gray-300 font-semibold">
+              Generate Invoice
+            </h3>
+            <div className="flex h-full flex-col gap-3">
+              <p className="text-gray-500">
+                Click the button below to generate your product invoice
+                instantly. It&apos;s just one clicks away!
+              </p>
+              <UIButton className="mt-auto rounded-sm border-[1px]">
+                Download
+              </UIButton>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex h-full flex-col gap-6 md:pt-28">
+        <span className="ml-auto pt-3">
+          OrderId: <u className="text-gray-700">{order?.order.orderId}</u>
+        </span>
+        {/* Order Details */}
+        <div className="flex w-full flex-col gap-12 rounded-md border-[1px] border-gray-300 px-3 py-6 lg:px-6 lg:py-9">
+          <div className="flex w-full items-start gap-6 max-sm:flex-col md:max-lg:flex-col">
+            {order && (
+              <Image
+                src={order.order.product.images[0]}
+                key={order.order.product.id + order.order.orderId}
+                alt={order.order.product.name}
+                width={200}
+                height={200}
+                className="w-full overflow-hidden object-contain object-center max-md:sm:w-1/3 lg:w-1/3"
+              />
+            )}
+            <div className="flex w-full flex-col items-start justify-between gap-2">
+              <div className="flex w-full flex-col gap-3">
+                <div className="flex w-full items-start justify-between gap-3">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-[14px] font-semibold">
+                      {order && order.order.product.name.length > 30
+                        ? `${order.order.product.name.slice(0, 30)}...`
+                        : order?.order.product.name}
+                    </h3>
+                    <span className="text-xs font-bold text-gray-500">
+                      {order?.order.product.brand_name}
+                    </span>
+                  </div>
+                  <div className="flex gap-1 text-[16px] font-semibold">
+                    {!!order?.order.product.varient.discount ? (
+                      <div className="flex items-baseline gap-2">
+                        <span>&#8377;{price}</span>
+                        <s className="text-gray-500">
+                          &#8377;
+                          {order.order.product.varient.price *
+                            order.order.product.quantity}
+                        </s>
+                        <span className="text-red-800">
+                          ({order.order.product.varient.discount}% OFF)
+                        </span>
+                      </div>
+                    ) : (
+                      <span>&#8377;{price}</span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {variations.map((val) => (
+                    <span
+                      key={val + order?.order._id}
+                      className="border-r-2 border-gray-400 pr-2 capitalize"
+                    >
+                      {val}
+                    </span>
+                  ))}
+                  <span>Qty: {order?.order.product.quantity}</span>
+                </div>
+              </div>
+
+              {!requestedReturn ? (
+                <div className="mt-auto flex w-full flex-col gap-5 pt-6">
+                  <h3 className="text-[14px] font-semibold">Order Status</h3>
+                  <Stepper statuses={statuses} currentStep={currentStep} />
+                  {order &&
+                    (!isCancelled ? (
+                      <p className="mx-auto text-gray-500">
+                        {order.order.deliveryInfo.status} on{" "}
+                        {dateFormater(new Date(order.order.deliveryInfo.date))}
+                      </p>
+                    ) : (
+                      <p className="mx-auto text-red-500">
+                        Order Cancelled on{" "}
+                        {dateFormater(
+                          new Date(order.order.cancellationInfo.date)
+                        )}
+                      </p>
+                    ))}
                 </div>
               ) : (
-                <span>&#8377;{price}</span>
+                <div className="mt-auto flex w-full flex-col gap-5 pt-6">
+                  <h3 className="text-[14px] font-semibold">Return Status</h3>
+                  <Stepper
+                    statuses={returnStatuses}
+                    currentStep={currentReturnStep}
+                  />
+                  {order.order.returnInfo && !isCancelled ? (
+                    <p className="mx-auto text-gray-500">
+                      {order.order.returnInfo.status} on{" "}
+                      {dateFormater(new Date(order.order.returnInfo.date))}
+                    </p>
+                  ) : (
+                    <p className="mx-auto text-red-500">
+                      Return Cancelled on{" "}
+                      {dateFormater(
+                        new Date(order.order.cancellationInfo.date)
+                      )}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           </div>
         </div>
-        {!requestedReturn ? (
-          <div className="flex w-full flex-col gap-5">
-            <h3 className="text-[14px] font-semibold">Order Status</h3>
-            <Stepper statuses={statuses} currentStep={currentStep} />
-            {order &&
-              (!isCancelled ? (
-                <p className="ml-auto text-gray-500">
-                  {order.order.deliveryInfo.status} on{" "}
-                  {dateFormater(new Date(order.order.deliveryInfo.date))}
-                </p>
-              ) : (
-                <p className="ml-auto text-red-500">
-                  Order Cancelled on{" "}
-                  {dateFormater(new Date(order.order.cancellationInfo.date))}
-                </p>
-              ))}
-          </div>
-        ) : (
-          <div className="flex w-full flex-col gap-5">
-            <h3 className="text-[14px] font-semibold">Return Status</h3>
-            <Stepper
-              statuses={returnStatuses}
-              currentStep={currentReturnStep}
-            />
-            {order.order.returnInfo && !isCancelled ? (
-              <p className="ml-auto text-gray-500">
-                {order.order.returnInfo.status} on{" "}
-                {dateFormater(new Date(order.order.returnInfo.date))}
-              </p>
-            ) : (
-              <p className="ml-auto text-red-500">
-                Return Cancelled on{" "}
-                {dateFormater(new Date(order.order.cancellationInfo.date))}
-              </p>
-            )}
-          </div>
-        )}
-      </div>
 
-      <div className="flex gap-5 max-lg:flex-col">
-        <div className="flex w-full flex-col rounded-md border-[1px] border-gray-300 [&>*]:p-5">
-          <h3 className="border-b-[1px] border-gray-300 font-semibold">
-            Generate Invoice
-          </h3>
-          <div className="flex h-full flex-col gap-3">
-            <p className="text-gray-500">
-              Click the button below to generate your product invoice instantly.
-              It&apos;s just one clicks away!
-            </p>
-            <UIButton className="mt-auto rounded-sm border-[1px]">
-              Download
-            </UIButton>
+        <div className="flex flex-col gap-3 rounded-md border-[1px] border-gray-300 px-3 py-6 md:gap-6 lg:px-6 lg:py-9">
+          <h4
+            className={cn(
+              "flex gap-2 text-[16px] font-semibold",
+              order?.payment.paymentInfo.order_status !== "Success" &&
+                "border-b-[1px] border-gray-300 pb-3 md:pb-6"
+            )}
+          >
+            <span>Transaction Status:</span>
+            {order &&
+              (order.payment.paymentInfo.order_status === "Success" ? (
+                <span className="text-green-600">Success</span>
+              ) : order.payment.paymentInfo.order_status === "Failure" ? (
+                <span className="text-red-600">Failed</span>
+              ) : order.payment.paymentInfo.order_status === "Aborted" ? (
+                <span className="text-yello-600">Aborted</span>
+              ) : order.payment.paymentInfo.order_status === "Invalid" ? (
+                <span className="text-amber-600">Invalid</span>
+              ) : order.payment.paymentInfo.order_status === "Timeout" ? (
+                <span className="text-blue-600">Timeout</span>
+              ) : (
+                <span className="text-gray-600">Pending</span>
+              ))}
+          </h4>
+          <p
+            className={cn(
+              "text-gray-500",
+              (order?.payment.paymentInfo.order_status === "Success" ||
+                !order?.payment.paymentInfo.order_status) &&
+                "hidden"
+            )}
+          >
+            Your order could have failed, aborted, timed out, invalid. Feel free
+            to try the payment process again for a smooth transaction. For more
+            information feel free to{" "}
+            <a
+              href="mailto:info@sanskrutinx.com"
+              className="text-blue-400 underline hover:text-blue-700"
+            >
+              contact
+            </a>{" "}
+            our support team
+          </p>
+          <p
+            className={cn(
+              "text-gray-500",
+              (order?.payment.paymentInfo.order_status === "Success" ||
+                !!order?.payment.paymentInfo.order_status) &&
+                "hidden"
+            )}
+          >
+            Your order transaction is still proccessing. Please check again
+            after 20 minutes. For more information feel free to{" "}
+            <a
+              href="mailto:info@sanskrutinx.com"
+              className="text-blue-400 underline hover:text-blue-700"
+            >
+              contact
+            </a>{" "}
+            our support team
+          </p>
+
+          <UIButton
+            className={cn(
+              "ml-auto w-fit rounded-full border-none bg-sanskrutiRed px-6 font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight",
+              (order?.payment.paymentInfo.order_status === "Success" ||
+                !order?.payment.paymentInfo.order_status) &&
+                "hidden"
+            )}
+            onClick={repay}
+          >
+            Checkout
+          </UIButton>
+        </div>
+
+        {/* Order breack down */}
+        <div className="flex flex-col gap-3 rounded-md border-[1px] border-gray-300 px-3 py-3 md:gap-6 lg:px-6 lg:py-6">
+          <h4 className="col-span-full border-b-[1px] border-gray-300 pb-3 text-[16px] font-semibold md:pb-6">
+            Order breakdown
+          </h4>
+
+          {allOrders.map((order, index) => (
+            <div
+              className="grid w-full grid-cols-5 gap-3 border-b-[1px] border-gray-300 pb-3 md:gap-6 md:pb-6"
+              key={order._id + index}
+            >
+              <div>
+                {order && (
+                  <Image
+                    src={order.product.images[0]}
+                    key={order.product.id + order.orderId}
+                    alt={order.product.name}
+                    width={100}
+                    height={100}
+                    className="w-full overflow-hidden object-contain object-center"
+                  />
+                )}
+              </div>
+              <div className="col-span-3 flex flex-col items-start gap-1">
+                <div className="flex w-full flex-col gap-3">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="text-[14px] font-semibold">
+                      {order && order.product.name.length > 30
+                        ? `${order.product.name.slice(0, 30)}...`
+                        : order?.product.name}
+                    </h3>
+                    <span className="text-xs font-bold text-gray-500">
+                      {order?.product.brand_name}
+                    </span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 text-[10px] md:text-xs">
+                    {Object.keys(order?.product.varient.variations)
+                      .map(
+                        (key) =>
+                          `${key}: ${order.product.varient.variations[key]}`
+                      )
+                      .map((val) => (
+                        <span
+                          key={val + order?._id}
+                          className="border-r-2 border-gray-400 pr-2 capitalize last:border-none"
+                        >
+                          {val}
+                        </span>
+                      ))}
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-2">
+                <span className="font-semibold">
+                  &#8377;{order.product.varient.price}
+                </span>
+                <span className="text-xs text-gray-600">
+                  Qty: {order?.product.quantity}
+                </span>
+              </div>
+            </div>
+          ))}
+
+          <div className="flex flex-col gap-2">
+            <div className="mt-4 grid w-full grid-cols-5">
+              <div className="col-span-3"></div>
+              <div className="text-right">Sub Total:</div>
+              <div className="text-right font-semibold text-black">
+                &#8377;{order?.payment.orderInfo.SubTotal}
+              </div>
+            </div>
+            <div className="grid w-full grid-cols-5">
+              <div className="col-span-3"></div>
+              <div className="text-right">Total GST:</div>
+              <div className="text-right font-semibold">
+                &#8377;{order?.payment.orderInfo.TotalGST}
+              </div>
+            </div>
+            {!!order?.payment.orderInfo.Totaldiscount && (
+              <div className="grid w-full grid-cols-5">
+                <div className="col-span-3"></div>
+                <div className="text-right">Discount:</div>
+                <div className="text-right font-semibold text-green-700">
+                  -&#8377;{order?.payment.orderInfo.Totaldiscount}
+                </div>
+              </div>
+            )}
+            {!!order?.payment.orderInfo.CouponDiscount && (
+              <div className="grid w-full grid-cols-5">
+                <div className="col-span-3"></div>
+                <div className="text-right">Coupon Discount:</div>
+                <div className="text-right font-semibold text-green-700">
+                  -&#8377;{order?.payment.orderInfo.CouponDiscount}
+                </div>
+              </div>
+            )}
+            <div className="grid w-full grid-cols-5">
+              <div className="col-span-3"></div>
+              <div className="text-right">Total:</div>
+              <div className="text-right font-semibold text-black">
+                &#8377;{order?.payment.orderInfo.Amount}
+              </div>
+            </div>
           </div>
         </div>
 
+        {/* Cancel */}
         <div
           className={cn(
             "flex w-full flex-col rounded-md border-[1px] border-red-300 text-sanskrutiRed [&>*]:p-5",

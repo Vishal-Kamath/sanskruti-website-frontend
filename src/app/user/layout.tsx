@@ -18,6 +18,8 @@ const UserLayout: FC<Props> = ({ children }) => {
   const pathname = usePathname();
   const padding = pathname.includes("/user/account")
     ? "md:pt-24 pt-36"
+    : pathname.includes("/user/order/details")
+    ? "pb-10 px-[3vw]"
     : "md:pt-28 pt-40 pb-10 px-[3vw]";
 
   return (

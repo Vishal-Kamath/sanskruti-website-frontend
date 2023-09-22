@@ -21,7 +21,6 @@ const StatusPage: FC = () => {
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
-  const tracking_id = searchParams.get("tracking_id");
 
   const [data, setData] = useState<Status>();
 
@@ -29,7 +28,7 @@ const StatusPage: FC = () => {
     if (orderId) {
       axios
         .get<Status & NotificationType>(
-          `${process.env.ENDPOINT}/api/v1/user/order/status?orderId=${orderId}&tracking_id=${tracking_id}`,
+          `${process.env.ENDPOINT}/api/v1/user/order/status?orderId=${orderId}`,
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
@@ -99,7 +98,7 @@ const StatusPage: FC = () => {
 
         <div className="mt-6 flex gap-2 text-[16px]">
           <Link
-            href="/user/order/search"
+            href="/user/order/order"
             className="text-sm text-gray-400 underline underline-offset-2 hover:text-sanskrutiRed"
           >
             View Orders
