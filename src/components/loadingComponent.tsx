@@ -3,8 +3,7 @@
 import { selectLoadingState } from "@/redux/slice/loading.slice";
 import { useAppSelector } from "@/redux/store/hooks";
 import { cn } from "@/utils/lib";
-import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 
 const LoadingComponent: FC = () => {
   const loading = useAppSelector(selectLoadingState);
@@ -16,17 +15,7 @@ const LoadingComponent: FC = () => {
         loading.loading ? "z-[999]" : "hidden"
       )}
     >
-      <div className="relative isolate h-fit w-fit overflow-hidden outline outline-8 -outline-offset-4 outline-white">
-        <Image
-          src="/assets/sanskrutiLoadingCutout.png"
-          alt="Sanskruti Logo"
-          width={500}
-          height={500}
-          style={{
-            filter: "drop-shadow(3px 3px 4px #00000077)",
-          }}
-          className="h-full max-h-[15rem] w-full border-2 border-white object-contain object-center "
-        />
+      <div className="mask relative isolate h-full min-h-screen w-full max-w-[15rem] overflow-hidden md:max-w-xs">
         <div
           style={{
             width: `${
@@ -37,7 +26,7 @@ const LoadingComponent: FC = () => {
                 : 100
             }%`,
           }}
-          className="absolute left-0 top-0 -z-10 h-full bg-sanskrutiRed"
+          className="absolute left-0 top-0 -z-10 h-full w-full bg-sanskrutiRed"
         ></div>
         <div className="absolute left-0 top-0 -z-20 h-full w-full bg-slate-400"></div>
       </div>
