@@ -436,9 +436,10 @@ const OrderDetailsPage: NextPage = () => {
                 "hidden"
             )}
           >
-            Your transaction type is 'Cash on Delivery', so the transaction
-            status is {order?.payment.paymentInfo.order_status || "Pending"} and
-            will be successful upon delivery and receipt of payment.
+            Your transaction type is &apos;Cash on Delivery&apos;, so the
+            transaction status is{" "}
+            {order?.payment.paymentInfo.order_status || "Pending"} and will be
+            successful upon delivery and receipt of payment.
           </p>
 
           <UIButton
