@@ -10,6 +10,7 @@ import { cn } from "@/utils/lib";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { CategoryType, selectCategory } from "@/redux/slice/category.slice";
 import { closeSidebar } from "@/redux/slice/sidebar.slice";
+import { BsArrowLeft } from "react-icons/bs";
 
 export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
   const pathname = usePathname();
@@ -29,12 +30,12 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
       )}
     >
       {!displayCategory ? (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 gap-y-6">
           {categories?.map((category) => (
             <button
               key={category.Title + " nav"}
               onClick={() => setDisplayCategory(category)}
-              className="relative h-32"
+              className="relative h-32 overflow-hidden rounded-b-lg rounded-t-3xl"
             >
               <Image
                 src={category.Image}
@@ -54,9 +55,9 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
           <div className="flex items-center justify-between px-1">
             <UIButton
               onClick={() => setDisplayCategory(undefined)}
-              className="px-4"
+              className="w-fit rounded-full border-[1px] border-gray-300 px-6 py-1 hover:bg-gray-100"
             >
-              Back
+              <BsArrowLeft className="h-6 w-auto" />
             </UIButton>
             <span className="text-lg font-bold capitalize">
               {displayCategory?.Title}
@@ -67,9 +68,9 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
             alt={displayCategory?.Title + " image"}
             width={100}
             height={100}
-            className="h-40 w-full object-cover object-top"
+            className="h-40 w-full rounded-lg object-cover object-top"
           />
-          <div className="flex flex-col gap-1 pb-20">
+          <div className="flex w-full flex-col gap-1 pb-20">
             {displayCategory?.subCategory.map((item, index) => (
               <Link
                 key={item + index + displayCategory?.Title + " sidebar"}
@@ -77,7 +78,7 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
                   displayCategory?.Title
                 )}?${encodeURIComponent(item)}`}
                 onClick={() => dispatch(closeSidebar())}
-                className="w-fit text-lg capitalize hover:text-sanskrutiRed hover:underline hover:decoration-sanskrutiRed hover:underline-offset-4"
+                className="w-full border-b-[1px] border-gray-200 py-1 text-center  text-lg capitalize hover:text-sanskrutiRed"
               >
                 {item}
               </Link>
