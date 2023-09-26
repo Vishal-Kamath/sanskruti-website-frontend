@@ -1,11 +1,11 @@
 module.exports = {
-  plugins: [
-    require("postcss-color-rgba-fallback"),
-    require("postcss-opacity"),
-    require("postcss-pseudoelements"),
-    require("postcss-import"),
-    require("flex-gap-polyfill"),
-    require("tailwindcss"),
-    require("autoprefixer"),
-  ],
+  plugins: {
+    "postcss-color-rgba-fallback": {},
+    "postcss-opacity": {},
+    "postcss-pseudoelements": {},
+    "postcss-import": {},
+    "flex-gap-polyfill": {},
+    "tailwindcss": {},
+    "autoprefixer": {},
+  },
 };
