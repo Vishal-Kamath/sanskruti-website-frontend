@@ -4,7 +4,6 @@ module.exports = {
     "postcss-opacity": {},
     "postcss-pseudoelements": {},
     "postcss-import": {},
-    "flex-gap-polyfill": {},
     "tailwindcss": {},
     "autoprefixer": {},
   },
