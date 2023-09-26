@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch } from "@/redux/store/hooks";
 import {
   NotificationType,
@@ -29,6 +29,21 @@ const RegisterPage: NextPage = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [status, setStatus] = useState({
+    google: false,
+    facebook: false,
+  });
+
+  useEffect(() => {
+    axios
+      .get<{ google: boolean; facebook: boolean }>(
+        `${process.env.ENDPOINT}/api/v1/user/auth/status`
+      )
+      .then((res) => {
+        setStatus(res.data);
+      });
+  }, []);
 
   const searchParams = useSearchParams();
   const query = searchParams.get("redirect");
@@ -123,6 +138,9 @@ const RegisterPage: NextPage = () => {
   const handleGoogleAuth = () => {
     window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
   };
+  const handleFacebookAuth = () => {
+    window.open(`${process.env.ENDPOINT}/api/v1/facebooklogin`, "_self");
+  };
 
   return (
     <div className="mt-9 flex w-full flex-col justify-center gap-4 rounded-md">
@@ -194,17 +212,32 @@ const RegisterPage: NextPage = () => {
         </UIButton>
       </div>
 
-      <span className="text-center">OR</span>
+      {(status.google || status.facebook) && (
+        <>
+          <span className="text-center">OR</span>
 
-      <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
-        <UIButton
-          onClick={handleGoogleAuth}
-          className="w-full gap-2 font-normal"
-        >
-          <FcGoogle className="h-6 w-6" />
-          <span>Sign up with Gooogle</span>
-        </UIButton>
-      </div>
+          <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
+            {status.google && (
+              <UIButton
+                onClick={handleGoogleAuth}
+                className="w-full gap-2 font-normal"
+              >
+                <FcGoogle className="h-6 w-6" />
+                <span>Sign up with Google</span>
+              </UIButton>
+            )}
+            {status.facebook && (
+              <UIButton
+                onClick={handleFacebookAuth}
+                className="w-full gap-2 font-normal"
+              >
+                <BsFacebook className="h-6 w-6 text-facebook" />
+                <span>Sign up with Facebook</span>
+              </UIButton>
+            )}
+          </div>
+        </>
+      )}
 
       <div className="flex justify-center gap-1">
         Already have an account?

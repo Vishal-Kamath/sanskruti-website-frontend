@@ -3,7 +3,7 @@
 import { FcGoogle } from "react-icons/fc";
 import { BsArrowLeft, BsFacebook } from "react-icons/bs";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/common/input";
 import { useAppDispatch } from "@/redux/store/hooks";
 import {
@@ -24,6 +24,21 @@ const LoginPage = () => {
 
   const [emailOrNumber, setEmailOrNumber] = useState("");
   const [password, setPassword] = useState("");
+
+  const [status, setStatus] = useState({
+    google: false,
+    facebook: false,
+  });
+
+  useEffect(() => {
+    axios
+      .get<{ google: boolean; facebook: boolean }>(
+        `${process.env.ENDPOINT}/api/v1/user/auth/status`
+      )
+      .then((res) => {
+        setStatus(res.data);
+      });
+  }, []);
 
   const checkType = () => {
     if (Number.isNaN(Number(emailOrNumber))) {
@@ -108,6 +123,9 @@ const LoginPage = () => {
   const handleGoogleAuth = () => {
     window.open(`${process.env.ENDPOINT}/api/v1/googlelogin`, "_self");
   };
+  const handleFacebookAuth = () => {
+    window.open(`${process.env.ENDPOINT}/api/v1/facebooklogin`, "_self");
+  };
 
   return (
     <div className="flex w-full flex-col justify-center gap-5 rounded-md">
@@ -153,17 +171,32 @@ const LoginPage = () => {
         </UIButton>
       </div>
 
-      <span className="text-center">OR</span>
+      {(status.google || status.facebook) && (
+        <>
+          <span className="text-center">OR</span>
 
-      <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
-        <UIButton
-          onClick={handleGoogleAuth}
-          className="w-full gap-2 font-normal"
-        >
-          <FcGoogle className="h-6 w-6" />
-          <span>Sign in with Google</span>
-        </UIButton>
-      </div>
+          <div className="flex w-full gap-3 font-semibold max-lg:flex-col">
+            {status.google && (
+              <UIButton
+                onClick={handleGoogleAuth}
+                className="w-full gap-2 font-normal"
+              >
+                <FcGoogle className="h-6 w-6" />
+                <span>Sign in with Google</span>
+              </UIButton>
+            )}
+            {status.facebook && (
+              <UIButton
+                onClick={handleFacebookAuth}
+                className="w-full gap-2 font-normal"
+              >
+                <BsFacebook className="h-6 w-6 text-facebook" />
+                <span>Sign in with Facebook</span>
+              </UIButton>
+            )}
+          </div>
+        </>
+      )}
 
       <div className="flex justify-center gap-1">
         Don&apos;t have an account?

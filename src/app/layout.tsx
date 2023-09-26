@@ -5,15 +5,12 @@ import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import { cn } from "@/utils/lib";
 
-import {
-  Open_Sans,
-  Montserrat,
-  Playfair_Display,
-} from "next/font/google";
+import { Open_Sans, Montserrat, Playfair_Display } from "next/font/google";
 import AuthComponent from "@/components/authComponent";
 import LoadingComponent from "@/components/loadingComponent";
 import ScrollToTheTopButton from "@/components/common/scrollToTpopButton";
 import Notification from "@/components/notification/notification";
+import Analytics from "@/components/analytics";
 
 const open_sans = Open_Sans({
   weight: ["300", "400", "500", "600", "700"],
@@ -80,6 +77,7 @@ export default function RootLayout({
               "relative flex min-h-screen select-none flex-col bg-white font-open-sans text-xs font-medium text-black md:text-[14px]"
             )}
           >
+            <Analytics />
             <LoadingComponent />
             <Header />
             <Notification />
