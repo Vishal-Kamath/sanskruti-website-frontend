@@ -430,8 +430,7 @@ const OrderDetailsPage: NextPage = () => {
           <p
             className={cn(
               "text-gray-500",
-              (order?.payment.paymentInfo.order_status !== "Success" ||
-                !order?.payment.paymentInfo.order_status) &&
+              order?.payment.paymentInfo.order_status === "Success" &&
                 order?.payment.paymentMethod !== "COD" &&
                 "hidden"
             )}
