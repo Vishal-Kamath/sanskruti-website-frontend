@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.sanskrutinx.in",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.sanskrutinx.com",
+      },
     ],
   },
   redirects: async () => {

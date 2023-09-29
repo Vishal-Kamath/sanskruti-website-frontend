@@ -26,7 +26,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentURL = `https://sanskrutinx.in${pathname}${
+  const currentURL = `https://sanskrutinx.com${pathname}${
     searchParams.toString() ? `?${searchParams.toString()}` : ""
   }`;
 
