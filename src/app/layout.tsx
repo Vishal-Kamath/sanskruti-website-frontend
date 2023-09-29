@@ -11,6 +11,7 @@ import LoadingComponent from "@/components/loadingComponent";
 import ScrollToTheTopButton from "@/components/common/scrollToTpopButton";
 import Notification from "@/components/notification/notification";
 import Analytics from "@/components/analytics";
+import Redirect from "@/components/redirectComponent";
 
 const open_sans = Open_Sans({
   weight: ["300", "400", "500", "600", "700"],
@@ -77,6 +78,7 @@ export default function RootLayout({
               "relative flex min-h-screen select-none flex-col bg-white font-open-sans text-xs font-medium text-black md:text-[14px]"
             )}
           >
+            <Redirect />
             <Analytics />
             <LoadingComponent />
             <Header />
