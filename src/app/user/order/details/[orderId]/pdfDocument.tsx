@@ -59,27 +59,59 @@ const OrderInvoice: FC<{
           <View
             style={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               alignItems: "flex-start",
-              fontSize: "12px",
-              paddingBottom: "30px",
-              fontWeight: 100,
-              color: "#64748b",
+              gap: "100px",
             }}
           >
-            <Text
+            <View
               style={{
-                fontWeight: 900,
-                color: "#000000",
-                paddingBottom: "5px",
-                fontSize: "15px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                fontSize: "12px",
+                paddingBottom: "30px",
+                fontWeight: 100,
+                color: "#64748b",
               }}
             >
-              Date of Issue
-            </Text>
-            <Text style={{ textAlign: "left" }}>
-              {dateFormater(new Date())}
-            </Text>
+              <Text
+                style={{
+                  fontWeight: 900,
+                  color: "#000000",
+                  paddingBottom: "5px",
+                  fontSize: "15px",
+                }}
+              >
+                Date of Issue
+              </Text>
+              <Text style={{ textAlign: "left" }}>
+                {dateFormater(new Date())}
+              </Text>
+            </View>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                fontSize: "12px",
+                paddingBottom: "30px",
+                fontWeight: 100,
+                color: "#64748b",
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: 900,
+                  color: "#000000",
+                  paddingBottom: "5px",
+                  fontSize: "15px",
+                }}
+              >
+                Order Id
+              </Text>
+              <Text style={{ textAlign: "left" }}>{payment.orderId}</Text>
+            </View>
           </View>
 
           <View
