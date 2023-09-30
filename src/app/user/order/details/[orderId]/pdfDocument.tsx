@@ -217,6 +217,7 @@ const OrderInvoice: FC<{
 
             return (
               <TableBody
+                key={index}
                 contents={[
                   {
                     title: order.product.name,
