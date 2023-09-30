@@ -61,7 +61,6 @@ const OrderInvoice: FC<{
               display: "flex",
               flexDirection: "row",
               alignItems: "flex-start",
-              gap: "100px",
             }}
           >
             <View
@@ -73,6 +72,7 @@ const OrderInvoice: FC<{
                 paddingBottom: "30px",
                 fontWeight: 100,
                 color: "#64748b",
+                width: "100%",
               }}
             >
               <Text
@@ -98,6 +98,7 @@ const OrderInvoice: FC<{
                 paddingBottom: "30px",
                 fontWeight: 100,
                 color: "#64748b",
+                width: "100%",
               }}
             >
               <Text
@@ -119,7 +120,6 @@ const OrderInvoice: FC<{
               display: "flex",
               flexDirection: "row",
               alignItems: "flex-start",
-              gap: "100px",
             }}
           >
             <View
@@ -131,6 +131,7 @@ const OrderInvoice: FC<{
                 color: "#64748b",
                 fontWeight: 100,
                 gap: "3px",
+                width: "100%",
               }}
             >
               <Text
@@ -156,6 +157,7 @@ const OrderInvoice: FC<{
                 color: "#64748b",
                 fontWeight: 100,
                 gap: "3px",
+                width: "100%",
               }}
             >
               <Text
