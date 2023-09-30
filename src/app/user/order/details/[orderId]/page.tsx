@@ -8,7 +8,7 @@ import axios from "axios";
 import Stepper from "./stepper";
 import Image from "next/image";
 import UIButton from "@/components/common/button";
-import { useAppDispatch } from "@/redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 import { dateFormater } from "@/utils/dateFormater";
 import {
@@ -20,9 +20,13 @@ import { cn } from "@/utils/lib";
 import { BsArrowLeft, BsDot } from "react-icons/bs";
 import UserReview from "./review";
 import Link from "next/link";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import OrderInvoice from "./pdfDocument";
+import { selectUsername } from "@/redux/slice/user.slice";
 
 const OrderDetailsPage: NextPage = () => {
   const dispatch = useAppDispatch();
+  const username = useAppSelector(selectUsername);
   const router = useRouter();
 
   const [order, setOrder] = useState<Order>();
@@ -238,9 +242,39 @@ const OrderDetailsPage: NextPage = () => {
                 Click the button below to generate your product invoice
                 instantly. It&apos;s just one clicks away!
               </p>
-              <UIButton className="mt-auto rounded-sm border-[1px]">
-                Download
-              </UIButton>
+              {order?.payment ? (
+                <PDFDownloadLink
+                  document={
+                    <OrderInvoice orders={allOrders} payment={order.payment} />
+                  }
+                  className="w-full"
+                  fileName={`${username?.replace(" ", "_")}_${
+                    order.order.orderId
+                  }.pdf`}
+                >
+                  {({ loading, error }) =>
+                    loading ? (
+                      error ? (
+                        <UIButton className="mt-auto w-full rounded-sm border-[1px] border-red-600 text-red-600">
+                          Error
+                        </UIButton>
+                      ) : (
+                        <UIButton className="mt-auto w-full rounded-sm border-[1px] opacity-75">
+                          Loading...
+                        </UIButton>
+                      )
+                    ) : (
+                      <UIButton className="mt-auto w-full rounded-sm border-[1px]">
+                        Download
+                      </UIButton>
+                    )
+                  }
+                </PDFDownloadLink>
+              ) : (
+                <UIButton className="mt-auto w-full rounded-sm border-[1px] opacity-75">
+                  Loading...
+                </UIButton>
+              )}
             </div>
           </div>
         </div>
