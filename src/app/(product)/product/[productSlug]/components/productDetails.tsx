@@ -92,6 +92,7 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
         _id={product._id}
         combinationString={combination.combinationString}
         pathname={pathname}
+        inStock={combination.quantity}
       />
 
       <div className="flex flex-col text-lg">

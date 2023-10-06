@@ -17,7 +17,8 @@ const AddToCartAndBuyNow: FC<{
   pathname: string;
   _id: string;
   combinationString: string[];
-}> = ({ pathname, _id, combinationString }) => {
+  inStock: number;
+}> = ({ pathname, _id, combinationString, inStock }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const isAuthenticated = useAppSelector(selectisAuthenticated);
@@ -76,26 +77,32 @@ const AddToCartAndBuyNow: FC<{
   return (
     <div className="isolate z-20 flex flex-col gap-2 bg-white max-md:fixed max-md:bottom-0 max-md:left-0 max-md:w-full max-md:border-t-2 max-md:border-gray-300 max-md:px-[3vw] max-md:py-2 max-md:shadow-top">
       {loading && <span className="text-gray-800">Sending Request...</span>}
+      {!loading &&
+        (inStock ? (
+          <span className="text-gray-600">In Stock: {inStock}</span>
+        ) : (
+          <span className="text-red-800">Out of Stock</span>
+        ))}
       <div className="flex gap-2">
         {isAuthenticated ? (
           <>
             <UIButton
               className={cn(
                 "w-full bg-white text-lg font-semibold text-black",
-                loading && "opacity-50"
+                (loading || !inStock) && "opacity-50"
               )}
               onClick={addToCart}
-              disabled={loading}
+              disabled={loading || !inStock}
             >
               ADD TO CART
             </UIButton>
             <UIButton
               className={cn(
                 "w-full border-black bg-black text-lg font-semibold text-white",
-                loading && "opacity-50"
+                (loading || !inStock) && "opacity-50"
               )}
               onClick={handleBuyNow}
-              disabled={loading}
+              disabled={loading || !inStock}
             >
               BUY NOW
             </UIButton>
