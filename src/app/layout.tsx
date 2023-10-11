@@ -12,6 +12,7 @@ import ScrollToTheTopButton from "@/components/common/scrollToTpopButton";
 import Notification from "@/components/notification/notification";
 import Analytics from "@/components/analytics";
 import Redirect from "@/components/redirectComponent";
+import BlockClickJack from "@/components/blockClickJack";
 
 const open_sans = Open_Sans({
   weight: ["300", "400", "500", "600", "700"],
@@ -79,6 +80,7 @@ export default function RootLayout({
             )}
           >
             <Redirect />
+            <BlockClickJack />
             <Analytics />
             <LoadingComponent />
             <Header />
