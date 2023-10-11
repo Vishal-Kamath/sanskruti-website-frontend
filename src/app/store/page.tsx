@@ -9,7 +9,7 @@ const StorePage: FC = () => {
     <div className="flex min-h-screen flex-col gap-5 pb-10 pt-36">
       <div className="relative isolate mb-[20rem] w-full sm:mb-[6rem] sm:px-[3vw]">
         <Image
-          src="/assets/storeImage.png"
+          src="/assets/storeImage.jpg"
           alt="store image"
           width={1500}
           height={1500}

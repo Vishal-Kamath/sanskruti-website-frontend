@@ -17,14 +17,14 @@ const VisitOurStore: FC = () => {
         className="relative w-full overflow-hidden"
       >
         <Image
-          src="/assets/storeImage.png"
+          src="/assets/storeImage.jpg"
           className="absolute -z-10 h-full w-full object-cover opacity-80"
           width={50}
           height={50}
           alt="Sanskruti Store"
         />
         <Image
-          src="/assets/storeImage.png"
+          src="/assets/storeImage.jpg"
           className="h-[55vh] w-full object-contain"
           width={500}
           height={500}
