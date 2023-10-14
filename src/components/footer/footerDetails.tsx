@@ -6,6 +6,7 @@ import {
   FooterCategory,
   FooterNewArrivals,
 } from "./footerComponents";
+import FooterSocial from "./footerSocial";
 
 const FooterDetails: FC = () => {
   return (
@@ -100,25 +101,7 @@ const FooterDetails: FC = () => {
             ]}
           />
         </div>
-        <div className="mb-5 flex flex-col gap-2">
-          <h5 className="flex items-center justify-between py-2 font-bold">
-            <span>FOLLOW US</span>
-          </h5>
-          <div className="flex gap-4 [&>*>*]:h-5 [&>*>*]:w-5">
-            <a href="#" target="_blank">
-              <BsInstagram />
-            </a>
-            <a href="#" target="_blank">
-              <BsFacebook />
-            </a>
-            <a href="#" target="_blank">
-              <BsWhatsapp />
-            </a>
-            <a href="#" target="_blank">
-              <BsYoutube />
-            </a>
-          </div>
-        </div>
+        <FooterSocial />
       </div>
       <div className="flex max-w-5xl flex-col gap-5">
         <FooterNewArrivals />
