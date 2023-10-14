@@ -53,6 +53,10 @@ const PriceFilter: FC = () => {
 
   const [value, setValue] = useState<number[]>([setMin(), setMax()]);
 
+  useEffect(() => {
+    setValue([setMin(), setMax()]);
+  }, [min, max]);
+
   const handleRedirect = useCallback(
     debounce((value: number[]) => {
       const current = new URLSearchParams(searchParams.toString());
