@@ -3,6 +3,7 @@ import { ResultType } from "../../category/[...categories]/page";
 import axios from "axios";
 import { Fragment } from "react";
 import ProductCard from "@/components/productCard";
+import PriceSetter from "@/components/sidebars/filterBar/priceSetter";
 
 const SearchPage = async ({
   params,
@@ -36,6 +37,7 @@ const SearchPage = async ({
   const products = result.products;
   return (
     <Fragment>
+      <PriceSetter min={result.minValue || 0} max={result.maxValue || 10000} />
       <div className="grid h-fit w-full grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">
         {products.length ? (
           products.map((product) => (

@@ -9,6 +9,7 @@ import VariantItem, { VariantType } from "./variantItem";
 import { useAppSelector } from "@/redux/store/hooks";
 import { CategoryType, selectCategory } from "@/redux/slice/category.slice";
 import MainFilters from "./mainFilter";
+import PriceFilter from "./priceFilter";
 
 const FilterList: FC<{ params: string[] }> = ({ params }) => {
   const { categories } = useAppSelector(selectCategory);
@@ -44,6 +45,7 @@ const FilterList: FC<{ params: string[] }> = ({ params }) => {
 
   return (
     <div className="flex flex-col pl-[3vw] pr-2">
+      <PriceFilter />
       <MainFilters
         categoriesList={categoriesList}
         selected={main?.Title || ""}

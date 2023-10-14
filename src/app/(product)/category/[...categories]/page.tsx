@@ -5,10 +5,13 @@ import { ProductType } from "@/components/header/header";
 import Pagination from "@/components/common/pagination";
 import { Metadata } from "next";
 import { CategoryStateType } from "@/redux/slice/category.slice";
+import PriceSetter from "@/components/sidebars/filterBar/priceSetter";
 
 export type ResultType = {
   totalPages: number;
   currentPage: number;
+  minValue: number;
+  maxValue: number;
   products: ProductType[];
 };
 
@@ -62,6 +65,7 @@ const CategoryPage = async ({
 
   return (
     <Fragment>
+      <PriceSetter min={result.minValue || 0} max={result.maxValue || 10000} />
       <div className="grid h-fit grid-cols-2 gap-7 md:grid-cols-3 lg:grid-cols-4">
         {products.length ? (
           products.map((product) => (

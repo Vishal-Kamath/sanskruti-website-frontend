@@ -6,6 +6,7 @@ import notificationReducer from "@/redux/slice/notification.slice";
 import cartReducer from "@/redux/slice/cart.slice";
 import wishlistReducer from "@/redux/slice/wishlist.slice";
 import categoryReducer from "@/redux/slice/category.slice";
+import priceReducer from "@/redux/slice/price.slice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     category: categoryReducer,
     wishlist: wishlistReducer,
     cart: cartReducer,
+    price: priceReducer,
     notification: notificationReducer,
   },
 });
