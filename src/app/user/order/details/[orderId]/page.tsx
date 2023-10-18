@@ -627,19 +627,26 @@ const OrderDetailsPage: NextPage = () => {
               </UIButton>
             </div>
           ) : (
-            <div className="flex h-full flex-col gap-3">
-              <p className="text-gray-500">
-                Caution! By clicking the button below, you are initiating a
-                return request for the ordered product. Make sure you are
-                certain before proceeding with this action.
-              </p>
-              <UIButton
-                onClick={() => !isCancelled && handleReturnProduct()}
-                className="mt-auto rounded-sm border-[1px] border-sanskrutiRed hover:outline-sanskrutiRedLight"
-              >
-                Return
-              </UIButton>
-            </div>
+            // <div className="flex h-full flex-col gap-3">
+            //   <p className="text-gray-500">
+            //     Caution! By clicking the button below, you are initiating a
+            //     return request for the ordered product. Make sure you are
+            //     certain before proceeding with this action.
+            //   </p>
+            //   <UIButton
+            //     onClick={() => !isCancelled && handleReturnProduct()}
+            //     className="mt-auto rounded-sm border-[1px] border-sanskrutiRed hover:outline-sanskrutiRedLight"
+            //   >
+            //     Return
+            //   </UIButton>
+            // </div>
+            <span>
+              For more Info and any queries about the product please contact us
+              at{" "}
+              <a target="_blank" href="mailto:info@sanskrutinx.com">
+                info@sanskrutinx.com
+              </a>
+            </span>
           )}
         </div>
       </div>

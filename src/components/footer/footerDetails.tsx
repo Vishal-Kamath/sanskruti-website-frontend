@@ -95,8 +95,8 @@ const FooterDetails: FC = () => {
             list={[
               {
                 inWebsiteLink: false,
-                title: "info@sanskruti.com",
-                link: "mailto:info@sanskruti.com",
+                title: "info@sanskrutinx.com",
+                link: "mailto:info@sanskrutinx.com",
               },
             ]}
           />
