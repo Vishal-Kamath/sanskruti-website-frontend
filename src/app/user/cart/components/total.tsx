@@ -46,7 +46,7 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
     if (!couponDiscount || !couponDiscount.discount || !couponDiscount.code)
       return;
     applyCode(couponDiscount.code);
-  }, [finalValue, couponDiscount]);
+  }, [finalValue, couponDiscount?.code]);
 
   const fetchCoupons = async () => {
     axios
@@ -107,6 +107,15 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
       });
   };
 
+  const cancelCoupon = () => {
+    dispatch(
+      setCouponDiscount({
+        discount: 0,
+        code: "",
+      })
+    );
+  };
+
   if (!cart || cart?.length === 0) return <Fragment></Fragment>;
   return (
     <div
@@ -120,9 +129,9 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
         onClick={() => setopenTotalTab((i) => !i)}
       >
         {openTotalTab ? (
-          <LiaAngleDoubleDownSolid className="h-6 w-6" />
+          <LiaAngleDoubleDownSolid className="h-6 w-6 text-gray-600" />
         ) : (
-          <LiaAngleDoubleUpSolid className="h-6 w-6" />
+          <LiaAngleDoubleUpSolid className="h-6 w-6 text-gray-600" />
         )}
       </button>
       <div
@@ -130,77 +139,91 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
       >
         {/* coupons */}
         <div className="text-xs font-medium text-gray-500">COUPONS</div>
-        <div className="flex justify-between text-xs">
-          <div className="flex items-center gap-2 font-bold">
-            <AiOutlineTag className="h-4 w-4" />
-            Apply Coupons
+        {couponDiscount?.code && couponDiscount.discount ? (
+          <div className="flex items-center justify-between">
+            <span className="font-semibold">CODE:{couponDiscount.code}</span>
+            <UIButton
+              onClick={cancelCoupon}
+              className="w-fit rounded-[4px] border-[1px] border-sanskrutiRed px-3 py-1 text-sanskrutiRed hover:outline-sanskrutiRedLight"
+            >
+              Cancel Coupon
+            </UIButton>
           </div>
-
-          <button
-            onClick={() => setOpen(!open)}
-            className={cn(
-              "h-6 w-6 rounded-full border-[1px] border-gray-500 p-1 outline-4 outline-gray-200 transition-all duration-200 ease-in-out hover:outline",
-              open ? "rotate-180" : "rotate-45"
-            )}
-          >
-            <RxCross2 className="h-full w-full" />
-          </button>
-        </div>
-        {open && (
-          <div className="flex flex-col gap-2">
-            <div className="flex w-full gap-2 text-xs">
-              <input
-                type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Enter your code"
-                className="h-full w-full rounded-[4px] border-[1px] border-gray-500 px-2 py-1 text-gray-500 outline-none focus-within:border-gray-700 focus-within:text-black"
-              />
-
-              <UIButton
-                onClick={() => applyCode(code)}
-                className="w-fit rounded-[4px] border-[1px] border-sanskrutiRed px-3 py-1 text-sanskrutiRed hover:outline-sanskrutiRedLight"
-              >
-                Apply
-              </UIButton>
-            </div>
-            {coupons && coupons.length ? (
-              <div className="relative overflow-hidden rounded-b-xl rounded-t-md">
-                <div className="flex h-full max-h-[12.5rem] flex-col gap-1 overflow-y-scroll pb-2 scrollbar-none">
-                  {coupons?.map((coupon, index) => (
-                    <CouponCartComponent
-                      key={coupon.code + index}
-                      className="flex-shrink-0"
-                      applyCoupon={() => applyCode(coupon.code)}
-                      {...coupon}
-                    />
-                  ))}
-                </div>
-                <div
-                  style={
-                    coupons.length < 2
-                      ? {}
-                      : {
-                          boxShadow: "0px -10px 5px #0000002f inset",
-                        }
-                  }
-                  className="absolute bottom-0 left-0 h-5 w-full rounded-b-xl"
-                ></div>
-                <div
-                  style={
-                    coupons.length < 2
-                      ? {}
-                      : {
-                          boxShadow: "0px 5px #00000011 inset",
-                        }
-                  }
-                  className="absolute left-0 top-0 h-2 w-full rounded-t-md"
-                ></div>
+        ) : (
+          <Fragment>
+            <div className="flex justify-between text-xs">
+              <div className="flex items-center gap-2 font-bold">
+                <AiOutlineTag className="h-4 w-4" />
+                Apply Coupons
               </div>
-            ) : (
-              <span className="text-center">No coupons found</span>
+
+              <button
+                onClick={() => setOpen(!open)}
+                className={cn(
+                  "h-6 w-6 rounded-full border-[1px] border-gray-500 p-1 outline-4 outline-gray-200 transition-all duration-200 ease-in-out hover:outline",
+                  open ? "rotate-180" : "rotate-45"
+                )}
+              >
+                <RxCross2 className="h-full w-full" />
+              </button>
+            </div>
+            {open && (
+              <div className="flex flex-col gap-2">
+                <div className="flex w-full gap-2 text-xs">
+                  <input
+                    type="text"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    placeholder="Enter your code"
+                    className="h-full w-full rounded-[4px] border-[1px] border-gray-500 px-2 py-1 text-gray-500 outline-none focus-within:border-gray-700 focus-within:text-black"
+                  />
+
+                  <UIButton
+                    onClick={() => applyCode(code)}
+                    className="w-fit rounded-[4px] border-[1px] border-sanskrutiRed px-3 py-1 text-sanskrutiRed hover:outline-sanskrutiRedLight"
+                  >
+                    Apply
+                  </UIButton>
+                </div>
+                {coupons && coupons.length ? (
+                  <div className="relative overflow-hidden rounded-b-xl rounded-t-md">
+                    <div className="flex h-full max-h-[12.5rem] flex-col gap-1 overflow-y-scroll pb-2 scrollbar-none">
+                      {coupons?.map((coupon, index) => (
+                        <CouponCartComponent
+                          key={coupon.code + index}
+                          className="flex-shrink-0"
+                          applyCoupon={() => applyCode(coupon.code)}
+                          {...coupon}
+                        />
+                      ))}
+                    </div>
+                    <div
+                      style={
+                        coupons.length < 2
+                          ? {}
+                          : {
+                              boxShadow: "0px -10px 5px #0000002f inset",
+                            }
+                      }
+                      className="absolute bottom-0 left-0 h-5 w-full rounded-b-xl"
+                    ></div>
+                    <div
+                      style={
+                        coupons.length < 2
+                          ? {}
+                          : {
+                              boxShadow: "0px 5px #00000011 inset",
+                            }
+                      }
+                      className="absolute left-0 top-0 h-2 w-full rounded-t-md"
+                    ></div>
+                  </div>
+                ) : (
+                  <span className="text-center">No coupons found</span>
+                )}
+              </div>
             )}
-          </div>
+          </Fragment>
         )}
         <div className="border-t-[1px] border-gray-300 pt-3 text-xs font-semibold text-gray-500">
           PAYMENT DETAILS (
