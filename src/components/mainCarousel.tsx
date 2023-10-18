@@ -70,26 +70,28 @@ const Carousel: FC = () => {
         }}
         slidesPerView={1}
       >
-        {banners?.map((banner, index) => {
-          return (
-            <SwiperSlide className="-z-10" key={"banner slide " + index}>
-              <Image
-                src={banner["mobileImage"]}
-                alt={"banner image" + index}
-                width={500}
-                height={500}
-                className="h-full w-full object-cover max-md:object-top md:hidden xl:max-h-[70vh]"
-              />
-              <Image
-                src={banner["desktopImage"]}
-                alt={"banner image" + index}
-                width={500}
-                height={500}
-                className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
-              />
-            </SwiperSlide>
-          );
-        })}
+        {banners
+          ?.filter((banner) => banner.isPublished)
+          .map((banner, index) => {
+            return (
+              <SwiperSlide className="-z-10" key={"banner slide " + index}>
+                <Image
+                  src={banner["mobileImage"]}
+                  alt={"banner image" + index}
+                  width={500}
+                  height={500}
+                  className="h-full w-full object-cover max-md:object-top md:hidden xl:max-h-[70vh]"
+                />
+                <Image
+                  src={banner["desktopImage"]}
+                  alt={"banner image" + index}
+                  width={500}
+                  height={500}
+                  className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
+                />
+              </SwiperSlide>
+            );
+          })}
       </SwiperContainerRef>
     </div>
   );
