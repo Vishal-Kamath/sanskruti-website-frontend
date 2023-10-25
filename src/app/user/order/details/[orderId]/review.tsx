@@ -25,7 +25,7 @@ const UserReview: FC<{ product_id?: string }> = ({ product_id }) => {
   useEffect(() => {
     const fetchReview = () => {
       axios
-        .get<{ userReview?: Review["reviews"][0] }>(
+        .get<{ userReview?: Review }>(
           `${process.env.ENDPOINT}/api/v1/user/userReview/${product_id}`,
           {
             headers: {
