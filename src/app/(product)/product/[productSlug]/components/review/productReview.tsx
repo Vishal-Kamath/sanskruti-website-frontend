@@ -3,41 +3,42 @@
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
-import { useAppDispatch } from "@/redux/store/hooks";
-import {
-  setNotification,
-  showNotification,
-} from "@/redux/slice/notification.slice";
 import ReviewComponent from "./reviewComponent";
 
-export type Review = {
+export interface Review {
+  id: string;
+  product_id: string;
+  product_name: string;
+  product_image: string;
+  username: string;
+  title: string;
+  rating: number;
+  comment: string;
+  status: "Under review" | "Accepted" | "Denied";
+  notify: boolean;
+}
+
+interface ProductRating {
   product_id: string;
   totalRatings: number;
-  reviews: {
-    id: string;
-    username: string;
-    title: string;
-    comment: string;
-    rating: number;
-  }[];
   ratingCounts: {
     [key: number]: number;
   };
-};
+}
 
 const ProductReview: FC<{ id: string }> = ({ id }) => {
-  const dispatch = useAppDispatch();
-
-  const [reviews, setReviews] = useState<Review>();
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [rating, setRating] = useState<ProductRating>();
 
   const fetchReview = () => {
     axios
-      .get<{ reviews: Review }>(
+      .get<{ reviews: Review[]; productRating: ProductRating }>(
         `${process.env.ENDPOINT}/api/v1/user/reviews/${id}`
       )
       .then((res) => {
         const response = res.data;
         setReviews(response.reviews);
+        setRating(response.productRating);
       })
       .catch();
   };
@@ -45,142 +46,16 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
     fetchReview();
   }, []);
 
-  const handlePostReview = async (
-    comment: string,
-    username: string,
-    title: string,
-    rating: number
-  ) => {
-    if (!comment.trim() || !username || !rating || !title.trim()) {
-      dispatch(
-        setNotification({
-          message: "please fill all details before you post a comment",
-          type: "info",
-        })
-      );
-      dispatch(showNotification());
-      return false;
-    }
-
-    try {
-      const response = (
-        await axios.post<{
-          reviews: Review;
-          userReview: Review["reviews"][0];
-        }>(
-          `${process.env.ENDPOINT}/api/v1/user/review`,
-          {
-            product_id: id,
-            username,
-            title,
-            rating,
-            comment,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        )
-      ).data;
-      setReviews(response.reviews)
-      return true;
-    } catch (err) {
-      return false;
-    }
-  };
-  const handleUpdateReview = async (
-    comment: string,
-    username: string,
-    title: string,
-    rating: number
-  ) => {
-    if (!comment.trim() || !username || !rating || !title.trim()) {
-      dispatch(
-        setNotification({
-          message: "please fill all details before you post a comment",
-          type: "info",
-        })
-      );
-      dispatch(showNotification());
-      return false;
-    }
-
-    try {
-      const response = (
-        await axios.put<{
-          reviews: Review;
-          userReview: Review["reviews"][0];
-        }>(
-          `${process.env.ENDPOINT}/api/v1/user/review`,
-          {
-            product_id: id,
-            username,
-            title,
-            rating,
-            comment,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        )
-      ).data;
-      setReviews(response.reviews);
-      return true;
-    } catch (err) {
-      return false;
-    }
-  };
-
-  // const handleDeleteReview = async () => {
-  //   const confirmIfUserWantsToDelete = confirm(
-  //     "Are you sure you want to delete this review?"
-  //   );
-  //   if (!confirmIfUserWantsToDelete) return;
-
-  //   try {
-  //     const response = (
-  //       await axios.delete<
-  //         NotificationType & {
-  //           reviews: Review;
-  //         }
-  //       >(
-  //         `${process.env.ENDPOINT}/api/v1/user/userReview/${id}?userId=${userReview?.id}`,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           withCredentials: true,
-  //         }
-  //       )
-  //     ).data;
-  //     dispatch(
-  //       setNotification({
-  //         message: response.message,
-  //         type: response.type,
-  //       })
-  //     );
-  //     dispatch(showNotification());
-  //     setReviews(response.reviews);
-  //   } catch (err) {
-  //     return;
-  //   }
-  // };
-
-  const total = reviews && reviews.totalRatings ? reviews.totalRatings : 0;
+  const total = reviews && rating?.totalRatings ? rating.totalRatings : 0;
 
   const ratingAverage =
-    reviews && reviews?.ratingCounts && total
+    reviews && rating?.ratingCounts && total
       ? (
-          (5 * reviews?.ratingCounts[5] +
-            4 * reviews?.ratingCounts[4] +
-            3 * reviews?.ratingCounts[3] +
-            2 * reviews?.ratingCounts[2] +
-            reviews?.ratingCounts[1]) /
+          (5 * rating?.ratingCounts[5] +
+            4 * rating?.ratingCounts[4] +
+            3 * rating?.ratingCounts[3] +
+            2 * rating?.ratingCounts[2] +
+            rating?.ratingCounts[1]) /
           total
         ).toFixed(1)
       : "NA";
@@ -212,16 +87,16 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
                 <div
                   style={{
                     width:
-                      total && reviews && reviews.ratingCounts
-                        ? `${(reviews?.ratingCounts[value] / total) * 100}%`
+                      total && rating && rating.ratingCounts
+                        ? `${(rating?.ratingCounts[value] / total) * 100}%`
                         : 0,
                   }}
                   className="rounded-full bg-yellow-300"
                 ></div>
               </div>
               <span>
-                {reviews && reviews.ratingCounts && reviews.ratingCounts[value]
-                  ? reviews?.ratingCounts[value]
+                {rating && rating.ratingCounts && rating.ratingCounts[value]
+                  ? rating?.ratingCounts[value]
                   : 0}
               </span>
             </div>
@@ -232,24 +107,24 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
       <h3 className="border-b-[1px] border-gray-300 pb-3 text-[16px]">
         CUSTOMER REVIEWS
       </h3>
-      {reviews?.reviews && reviews.reviews.length ? (
+      {reviews && reviews.length ? (
         <div className="flex flex-col gap-2">
-          {reviews.reviews.map((review, index) => (
+          {reviews.map((review, index) => (
             <ReviewComponent key={index + review.username} {...review} />
           ))}
         </div>
-      ) :  (
-          <div className="flex flex-col items-center justify-center gap-1 text-[16px]">
-            <div className="flex gap-1">
-              <AiFillStar className="text-gray-300" />
-              <AiFillStar className="text-gray-300" />
-              <AiFillStar className="text-gray-300" />
-              <AiFillStar className="text-gray-300" />
-              <AiFillStar className="text-gray-300" />
-            </div>
-            <span>No reviews here!!!</span>
+      ) : (
+        <div className="flex flex-col items-center justify-center gap-1 text-[16px]">
+          <div className="flex gap-1">
+            <AiFillStar className="text-gray-300" />
+            <AiFillStar className="text-gray-300" />
+            <AiFillStar className="text-gray-300" />
+            <AiFillStar className="text-gray-300" />
+            <AiFillStar className="text-gray-300" />
           </div>
-        )}
+          <span>No reviews here!!!</span>
+        </div>
+      )}
     </div>
   );
 };

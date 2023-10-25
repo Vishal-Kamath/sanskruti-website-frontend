@@ -4,12 +4,7 @@ import { FC } from "react";
 import { Review } from "./productReview";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const ReviewComponent: FC<Review["reviews"][0]> = ({
-  username,
-  rating,
-  title,
-  comment,
-}) => {
+const ReviewComponent: FC<Review> = ({ username, rating, title, comment }) => {
   const Initials = username
     .split(" ")
     .map((name) => name[0].toLocaleUpperCase())
