@@ -11,7 +11,7 @@ const SearchResults: FC<Props> = ({ searchResults, className, ...props }) => {
   return (
     <div
       className={cn(
-        "fixed top-24 grid max-h-[30rem] w-full bg-white shadow-lg max-md:top-36 md:right-[3vw] md:max-w-[42.3rem] md:grid-cols-2 md:rounded-md md:border-[1px] md:border-gray-300",
+        "fixed top-24 grid max-h-[30rem] w-full overflow-y-auto bg-white shadow-lg max-md:top-36 md:right-[3vw] md:max-w-[42.3rem] md:grid-cols-2 md:rounded-md md:border-[1px] md:border-gray-300",
         className
       )}
       {...props}
