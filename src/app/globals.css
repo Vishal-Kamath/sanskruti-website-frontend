@@ -821,9 +821,6 @@ video {
 .h-12 {
   height: 3rem;
 }
-.h-14 {
-  height: 3.5rem;
-}
 .h-16 {
   height: 4rem;
 }
@@ -951,9 +948,6 @@ video {
 }
 .w-11 {
   width: 2.75rem;
-}
-.w-14 {
-  width: 3.5rem;
 }
 .w-16 {
   width: 4rem;
@@ -1207,6 +1201,9 @@ video {
 }
 .gap-2 {
   gap: 0.5rem;
+}
+.gap-20 {
+  gap: 5rem;
 }
 .gap-24 {
   gap: 6rem;
@@ -1709,10 +1706,6 @@ video {
 .px-\[3vw\] {
   padding-left: 3vw;
   padding-right: 3vw;
-}
-.px-\[9vw\] {
-  padding-left: 9vw;
-  padding-right: 9vw;
 }
 .py-1 {
   padding-top: 0.25rem;
@@ -2259,14 +2252,8 @@ video {
 .group:hover .group-hover\:hidden {
   display: none;
 }
-.group:hover .group-hover\:h-24 {
-  height: 6rem;
-}
 .group:hover .group-hover\:h-full {
   height: 100%;
-}
-.group:hover .group-hover\:w-24 {
-  width: 6rem;
 }
 .group:hover .group-hover\:w-full {
   width: 100%;
@@ -2498,11 +2485,6 @@ video {
   .max-lg\:pt-5 {
     padding-top: 1.25rem;
   }
-
-  .max-lg\:text-xs {
-    font-size: 0.75rem;
-    line-height: 1rem;
-  }
 }
 @media not all and (min-width: 768px) {
 
@@ -2524,10 +2506,6 @@ video {
 
   .max-md\:z-30 {
     z-index: 30;
-  }
-
-  .max-md\:col-span-full {
-    grid-column: 1 / -1;
   }
 
   .max-md\:hidden {
@@ -2986,11 +2964,6 @@ video {
 
   .lg\:text-\[14px\] {
     font-size: 14px;
-  }
-
-  .lg\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
   }
 }
 @media (min-width: 1280px) {

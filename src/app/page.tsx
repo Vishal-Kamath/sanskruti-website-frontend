@@ -12,7 +12,7 @@ import FeaturedProducts from "./component/featured";
 
 const Home: NextPage = () => {
   return (
-    <main className="flex flex-col gap-5 pb-10 pt-36">
+    <main className="flex flex-col gap-20 pb-10 pt-36">
       <Carousel />
       <CategoryBar />
       <SubBanner />
@@ -20,17 +20,6 @@ const Home: NextPage = () => {
       <BestSellers />
       <FeaturedProducts />
       <UserReviewCarousel />
-
-      <a href="" className="px-[3vw]" target="_blank">
-        <Image
-          src="/assets/footerInstagramImage.png"
-          alt="Visit our instagram diaries"
-          width={600}
-          height={600}
-          className="w-full"
-        />
-      </a>
-
       <VisitOurStore />
     </main>
   );
