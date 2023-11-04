@@ -1,57 +1,181 @@
-import UIHeader from "@/components/common/header";
+import VisitOurStore from "@/components/footer/visitOurStore";
 import { NextPage } from "next";
+import Image from "next/image";
+import CustomerCare from "./cutomerCare";
 
 const AboutUsPage: NextPage = () => {
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-lg">
-      <UIHeader title="ABOUT US" />
-      <div className="text-justify text-lg">
-        <div className="font-semibold">Sanskruti nx</div>
-        Welcome to Sanskruti.This document is an electronic record in terms of
-        Information Technology Act, 2000 and published in accordance with the
-        provisions of Rule 3 of the Information Technology Intermediaries
-        guidelines Rules, 2011 that require publishing the rules and
-        regulations, privacy policy and Terms of Use for access or usage of
-        Sanskruti marketplace platform - www.Sanskruti.com (hereinafter referred
-        to as &quot;Platform&quot;)
-        <br />
-        The Platform is owned by Sanskruti Designs Private Limited, having its
-        registered office at Buildings Alyssa, Begonia and Clover situated in
-        Embassy Tech Village, Outer Ring Road, Devarabeesanahalli Village,
-        Varthur Hobli, Bengaluru - 560103, India and its branch office at Plot
-        82 A - 2nd and 3rd Floor, Sector 18 Gurugram Haryana, India.
-        <br />
-        Your use of the Sanskruti and services and tools are governed by the
-        following terms and conditions &quot;Terms of Use&quot; as applicable to
-        the Sanskruti including the applicable policies which are incorporated
-        herein by way of reference. By mere use of the Sanskruti, You shall be
-        contracting with Sanskruti Designs Private Limited, the owner of the
-        Platform. These terms and conditions including the policies constitute
-        Your binding obligations, with Sanskruti.
-        <br />
-        For the purpose of these Terms of Use, wherever the context so requires
-        &quot;You&quot; or &quot;User&quot; shall mean any natural or legal
-        person who has agreed to become a buyer on Platform by providing data
-        while registering on the Platform as Registered User. The term
-        &quot;Sanskruti&quot;,&quot;We&quot;,&quot;Us&quot;,&quot;Our&quot;
-        shall mean Sanskruti Designs Private Limited and its affiliates.
-        <br />
-        When You use any of the services provided by Us through the Platform,
-        including but not limited to, e.g. Product Reviews, Seller Reviews, You
-        will be subject to the rules, guidelines, policies, terms, and
-        conditions applicable to such service, and they shall be deemed to be
-        incorporated into this Terms of Use and shall be considered as part and
-        parcel of this Terms of Use. We reserve the right, at Our sole
-        discretion, to change, modify, add or remove portions of these Terms of
-        Use, at any time without any prior written notice to You. You shall
-        ensure to review these Terms of Use periodically for updates/changes.
-        Your continued use of the Platform following the posting of changes will
-        mean that You accept and agree to the revisions. As long as You comply
-        with these Terms of Use, We grant You a personal, non-exclusive,
-        non-transferable, limited privilege to enter and use the Platform. By
-        impliedly or expressly accepting these Terms of Use, You also accept and
-        agree to be bound by Sanskruti Policies including but not limited to
-        Privacy Policy as amended from time to time.
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-12 px-[3vw] pb-16 pt-48 text-lg">
+      <div className="relative flex w-full items-center justify-center">
+        <div className="absolute top-1/2 -z-10 mx-auto w-full max-w-xl -translate-y-1/2 border-b-[1px] border-slate-500 outline-none"></div>
+        <Image
+          src="/assets/sanskruti-logo.svg"
+          alt="Sanskruti Logo"
+          width={150}
+          height={150}
+          className="aspect-auto w-full max-w-[15rem] bg-white px-5"
+        />
+      </div>
+
+      <div className="text-justify text-sm text-gray-500">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto laborum
+        assumenda voluptatem nam nemo, ut, reiciendis recusandae, minima autem
+        in velit consequuntur magnam praesentium quisquam cupiditate? Asperiores
+        perferendis architecto ipsa? Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Omnis voluptas delectus sapiente, blanditiis soluta
+        totam ipsam hic sequi distinctio laudantium sunt odit, officia corporis
+        eius dolorum, quasi rem similique consectetur.
+      </div>
+
+      <div className="flex w-full flex-col gap-4">
+        <h3 className="text-xl font-semibold">Mission</h3>
+        <p className="text-sm text-gray-500">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+          quibusdam sit sed quia veritatis adipisci unde in quaerat earum
+          repellat deserunt velit dolorum non vero culpa quod itaque reiciendis
+          praesentium.
+        </p>
+      </div>
+      <div className="flex w-full flex-col gap-4">
+        <h3 className="text-xl font-semibold">Vision</h3>
+        <p className="text-sm text-gray-500">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+          quibusdam sit sed quia veritatis adipisci unde in quaerat earum
+          repellat deserunt velit dolorum non vero culpa quod itaque reiciendis
+          praesentium.
+        </p>
+      </div>
+
+      <hr />
+
+      {/* Founders Details */}
+      <div className="flex flex-col items-center gap-12">
+        <h3 className="text-2xl font-semibold">Founders</h3>
+
+        <div className="flex gap-9 max-md:flex-col">
+          <Image
+            src="https://placehold.co/300x200/png"
+            alt="founder"
+            width={300}
+            height={200}
+            className="aspect-auto h-full w-full"
+          />
+          <div className="flex w-full flex-col gap-4">
+            <h3 className="text-xl font-semibold">Name</h3>
+            <p className="text-justify text-sm text-gray-500">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+              quibusdam sit sed quia veritatis adipisci unde in quaerat earum
+              repellat deserunt velit dolorum non vero culpa quod itaque
+              reiciendis praesentium. Lorem ipsum dolor sit amet consectetur,
+              adipisicing elit. Pariatur earum incidunt sapiente rem autem,
+              corrupti amet iure ipsam porro est quos libero obcaecati
+              voluptatem corporis quaerat architecto, nulla maxime iste. Lorem,
+              ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+              iusto a nulla sint esse dolorum impedit voluptatem enim? Explicabo
+              consequatur optio eum? Sequi magni nobis quae maxime cupiditate
+              aspernatur reprehenderit.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-9 max-md:flex-col-reverse">
+          <div className="flex w-full flex-col gap-4">
+            <h3 className="text-xl font-semibold">Name</h3>
+            <p className="text-justify text-sm text-gray-500">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+              quibusdam sit sed quia veritatis adipisci unde in quaerat earum
+              repellat deserunt velit dolorum non vero culpa quod itaque
+              reiciendis praesentium. Lorem ipsum dolor sit amet consectetur,
+              adipisicing elit. Pariatur earum incidunt sapiente rem autem,
+              corrupti amet iure ipsam porro est quos libero obcaecati
+              voluptatem corporis quaerat architecto, nulla maxime iste. Lorem,
+              ipsum dolor sit amet consectetur adipisicing elit. Consequatur
+              iusto a nulla sint esse dolorum impedit voluptatem enim? Explicabo
+              consequatur optio eum? Sequi magni nobis quae maxime cupiditate
+              aspernatur reprehenderit.
+            </p>
+          </div>
+          <Image
+            src="https://placehold.co/300x200/png"
+            alt="founder"
+            width={300}
+            height={200}
+            className="aspect-auto h-full w-full"
+          />
+        </div>
+      </div>
+
+      <hr />
+
+      {/* Features */}
+      <div className="flex flex-col items-center gap-9">
+        <h3 className="text-2xl font-semibold">Features</h3>
+
+        <div className="flex justify-between gap-12 max-md:flex-col md:gap-9">
+          <div className="flex flex-col items-center gap-6 text-center text-[16px]">
+            <Image
+              src="https://placehold.co/300x300/png"
+              alt="feature"
+              width={300}
+              height={300}
+              className="aspect-square h-full w-full max-w-[10rem] rounded-full"
+            />
+            <h4>Title 1</h4>
+            <p className="max-w-lg text-gray-500">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet
+              fugiat eum voluptatibus maiores consequuntur earum asperiores
+              illum necessitatibus atque. Illo porro veniam vel odit aspernatur.
+              Eaque beatae earum enim debitis!
+            </p>
+          </div>
+          <div className="flex flex-col items-center gap-6 text-center text-[16px]">
+            <Image
+              src="https://placehold.co/300x300/png"
+              alt="feature"
+              width={300}
+              height={300}
+              className="aspect-square h-full w-full max-w-[10rem] rounded-full"
+            />
+            <h4>Title 2</h4>
+            <p className="max-w-lg text-gray-500">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet
+              fugiat eum voluptatibus maiores consequuntur earum asperiores
+              illum necessitatibus atque. Illo porro veniam vel odit aspernatur.
+              Eaque beatae earum enim debitis!
+            </p>
+          </div>
+          <div className="flex flex-col items-center gap-6 text-center text-[16px]">
+            <Image
+              src="https://placehold.co/300x300/png"
+              alt="feature"
+              width={300}
+              height={300}
+              className="aspect-square h-full w-full max-w-[10rem] rounded-full"
+            />
+            <h4>Title 3</h4>
+            <p className="max-w-lg text-gray-500">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eveniet
+              fugiat eum voluptatibus maiores consequuntur earum asperiores
+              illum necessitatibus atque. Illo porro veniam vel odit aspernatur.
+              Eaque beatae earum enim debitis!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      {/* Our Store */}
+      <div className="flex flex-col gap-9">
+        <VisitOurStore />
+      </div>
+
+      <hr />
+
+      {/* Customer Care */}
+      <div className="flex flex-col gap-9">
+        <h3 className="text-2xl font-semibold">Customer Care</h3>
+        <CustomerCare />
       </div>
     </div>
   );
