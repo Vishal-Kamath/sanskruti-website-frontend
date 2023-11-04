@@ -31,11 +31,6 @@ const FooterDetails: FC = () => {
               title: "Blog",
               link: "/blog",
             },
-            {
-              inWebsiteLink: true,
-              title: "Testimonial",
-              link: "/testimonial",
-            },
           ]}
         />
 
@@ -49,28 +44,13 @@ const FooterDetails: FC = () => {
             },
             {
               inWebsiteLink: true,
-              title: "Shipping",
-              link: "/shipping",
-            },
-            {
-              inWebsiteLink: true,
-              title: "Customization",
-              link: "/customFitting",
-            },
-            {
-              inWebsiteLink: true,
               title: "Return Policy",
               link: "/return",
             },
             {
               inWebsiteLink: true,
-              title: "Payment Policy",
-              link: "/paymentPolicy",
-            },
-            {
-              inWebsiteLink: true,
-              title: "FAQ's",
-              link: "/faqs",
+              title: "Privacy Policy",
+              link: "/privacyPolicy",
             },
           ]}
         />
