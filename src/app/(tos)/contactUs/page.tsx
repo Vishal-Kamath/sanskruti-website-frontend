@@ -1,57 +1,84 @@
-import UIHeader from "@/components/common/header";
+import WhatsappNumber from "@/components/common/whatsappNumber";
 import { NextPage } from "next";
+import { PiWhatsappLogoThin } from "react-icons/pi";
+import { CiMail } from "react-icons/ci";
+import ContactUsForm from "./contactUsForm";
+import VisitOurStore from "@/components/footer/visitOurStore";
 
 const ContactUsPage: NextPage = () => {
   return (
-    <div className="mx-auto flex max-w-4xl flex-col gap-5 px-[3vw] pb-10 pt-44 text-lg">
-      <UIHeader title="CONTACT US" />
-      <div className="text-justify text-lg">
-        <div className="font-semibold">Sanskruti nx</div>
-        Welcome to Sanskruti.This document is an electronic record in terms of
-        Information Technology Act, 2000 and published in accordance with the
-        provisions of Rule 3 of the Information Technology Intermediaries
-        guidelines Rules, 2011 that require publishing the rules and
-        regulations, privacy policy and Terms of Use for access or usage of
-        Sanskruti marketplace platform - www.Sanskruti.com (hereinafter referred
-        to as &quot;Platform&quot;)
-        <br />
-        The Platform is owned by Sanskruti Designs Private Limited, having its
-        registered office at Buildings Alyssa, Begonia and Clover situated in
-        Embassy Tech Village, Outer Ring Road, Devarabeesanahalli Village,
-        Varthur Hobli, Bengaluru - 560103, India and its branch office at Plot
-        82 A - 2nd and 3rd Floor, Sector 18 Gurugram Haryana, India.
-        <br />
-        Your use of the Sanskruti and services and tools are governed by the
-        following terms and conditions &quot;Terms of Use&quot; as applicable to
-        the Sanskruti including the applicable policies which are incorporated
-        herein by way of reference. By mere use of the Sanskruti, You shall be
-        contracting with Sanskruti Designs Private Limited, the owner of the
-        Platform. These terms and conditions including the policies constitute
-        Your binding obligations, with Sanskruti.
-        <br />
-        For the purpose of these Terms of Use, wherever the context so requires
-        &quot;You&quot; or &quot;User&quot; shall mean any natural or legal
-        person who has agreed to become a buyer on Platform by providing data
-        while registering on the Platform as Registered User. The term
-        &quot;Sanskruti&quot;,&quot;We&quot;,&quot;Us&quot;,&quot;Our&quot;
-        shall mean Sanskruti Designs Private Limited and its affiliates.
-        <br />
-        When You use any of the services provided by Us through the Platform,
-        including but not limited to, e.g. Product Reviews, Seller Reviews, You
-        will be subject to the rules, guidelines, policies, terms, and
-        conditions applicable to such service, and they shall be deemed to be
-        incorporated into this Terms of Use and shall be considered as part and
-        parcel of this Terms of Use. We reserve the right, at Our sole
-        discretion, to change, modify, add or remove portions of these Terms of
-        Use, at any time without any prior written notice to You. You shall
-        ensure to review these Terms of Use periodically for updates/changes.
-        Your continued use of the Platform following the posting of changes will
-        mean that You accept and agree to the revisions. As long as You comply
-        with these Terms of Use, We grant You a personal, non-exclusive,
-        non-transferable, limited privilege to enter and use the Platform. By
-        impliedly or expressly accepting these Terms of Use, You also accept and
-        agree to be bound by Sanskruti Policies including but not limited to
-        Privacy Policy as amended from time to time.
+    <div className="flex min-h-screen flex-col gap-5 pb-10 pt-36">
+      <div className="relative isolate w-full sm:px-[3vw] sm:pt-[5rem]">
+        {/* Background */}
+        <div className="absolute left-1/2 top-0 -z-10 h-[40vh] w-full -translate-x-1/2 bg-gradient-to-br from-amber-200 via-yellow-300 to-orange-400 object-cover sm:h-[60vh]"></div>
+
+        {/* Contact Card */}
+        <div className="mx-auto flex w-full max-w-4xl justify-between gap-4 overflow-hidden border-gray-400 bg-white max-sm:flex-col sm:rounded-md sm:border-[1px]">
+          <div className="flex w-full flex-col gap-6 p-6">
+            <h3 className="text-xl font-semibold">Get in touch</h3>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex w-full gap-4 rounded-md border-[1px] border-gray-200 px-6 py-4">
+                <CiMail className="h-8 w-8 text-gray-600" />
+                <div className="flex flex-col gap-3 font-light">
+                  <h4>MAIL US</h4>
+                  <a
+                    href="mailto:info@sanskrutinx.com"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="border-b-[1px] border-transparent hover:border-gray-600"
+                  >
+                    info@sanskrutinx.com
+                  </a>
+                </div>
+              </div>
+              <div className="flex w-full gap-4 rounded-md border-[1px] border-gray-200 px-6 py-4">
+                <PiWhatsappLogoThin className="h-8 w-8 text-gray-600" />
+                <div className="flex flex-col gap-3 font-light">
+                  <h4>WHATSAPP</h4>
+                  <WhatsappNumber className="border-b-[1px] border-transparent hover:border-gray-600" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex w-full max-w-[30rem] flex-col gap-6 bg-slate-100 p-6">
+            <h3 className="text-xl font-semibold">Contact us</h3>
+            <ContactUsForm />
+          </div>
+        </div>
+      </div>
+
+      {/* Our Store */}
+      <div className="mx-auto flex max-w-4xl flex-col gap-9 px-[3vw] pb-6">
+        <VisitOurStore />
+      </div>
+
+      <hr className="mx-auto w-full max-w-4xl px-[3vw]" />
+
+      {/* Customer Care */}
+      <div className="mx-auto flex max-w-4xl flex-col gap-9 px-[3vw] py-6">
+        <h3 className="text-2xl font-semibold">Customer Care</h3>
+        <div className="flex flex-col gap-2 text-sm text-gray-500">
+          <p>
+            Whatsapp: <WhatsappNumber />
+          </p>
+          <p>
+            Email:{" "}
+            <a
+              href="mailto:info@sanskrutinx.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              info@sanskrutinx.com
+            </a>
+          </p>
+
+          <p className="mt-4 max-w-lg">
+            Shop No. 2, 3, 4, Yashoda Vinayak Sankul, Agra Rd, Opposite Suchak
+            Petrol Pump, Kalyan(West), Maharashtra 421301
+          </p>
+        </div>
       </div>
     </div>
   );

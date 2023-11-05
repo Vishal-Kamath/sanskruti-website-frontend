@@ -1,7 +1,7 @@
 import VisitOurStore from "@/components/footer/visitOurStore";
 import { NextPage } from "next";
 import Image from "next/image";
-import CustomerCare from "./cutomerCare";
+import WhatsappNumber from "@/components/common/whatsappNumber";
 
 const AboutUsPage: NextPage = () => {
   return (
@@ -175,7 +175,26 @@ const AboutUsPage: NextPage = () => {
       {/* Customer Care */}
       <div className="flex flex-col gap-9">
         <h3 className="text-2xl font-semibold">Customer Care</h3>
-        <CustomerCare />
+        <div className="flex flex-col gap-2 text-sm text-gray-500">
+          <p>
+            Whatsapp: <WhatsappNumber />
+          </p>
+          <p>
+            Email:{" "}
+            <a
+              href="mailto:info@sanskrutinx.com"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              info@sanskrutinx.com
+            </a>
+          </p>
+
+          <p className="mt-4 max-w-lg">
+            Shop No. 2, 3, 4, Yashoda Vinayak Sankul, Agra Rd, Opposite Suchak
+            Petrol Pump, Kalyan(West), Maharashtra 421301
+          </p>
+        </div>
       </div>
     </div>
   );

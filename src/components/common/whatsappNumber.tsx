@@ -1,8 +1,9 @@
 "use client";
+
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 
-const CustomerCare: FC = () => {
+const WhatsappNumber: FC<{ className?: string }> = ({ className }) => {
   const [number, setNumber] = useState("");
 
   useEffect(() => {
@@ -24,18 +25,18 @@ const CustomerCare: FC = () => {
     };
     getWhatsApp();
   }, []);
+  const whatsappURL = `https://api.whatsapp.com/send?phone=${number}`;
 
   return (
-    <div className="flex flex-col gap-2 text-sm text-gray-500">
-      <p>Whatsapp: +91 {number}</p>
-      <p>Email: info@sanskrutinx.com</p>
-
-      <p className="mt-4 max-w-lg">
-        Shop No. 2, 3, 4, Yashoda Vinayak Sankul, Agra Rd, Opposite Suchak
-        Petrol Pump, Kalyan(West), Maharashtra 421301
-      </p>
-    </div>
+    <a
+      href={whatsappURL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+    >
+      +91 {number}
+    </a>
   );
 };
 
-export default CustomerCare;
+export default WhatsappNumber;
