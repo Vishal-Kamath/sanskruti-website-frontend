@@ -2588,6 +2588,10 @@ video {
     width: 100%;
   }
 
+  .max-md\:min-w-\[100vw\] {
+    min-width: 100vw;
+  }
+
   .max-md\:flex-col {
     flex-direction: column;
   }

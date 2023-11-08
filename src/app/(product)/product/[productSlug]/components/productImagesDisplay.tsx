@@ -37,7 +37,10 @@ const ProductImageDisplay: React.FC<{
         onRealIndexChange={onIndexChange}
       >
         {images.map((image, index) => (
-          <SwiperSlide key={image + index + "image"}>
+          <SwiperSlide
+            key={image + index + "image"}
+            className="w-full max-w-[100vw] max-md:min-w-[100vw] md:max-w-[30rem]"
+          >
             <Image
               width={500}
               height={500}
