@@ -31,7 +31,7 @@ const ProductImageDisplay: React.FC<{
     <div className="flex w-fit shrink-0 flex-col justify-end gap-3 md:pl-[3vw] md:pr-0 lg:flex-row-reverse">
       <Swiper
         ref={sliderRef}
-        className="relative isolate w-fit max-w-[100vw] md:max-w-[35rem]"
+        className="relative isolate w-full max-w-[100vw] md:max-w-[30rem]"
         modules={[Navigation]}
         slidesPerView={1}
         onRealIndexChange={onIndexChange}
@@ -43,7 +43,7 @@ const ProductImageDisplay: React.FC<{
               height={500}
               src={image}
               alt="product image"
-              className="-z-10 aspect-auto w-full cursor-zoom-in object-cover"
+              className="-z-10 aspect-[2/3] max-h-[50rem] w-full max-w-[30rem] cursor-zoom-in object-cover"
               onClick={() => setFullscreenImageOpen(true)}
             />
           </SwiperSlide>
@@ -70,7 +70,7 @@ const ProductImageDisplay: React.FC<{
             height={50}
             key={index}
             className={cn(
-              "aspect-auto h-20 w-auto",
+              "aspect-[2/3] w-16 border-[1px] border-gray-400 bg-gray-100 object-contain",
               imageIndex !== index && "opacity-70"
             )}
             onClick={() => handleSet(index)}
