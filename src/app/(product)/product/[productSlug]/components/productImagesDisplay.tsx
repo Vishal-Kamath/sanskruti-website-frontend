@@ -43,7 +43,7 @@ const ProductImageDisplay: React.FC<{
               height={500}
               src={image}
               alt="product image"
-              className="-z-10 aspect-[2/3] max-h-[50rem] w-full max-w-[30rem] cursor-zoom-in object-cover"
+              className="-z-10 aspect-[2/3] max-h-[50rem] w-full max-w-[100vw] cursor-zoom-in object-cover max-md:min-w-[100vw] md:max-w-[30rem]"
               onClick={() => setFullscreenImageOpen(true)}
             />
           </SwiperSlide>
