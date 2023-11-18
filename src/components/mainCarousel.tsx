@@ -11,7 +11,6 @@ import axios from "axios";
 import { SwiperContainerRef } from "./common/swiperContainer";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
-import Link from "next/link";
 
 type Banner = {
   isPublished: boolean;
@@ -77,7 +76,11 @@ const Carousel: FC = () => {
           .map((banner, index) => {
             return (
               <SwiperSlide className="-z-10" key={"banner slide " + index}>
-                <Link href={banner.bannerLink}>
+                <a
+                  href={banner?.bannerLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Image
                     src={banner["mobileImage"]}
                     alt={"banner image" + index}
@@ -92,7 +95,7 @@ const Carousel: FC = () => {
                     height={500}
                     className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
                   />
-                </Link>
+                </a>
               </SwiperSlide>
             );
           })}

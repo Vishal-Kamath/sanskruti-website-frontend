@@ -12,7 +12,6 @@ import SwiperContainer from "./common/swiperContainer";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { completeLoading, startLoading } from "@/redux/slice/loading.slice";
 import UIHeader from "./common/header";
-import Link from "next/link";
 
 type Banner = {
   isPublished: boolean;
@@ -67,7 +66,11 @@ const SubBanner: FC = () => {
                   className="-z-10"
                   key={"sub banner slide " + index}
                 >
-                  <Link href={banner.bannerLink}>
+                  <a
+                    href={banner?.bannerLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Image
                       src={banner["mobileImage"]}
                       alt={"sub banner image" + index}
@@ -82,7 +85,7 @@ const SubBanner: FC = () => {
                       height={500}
                       className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
                     />
-                  </Link>
+                  </a>
                 </SwiperSlide>
               );
             })}
