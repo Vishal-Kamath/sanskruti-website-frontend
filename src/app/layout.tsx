@@ -79,9 +79,9 @@ export default function RootLayout({
               "relative flex min-h-screen select-none flex-col bg-white font-open-sans text-xs font-medium text-black md:text-[14px]"
             )}
           >
+            <Analytics />
             <Redirect />
             <BlockClickJack />
-            <Analytics />
             <LoadingComponent />
             <Header />
             <Notification />
