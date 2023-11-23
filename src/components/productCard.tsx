@@ -158,8 +158,8 @@ const ProductCard: FC<Props> = ({ className, product }) => {
                   <SwiperSlide key={product.name + " image " + index}>
                     <Image
                       src={image}
-                      width={150}
-                      height={150}
+                      width={1080}
+                      height={720}
                       className="aspect-[2/2.5] h-full w-full object-cover object-top"
                       alt="Product image"
                     />

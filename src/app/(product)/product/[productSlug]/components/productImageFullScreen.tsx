@@ -44,8 +44,8 @@ const ProductImageFullScreen: React.FC<{
         <div className="flex h-full max-h-screen w-full flex-col items-center justify-center gap-3 py-4">
           <ImageZoom src={image} alt="product image" />
           <Image
-            width={500}
-            height={500}
+            width={1440}
+            height={1080}
             src={image}
             alt="product image"
             className="h-full object-contain md:hidden"
@@ -55,8 +55,8 @@ const ProductImageFullScreen: React.FC<{
               <Image
                 src={imageSrc}
                 alt={index + " product image"}
-                width={50}
-                height={50}
+                width={100}
+                height={200}
                 key={index}
                 className={cn(
                   "aspect-auto h-20 w-auto",

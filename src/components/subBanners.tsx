@@ -74,15 +74,15 @@ const SubBanner: FC = () => {
                     <Image
                       src={banner["mobileImage"]}
                       alt={"sub banner image" + index}
-                      width={500}
-                      height={500}
+                      width={1440}
+                      height={1080}
                       className="h-full w-full object-cover max-md:object-top md:hidden xl:max-h-[70vh]"
                     />
                     <Image
                       src={banner["desktopImage"]}
                       alt={"sub banner image" + index}
-                      width={500}
-                      height={500}
+                      width={1080}
+                      height={1440}
                       className="h-full w-full object-cover max-md:hidden max-md:object-top xl:max-h-[70vh]"
                     />
                   </a>

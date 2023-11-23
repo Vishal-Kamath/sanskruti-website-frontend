@@ -42,8 +42,8 @@ const ProductImageDisplay: React.FC<{
             className="w-full max-w-[100vw] max-md:min-w-[100vw] md:max-w-[30rem]"
           >
             <Image
-              width={500}
-              height={500}
+              width={1440}
+              height={1080}
               src={image}
               alt="product image"
               className="-z-10 aspect-[2/3] max-h-[50rem] w-full max-w-[100vw] cursor-zoom-in object-cover max-md:min-w-[100vw] md:max-w-[30rem]"
@@ -69,8 +69,8 @@ const ProductImageDisplay: React.FC<{
           <Image
             src={imageSrc}
             alt={index + " product image"}
-            width={50}
-            height={50}
+            width={100}
+            height={200}
             key={index}
             className={cn(
               "aspect-[2/3] w-16 border-[1px] border-gray-400 bg-gray-100 object-contain",

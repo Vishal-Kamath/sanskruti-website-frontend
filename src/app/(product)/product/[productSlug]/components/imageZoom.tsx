@@ -43,8 +43,8 @@ const ImageZoom: FC<{ src: string; alt: string }> = ({ src, alt }) => {
       }}
     >
       <Image
-        width={500}
-        height={500}
+        width={1440}
+        height={1080}
         src={src}
         alt={alt}
         className="h-full object-contain"
