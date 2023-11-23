@@ -41,8 +41,8 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
                 src={category.Image}
                 alt={category.Title + " nav image"}
                 className="h-full w-full object-cover object-top"
-                height={100}
-                width={100}
+                width={1080}
+                height={720}
               />
               <div className="absolute bottom-0 flex h-8 w-full items-center justify-center gap-1 bg-white bg-opacity-75 capitalize">
                 {category.Title} <FaAngleDown />
@@ -66,8 +66,8 @@ export const NavbarDrawer: FC<{ sidebarOpen: boolean }> = ({ sidebarOpen }) => {
           <Image
             src={displayCategory?.Image}
             alt={displayCategory?.Title + " image"}
-            width={100}
-            height={100}
+            width={1080}
+            height={720}
             className="h-40 w-full rounded-lg object-cover object-top"
           />
           <div className="flex w-full flex-col gap-1 pb-20">

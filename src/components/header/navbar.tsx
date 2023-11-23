@@ -80,8 +80,8 @@ const Navbar: FC = () => {
                   <Image
                     src={displayCategory?.Image}
                     alt={displayCategory?.Title}
-                    width={300}
-                    height={300}
+                    width={1080}
+                    height={720}
                     className="h-full w-full object-cover object-top"
                   />
                 )}
