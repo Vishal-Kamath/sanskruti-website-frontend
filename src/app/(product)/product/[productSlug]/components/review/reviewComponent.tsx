@@ -13,7 +13,7 @@ const ReviewComponent: FC<Review> = ({ username, rating, title, comment }) => {
 
   return (
     <div className="flex gap-3 border-b-[1px] border-gray-200 p-5 text-[16px]">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-300 text-lg text-slate-700">
+      <div className="flex aspect-square h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-lg text-red-700">
         {Initials}
       </div>
       <div className="flex flex-col gap-3">

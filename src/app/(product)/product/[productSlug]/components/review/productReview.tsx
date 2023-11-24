@@ -61,7 +61,7 @@ const ProductReview: FC<{ id: string }> = ({ id }) => {
       : "NA";
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-full max-w-3xl flex-col gap-5 max-lg:mx-auto">
       <h3 className="text-lg font-bold">RATINGS</h3>
 
       <div className="my-6 flex items-center justify-between gap-12">

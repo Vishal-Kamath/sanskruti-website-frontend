@@ -79,7 +79,9 @@ const AddToCartAndBuyNow: FC<{
       {loading && <span className="text-gray-800">Sending Request...</span>}
       {!loading &&
         (inStock ? (
-          <span className="text-gray-600">In Stock: {inStock}</span>
+          <span className="text-gray-500">
+            {inStock < 10 ? `${inStock} products in Stock` : "In Stock"}
+          </span>
         ) : (
           <span className="text-red-800">Out of Stock</span>
         ))}
@@ -88,7 +90,7 @@ const AddToCartAndBuyNow: FC<{
           <>
             <UIButton
               className={cn(
-                "w-full bg-white text-lg font-semibold text-black",
+                "w-full border-amber-300 bg-white text-lg font-semibold text-red-700 hover:outline-amber-50",
                 (loading || !inStock) && "opacity-50"
               )}
               onClick={addToCart}
@@ -98,7 +100,7 @@ const AddToCartAndBuyNow: FC<{
             </UIButton>
             <UIButton
               className={cn(
-                "w-full border-black bg-black text-lg font-semibold text-white",
+                "w-full border-amber-300 bg-amber-100 text-lg font-semibold text-red-700 hover:bg-amber-200 hover:outline-amber-100",
                 (loading || !inStock) && "opacity-50"
               )}
               onClick={handleBuyNow}

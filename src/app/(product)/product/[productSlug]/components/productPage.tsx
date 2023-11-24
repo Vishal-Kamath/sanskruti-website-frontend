@@ -5,10 +5,10 @@ import { FC, useCallback, useRef, useState } from "react";
 import ProductImageFullScreen from "./productImageFullScreen";
 import ProductImageDisplay from "./productImagesDisplay";
 import ProductDetails from "./productDetails";
-import ProductCarousel from "@/components/common/productCarousel";
-import { SwiperRef, Swiper } from "swiper/react";
+import { SwiperRef } from "swiper/react";
 import { cn } from "@/utils/lib";
 import ProductReview from "./review/productReview";
+import RecomenedProducts from "./recomendedProducts";
 
 const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
   const [fullscreenImageOpen, setFullscreenImageOpen] = useState(false);
@@ -54,7 +54,7 @@ const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
         className={cn(!fullscreenImageOpen && "hidden")}
       />
       <div className="mb-10 flex flex-col gap-6 pt-36 md:pt-40">
-        <div className="mx-auto flex w-full max-w-7xl items-start gap-5 max-md:flex-col">
+        <div className="mx-auto flex w-full max-w-7xl items-start gap-5 max-lg:flex-col">
           <ProductImageDisplay
             setFullscreenImageOpen={setFullscreenImageOpen}
             images={product?.images || []}
@@ -65,12 +65,16 @@ const ProductPageComponent: FC<{ product: ProductType }> = ({ product }) => {
             handleSet={handleSet}
             onIndexChange={onIndexChange}
           />
-          <div className="flex w-full flex-col gap-5 px-[3vw] md:pl-0">
+          <div className="flex w-full flex-col gap-5 px-[3vw] md:max-lg:mt-12 lg:pl-0">
             <ProductDetails product={product} />
             <ProductReview id={product._id} />
           </div>
         </div>
-        <ProductCarousel />
+
+        <RecomenedProducts
+          mainCategory={product.MainCategory}
+          subCategory={product.SubCategory}
+        />
       </div>
     </>
   );

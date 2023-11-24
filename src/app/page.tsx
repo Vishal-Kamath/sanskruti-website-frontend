@@ -5,8 +5,6 @@ import CategoryBar from "@/components/sidebars/categoryBar/categoryBar";
 import SubBanner from "@/components/subBanners";
 import UserReviewCarousel from "@/components/userReviewCarousel";
 import { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import BestSellers from "./component/bestSeller";
 import FeaturedProducts from "./component/featured";
 

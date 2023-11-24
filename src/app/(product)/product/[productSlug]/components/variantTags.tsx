@@ -48,7 +48,7 @@ const VariantTags: FC<{
   return (
     <div
       className={cn(
-        "flex flex-col gap-3 border-t-2 border-gray-300 py-3 capitalize",
+        "flex flex-col gap-3 border-t-[1px] border-gray-300 py-3 capitalize",
         filterChildren.length === 0 && "hidden"
       )}
     >
@@ -60,8 +60,8 @@ const VariantTags: FC<{
           <UIButton
             key={subVariant.value}
             className={cn(
-              "relative isolate min-w-[3rem] rounded-full border-gray-700 px-3 py-2 text-[14px] capitalize",
-              selected === subVariant.value && "bg-gray-700 text-white"
+              "relative isolate min-w-[3rem] cursor-pointer rounded-full border-amber-300 px-3 py-2 text-[14px] capitalize text-red-700 hover:bg-amber-200 hover:outline-transparent",
+              selected === subVariant.value && "bg-amber-100"
             )}
           >
             <input
@@ -69,7 +69,7 @@ const VariantTags: FC<{
               name={name}
               checked={selected === subVariant.value}
               id={name + " " + subVariant.value}
-              className="absolute left-0 top-0 z-10 h-full w-full opacity-0"
+              className="absolute left-0 top-0 z-10 h-full w-full cursor-pointer opacity-0"
               onClick={() => onClick(subVariant.value)}
               onChange={() => {}}
             />

@@ -33,12 +33,10 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
   const titleForLinks = `Shop ${product.name} at Sanskruti nx`;
 
   return (
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-full max-w-3xl flex-col gap-5 max-lg:mx-auto">
       <div className="flex justify-between gap-3">
         <div className="flex flex-col gap-1">
-          <h1 className="break-words font-serif text-lg font-bold md:text-2xl">
-            {product?.name}
-          </h1>
+          <h1 className="break-words text-xl md:text-3xl">{product?.name}</h1>
           <h3 className="text-md font-semibold text-gray-600">
             {product?.brand_name}
           </h3>

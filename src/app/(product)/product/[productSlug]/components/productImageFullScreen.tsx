@@ -50,39 +50,45 @@ const ProductImageFullScreen: React.FC<{
             alt="product image"
             className="h-full object-contain md:hidden"
           />
-          <div className="custom_scrollbar flex h-fit max-w-[50vw] gap-2 overflow-x-auto overflow-y-hidden max-md:px-[3vw]">
-            {images.map((imageSrc, index) => (
-              <Image
-                src={imageSrc}
-                alt={index + " product image"}
-                width={100}
-                height={200}
-                key={index}
-                className={cn(
-                  "aspect-auto h-20 w-auto",
-                  imageIndex !== index && "opacity-60"
-                )}
-                onClick={() => handleSet(index)}
-              />
-            ))}
-          </div>
+          {images.length > 1 && (
+            <div className="custom_scrollbar flex h-fit max-w-[50vw] gap-2 overflow-x-auto overflow-y-hidden max-md:px-[3vw]">
+              {images.map((imageSrc, index) => (
+                <Image
+                  src={imageSrc}
+                  alt={index + " product image"}
+                  width={100}
+                  height={200}
+                  key={index}
+                  className={cn(
+                    "aspect-auto h-20 w-auto",
+                    imageIndex !== index && "opacity-60"
+                  )}
+                  onClick={() => handleSet(index)}
+                />
+              ))}
+            </div>
+          )}
         </div>
-        <button
-          onClick={handlePrev}
-          className="group absolute left-0 top-0 flex h-full w-[25%] items-center justify-start"
-        >
-          <div className="z-50 w-fit rounded-r-full bg-white py-3 pl-1 pr-3 opacity-50 group-hover:opacity-80">
-            <FaAngleLeft className="h-6 w-6" />
-          </div>
-        </button>
-        <button
-          onClick={handleNext}
-          className="group absolute right-0 top-0 flex h-full w-[25%] items-center justify-end"
-        >
-          <div className="z-50 w-fit rounded-l-full bg-white py-3 pl-3 pr-1 opacity-50 group-hover:opacity-80">
-            <FaAngleRight className="h-6 w-6" />
-          </div>
-        </button>
+        {images.length > 1 && (
+          <button
+            onClick={handlePrev}
+            className="group absolute left-0 top-0 flex h-full w-[25%] items-center justify-start"
+          >
+            <div className="z-50 w-fit rounded-r-full bg-white py-3 pl-1 pr-3 opacity-50 group-hover:opacity-80">
+              <FaAngleLeft className="h-6 w-6" />
+            </div>
+          </button>
+        )}
+        {images.length > 1 && (
+          <button
+            onClick={handleNext}
+            className="group absolute right-0 top-0 flex h-full w-[25%] items-center justify-end"
+          >
+            <div className="z-50 w-fit rounded-l-full bg-white py-3 pl-3 pr-1 opacity-50 group-hover:opacity-80">
+              <FaAngleRight className="h-6 w-6" />
+            </div>
+          </button>
+        )}
 
         <button
           onClick={() => setFullscreenImageOpen(false)}
