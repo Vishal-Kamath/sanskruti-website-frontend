@@ -38,7 +38,7 @@ const CartPaymemtPage: FC = () => {
   const [shippingAddress] = useAddressState("shippingAddress");
   const [billingAddress] = useAddressState("billingAddress");
 
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("PayZapp");
   const [paymentStatus, setpaymentStatus] = useState<PaymentStatus>();
 
   const handleFillAllDetails = () => {
@@ -73,8 +73,6 @@ const CartPaymemtPage: FC = () => {
   };
 
   const payment = async () => {
-    const { total, discount, gst, finalValue } = getAmounts(cart);
-
     const body = {
       paymentMethod,
       shippingAddress,
@@ -138,6 +136,13 @@ const CartPaymemtPage: FC = () => {
       )
       .then((res) => {
         setpaymentStatus(res.data);
+        if (!res.data?.payZapp) {
+          if (!res.data.cashondelivery) {
+            setPaymentMethod("");
+          } else {
+            setPaymentMethod("COD");
+          }
+        }
       })
       .catch();
   }, []);
