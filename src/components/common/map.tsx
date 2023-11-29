@@ -2,8 +2,7 @@
 
 import { cn } from "@/utils/lib";
 import { FC } from "react";
-import "./css/map.css";
-import { FaSpinner } from "react-icons/fa";
+import LoadingSpinner from "./loadingSpinner";
 
 interface Props {
   className: string;
@@ -21,7 +20,7 @@ const UIGoogleMap: FC<Props> = ({ className, src }) => {
           sandbox="allow-scripts"
         ></iframe>
         <div className="absolute left-0 top-0 -z-10 flex h-full w-full items-center justify-center bg-slate-100">
-          <FaSpinner className="spinner h-10 w-10 text-slate-500" />
+          <LoadingSpinner />
         </div>
       </div>
     );
