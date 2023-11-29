@@ -27,11 +27,6 @@ const FooterDetails: FC = () => {
               title: "Contact Us",
               link: "/contactUs",
             },
-            {
-              inWebsiteLink: true,
-              title: "Blog",
-              link: "/blog",
-            },
           ]}
         />
 
