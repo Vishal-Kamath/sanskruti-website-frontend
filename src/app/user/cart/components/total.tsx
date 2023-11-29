@@ -23,6 +23,7 @@ import {
   setNotification,
   showNotification,
 } from "@/redux/slice/notification.slice";
+import LoadingSpinner from "@/components/common/loadingSpinner";
 
 const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,8 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState("");
 
+  const [couponUpdateLoading, setCouponUpdateLoading] = useState(false);
+
   useEffect(() => {
     fetchCoupons();
   }, []);
@@ -49,6 +52,7 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
   }, [finalValue, couponDiscount?.code]);
 
   const fetchCoupons = async () => {
+    setCouponUpdateLoading(true);
     axios
       .get<{ coupons: Coupon[] }>(
         `${process.env.ENDPOINT}/api/v1/user/coupons`,
@@ -60,12 +64,16 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
         }
       )
       .then((res) => {
+        setCouponUpdateLoading(false);
         setCoupons(res.data.coupons);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setCouponUpdateLoading(false);
+      });
   };
 
   const applyCode = async (couponCode: string) => {
+    setCouponUpdateLoading(true);
     axios
       .post<Notification & { couponDiscount: number; code: string }>(
         `${process.env.ENDPOINT}/api/v1/user/coupons`,
@@ -87,6 +95,7 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
             code: res.data.code,
           })
         );
+        setCouponUpdateLoading(false);
       })
       .catch((err) => {
         const response = err.response.data;
@@ -104,6 +113,7 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
           })
         );
         dispatch(showNotification());
+        setCouponUpdateLoading(false);
       });
   };
 
@@ -135,16 +145,26 @@ const Total: FC<{ children: React.ReactNode }> = ({ children }) => {
         )}
       </button>
       <div
-        className={cn("flex flex-col gap-2", !openTotalTab && "max-md:hidden")}
+        className={cn(
+          "relative flex flex-col gap-2",
+          !openTotalTab && "max-md:hidden"
+        )}
       >
+        {/* Loading spinner*/}
+        {couponUpdateLoading && (
+          <div className="absolute left-0 top-0 z-10 grid h-full w-full place-content-center rounded-lg bg-gray-50 opacity-40">
+            <LoadingSpinner className="h-5 w-5 text-gray-700" />
+          </div>
+        )}
+
         {/* coupons */}
         <div className="text-xs font-medium text-gray-500">COUPONS</div>
         {couponDiscount?.code && couponDiscount.discount ? (
           <div className="flex items-center justify-between">
-            <span className="font-semibold">CODE:{couponDiscount.code}</span>
+            <span className="font-semibold">CODE: {couponDiscount.code}</span>
             <UIButton
               onClick={cancelCoupon}
-              className="w-fit rounded-[4px] border-[1px] border-sanskrutiRed px-3 py-1 text-sanskrutiRed hover:outline-sanskrutiRedLight"
+              className="w-fit rounded-[4px] border-[1px] border-gray-400 px-3 py-1 text-gray-400 hover:border-gray-500 hover:text-gray-500 hover:outline-gray-100"
             >
               Cancel Coupon
             </UIButton>
