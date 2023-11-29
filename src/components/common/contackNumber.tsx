@@ -27,6 +27,8 @@ const ContactNumber: FC<{ className?: string }> = ({ className }) => {
   }, []);
   const whatsappURL = `tel:91${number}`;
 
+  if (!number) return null;
+
   return (
     <a
       href={whatsappURL}

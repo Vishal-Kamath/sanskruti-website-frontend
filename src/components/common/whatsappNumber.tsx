@@ -27,6 +27,8 @@ const WhatsappNumber: FC<{ className?: string }> = ({ className }) => {
   }, []);
   const whatsappURL = `https://api.whatsapp.com/send?phone=${number}`;
 
+  if (!number) return null;
+
   return (
     <a
       href={whatsappURL}
