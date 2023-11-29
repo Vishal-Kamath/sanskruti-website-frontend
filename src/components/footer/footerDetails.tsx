@@ -77,7 +77,7 @@ const FooterDetails: FC = () => {
         <FooterBestSellers />
       </div>
       <div className="mt-7 flex w-full max-w-5xl justify-between gap-2 max-md:flex-col">
-        <span>Design and development by 🖤 Growtecs</span>
+        <span>Design and development by Growtecs</span>
         <span>© 2020 - 2023 Sanskruti NX All Rights Reserved.</span>
       </div>
     </div>
