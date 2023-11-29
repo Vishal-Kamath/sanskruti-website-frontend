@@ -2,6 +2,7 @@ import VisitOurStore from "@/components/footer/visitOurStore";
 import { NextPage } from "next";
 import Image from "next/image";
 import WhatsappNumber from "@/components/common/whatsappNumber";
+import ContactNumber from "@/components/common/contackNumber";
 
 const AboutUsPage: NextPage = () => {
   return (
@@ -178,6 +179,9 @@ const AboutUsPage: NextPage = () => {
         <div className="flex flex-col gap-2 text-sm text-gray-500">
           <p>
             Whatsapp: <WhatsappNumber />
+          </p>
+          <p>
+            Contact: <ContactNumber />
           </p>
           <p>
             Email:{" "}

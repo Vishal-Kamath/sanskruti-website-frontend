@@ -1,9 +1,10 @@
 import WhatsappNumber from "@/components/common/whatsappNumber";
 import { NextPage } from "next";
-import { PiWhatsappLogoThin } from "react-icons/pi";
+import { PiPhoneCallThin, PiWhatsappLogoThin } from "react-icons/pi";
 import { CiMail } from "react-icons/ci";
 import ContactUsForm from "./contactUsForm";
 import VisitOurStore from "@/components/footer/visitOurStore";
+import ContactNumber from "@/components/common/contackNumber";
 
 const ContactUsPage: NextPage = () => {
   return (
@@ -37,6 +38,13 @@ const ContactUsPage: NextPage = () => {
                 <div className="flex flex-col gap-3 font-light">
                   <h4>WHATSAPP</h4>
                   <WhatsappNumber className="border-b-[1px] border-transparent hover:border-gray-600" />
+                </div>
+              </div>
+              <div className="flex w-full gap-4 rounded-md border-[1px] border-gray-200 px-6 py-4">
+                <PiPhoneCallThin className="h-8 w-8 text-gray-600" />
+                <div className="flex flex-col gap-3 font-light">
+                  <h4>CONTACT</h4>
+                  <ContactNumber className="border-b-[1px] border-transparent hover:border-gray-600" />
                 </div>
               </div>
             </div>

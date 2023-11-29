@@ -11,6 +11,7 @@ import "swiper/css/autoplay";
 import Image from "next/image";
 import Link from "next/link";
 import { FC, useState, useEffect } from "react";
+import ContactNumber from "../common/contackNumber";
 
 const TopBanner: FC = () => {
   const [displayNum, setDisplayNum] = useState(1);
@@ -51,7 +52,7 @@ const TopBanner: FC = () => {
           className="mx-auto flex h-8 w-fit items-center justify-center gap-2 text-sm"
         >
           <FiPhoneCall />
-          <span>+91-1234567890</span>
+          <ContactNumber />
         </a>
       </SwiperSlide>
       <SwiperSlide>

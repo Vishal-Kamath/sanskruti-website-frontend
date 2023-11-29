@@ -7,6 +7,7 @@ import {
   FooterNewArrivals,
 } from "./footerComponents";
 import FooterSocial from "./footerSocial";
+import ContactNumber from "../common/contackNumber";
 
 const FooterDetails: FC = () => {
   return (
@@ -55,21 +56,14 @@ const FooterDetails: FC = () => {
           ]}
         />
         <div className="flex flex-col gap-2">
-          <FooterDetailsCard
-            title="GET IN TOUCH"
-            list={[
-              {
-                title: "+91-1234567890",
-                inWebsiteLink: false,
-                link: "tel:911234567890",
-              },
-              {
-                title: "+91-0987654321",
-                inWebsiteLink: false,
-                link: "tel:910987654321",
-              },
-            ]}
-          />
+          <div className="flex flex-col">
+            <h5 className="flex items-center justify-between py-2 font-semibold">
+              <span>GET IN TOUCH</span>
+            </h5>
+            <div className="flex flex-col gap-1 py-1">
+              <ContactNumber />
+            </div>
+          </div>
           <FooterDetailsCard
             title="EMAIL US ON"
             list={[
