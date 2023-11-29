@@ -12,6 +12,7 @@ import { BsBoxArrowUpLeft } from "react-icons/bs";
 import { MdRemoveShoppingCart } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 import { setWishlistIds } from "@/redux/slice/wishlist.slice";
+import LoadingSpinner from "@/components/common/loadingSpinner";
 
 const debounce = <T extends (...args: any[]) => void>(
   func: T,
@@ -94,6 +95,7 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
   };
 
   // Quantity
+  const [quatityChangeLoading, setQuatityChangeLoading] = useState(false);
   const incrementQuantity = (value: number) => {
     if (value > combination.quantity) return;
     setQuantityState(value);
@@ -109,23 +111,30 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
     debounce((value: number) => updateQuantity(value), 200),
     [combination]
   );
-  const updateQuantity = async (value: number) => {
-    const cartDetails = await axios.post<CartType>(
-      `${process.env.ENDPOINT}/api/v1/user/cart/quantity`,
-      {
-        productId: product._id,
-        variant: combination.combinationString,
-        quantity: value,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+  const updateQuantity = (value: number) => {
+    setQuatityChangeLoading(true);
+    axios
+      .post<CartType>(
+        `${process.env.ENDPOINT}/api/v1/user/cart/quantity`,
+        {
+          productId: product._id,
+          variant: combination.combinationString,
+          quantity: value,
         },
-        withCredentials: true,
-      }
-    );
-    if (cartDetails.status !== 200) return;
-    dispatch(setCart({ cart: cartDetails.data.cart }));
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        dispatch(setCart({ cart: res.data.cart }));
+        setQuatityChangeLoading(false);
+      })
+      .catch((err) => {
+        setQuatityChangeLoading(false);
+      });
   };
 
   // Remove Form cart
@@ -240,17 +249,30 @@ const CartProduct: FC<CartItem> = ({ product, variant, quantity }) => {
           <div className="flex w-fit items-center gap-1 rounded-full border-[1px] border-slate-300 bg-slate-50 p-1 [&>*]:h-4 [&>*]:w-4">
             <UIButton
               onClick={() => decrementQuantity(quantityState - 1)}
-              className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
+              className={cn(
+                "grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200",
+                quatityChangeLoading && "opacity-0"
+              )}
+              disabled={quatityChangeLoading}
             >
               -
             </UIButton>
-            <span className="grid w-fit place-content-center leading-none">
-              {quantity}
-            </span>
+
+            {quatityChangeLoading ? (
+              <LoadingSpinner className="h-3 w-3" />
+            ) : (
+              <span className="grid w-fit place-content-center leading-none">
+                {quantity}
+              </span>
+            )}
 
             <UIButton
               onClick={() => incrementQuantity(quantityState + 1)}
-              className="grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200"
+              className={cn(
+                "grid place-content-center rounded-full border-[1px] border-slate-400 p-0 leading-none hover:outline-slate-200",
+                quatityChangeLoading && "opacity-0"
+              )}
+              disabled={quatityChangeLoading}
             >
               +
             </UIButton>
