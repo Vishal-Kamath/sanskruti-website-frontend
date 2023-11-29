@@ -47,13 +47,12 @@ const TopBanner: FC = () => {
       className="flex w-full bg-slate-100 text-black"
     >
       <SwiperSlide>
-        <a
-          href="tel:911234567890"
+        <div
           className="mx-auto flex h-8 w-fit items-center justify-center gap-2 text-sm"
         >
           <FiPhoneCall />
           <ContactNumber />
-        </a>
+        </div>
       </SwiperSlide>
       <SwiperSlide>
         <Link
