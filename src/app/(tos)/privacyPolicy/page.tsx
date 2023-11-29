@@ -5,7 +5,7 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { getData } from "../utils/getData";
 import { useState, useEffect, FC } from "react";
 
-const PaymentPolicyPage = async () => {
+const PrivacyPolicyPage: FC = () => {
   const [reply, setReply] = useState("");
 
   useEffect(() => {
@@ -23,4 +23,4 @@ const PaymentPolicyPage = async () => {
   );
 };
 
-export default PaymentPolicyPage;
+export default PrivacyPolicyPage;
