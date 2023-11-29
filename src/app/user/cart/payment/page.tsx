@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { BsArrowLeft, BsDot } from "react-icons/bs";
 import Total from "../components/total";
 import { cn } from "@/utils/lib";
+import LoadingSpinner from "@/components/common/loadingSpinner";
 
 type PaymentStatus = {
   payZapp: boolean;
@@ -40,6 +41,8 @@ const CartPaymemtPage: FC = () => {
 
   const [paymentMethod, setPaymentMethod] = useState("PayZapp");
   const [paymentStatus, setpaymentStatus] = useState<PaymentStatus>();
+
+  const [paymentUpdateLoading, setPaymentUpdateLoading] = useState(false);
 
   const handleFillAllDetails = () => {
     if (!cart || !cart.length) {
@@ -79,7 +82,7 @@ const CartPaymemtPage: FC = () => {
       billingAddress,
       couponCode: couponDiscount?.code,
     };
-
+    setPaymentUpdateLoading(true);
     axios
       .post<
         {
@@ -107,6 +110,7 @@ const CartPaymemtPage: FC = () => {
           setNotification({ message: response.message, type: response.type })
         );
         dispatch(showNotification());
+        setPaymentUpdateLoading(false);
         router.replace(
           `/user/order/status?orderId=${response.orderId}&tracking_id=${response.tracking_id}`
         );
@@ -117,9 +121,11 @@ const CartPaymemtPage: FC = () => {
           setNotification({
             message: response.message,
             type: response.type,
+            content: response.content,
           })
         );
         dispatch(showNotification());
+        setPaymentUpdateLoading(false);
       });
   };
 
@@ -327,9 +333,17 @@ const CartPaymemtPage: FC = () => {
         paymentMethod ? (
           <UIButton
             onClick={payment}
-            className="w-full rounded-full border-none bg-sanskrutiRed font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight"
+            className={cn(
+              "flex w-full justify-center rounded-full border-none bg-sanskrutiRed font-bold text-white opacity-75 hover:opacity-100 hover:outline-sanskrutiRedLight",
+              paymentUpdateLoading && "opacity-75 hover:opacity-75"
+            )}
+            disabled={paymentUpdateLoading}
           >
-            CHECKOUT
+            {paymentUpdateLoading ? (
+              <LoadingSpinner className="h-4 w-4 text-white" />
+            ) : (
+              <span>CHECKOUT</span>
+            )}
           </UIButton>
         ) : (
           <UIButton
