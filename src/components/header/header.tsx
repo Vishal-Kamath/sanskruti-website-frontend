@@ -62,6 +62,7 @@ export interface ProductType {
   is_featured: boolean;
   is_new_arrival: boolean;
   is_best_seller: boolean;
+  stylesAndTips?: string;
   meta_tittle: string;
   meta_description: string;
   meta_keyword: string;

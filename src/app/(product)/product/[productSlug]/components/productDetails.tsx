@@ -169,32 +169,12 @@ const ProductDetails: FC<{ product: ProductType }> = ({ product }) => {
             </tbody>
           </table>
         </DropdownComponent>
-        <DropdownComponent main="Style & Fit Tips">
-          <span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum
-            nobis adipisci excepturi temporibus aspernatur fuga culpa, maxime
-            ipsum quidem dolorem! Odit ullam doloribus quibusdam iste minima
-            esse laboriosam ad?
-          </span>
-        </DropdownComponent>
 
-        <DropdownComponent main="Shipping & Returns">
-          <span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum
-            nobis adipisci excepturi temporibus aspernatur fuga culpa, maxime
-            ipsum quidem dolorem! Odit ullam doloribus quibusdam iste minima
-            esse laboriosam ad?
-          </span>
-        </DropdownComponent>
-
-        <DropdownComponent main="FAQs">
-          <span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil illum
-            nobis adipisci excepturi temporibus aspernatur fuga culpa, maxime
-            ipsum quidem dolorem! Odit ullam doloribus quibusdam iste minima
-            esse laboriosam ad?
-          </span>
-        </DropdownComponent>
+        {product.stylesAndTips && (
+          <DropdownComponent main="Style & Fit Tips">
+            <span>{product.stylesAndTips}</span>
+          </DropdownComponent>
+        )}
       </div>
     </div>
   );
