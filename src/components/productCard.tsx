@@ -31,6 +31,7 @@ import "swiper/css/autoplay";
 import "swiper/css";
 import "swiper/css/navigation";
 import { GoDotFill } from "react-icons/go";
+import LoadingSpinner from "./common/loadingSpinner";
 
 interface Props {
   className?: string;
@@ -46,6 +47,7 @@ const ProductCard: FC<Props> = ({ className, product }) => {
     (listProduct) => listProduct === product._id
   );
 
+  const [likeLoading, setlikeLoading] = useState(false);
   const handleLike = () => {
     if (!isAuthenticated) return router.push("/auth/login");
 
@@ -54,6 +56,7 @@ const ProductCard: FC<Props> = ({ className, product }) => {
   };
 
   const likeProduct = () => {
+    setlikeLoading(true);
     axios
       .post<{ ids: string[] }>(
         `${process.env.ENDPOINT}/api/v1/user/wishlist`,
@@ -69,11 +72,15 @@ const ProductCard: FC<Props> = ({ className, product }) => {
       )
       .then((res) => {
         dispatch(setWishlistIds({ ids: res.data.ids }));
+        setlikeLoading(false);
       })
-      .catch(() => {});
+      .catch(() => {
+        setlikeLoading(false);
+      });
   };
 
   const unlikeProduct = () => {
+    setlikeLoading(true);
     axios
       .delete<{ ids: string[] }>(
         `${process.env.ENDPOINT}/api/v1/user/wishlist?productId=${product._id}`,
@@ -86,8 +93,11 @@ const ProductCard: FC<Props> = ({ className, product }) => {
       )
       .then((res) => {
         dispatch(setWishlistIds({ ids: res.data.ids }));
+        setlikeLoading(false);
       })
-      .catch(() => {});
+      .catch(() => {
+        setlikeLoading(false);
+      });
   };
 
   const price = !!product.varients.variations[0]?.discount
@@ -207,15 +217,18 @@ const ProductCard: FC<Props> = ({ className, product }) => {
         className={cn(
           "absolute right-0 top-0 rounded-bl-md bg-opacity-75 p-2",
           liked
-            ? "border-red-300 bg-red-200 text-red-500 hover:border-red-600"
+            ? "border-red-300 bg-red-200 text-red-600 hover:border-red-600"
             : "border-gray-300 bg-white text-black hover:border-gray-600 hover:text-black"
         )}
       >
-        {liked ? (
-          <AiFillHeart className="h-4 w-4 text-red-600" />
-        ) : (
-          <AiOutlineHeart className="h-4 w-4" />
-        )}
+        {!likeLoading &&
+          (liked ? (
+            <AiFillHeart className="h-4 w-4" />
+          ) : (
+            <AiOutlineHeart className="h-4 w-4" />
+          ))}
+
+        {likeLoading && <LoadingSpinner className="h-4 w-4" />}
       </button>
     </div>
   );
