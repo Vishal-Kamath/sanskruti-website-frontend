@@ -8,20 +8,23 @@ import {
 } from "@/redux/slice/notification.slice";
 import { useAppDispatch } from "@/redux/store/hooks";
 import { cn } from "@/utils/lib";
-import { FC, MouseEvent, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { FC, FormEvent, useState } from "react";
 
 const ContactUsForm: FC = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [tel, setTel] = useState("");
   const [review, setReview] = useState("");
 
-  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!name.trim() || !email.trim() || !tel.trim() || !review.trim()) {
+    if (!name.trim() || !email.trim() || !tel.trim()) {
       dispatch(
         setNotification({
           message: "Please fill all details",
@@ -31,10 +34,51 @@ const ContactUsForm: FC = () => {
       dispatch(showNotification());
       return;
     }
+
+    axios
+      .post(
+        `${process.env.ENDPOINT}/api/v1/user/contactus`,
+        {
+          name,
+          email,
+          tel,
+          review,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        dispatch(
+          setNotification({
+            message: res.data.message,
+            type: res.data.type,
+          })
+        );
+        dispatch(showNotification());
+
+        setName("");
+        setEmail("");
+        setTel("");
+        setReview("");
+
+        router.push("/");
+      })
+      .catch((err) => {
+        dispatch(
+          setNotification({
+            message: err.response.data.message,
+            type: err.response.data.type,
+          })
+        );
+        dispatch(showNotification());
+      });
   };
 
   return (
-    <form className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <Input
         input_type="text"
         placeholder="*Full Name"
@@ -78,7 +122,6 @@ const ContactUsForm: FC = () => {
       <UIButton
         type="submit"
         className="ml-auto mt-6 bg-black px-12 font-bold text-white"
-        onClick={handleSubmit}
       >
         SUBMIT
       </UIButton>
